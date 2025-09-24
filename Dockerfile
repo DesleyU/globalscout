@@ -10,11 +10,14 @@ COPY backend/package*.json ./
 # Install dependencies
 RUN npm ci
 
-# Copy backend source code
-COPY backend/ .
+# Copy Prisma schema first
+COPY backend/prisma ./prisma
 
 # Generate Prisma client
 RUN npx prisma generate
+
+# Copy rest of backend source code
+COPY backend/ .
 
 # Expose port
 EXPOSE 5000
