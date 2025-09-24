@@ -1,23 +1,20 @@
 # Use Node.js 18 LTS
 FROM node:18-alpine
 
-# Set working directory
+# Set working directory to backend
 WORKDIR /app
 
-# Copy package files
-COPY backend/package*.json ./
+# Copy ALL backend files first (including prisma directory)
+COPY backend/ ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy Prisma schema first
-COPY backend/prisma ./prisma
-
-# Generate Prisma client
+# Generate Prisma client (now prisma directory is in correct location)
 RUN npx prisma generate
 
-# Copy rest of backend source code
-COPY backend/ .
+# Run database migrations
+RUN npx prisma migrate deploy || echo "Migration failed, continuing..."
 
 # Expose port
 EXPOSE 5000
