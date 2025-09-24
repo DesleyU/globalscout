@@ -1,0 +1,11 @@
+name = "globalscout-frontend"
+compatibility_date = "2023-12-01"
+
+[env.production]
+route = "your-domain.com/*"
+
+[env.preview]
+route = "preview.your-domain.com/*"
+
+[[pages_build_output_dir]]
+directory = "frontend/dist"

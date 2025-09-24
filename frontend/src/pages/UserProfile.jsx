@@ -1,0 +1,261 @@
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { api } from '../services/api';
+import VideoDisplay from '../components/VideoDisplay';
+import MessageModal from '../components/MessageModal';
+import FollowButton from '../components/FollowButton';
+import PlayerStatistics from '../components/PlayerStatistics';
+import PremiumBadge from '../components/PremiumBadge';
+import toast from 'react-hot-toast';
+
+const UserProfile = () => {
+  const { id } = useParams();
+  const { user: currentUser } = useAuth();
+  const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
+  const queryClient = useQueryClient();
+
+  // Connection mutation
+  const connectionMutation = useMutation({
+    mutationFn: () => api.connections.sendRequest(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries(['connections']);
+      toast.success('Verbindingsverzoek verzonden!');
+    },
+    onError: (error) => {
+      toast.error(error.response?.data?.error || 'Fout bij het verzenden van verbindingsverzoek');
+    },
+  });
+
+  const { data: user, isLoading, error } = useQuery({
+    queryKey: ['user', id],
+    queryFn: () => api.users.getUserById(id),
+    enabled: !!id
+  });
+
+  const { data: videos, isLoading: videosLoading } = useQuery({
+    queryKey: ['userVideos', id],
+    queryFn: () => api.media.getUserVideos(id),
+    enabled: !!id && user?.role === 'PLAYER'
+  });
+
+  const handleConnect = () => {
+    if (id === currentUser?.id) {
+      toast.error('Je kunt geen verbinding maken met jezelf');
+      return;
+    }
+    connectionMutation.mutate();
+  };
+
+  if (isLoading) {
+    return (
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-300 rounded w-1/3 mb-4"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/2 mb-2"></div>
+          <div className="h-4 bg-gray-300 rounded w-1/4"></div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+          <strong>Error:</strong> {error.message}
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return (
+      <div className="max-w-4xl mx-auto p-6">
+        <div className="text-center text-gray-500">
+          Gebruiker niet gevonden
+        </div>
+      </div>
+    );
+  }
+
+  const profile = user?.profile;
+
+  return (
+    <div className="max-w-4xl mx-auto p-6">
+      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        {/* Header Section */}
+        <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-8 text-white">
+          <div className="flex items-center space-x-4">
+            <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center text-blue-600 text-2xl font-bold">
+              {profile?.firstName?.[0] || '?'}{profile?.lastName?.[0] || '?'}
+            </div>
+            <div>
+              <div className="flex items-center gap-3 mb-2">
+                <h1 className="text-3xl font-bold">
+                  {profile?.firstName || 'Onbekend'} {profile?.lastName || 'Gebruiker'}
+                </h1>
+                {user?.accountType === 'PREMIUM' && (
+                  <PremiumBadge size="md" variant="dark" />
+                )}
+              </div>
+              <p className="text-blue-100 text-lg">
+                {user?.role === 'PLAYER' && profile?.position && `${profile.position} • `}
+                {profile?.clubName || (user?.role === 'CLUB' ? 'Club' : user?.role === 'SCOUT_AGENT' ? 'Scout Agent' : 'Gebruiker')}
+              </p>
+              {(profile?.city || profile?.country) && (
+                <p className="text-blue-200">
+                  {[profile?.city, profile?.country].filter(Boolean).join(', ')}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+
+        {/* Content Section */}
+        <div className="p-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Bio Section */}
+            <div>
+              <h2 className="text-xl font-semibold mb-3 text-gray-800">Over</h2>
+              <p className="text-gray-600 leading-relaxed">
+                {profile?.bio || (
+                  <span className="italic text-gray-400">
+                    {user?.role === 'PLAYER' ? 'Deze speler heeft nog geen bio toegevoegd.' :
+                     user?.role === 'CLUB' ? 'Deze club heeft nog geen beschrijving toegevoegd.' :
+                     user?.role === 'SCOUT_AGENT' ? 'Deze scout heeft nog geen bio toegevoegd.' :
+                     'Geen bio beschikbaar.'}
+                  </span>
+                )}
+              </p>
+            </div>
+
+            {/* Details Section */}
+            <div>
+              <h2 className="text-xl font-semibold mb-3 text-gray-800">Details</h2>
+              <div className="space-y-2">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Rol:</span>
+                  <span className="font-medium">
+                    {user?.role === 'PLAYER' ? 'Speler' : 
+                     user?.role === 'CLUB' ? 'Club' :
+                     user?.role === 'SCOUT_AGENT' ? 'Scout Agent' :
+                     user?.role || 'Onbekend'}
+                  </span>
+                </div>
+                {profile?.position && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Positie:</span>
+                    <span className="font-medium">{profile.position}</span>
+                  </div>
+                )}
+                {profile?.clubName && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Club:</span>
+                    <span className="font-medium">{profile.clubName}</span>
+                  </div>
+                )}
+                {profile?.age && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Leeftijd:</span>
+                    <span className="font-medium">{profile.age} jaar</span>
+                  </div>
+                )}
+                {(profile?.city || profile?.country) && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Locatie:</span>
+                    <span className="font-medium">
+                      {[profile?.city, profile?.country].filter(Boolean).join(', ')}
+                    </span>
+                  </div>
+                )}
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Abonnement:</span>
+                  <span className={`font-medium ${user?.subscriptionTier === 'PREMIUM' ? 'text-yellow-600' : 'text-gray-600'}`}>
+                    {user?.subscriptionTier === 'BASIC' ? 'Basis' : 
+                     user?.subscriptionTier === 'PREMIUM' ? 'Premium' :
+                     user?.subscriptionTier || 'Onbekend'}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Videos Section - Only for Players */}
+          {user?.role === 'PLAYER' && (
+            <div className="mt-8">
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Video's</h2>
+              {videosLoading ? (
+                <div className="animate-pulse">
+                  <div className="h-48 bg-gray-300 rounded-lg"></div>
+                </div>
+              ) : videos && videos.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {videos.map((video) => (
+                    <VideoDisplay
+                      key={video.id}
+                      video={video}
+                      showControls={true}
+                      onDelete={null}
+                    />
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 bg-gray-50 rounded-lg">
+                  <p className="text-gray-500">Deze speler heeft nog geen video's geüpload.</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Player Statistics Section - Only for Players */}
+          {user?.role === 'PLAYER' && (
+            <div className="mt-8">
+              <PlayerStatistics 
+                userId={id} 
+                isOwnProfile={id === currentUser?.id}
+              />
+            </div>
+          )}
+
+          {/* Action Buttons */}
+          <div className="mt-8 flex space-x-4">
+            {id !== currentUser?.id && (
+              <FollowButton 
+                userId={id} 
+                size="large"
+                className="px-6 py-2"
+              />
+            )}
+            <button 
+              onClick={handleConnect}
+              disabled={connectionMutation.isPending || id === currentUser?.id}
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+            >
+              {connectionMutation.isPending ? 'Verzenden...' : 'Verbinden'}
+            </button>
+            <button 
+              onClick={() => setIsMessageModalOpen(true)}
+              className="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              Bericht sturen
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* Message Modal */}
+      <MessageModal
+        isOpen={isMessageModalOpen}
+        onClose={() => setIsMessageModalOpen(false)}
+        receiverId={id}
+        receiverName={user?.profile?.firstName && user?.profile?.lastName 
+          ? `${user.profile.firstName} ${user.profile.lastName}` 
+          : user?.email || 'Gebruiker'}
+      />
+    </div>
+  );
+};
+
+export default UserProfile;
