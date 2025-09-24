@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "Root package for Globalscout deployment",
   "private": true,
+  "engines": {
+    "node": "18.x",
+    "npm": "9.x"
+  },
   "dependencies": {
     "prisma": "^5.0.0",
     "@prisma/client": "^5.0.0"
