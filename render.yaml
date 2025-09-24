@@ -2,7 +2,7 @@ services:
   - type: web
     name: globalscout-backend
     env: node
-    buildCommand: npm ci && npx prisma generate && cd backend && npm ci && npx prisma migrate deploy
+    buildCommand: cd backend && npm ci && npm run build
     startCommand: cd backend && npm start
     healthCheckPath: /health
     envVars:
