@@ -4,8 +4,8 @@
   "description": "Root package for Globalscout deployment",
   "private": true,
   "engines": {
-    "node": "18.x",
-    "npm": "9.x"
+    "node": "22.x",
+    "npm": "10.x"
   },
   "dependencies": {
     "prisma": "^5.0.0",
