@@ -1,7 +1,10 @@
-// Vercel serverless function entry point
-const app = require('../backend/src/server');
+// Vercel serverless function for Globalscout backend
+const express = require('express');
+const cors = require('cors');
+const path = require('path');
 
-// Export as a Vercel serverless function
-module.exports = (req, res) => {
-  return app(req, res);
-};
+// Import the main app from backend
+const app = require('../backend/src/app');
+
+// Export the Express app as a Vercel serverless function
+module.exports = app;
