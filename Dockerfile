@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy ALL backend files first (including prisma directory)
 COPY backend/ ./
 
+# Copy environment file for production
+COPY backend/.env.render ./.env
+
 # Install dependencies
 RUN npm ci
 
