@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: globalscout-backend
+    runtime: node
+    buildCommand: cd backend && npm ci && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
