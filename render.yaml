@@ -37,15 +37,6 @@ services:
       - key: RATE_LIMIT_MAX_REQUESTS
         value: 100
 
-  - type: web
-    name: globalscout-frontend
-    runtime: static
-    buildCommand: cd frontend && npm ci && npm run build
-    staticPublishPath: frontend/dist
-    envVars:
-      - key: VITE_API_URL
-        value: https://globalscout-backend.onrender.com/api
-
 databases:
   - name: globalscout-db
     databaseName: globalscout
