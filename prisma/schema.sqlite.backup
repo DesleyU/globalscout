@@ -1,0 +1,333 @@
+// Production Prisma schema file for PostgreSQL
+// This replaces SQLite with PostgreSQL for production deployment
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// PostgreSQL supports native enums
+enum UserRole {
+  PLAYER
+  CLUB
+  SCOUT_AGENT
+  ADMIN
+}
+
+enum UserStatus {
+  ACTIVE
+  BLOCKED
+  PENDING
+}
+
+enum AccountType {
+  BASIC
+  PREMIUM
+}
+
+enum Position {
+  GOALKEEPER
+  DEFENDER
+  MIDFIELDER
+  FORWARD
+}
+
+enum ConnectionStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+}
+
+enum MediaType {
+  VIDEO
+  IMAGE
+  DOCUMENT
+}
+
+enum SubscriptionTier {
+  BASIC
+  PREMIUM
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  CANCELLED
+  EXPIRED
+}
+
+model User {
+  id               String      @id @default(cuid())
+  email            String      @unique
+  password         String
+  role             UserRole    @default(PLAYER)
+  status           UserStatus  @default(ACTIVE)
+  accountType      AccountType @default(BASIC)
+  playerId         Int?        // API-Football player ID for players
+  stripeCustomerId String?     // Stripe customer ID for payments
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  // Profile information
+  profile     Profile?
+
+  // Player statistics
+  playerStatistics PlayerStatistics[]
+
+  // Connections
+  sentConnections     Connection[] @relation("ConnectionSender")
+  receivedConnections Connection[] @relation("ConnectionReceiver")
+
+  // Admin actions
+  blockedUsers        User[]       @relation("BlockedUsers")
+  blockedBy           User[]       @relation("BlockedUsers")
+
+  // Follow relationships
+  followers           Follow[]     @relation("UserFollowing")
+  following           Follow[]     @relation("UserFollowers")
+
+  // Messages
+  sentMessages        Message[]    @relation("MessageSender")
+  receivedMessages    Message[]    @relation("MessageReceiver")
+
+  // Media uploads
+  media               Media[]
+
+  // Subscription
+  subscription        Subscription?
+
+  @@map("users")
+  @@index([email])
+  @@index([role])
+  @@index([status])
+  @@index([accountType])
+}
+
+model Profile {
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  // Basic info
+  firstName   String
+  lastName    String
+  avatar      String?
+  bio         String?
+  
+  // Player specific
+  position    Position?
+  age         Int?
+  height      Int?      // in cm
+  weight      Int?      // in kg
+  nationality String?
+  
+  // Club/Organization info
+  clubName    String?
+  clubLogo    String?
+  
+  // Contact info
+  phone       String?
+  website     String?
+  
+  // Social media
+  instagram   String?
+  twitter     String?
+  linkedin    String?
+  
+  // Location
+  country     String?
+  city        String?
+  
+  // Stats data (JSON for flexible storage)
+  statsData   Json?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("profiles")
+  @@index([firstName, lastName])
+  @@index([position])
+  @@index([country])
+  @@index([clubName])
+}
+
+model Connection {
+  id          String           @id @default(cuid())
+  senderId    String
+  receiverId  String
+  status      ConnectionStatus @default(PENDING)
+  message     String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  sender      User             @relation("ConnectionSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver    User             @relation("ConnectionReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@unique([senderId, receiverId])
+  @@map("connections")
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([status])
+}
+
+model Club {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  logo        String?
+  country     String?
+  city        String?
+  league      String?
+  website     String?
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("clubs")
+  @@index([name])
+  @@index([country])
+  @@index([league])
+}
+
+model Media {
+  id          String    @id @default(cuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type        MediaType
+  url         String
+  filename    String?
+  originalName String?
+  mimeType    String?
+  size        Int?      // File size in bytes
+  title       String?
+  description String?
+  tags        String?   // Comma-separated tags for categorization
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@map("media")
+  @@index([userId])
+  @@index([type])
+  @@index([createdAt])
+}
+
+model PlayerStatistics {
+  id              String   @id @default(cuid())
+  userId          String
+  season          String
+  
+  // Basic stats
+  goals           Int      @default(0)
+  assists         Int      @default(0)
+  matches         Int      @default(0)
+  minutes         Int      @default(0)
+  yellowCards     Int      @default(0)
+  redCards        Int      @default(0)
+  rating          Float?
+  
+  // Extended stats
+  shotsTotal      Int?     @default(0)
+  shotsOnTarget   Int?     @default(0)
+  passesTotal     Int?     @default(0)
+  passesAccuracy  Float?
+  tacklesTotal    Int?     @default(0)
+  tacklesInterceptions Int? @default(0)
+  duelsWon        Int?     @default(0)
+  foulsCommitted  Int?     @default(0)
+  foulsDrawn      Int?     @default(0)
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@unique([userId, season])
+  @@map("player_statistics")
+  @@index([userId])
+  @@index([season])
+}
+
+model Subscription {
+  id          String             @id @default(cuid())
+  userId      String             @unique
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tier        SubscriptionTier   @default(BASIC)
+  status      SubscriptionStatus @default(ACTIVE)
+  startDate   DateTime           @default(now())
+  endDate     DateTime?
+  paymentId   String?            // For payment processor reference
+  stripeCustomerId String?       // Stripe customer ID
+  stripeSubscriptionId String?   // Stripe subscription ID
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  @@map("subscriptions")
+  @@index([userId])
+  @@index([status])
+  @@index([tier])
+}
+
+model ProfileVisitor {
+  id          String   @id @default(cuid())
+  profileId   String   // The profile being visited
+  visitorId   String   // The user visiting the profile
+  visitorType UserRole // PLAYER, CLUB, SCOUT_AGENT
+  createdAt   DateTime @default(now())
+
+  @@unique([profileId, visitorId])
+  @@map("profile_visitors")
+  @@index([profileId])
+  @@index([visitorId])
+  @@index([createdAt])
+}
+
+model Follow {
+  id          String   @id @default(cuid())
+  followerId  String   // The user who is following
+  followingId String   // The user being followed
+  createdAt   DateTime @default(now())
+
+  follower    User     @relation("UserFollowers", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User     @relation("UserFollowing", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@unique([followerId, followingId])
+  @@map("follows")
+  @@index([followerId])
+  @@index([followingId])
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  content    String
+  isRead     Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  sender     User     @relation("MessageSender", fields: [senderId], references: [id], onDelete: Cascade)
+  receiver   User     @relation("MessageReceiver", fields: [receiverId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+  @@index([senderId])
+  @@index([receiverId])
+  @@index([createdAt])
+  @@index([isRead])
+}
+
+// Audit log for tracking important actions
+model AuditLog {
+  id          String   @id @default(cuid())
+  userId      String?  // User who performed the action
+  action      String   // Action type (LOGIN, PROFILE_UPDATE, etc.)
+  entityType  String?  // Type of entity affected
+  entityId    String?  // ID of entity affected
+  details     Json?    // Additional details about the action
+  ipAddress   String?  // IP address of the user
+  userAgent   String?  // User agent string
+  createdAt   DateTime @default(now())
+
+  @@map("audit_logs")
+  @@index([userId])
+  @@index([action])
+  @@index([createdAt])
+}
