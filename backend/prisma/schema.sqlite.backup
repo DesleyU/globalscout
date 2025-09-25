@@ -6,66 +6,36 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
-// PostgreSQL supports native enums
-enum UserRole {
-  PLAYER
-  CLUB
-  SCOUT_AGENT
-  ADMIN
-}
+// SQLite uses String fields instead of enums
+// UserRole: PLAYER, CLUB, SCOUT_AGENT, ADMIN
+// UserStatus: ACTIVE, BLOCKED, PENDING  
+// AccountType: BASIC, PREMIUM
+// Position: GOALKEEPER, DEFENDER, MIDFIELDER, FORWARD
+// ConnectionStatus: PENDING, ACCEPTED, REJECTED
+// MediaType: VIDEO, IMAGE, DOCUMENT
 
-enum UserStatus {
-  ACTIVE
-  BLOCKED
-  PENDING
-}
+// enum SubscriptionTier {
+//   BASIC
+//   PREMIUM
+// }
 
-enum AccountType {
-  BASIC
-  PREMIUM
-}
-
-enum Position {
-  GOALKEEPER
-  DEFENDER
-  MIDFIELDER
-  FORWARD
-}
-
-enum ConnectionStatus {
-  PENDING
-  ACCEPTED
-  REJECTED
-}
-
-enum MediaType {
-  VIDEO
-  IMAGE
-  DOCUMENT
-}
-
-enum SubscriptionTier {
-  BASIC
-  PREMIUM
-}
-
-enum SubscriptionStatus {
-  ACTIVE
-  CANCELLED
-  EXPIRED
-}
+// enum SubscriptionStatus {
+//   ACTIVE
+//   CANCELLED
+//   EXPIRED
+// }
 
 model User {
   id               String      @id @default(cuid())
   email            String      @unique
   password         String
-  role             UserRole    @default(PLAYER)
-  status           UserStatus  @default(ACTIVE)
-  accountType      AccountType @default(BASIC)
+  role             String      @default("PLAYER")
+  status           String      @default("ACTIVE")
+  accountType      String      @default("BASIC")
   playerId         Int?        // API-Football player ID for players
   stripeCustomerId String?     // Stripe customer ID for payments
   createdAt        DateTime    @default(now())
@@ -117,7 +87,7 @@ model Profile {
   bio         String?
   
   // Player specific
-  position    Position?
+  position    String?
   age         Int?
   height      Int?      // in cm
   weight      Int?      // in kg
@@ -141,7 +111,7 @@ model Profile {
   city        String?
   
   // Stats data (JSON for flexible storage)
-  statsData   Json?
+  statsData   String?
   
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -157,7 +127,7 @@ model Connection {
   id          String           @id @default(cuid())
   senderId    String
   receiverId  String
-  status      ConnectionStatus @default(PENDING)
+  status      String           @default("PENDING")
   message     String?
   createdAt   DateTime         @default(now())
   updatedAt   DateTime         @updatedAt
@@ -194,7 +164,7 @@ model Media {
   id          String    @id @default(cuid())
   userId      String
   user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  type        MediaType
+  type        String
   url         String
   filename    String?
   originalName String?
@@ -215,6 +185,7 @@ model Media {
 model PlayerStatistics {
   id              String   @id @default(cuid())
   userId          String
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   season          String
   
   // Basic stats
@@ -250,8 +221,8 @@ model Subscription {
   id          String             @id @default(cuid())
   userId      String             @unique
   user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  tier        SubscriptionTier   @default(BASIC)
-  status      SubscriptionStatus @default(ACTIVE)
+  tier        String             @default("BASIC")
+  status      String             @default("ACTIVE")
   startDate   DateTime           @default(now())
   endDate     DateTime?
   paymentId   String?            // For payment processor reference
@@ -270,7 +241,7 @@ model ProfileVisitor {
   id          String   @id @default(cuid())
   profileId   String   // The profile being visited
   visitorId   String   // The user visiting the profile
-  visitorType UserRole // PLAYER, CLUB, SCOUT_AGENT
+  visitorType String   // PLAYER, CLUB, SCOUT_AGENT
   createdAt   DateTime @default(now())
 
   @@unique([profileId, visitorId])
@@ -321,7 +292,7 @@ model AuditLog {
   action      String   // Action type (LOGIN, PROFILE_UPDATE, etc.)
   entityType  String?  // Type of entity affected
   entityId    String?  // ID of entity affected
-  details     Json?    // Additional details about the action
+  details     String?  // Additional details about the action
   ipAddress   String?  // IP address of the user
   userAgent   String?  // User agent string
   createdAt   DateTime @default(now())
