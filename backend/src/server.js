@@ -16,6 +16,10 @@ const {
   securityLogger
 } = require('./middleware/security');
 
+// Import Prisma client
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
+
 // Import routes
 const authRoutes = require('./routes/auth');
 const userRoutes = require('./routes/users');
@@ -225,14 +229,31 @@ app.use((error, req, res, next) => {
 
 
 
+// Database connection test
+async function testDatabaseConnection() {
+  try {
+    await prisma.$connect();
+    console.log('✅ Database connected successfully');
+    
+    // Test a simple query
+    const userCount = await prisma.user.count();
+    console.log(`📊 Database has ${userCount} users`);
+  } catch (error) {
+    console.error('❌ Database connection failed:', error.message);
+    console.log('⚠️ Server will continue without database for now');
+    // Don't exit the process, let the server start anyway
+  }
+}
+
 // Start server
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
   console.log(`🚀 Server running on port ${PORT}`);
   console.log(`📚 API Documentation: http://localhost:${PORT}/api/docs`);
   console.log(`🏥 Health Check: http://localhost:${PORT}/health`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   
-
+  // Test database connection
+  await testDatabaseConnection();
 });
 
 module.exports = app;
