@@ -242,16 +242,17 @@ const Profile = () => {
   }
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <div className="max-w-4xl mx-auto space-y-6 p-6">
       {/* Profile Header */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+        <div className="px-8 py-6 border-b border-gray-200/50">
           <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Profile</h1>
             {!isEditing ? (
               <button
                 onClick={() => setIsEditing(true)}
-                className="btn btn-outline flex items-center"
+                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center"
               >
                 <Edit3 className="h-4 w-4 mr-2" />
                 Edit Profile
@@ -261,7 +262,7 @@ const Profile = () => {
                 <button
                   onClick={handleSubmit}
                   disabled={updateProfileMutation.isPending}
-                  className="btn btn-primary flex items-center"
+                  className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white font-semibold rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {updateProfileMutation.isPending ? (
                     <LoadingSpinner size="small" className="mr-2" />
@@ -272,7 +273,7 @@ const Profile = () => {
                 </button>
                 <button
                   onClick={handleCancel}
-                  className="btn btn-outline flex items-center"
+                  className="px-6 py-3 bg-white/60 border border-gray-300 text-gray-700 font-semibold rounded-xl shadow-lg hover:shadow-xl hover:bg-white/80 transition-all duration-300 hover:-translate-y-1 flex items-center"
                 >
                   <X className="h-4 w-4 mr-2" />
                   Cancel
@@ -282,7 +283,7 @@ const Profile = () => {
           </div>
         </div>
 
-        <div className="p-6">
+        <div className="p-8">
           <div className="flex items-start space-x-6">
             {/* Profile Picture */}
             <div className="flex-shrink-0">
@@ -348,7 +349,7 @@ const Profile = () => {
 
                   {profile?.profile?.position && (
                     <div>
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary-100 text-primary-800">
+                      <span className="inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold bg-gradient-to-r from-blue-100 to-indigo-100 text-blue-800 shadow-lg">
                         {profile.profile.position}
                       </span>
                     </div>
@@ -518,11 +519,11 @@ const Profile = () => {
       </div>
 
       {/* Account Information */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Account Information</h2>
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+        <div className="px-8 py-6 border-b border-gray-200/50">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Account Information</h2>
         </div>
-        <div className="p-6">
+        <div className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -566,19 +567,19 @@ const Profile = () => {
       </div>
 
       {/* Subscription Tier Display */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+        <div className="px-8 py-6 border-b border-gray-200/50">
           <div className="flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900">Subscription Status</h2>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Subscription Status</h2>
             {profile?.subscriptionTier === 'PREMIUM' && (
               <div className="flex items-center text-yellow-600">
                 <Crown className="h-5 w-5 mr-1" />
-                <span className="font-medium">Premium Member</span>
+                <span className="font-semibold">Premium Member</span>
               </div>
             )}
           </div>
         </div>
-        <div className="p-6">
+        <div className="p-8">
           <BasicProfileCard 
             user={profile} 
             isOwnProfile={true}
@@ -590,11 +591,11 @@ const Profile = () => {
 
       {/* Player Statistics - Only for Players */}
       {user?.role === 'PLAYER' && (
-        <div className="bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Speler Statistieken</h2>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+          <div className="px-8 py-6 border-b border-gray-200/50">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Speler Statistieken</h2>
           </div>
-          <div className="p-6">
+          <div className="p-8">
             <PlayerStatistics 
               userId={user?.id} 
               isOwnProfile={true}
@@ -604,11 +605,11 @@ const Profile = () => {
       )}
 
       {/* Profile Visitors */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Profile Visitors</h2>
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+        <div className="px-8 py-6 border-b border-gray-200/50">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Profile Visitors</h2>
         </div>
-        <div className="p-6">
+        <div className="p-8">
           {visitorsLoading ? (
             <LoadingSpinner />
           ) : (
@@ -622,11 +623,11 @@ const Profile = () => {
       </div>
 
       {/* Privacy Settings */}
-      <div className="bg-white rounded-lg shadow">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">Privacy Settings</h2>
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+        <div className="px-8 py-6 border-b border-gray-200/50">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Privacy Settings</h2>
         </div>
-        <div className="p-6">
+        <div className="p-8">
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
@@ -663,6 +664,7 @@ const Profile = () => {
         onClose={() => setShowPaymentModal(false)}
         onSuccess={handlePaymentSuccess}
       />
+      </div>
     </div>
   );
 };

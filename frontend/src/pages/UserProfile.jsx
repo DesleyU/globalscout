@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../services/api';
@@ -8,13 +8,76 @@ import MessageModal from '../components/MessageModal';
 import FollowButton from '../components/FollowButton';
 import PlayerStatistics from '../components/PlayerStatistics';
 import PremiumBadge from '../components/PremiumBadge';
+import LoadingSpinner from '../components/LoadingSpinner';
+import { Lock, User, Building, Search as SearchIcon } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const UserProfile = () => {
   const { id } = useParams();
-  const { user: currentUser } = useAuth();
+  const { user: currentUser, isAuthenticated, loading: authLoading } = useAuth();
   const [isMessageModalOpen, setIsMessageModalOpen] = useState(false);
   const queryClient = useQueryClient();
+
+  // Show loading state while checking authentication
+  if (authLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <LoadingSpinner size="large" />
+      </div>
+    );
+  }
+
+  // Show login prompt for unauthenticated users
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+        <div className="space-y-6 max-w-2xl mx-auto mt-8">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 text-center">
+          <div className="mx-auto flex items-center justify-center h-16 w-16 rounded-full bg-blue-100 mb-4">
+            <Lock className="h-8 w-8 text-blue-600" />
+          </div>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Login Required</h1>
+          <p className="text-gray-600 mb-6">
+            You need to be logged in to view player profiles and connect with other users.
+          </p>
+          <div className="space-x-4">
+            <Link
+              to="/login"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 inline-block"
+            >
+              Login
+            </Link>
+            <Link
+              to="/register"
+              className="bg-white/60 border border-white/30 text-gray-700 px-6 py-3 rounded-xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 inline-block"
+            >
+              Create Account
+            </Link>
+          </div>
+        </div>
+        
+        {/* Benefits of Creating Account */}
+        <div className="bg-white/60 backdrop-blur-sm rounded-2xl shadow-lg border border-white/30 p-6">
+          <h3 className="text-xl font-bold bg-gradient-to-r from-blue-900 to-indigo-900 bg-clip-text text-transparent mb-4">Join GlobalScout to:</h3>
+          <ul className="text-sm text-gray-700 space-y-3">
+            <li className="flex items-center">
+              <User className="h-4 w-4 mr-2" />
+              View detailed player profiles and statistics
+            </li>
+            <li className="flex items-center">
+              <SearchIcon className="h-4 w-4 mr-2" />
+              Search and connect with players, clubs, and scouts
+            </li>
+            <li className="flex items-center">
+              <Building className="h-4 w-4 mr-2" />
+              Create your own professional football profile
+            </li>
+          </ul>
+        </div>
+        </div>
+      </div>
+    );
+  }
 
   // Connection mutation
   const connectionMutation = useMutation({
@@ -83,8 +146,9 @@ const UserProfile = () => {
   const profile = user?.profile;
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 p-6">
+      <div className="max-w-4xl mx-auto">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden">
         {/* Header Section */}
         <div className="bg-gradient-to-r from-blue-600 to-blue-800 px-6 py-8 text-white">
           <div className="flex items-center space-x-4">
@@ -231,13 +295,13 @@ const UserProfile = () => {
             <button 
               onClick={handleConnect}
               disabled={connectionMutation.isPending || id === currentUser?.id}
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+              className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
             >
               {connectionMutation.isPending ? 'Verzenden...' : 'Verbinden'}
             </button>
             <button 
               onClick={() => setIsMessageModalOpen(true)}
-              className="border border-gray-300 text-gray-700 px-6 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+              className="bg-white/60 border border-white/30 text-gray-700 px-6 py-3 rounded-xl hover:bg-white/80 hover:shadow-lg transition-all duration-300"
             >
               Bericht sturen
             </button>
@@ -254,6 +318,7 @@ const UserProfile = () => {
           ? `${user.profile.firstName} ${user.profile.lastName}` 
           : user?.email || 'Gebruiker'}
       />
+      </div>
     </div>
   );
 };
