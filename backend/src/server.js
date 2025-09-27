@@ -172,6 +172,52 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Database test endpoint for debugging Render deployment
+app.get('/api/test-db', async (req, res) => {
+  try {
+    console.log('🧪 Testing database connection...');
+    
+    // Test basic Prisma connection
+    const userCount = await prisma.user.count();
+    console.log(`✅ Database connected! Found ${userCount} users`);
+    
+    // Test specific user lookup
+    const testUser = await prisma.user.findUnique({
+      where: { email: 'desley_u@hotmail.com' }
+    });
+    
+    if (testUser) {
+      console.log('✅ Test user found:', testUser.email);
+    } else {
+      console.log('❌ Test user not found');
+    }
+    
+    res.json({
+      status: 'success',
+      userCount,
+      testUserFound: !!testUser,
+      testUser: testUser ? {
+        id: testUser.id,
+        email: testUser.email,
+        role: testUser.role,
+        status: testUser.status
+      } : null,
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development'
+    });
+    
+  } catch (error) {
+    console.error('❌ Database test failed:', error);
+    res.status(500).json({
+      status: 'error',
+      error: error.message,
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
+      timestamp: new Date().toISOString(),
+      environment: process.env.NODE_ENV || 'development'
+    });
+  }
+});
+
 // API routes with specific rate limiting
 app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/users', userRoutes);
