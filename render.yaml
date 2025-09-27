@@ -2,6 +2,7 @@ services:
   - type: web
     name: globalscout-backend
     runtime: node
+    rootDir: backend
     buildCommand: npm ci && npm run build
     startCommand: npm start
     healthCheckPath: /health
