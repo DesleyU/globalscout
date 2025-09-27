@@ -48,7 +48,7 @@ class SubscriptionService {
       maxConnections: 10,
       maxVideos: 1,
       profileFields: ['avatar', 'position', 'age', 'clubName'],
-      statsFields: ['goals', 'assists', 'minutes'],
+      statsFields: ['season', 'goals', 'assists', 'minutes', 'matches', 'yellowCards', 'redCards', 'rating'],
       visitorDetails: false // Only show count, not details
     };
   }

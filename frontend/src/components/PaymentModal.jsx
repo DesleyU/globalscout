@@ -1,171 +1,145 @@
 import React, { useState, useEffect } from 'react';
-import { X, CreditCard, Lock, Crown, Check } from 'lucide-react';
+import { X, Lock, Crown, Check } from 'lucide-react';
 import { toast } from 'react-hot-toast';
-import { loadStripe } from '@stripe/stripe-js';
-import {
-  Elements,
-  CardElement,
-  useStripe,
-  useElements
-} from '@stripe/react-stripe-js';
+import { PayPalScriptProvider, PayPalButtons } from '@paypal/react-paypal-js';
 
-// Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-// Stripe Payment Form Component
-const StripePaymentForm = ({ onSuccess, onClose }) => {
-  const stripe = useStripe();
-  const elements = useElements();
+
+// PayPal Payment Component
+const PayPalPaymentForm = ({ onSuccess, onClose }) => {
   const [loading, setLoading] = useState(false);
-  const [clientSecret, setClientSecret] = useState('');
-  const [email, setEmail] = useState('');
 
-  useEffect(() => {
-    // Create payment intent when component mounts
-    createPaymentIntent();
-  }, []);
-
-  const createPaymentIntent = async () => {
+  const createOrder = async () => {
     try {
+      console.log('PayPal createOrder called');
+      setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/payment/create-intent`, {
+      console.log('Token:', token ? 'Present' : 'Missing');
+      
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/payment/paypal/create-order`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          amount: 9.99,
-          currency: 'eur'
+          amount: 9.99
         })
       });
 
+      console.log('PayPal API response status:', response.status);
+      
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to create payment intent');
+        console.error('PayPal API error:', errorData);
+        throw new Error(errorData.error || 'Failed to create PayPal order');
       }
 
       const data = await response.json();
-      setClientSecret(data.data.clientSecret);
+      console.log('PayPal order created:', data);
+      return data.orderId;
     } catch (error) {
-      console.error('Error creating payment intent:', error);
-      toast.error(error.message || 'Failed to initialize payment');
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    
-    if (!stripe || !elements || !clientSecret) {
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const cardElement = elements.getElement(CardElement);
-      
-      const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: cardElement,
-          billing_details: {
-            email: email,
-          },
-        },
-      });
-
-      if (error) {
-        console.error('Payment error:', error);
-        toast.error(error.message || 'Payment failed');
-      } else if (paymentIntent.status === 'succeeded') {
-        toast.success('Payment successful! Upgrading your account...');
-        
-        // Call the success callback
-        if (onSuccess) {
-          await onSuccess();
-        }
-        
-        onClose();
-      }
-    } catch (error) {
-      console.error('Payment processing error:', error);
-      toast.error('Payment failed. Please try again.');
+      console.error('Error creating PayPal order:', error);
+      toast.error(error.message || 'Failed to initialize PayPal payment');
+      throw error;
     } finally {
       setLoading(false);
     }
   };
 
-  const cardElementOptions = {
-    style: {
-      base: {
-        fontSize: '16px',
-        color: '#424770',
-        '::placeholder': {
-          color: '#aab7c4',
+  const onApprove = async (data) => {
+    try {
+      console.log('PayPal onApprove called with data:', data);
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/payment/paypal/capture-order`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
-      },
-      invalid: {
-        color: '#9e2146',
-      },
-    },
+        body: JSON.stringify({
+          orderId: data.orderID
+        })
+      });
+
+      console.log('PayPal capture response status:', response.status);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('PayPal capture error:', errorData);
+        throw new Error(errorData.error || 'Payment capture failed');
+      }
+
+      const result = await response.json();
+      console.log('PayPal capture result:', result);
+      
+      if (result.success) {
+        toast.success('Payment successful! Premium access activated!');
+        
+        if (onSuccess) {
+          await onSuccess();
+        }
+        
+        onClose();
+      } else {
+        throw new Error('Payment processing failed');
+      }
+    } catch (error) {
+      console.error('PayPal capture error:', error);
+      toast.error(error.message || 'Payment failed. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onError = (err) => {
+    console.error('PayPal error:', err);
+    toast.error('PayPal payment failed. Please try again.');
+  };
+
+  const onCancel = () => {
+    toast.info('Payment cancelled');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      {/* Email */}
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-          Email Address
-        </label>
-        <input
-          type="email"
-          id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
-          placeholder="your@email.com"
-          required
-        />
+    <div className="space-y-4">
+      <div className="text-center">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2">Pay with PayPal</h3>
+        <p className="text-sm text-gray-600">Secure payment via PayPal</p>
       </div>
-
-      {/* Card Element */}
-      <div>
-        <label className="block text-sm font-medium text-gray-700 mb-1">
-          Card Information
-        </label>
-        <div className="w-full px-3 py-3 border border-gray-300 rounded-md focus-within:ring-2 focus-within:ring-amber-500 focus-within:border-transparent">
-          <CardElement options={cardElementOptions} />
+      
+      {loading && (
+        <div className="flex justify-center py-4">
+          <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
         </div>
+      )}
+      
+      <PayPalButtons
+        style={{
+          layout: 'vertical',
+          color: 'blue',
+          shape: 'rect',
+          label: 'pay'
+        }}
+        createOrder={createOrder}
+        onApprove={onApprove}
+        onError={onError}
+        onCancel={onCancel}
+        disabled={loading}
+      />
+      
+      <div className="text-xs text-gray-500 text-center">
+        <Lock className="inline w-3 h-3 mr-1" />
+        Secure payment processed by PayPal
       </div>
-
-      {/* Security Notice */}
-      <div className="flex items-center mt-4 p-3 bg-gray-50 rounded-md">
-        <Lock className="h-4 w-4 text-gray-500 mr-2" />
-        <span className="text-xs text-gray-600">
-          Your payment information is secure and encrypted
-        </span>
-      </div>
-
-      {/* Submit Button */}
-      <button
-        type="submit"
-        disabled={loading || !stripe || !clientSecret}
-        className="w-full mt-6 bg-gradient-to-r from-amber-500 to-orange-500 text-white py-3 px-4 rounded-md font-medium hover:from-amber-600 hover:to-orange-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
-      >
-        {loading ? (
-          <div className="flex items-center justify-center">
-            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-            Processing...
-          </div>
-        ) : (
-          `Pay €9.99 and Upgrade`
-        )}
-      </button>
-    </form>
+    </div>
   );
 };
 
 const PaymentModal = ({ isOpen, onClose, onSuccess }) => {
+
   if (!isOpen) return null;
 
   return (
@@ -212,31 +186,47 @@ const PaymentModal = ({ isOpen, onClose, onSuccess }) => {
           </div>
         </div>
 
-        {/* Payment Form with Stripe Elements */}
-         <div className="p-6">
-           <StripePaymentForm onSuccess={onSuccess} onClose={onClose} />
-           
-           {/* Cancel Button */}
-           <button
-             type="button"
-             onClick={onClose}
-             className="w-full mt-3 bg-gray-100 text-gray-700 py-2 px-4 rounded-md font-medium hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 transition-colors"
-           >
-             Cancel
-           </button>
-         </div>
-       </div>
-     </div>
-   );
- };
 
- // Wrapper component to handle Stripe Elements
- const PaymentModalWrapper = (props) => {
-   return (
-     <Elements stripe={stripePromise}>
-       <PaymentModal {...props} />
-     </Elements>
-   );
- };
 
- export default PaymentModalWrapper;
+        {/* PayPal Payment */}
+        <div className="p-6">
+          <div className="text-center mb-4">
+            <h3 className="text-lg font-medium text-gray-900 mb-2">Pay with PayPal</h3>
+            <p className="text-sm text-gray-600">Secure payment processing</p>
+          </div>
+          
+          <PayPalPaymentForm onSuccess={onSuccess} onClose={onClose} />
+          
+          {/* Cancel Button */}
+          <button
+            type="button"
+            onClick={onClose}
+            className="w-full mt-4 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 transition-colors"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+ // Wrapper component to handle PayPal
+const PaymentModalWrapper = (props) => {
+  const paypalOptions = {
+    "client-id": import.meta.env.VITE_PAYPAL_CLIENT_ID,
+    currency: "EUR",
+    intent: "capture"
+  };
+
+  console.log('PayPal options:', paypalOptions);
+  console.log('PayPal Client ID:', import.meta.env.VITE_PAYPAL_CLIENT_ID);
+
+  return (
+    <PayPalScriptProvider options={paypalOptions}>
+      <PaymentModal {...props} />
+    </PayPalScriptProvider>
+  );
+};
+
+export default PaymentModalWrapper;

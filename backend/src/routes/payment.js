@@ -3,12 +3,11 @@ const router = express.Router();
 const { authenticateToken } = require('../middleware/auth');
 const { validateInput } = require('../middleware/security');
 const {
-  createPaymentIntent,
-  createSubscription,
-  cancelSubscription,
-  getSubscriptionStatus,
-  handleWebhook,
-  getPaymentConfig
+  // PayPal functions
+  createPayPalOrder,
+  capturePayPalOrder,
+  getPayPalOrderDetails,
+  handlePayPalWebhook
 } = require('../controllers/paymentController');
 
 /**
@@ -20,10 +19,10 @@ const {
  *       properties:
  *         clientSecret:
  *           type: string
- *           description: Stripe client secret for payment
+ *           description: Client secret for payment
  *         customerId:
  *           type: string
- *           description: Stripe customer ID
+ *           description: Customer ID
  *     Subscription:
  *       type: object
  *       properties:
@@ -42,41 +41,13 @@ const {
  *           format: date-time
  */
 
-/**
- * @swagger
- * /api/payment/config:
- *   get:
- *     summary: Get payment configuration
- *     tags: [Payment]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Payment configuration retrieved successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 data:
- *                   type: object
- *                   properties:
- *                     publishableKey:
- *                       type: string
- *                     prices:
- *                       type: object
- *       401:
- *         description: Unauthorized
- */
-router.get('/config', authenticateToken, getPaymentConfig);
+
 
 /**
  * @swagger
- * /api/payment/create-intent:
+ * /api/payment/paypal/create-order:
  *   post:
- *     summary: Create payment intent for one-time payment
+ *     summary: Create PayPal order for premium subscription
  *     tags: [Payment]
  *     security:
  *       - bearerAuth: []
@@ -90,12 +61,9 @@ router.get('/config', authenticateToken, getPaymentConfig);
  *               amount:
  *                 type: number
  *                 default: 9.99
- *               currency:
- *                 type: string
- *                 default: eur
  *     responses:
  *       200:
- *         description: Payment intent created successfully
+ *         description: PayPal order created successfully
  *         content:
  *           application/json:
  *             schema:
@@ -103,20 +71,22 @@ router.get('/config', authenticateToken, getPaymentConfig);
  *               properties:
  *                 success:
  *                   type: boolean
- *                 data:
- *                   $ref: '#/components/schemas/PaymentIntent'
+ *                 orderId:
+ *                   type: string
+ *                 approvalUrl:
+ *                   type: string
  *       400:
  *         description: User already has premium access
  *       401:
  *         description: Unauthorized
  */
-router.post('/create-intent', authenticateToken, validateInput, createPaymentIntent);
+router.post('/paypal/create-order', authenticateToken, validateInput, createPayPalOrder);
 
 /**
  * @swagger
- * /api/payment/create-subscription:
+ * /api/payment/paypal/capture-order:
  *   post:
- *     summary: Create subscription for recurring payments
+ *     summary: Capture PayPal order after approval
  *     tags: [Payment]
  *     security:
  *       - bearerAuth: []
@@ -127,48 +97,13 @@ router.post('/create-intent', authenticateToken, validateInput, createPaymentInt
  *           schema:
  *             type: object
  *             required:
- *               - priceId
+ *               - orderId
  *             properties:
- *               priceId:
+ *               orderId:
  *                 type: string
- *                 description: Stripe price ID for the subscription
  *     responses:
  *       200:
- *         description: Subscription created successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 data:
- *                   type: object
- *                   properties:
- *                     subscriptionId:
- *                       type: string
- *                     clientSecret:
- *                       type: string
- *                     customerId:
- *                       type: string
- *       400:
- *         description: Invalid request or user already has premium access
- *       401:
- *         description: Unauthorized
- */
-router.post('/create-subscription', authenticateToken, validateInput, createSubscription);
-
-/**
- * @swagger
- * /api/payment/cancel-subscription:
- *   post:
- *     summary: Cancel active subscription
- *     tags: [Payment]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Subscription canceled successfully
+ *         description: Payment captured successfully
  *         content:
  *           application/json:
  *             schema:
@@ -178,57 +113,45 @@ router.post('/create-subscription', authenticateToken, validateInput, createSubs
  *                   type: boolean
  *                 message:
  *                   type: string
- *                 data:
- *                   type: object
- *                   properties:
- *                     subscriptionId:
- *                       type: string
- *                     status:
- *                       type: string
- *       404:
- *         description: No active subscription found
+ *                 captureId:
+ *                   type: string
+ *       400:
+ *         description: Payment capture failed
  *       401:
  *         description: Unauthorized
  */
-router.post('/cancel-subscription', authenticateToken, cancelSubscription);
+router.post('/paypal/capture-order', authenticateToken, validateInput, capturePayPalOrder);
 
 /**
  * @swagger
- * /api/payment/subscription-status:
+ * /api/payment/paypal/order/{orderId}:
  *   get:
- *     summary: Get current subscription status
+ *     summary: Get PayPal order details
  *     tags: [Payment]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: string
  *     responses:
  *       200:
- *         description: Subscription status retrieved successfully
- *         content:
- *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 success:
- *                   type: boolean
- *                 data:
- *                   type: object
- *                   properties:
- *                     hasSubscription:
- *                       type: boolean
- *                     subscription:
- *                       $ref: '#/components/schemas/Subscription'
+ *         description: Order details retrieved successfully
+ *       404:
+ *         description: Order not found
  *       401:
  *         description: Unauthorized
  */
-router.get('/subscription-status', authenticateToken, getSubscriptionStatus);
+router.get('/paypal/order/:orderId', authenticateToken, getPayPalOrderDetails);
 
 /**
  * @swagger
- * /api/payment/webhook:
+ * /api/payment/paypal/webhook:
  *   post:
- *     summary: Handle Stripe webhooks
+ *     summary: Handle PayPal webhook events
  *     tags: [Payment]
- *     description: Endpoint for Stripe to send webhook events
  *     requestBody:
  *       required: true
  *       content:
@@ -239,10 +162,8 @@ router.get('/subscription-status', authenticateToken, getSubscriptionStatus);
  *       200:
  *         description: Webhook processed successfully
  *       400:
- *         description: Invalid webhook signature or processing failed
+ *         description: Invalid webhook signature
  */
-// Note: Webhook endpoint should not use authentication middleware
-// and should receive raw body for signature verification
-router.post('/webhook', express.raw({ type: 'application/json' }), handleWebhook);
+router.post('/paypal/webhook', express.raw({ type: 'application/json' }), handlePayPalWebhook);
 
 module.exports = router;

@@ -136,9 +136,9 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Welcome Header */}
-      <div className="bg-white rounded-lg shadow p-6">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8 bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/30">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-4">
             <Avatar 
@@ -149,7 +149,7 @@ const Dashboard = () => {
             />
             <div>
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">
                   {getWelcomeMessage()}, {profile?.profile?.firstName || user?.profile?.firstName || 'Gebruiker'}!
                 </h1>
                 {(user?.accountType === 'PREMIUM' || profile?.accountType === 'PREMIUM') && (
@@ -177,8 +177,8 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="text-right">
-            <div className="text-sm text-gray-500">Your role</div>
-            <div className="text-lg font-semibold text-primary-600">
+            <div className="text-sm text-gray-500 font-medium">Your role</div>
+            <div className="text-lg font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               {getRoleDisplayName(user?.role)}
             </div>
           </div>
@@ -186,18 +186,18 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat) => {
           const Icon = stat.icon;
           return (
-            <div key={stat.name} className="bg-white rounded-lg shadow p-6">
+            <div key={stat.name} className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-white/20 p-6 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
               <div className="flex items-center">
-                <div className={`p-3 rounded-lg ${stat.bgColor}`}>
-                  <Icon className={`h-6 w-6 ${stat.color}`} />
+                <div className={`p-4 rounded-xl ${stat.bgColor} shadow-lg`}>
+                  <Icon className={`h-7 w-7 ${stat.color}`} />
                 </div>
                 <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">{stat.name}</p>
-                  <p className="text-2xl font-bold text-gray-900">{stat.value}</p>
+                  <p className="text-sm font-semibold text-gray-600">{stat.name}</p>
+                  <p className="text-3xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">{stat.value}</p>
                 </div>
               </div>
             </div>
@@ -207,15 +207,15 @@ const Dashboard = () => {
 
       {/* Player Videos Section - Only for Players */}
       {user?.role === 'PLAYER' && (
-        <div className="bg-white rounded-lg shadow">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">My Videos</h2>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+          <div className="p-8 border-b border-gray-200/50">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">My Videos</h2>
             <p className="text-sm text-gray-500 mt-1">
               Upload and manage your videos to showcase your skills and abilities
             </p>
 
           </div>
-          <div className="p-6">
+          <div className="p-8">
             {userVideos && userVideos.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {userVideos.map((video) => (
@@ -238,7 +238,7 @@ const Dashboard = () => {
                 <div className="mt-6">
                   <Link
                     to="/profile"
-                    className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                    className="inline-flex items-center px-6 py-3 border border-transparent shadow-lg text-sm font-semibold rounded-xl text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 hover:shadow-xl hover:-translate-y-0.5"
                   >
                     Go to Profile
                   </Link>
@@ -251,14 +251,14 @@ const Dashboard = () => {
 
       {/* Player Statistics Section - Only for Players */}
       {user?.role === 'PLAYER' && (
-        <div className="bg-white rounded-lg shadow">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Mijn Statistieken</h2>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+          <div className="p-8 border-b border-gray-200/50">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Mijn Statistieken</h2>
             <p className="text-sm text-gray-500 mt-1">
               Bekijk je prestaties en statistieken per seizoen en competitie
             </p>
           </div>
-          <div className="p-6">
+          <div className="p-8">
             <PlayerStatistics 
               userId={user?.id} 
               isOwnProfile={true}
@@ -267,21 +267,21 @@ const Dashboard = () => {
         </div>
       )}
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Recent Connections */}
-        <div className="bg-white rounded-lg shadow">
-          <div className="p-6 border-b border-gray-200">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+          <div className="p-8 border-b border-gray-200/50">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">Recent Connections</h2>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Recent Connections</h2>
               <Link
                 to="/connections"
-                className="text-sm text-primary-600 hover:text-primary-500"
+                className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
               >
                 View all
               </Link>
             </div>
           </div>
-          <div className="p-6">
+          <div className="p-8">
             {connectionsLoading ? (
               <LoadingSpinner />
             ) : connections && connections.length > 0 ? (
@@ -335,19 +335,19 @@ const Dashboard = () => {
         </div>
 
         {/* Recommendations */}
-        <div className="bg-white rounded-lg shadow">
-          <div className="p-6 border-b border-gray-200">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+          <div className="p-8 border-b border-gray-200/50">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-semibold text-gray-900">People You May Know</h2>
+              <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">People You May Know</h2>
               <Link
                 to="/search"
-                className="text-sm text-primary-600 hover:text-primary-500"
+                className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
               >
                 See more
               </Link>
             </div>
           </div>
-          <div className="p-6">
+          <div className="p-8">
             {recommendationsLoading ? (
               <LoadingSpinner />
             ) : recommendations && recommendations.length > 0 ? (
@@ -403,11 +403,11 @@ const Dashboard = () => {
 
       {/* Pending Requests */}
       {pendingRequests && pendingRequests.length > 0 && (
-        <div className="bg-white rounded-lg shadow">
-          <div className="p-6 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Pending Connection Requests</h2>
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
+          <div className="p-8 border-b border-gray-200/50">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Pending Connection Requests</h2>
           </div>
-          <div className="p-6">
+          <div className="p-8">
             {pendingLoading ? (
               <LoadingSpinner />
             ) : (
@@ -443,7 +443,7 @@ const Dashboard = () => {
                   <div className="text-center pt-4">
                     <Link
                       to="/connections"
-                      className="text-sm text-primary-600 hover:text-primary-500"
+                      className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
                     >
                       View all {pendingRequests.length} pending requests
                     </Link>
@@ -456,37 +456,43 @@ const Dashboard = () => {
       )}
 
       {/* Quick Actions */}
-      <div className="bg-white rounded-lg shadow p-6">
-        <h2 className="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+      <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 p-8">
+        <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-6">Quick Actions</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
           <Link
             to="/search"
-            className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center p-6 bg-white/60 border border-white/30 rounded-xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
           >
-            <Search className="h-8 w-8 text-primary-600 mr-3" />
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg mr-4">
+              <Search className="h-6 w-6 text-white" />
+            </div>
             <div>
-              <p className="font-medium text-gray-900">Find People</p>
-              <p className="text-sm text-gray-500">Search for professionals</p>
+              <p className="font-semibold text-gray-900">Find People</p>
+              <p className="text-sm text-gray-600">Search for professionals</p>
             </div>
           </Link>
           <Link
             to="/profile"
-            className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center p-6 bg-white/60 border border-white/30 rounded-xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
           >
-            <Users className="h-8 w-8 text-primary-600 mr-3" />
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg mr-4">
+              <Users className="h-6 w-6 text-white" />
+            </div>
             <div>
-              <p className="font-medium text-gray-900">Edit Profile</p>
-              <p className="text-sm text-gray-500">Update your information</p>
+              <p className="font-semibold text-gray-900">Edit Profile</p>
+              <p className="text-sm text-gray-600">Update your information</p>
             </div>
           </Link>
           <Link
             to="/connections"
-            className="flex items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+            className="flex items-center p-6 bg-white/60 border border-white/30 rounded-xl hover:bg-white/80 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
           >
-            <UserPlus className="h-8 w-8 text-primary-600 mr-3" />
+            <div className="p-3 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-xl shadow-lg mr-4">
+              <UserPlus className="h-6 w-6 text-white" />
+            </div>
             <div>
-              <p className="font-medium text-gray-900">Connections</p>
-              <p className="text-sm text-gray-500">Manage your network</p>
+              <p className="font-semibold text-gray-900">Connections</p>
+              <p className="text-sm text-gray-600">Manage your network</p>
             </div>
           </Link>
         </div>

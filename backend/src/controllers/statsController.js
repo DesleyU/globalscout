@@ -89,7 +89,7 @@ const updateUserStats = async (req, res) => {
     }
 
     // Validate required fields
-    const requiredFields = ['apiPlayerId', 'apiLeagueId', 'apiTeamId', 'season'];
+    const requiredFields = ['season'];
     for (const field of requiredFields) {
       if (!allowedData[field]) {
         return res.status(400).json({ error: `${field} is required` });
@@ -99,11 +99,8 @@ const updateUserStats = async (req, res) => {
     // Create or update player statistics
     const playerStats = await prisma.playerStatistics.upsert({
       where: {
-        userId_apiPlayerId_apiLeagueId_apiTeamId_season: {
+        userId_season: {
           userId: userId,
-          apiPlayerId: allowedData.apiPlayerId,
-          apiLeagueId: allowedData.apiLeagueId,
-          apiTeamId: allowedData.apiTeamId,
           season: allowedData.season
         }
       },
@@ -138,24 +135,23 @@ const getMyStats = async (req, res) => {
       where: { userId: userId },
       orderBy: [
         { season: 'desc' },
-        { apiLeagueId: 'asc' }
+        { createdAt: 'desc' }
       ]
     });
 
     // Map database field names to frontend expected field names
     const mappedStats = playerStats.map(stat => ({
       ...stat,
-      // Frontend expected field names
-      goals: stat.goalsTotal || 0,
-      assists: stat.goalsAssists || 0,
-      minutes: stat.gamesMinutes || 0,
-      appearances: stat.gamesAppearances || 0,
-      yellowCards: stat.cardsYellow || 0,
-      redCards: stat.cardsRed || 0,
-      rating: stat.gamesRating || null,
-      position: stat.gamesPosition || null,
-      shotsTotal: 0, // Not available in current schema
-      shotsOnTarget: 0, // Not available in current schema
+      // Frontend expected field names (using actual schema fields)
+      goals: stat.goals || 0,
+      assists: stat.assists || 0,
+      minutes: stat.minutes || 0,
+      appearances: stat.matches || 0,
+      yellowCards: stat.yellowCards || 0,
+      redCards: stat.redCards || 0,
+      rating: stat.rating || null,
+      shotsTotal: stat.shotsTotal || 0,
+      shotsOnTarget: stat.shotsOnTarget || 0,
       passesAccuracy: stat.passesAccuracy || 0,
       tacklesTotal: stat.tacklesTotal || 0,
       tacklesInterceptions: stat.tacklesInterceptions || 0,

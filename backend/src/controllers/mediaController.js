@@ -102,7 +102,7 @@ const uploadVideo = async (req, res) => {
       const existingVideosCount = await prisma.media.count({
         where: {
           userId: userId,
-          type: 'video'
+          type: 'VIDEO'
         }
       });
 
@@ -119,7 +119,7 @@ const uploadVideo = async (req, res) => {
     const media = await prisma.media.create({
       data: {
         userId: userId,
-        type: 'video',
+        type: 'VIDEO',
         url: `/uploads/videos/${req.file.filename}`,
         title: title || 'Player Video',
         description: description || '',
@@ -149,7 +149,7 @@ const getUserVideos = async (req, res) => {
     const videos = await prisma.media.findMany({
       where: {
         userId: userId,
-        type: 'video'
+        type: 'VIDEO'
       },
       orderBy: {
         createdAt: 'desc'
@@ -174,7 +174,7 @@ const deleteVideo = async (req, res) => {
       where: {
         id: videoId,
         userId: userId,
-        type: 'video'
+        type: 'VIDEO'
       }
     });
 

@@ -1,6 +1,5 @@
 const prisma = require('../config/database');
 const SubscriptionService = require('../services/subscriptionService');
-const StripeService = require('../services/stripeService');
 
 // Get current user's account information
 const getAccountInfo = async (req, res) => {
@@ -36,11 +35,10 @@ const getAccountInfo = async (req, res) => {
   }
 };
 
-// Upgrade account to premium (called after successful payment)
+// Upgrade account to premium (called after successful PayPal payment)
 const upgradeAccount = async (req, res) => {
   try {
     const userId = req.user.id;
-    const { paymentIntentId } = req.body;
     
     // Check current account type
     const currentTier = await SubscriptionService.getUserTier(userId);
@@ -51,37 +49,6 @@ const upgradeAccount = async (req, res) => {
       });
     }
 
-    // Get user details
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-      select: { id: true, email: true, stripeCustomerId: true }
-    });
-
-    if (!user) {
-      return res.status(404).json({ error: 'User not found' });
-    }
-
-    // Create or get Stripe customer
-    let stripeCustomerId = user.stripeCustomerId;
-    if (!stripeCustomerId) {
-      const customer = await StripeService.createCustomer(user.email, {
-        userId: user.id
-      });
-      stripeCustomerId = customer.id;
-      
-      // Update user with Stripe customer ID
-      await prisma.user.update({
-        where: { id: userId },
-        data: { stripeCustomerId }
-      });
-    }
-
-    // Create subscription
-    const subscription = await StripeService.createSubscription(
-      stripeCustomerId,
-      process.env.STRIPE_MONTHLY_PRICE_ID
-    );
-
     // Update account type to premium
     const updatedUser = await SubscriptionService.updateAccountType(userId, 'PREMIUM');
     
@@ -89,16 +56,12 @@ const upgradeAccount = async (req, res) => {
       success: true,
       message: 'Account upgraded to Premium successfully',
       data: {
-        accountType: updatedUser.accountType,
-        subscription: {
-          id: subscription.id,
-          status: subscription.status
-        }
+        accountType: updatedUser.accountType
       }
     });
   } catch (error) {
     console.error('Upgrade account error:', error);
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ error: 'Failed to upgrade account' });
   }
 };
 
