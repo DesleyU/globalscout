@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-// Trigger deployment with updated environment variables
+// Trigger deployment - reactivating suspended service
 const cors = require('cors');
 const helmet = require('helmet');
 const swaggerJsdoc = require('swagger-jsdoc');
@@ -32,6 +32,7 @@ const statsRoutes = require('./routes/stats');
 const messageRoutes = require('./routes/messages');
 const accountRoutes = require('./routes/account');
 const paymentRoutes = require('./routes/payment');
+const playerUpdatesRoutes = require('./routes/playerUpdates');
 
 
 
@@ -182,6 +183,7 @@ app.use('/api/stats', statsRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/account', accountRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/player-updates', playerUpdatesRoutes);
 
 // 404 handler
 app.use('*', (req, res) => {
