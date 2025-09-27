@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: globalscout-backend
+    runtime: node
+    buildCommand: npm ci && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        value: postgresql://postgres:Globalscout!2025@db.pxiwcdsrkehxgguqyjur.supabase.co:6543/postgres?sslmode=require
+      - key: JWT_SECRET
+        value: d7a939f54fe7f42c5771432df7b87ceea2748f2580d77fb12725fac3880c43ea
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: JWT_REFRESH_SECRET
+        value: 06d9e34fab63a41664b7edd49297be4dd64f370966d24de5ac5fa210e67b326a
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 30d
+      - key: FRONTEND_URL
+        value: https://globalscout-frontend.netlify.app
+      - key: MAX_FILE_SIZE
+        value: 10485760
+      - key: UPLOAD_PATH
+        value: /uploads
+      - key: BCRYPT_ROUNDS
+        value: 12
+      - key: SESSION_SECRET
+        value: b9065e714cef3773f46884210d5adce27b058e471ce46519cb4d679951724eb4
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 100
+      - key: API_FOOTBALL_KEY
+        value: placeholder_key_not_required_for_login

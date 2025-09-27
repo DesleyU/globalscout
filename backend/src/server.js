@@ -177,6 +177,11 @@ app.get('/api/test-db', async (req, res) => {
   try {
     console.log('🧪 Testing database connection...');
     
+    // Show environment info for debugging
+    const dbUrl = process.env.DATABASE_URL;
+    const dbUrlMasked = dbUrl ? dbUrl.replace(/:[^:@]*@/, ':***@') : 'NOT_SET';
+    console.log('🔍 DATABASE_URL:', dbUrlMasked);
+    
     // Test basic Prisma connection
     const userCount = await prisma.user.count();
     console.log(`✅ Database connected! Found ${userCount} users`);
@@ -202,15 +207,22 @@ app.get('/api/test-db', async (req, res) => {
         role: testUser.role,
         status: testUser.status
       } : null,
+      databaseUrl: dbUrlMasked,
       timestamp: new Date().toISOString(),
       environment: process.env.NODE_ENV || 'development'
     });
     
   } catch (error) {
     console.error('❌ Database test failed:', error);
+    
+    // Show environment info even on error
+    const dbUrl = process.env.DATABASE_URL;
+    const dbUrlMasked = dbUrl ? dbUrl.replace(/:[^:@]*@/, ':***@') : 'NOT_SET';
+    
     res.status(500).json({
       status: 'error',
       error: error.message,
+      databaseUrl: dbUrlMasked,
       stack: process.env.NODE_ENV === 'development' ? error.stack : undefined,
       timestamp: new Date().toISOString(),
       environment: process.env.NODE_ENV || 'development'
