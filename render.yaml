@@ -3,7 +3,7 @@ services:
     name: globalscout-backend
     runtime: node
     rootDir: backend
-    buildCommand: npm ci && npm run build
+    buildCommand: npm ci && npm run postinstall
     startCommand: npm start
     healthCheckPath: /health
     envVars:
