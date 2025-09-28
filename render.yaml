@@ -11,7 +11,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        value: postgresql://postgres:Globalscout!2025@db.pxiwcdsrkehxgguqyjur.supabase.co:5432/postgres?sslmode=require
+        value: postgresql://postgres.pxiwcdsrkehxgguqyjur:Globalscout!2025@aws-0-eu-west-1.pooler.supabase.com:5432/postgres?sslmode=require
       - key: JWT_SECRET
         value: d7a939f54fe7f42c5771432df7b87ceea2748f2580d77fb12725fac3880c43ea
       - key: JWT_EXPIRES_IN
