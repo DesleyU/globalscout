@@ -1,4 +1,3 @@
-
 console.log('📊 RENDER DEPLOYMENT MONITOR');
 console.log('=============================');
 console.log('⏰ Monitor gestart:', new Date().toLocaleString('nl-NL'));
