@@ -59,12 +59,13 @@ app.use('*', (req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
 
-// Start server
+// Start server - Updated for Supabase pooler deployment
 app.listen(PORT, () => {
   console.log(`🚀 Minimal server running on port ${PORT}`);
   console.log(`📍 Health check: http://localhost:${PORT}/health`);
   console.log(`📍 API test: http://localhost:${PORT}/api/test`);
   console.log(`📍 DB test: http://localhost:${PORT}/api/test-db`);
+  console.log(`🔗 Database: ${process.env.DATABASE_URL ? 'Connected' : 'Not configured'}`);
 });
 
 module.exports = app;
