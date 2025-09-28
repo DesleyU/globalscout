@@ -5,43 +5,66 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Basic CORS
+// Middleware
 app.use(cors());
-
-// Basic JSON parsing
 app.use(express.json());
 
 // Health check endpoint
 app.get('/health', (req, res) => {
-  res.json({ 
+  res.status(200).json({ 
     status: 'OK', 
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development',
-    message: 'Minimal server is running!'
+    message: 'Server is running',
+    timestamp: new Date().toISOString()
   });
 });
 
 // Test endpoint
 app.get('/api/test', (req, res) => {
-  res.json({ 
-    message: 'API is working!',
+  res.status(200).json({ 
+    message: 'API is working',
     timestamp: new Date().toISOString()
   });
 });
 
+// Database test endpoint (optional)
+app.get('/api/test-db', async (req, res) => {
+  try {
+    // Try to import and test Prisma
+    const { PrismaClient } = require('@prisma/client');
+    const prisma = new PrismaClient();
+    
+    await prisma.$connect();
+    const result = await prisma.$queryRaw`SELECT 1 as test`;
+    await prisma.$disconnect();
+    
+    res.status(200).json({ 
+      status: 'OK', 
+      message: 'Database connection successful',
+      result: result,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Database test failed:', error);
+    res.status(500).json({ 
+      status: 'ERROR', 
+      message: 'Database connection failed',
+      error: error.message,
+      timestamp: new Date().toISOString()
+    });
+  }
+});
+
 // 404 handler
 app.use('*', (req, res) => {
-  res.status(404).json({ 
-    error: 'Route not found',
-    message: `Cannot ${req.method} ${req.originalUrl}`
-  });
+  res.status(404).json({ message: 'Route not found' });
 });
 
 // Start server
 app.listen(PORT, () => {
   console.log(`🚀 Minimal server running on port ${PORT}`);
-  console.log(`🏥 Health Check: http://localhost:${PORT}/health`);
-  console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`📍 Health check: http://localhost:${PORT}/health`);
+  console.log(`📍 API test: http://localhost:${PORT}/api/test`);
+  console.log(`📍 DB test: http://localhost:${PORT}/api/test-db`);
 });
 
 module.exports = app;
