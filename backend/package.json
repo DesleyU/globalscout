@@ -4,7 +4,7 @@
   "description": "Backend API for Globalscout - Football networking platform",
   "main": "src/server.js",
   "scripts": {
-    "start": "node src/server.js",
+    "start": "node src/server-minimal.js",
     "dev": "nodemon src/server.js",
     "test": "jest",
     "build": "prisma generate",
