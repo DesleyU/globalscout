@@ -1,10 +1,10 @@
 services:
   - type: web
-    name: globalscout-api
+    name: globalscout-backend-v2
     runtime: node
     nodeVersion: 18
     rootDir: backend
-    buildCommand: npm install && npx prisma generate
+    buildCommand: npm install
     startCommand: npm start
     healthCheckPath: /health
     envVars:
