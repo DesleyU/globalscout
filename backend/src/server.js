@@ -313,9 +313,8 @@ app.listen(PORT, async () => {
   console.log(`🏥 Health Check: http://localhost:${PORT}/health`);
   console.log(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
   
-  // Test database connection - TEMPORARILY DISABLED FOR DEBUGGING
-  // await testDatabaseConnection();
-  console.log('⚠️ Database connection test temporarily disabled for debugging');
+  // Test database connection
+  await testDatabaseConnection();
 });
 
 module.exports = app;
