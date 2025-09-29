@@ -6,7 +6,6 @@ services:
     rootDir: backend
     buildCommand: npm install && npx prisma generate
     startCommand: node src/server-minimal.js
-    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
