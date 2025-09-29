@@ -1,11 +1,12 @@
 services:
   - type: web
-    name: globalscout-backend-v2
+    name: globalscout
     runtime: node
     nodeVersion: 18
     rootDir: backend
-    buildCommand: npm install && npx prisma generate
+    buildCommand: npm ci && npx prisma generate
     startCommand: node src/server-minimal.js
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
