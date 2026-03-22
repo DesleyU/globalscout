@@ -1,25 +1,15 @@
-using FluentValidation;
 using GlobalScout.Application.Abstractions.Auth;
 using GlobalScout.Application.Abstractions.Messaging;
-using GlobalScout.Domain.Identity;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Auth.Login;
 
 internal sealed class LoginUserCommandHandler(
     IUserIdentityStore identityStore,
-    IJwtTokenIssuer jwtTokenIssuer,
-    IValidator<LoginUserCommand> validator) : ICommandHandler<LoginUserCommand, LoginUserResult>
+    IJwtTokenIssuer jwtTokenIssuer) : ICommandHandler<LoginUserCommand, LoginUserResult>
 {
     public async Task<Result<LoginUserResult>> Handle(LoginUserCommand command, CancellationToken cancellationToken)
     {
-        var validation = await validator.ValidateAsync(command, cancellationToken);
-        if (!validation.IsValid)
-        {
-            var msg = string.Join("; ", validation.Errors.Select(e => e.ErrorMessage));
-            return Result.Failure<LoginUserResult>(Error.Validation("Validation.Failed", msg));
-        }
-
         var login = await identityStore.ValidateLoginAsync(command, cancellationToken);
         if (login.IsFailure)
         {

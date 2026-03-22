@@ -127,3 +127,5 @@ temp/
 
 # Local Netlify folder
 .netlify
+/src/GlobalScout/.vs
+/src/GlobalScout/.vs

@@ -27,6 +27,10 @@ public static class AuthEndpoints
             .RequireAuthorization()
             .WithName("GetAuthProfile");
 
+        group.MapPost("/logout", () => Results.NoContent())
+            .AllowAnonymous()
+            .WithName("Logout");
+
         return app;
     }
 

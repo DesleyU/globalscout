@@ -40,7 +40,7 @@ public static class DependencyInjection
                 .UseSnakeCaseNamingConvention();
         });
 
-        services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IUserDirectoryRepository, UserDirectoryRepository>();
         services.AddScoped<IUserIdentityStore, UserIdentityStore>();
 
         return services;

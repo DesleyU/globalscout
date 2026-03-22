@@ -1,5 +1,6 @@
 using System.Reflection;
 using FluentValidation;
+using GlobalScout.Application.Abstractions.Behaviors;
 using GlobalScout.Application.Abstractions.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -18,6 +19,8 @@ public static class DependencyInjection
             .AddClasses(classes => classes.AssignableTo(typeof(ICommandHandler<,>)), publicOnly: false)
             .AsImplementedInterfaces()
             .WithScopedLifetime());
+
+        services.Decorate(typeof(ICommandHandler<,>), typeof(ValidationDecorator.CommandHandler<,>));
 
         services.Scan(scan => scan
             .FromAssemblies(assembly)
