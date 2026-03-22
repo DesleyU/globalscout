@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>b8bf9fd5-ac9c-4db5-948f-8581370f0ddf</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.1">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Scalar.AspNetCore.Microsoft" Version="2.13.13" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\GlobalScout.SharedKernel\GlobalScout.SharedKernel.csproj" />
+    <ProjectReference Include="..\GlobalScout.Application\GlobalScout.Application.csproj" />
+    <ProjectReference Include="..\GlobalScout.Infrastructure\GlobalScout.Infrastructure.csproj" />
+    <ProjectReference Include="..\GlobalScout.ServiceDefaults\GlobalScout.ServiceDefaults.csproj" />
+  </ItemGroup>
+
+</Project>

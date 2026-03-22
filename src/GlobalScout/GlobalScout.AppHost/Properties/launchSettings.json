@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "GlobalScout.AppHost": {
+      "commandName": "Project",
+      "dotnetRunMessages": true
+    }
+  }
+}
