@@ -1,7 +1,7 @@
 <Solution>
   <Project Path="GlobalScout.Api.IntegrationTests/GlobalScout.Api.IntegrationTests.csproj" />
   <Project Path="GlobalScout.Api/GlobalScout.Api.csproj" />
-  <Project Path="GlobalScout.AppHost/GlobalScout.AppHost.csproj" />
+  <Project Path="GlobalScout.AppHost/GlobalScout.AppHost.csproj" Id="565e621c-3aba-46fc-a33d-e644008a6012" />
   <Project Path="GlobalScout.Application.UnitTests/GlobalScout.Application.UnitTests.csproj" />
   <Project Path="GlobalScout.Application/GlobalScout.Application.csproj" Id="ad36188a-4bbf-4fa9-803c-d03588d2d526" />
   <Project Path="GlobalScout.Domain/GlobalScout.Domain.csproj" Id="d563a737-65f2-4860-9932-4b4e29dea8b0" />
