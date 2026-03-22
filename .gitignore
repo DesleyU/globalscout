@@ -129,3 +129,5 @@ temp/
 .netlify
 /src/GlobalScout/.vs
 /src/GlobalScout/.vs
+*.vsidx
+/src/GlobalScout/.vs
