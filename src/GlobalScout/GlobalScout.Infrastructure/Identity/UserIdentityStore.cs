@@ -5,7 +5,7 @@ using GlobalScout.Application.Auth.Login;
 using GlobalScout.Application.Auth.Register;
 using GlobalScout.Domain.Identity;
 using GlobalScout.Infrastructure.Data;
-using GlobalScout.Infrastructure.Data.Entities;
+using GlobalScout.Domain.Users;
 using GlobalScout.SharedKernel;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

@@ -5,7 +5,8 @@ using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Infrastructure.Auth;
 using GlobalScout.Infrastructure.Data;
 using GlobalScout.Infrastructure.Identity;
-using GlobalScout.Infrastructure.Persistence;
+using GlobalScout.Infrastructure.Social;
+using GlobalScout.Infrastructure.Users;
 using EFCore.NamingConventions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -42,6 +43,7 @@ public static class DependencyInjection
 
         services.AddScoped<IUserDirectoryRepository, UserDirectoryRepository>();
         services.AddScoped<ISocialGraphRepository, SocialGraphRepository>();
+        services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IUserIdentityStore, UserIdentityStore>();
 
         return services;
@@ -92,6 +94,22 @@ public static class DependencyInjection
                     ValidAudience = jwt.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwt.SigningKey)),
                     RoleClaimType = ClaimTypes.Role
+                };
+
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        var accessToken = context.Request.Query["access_token"];
+                        var path = context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken)
+                            && path.StartsWithSegments("/hubs"))
+                        {
+                            context.Token = accessToken;
+                        }
+
+                        return Task.CompletedTask;
+                    }
                 };
             });
 

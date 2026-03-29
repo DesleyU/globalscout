@@ -1,15 +1,10 @@
-using GlobalScout.Domain.Subscriptions;
-using GlobalScout.Infrastructure.Identity;
-
-namespace GlobalScout.Infrastructure.Data.Entities;
+namespace GlobalScout.Domain.Subscriptions;
 
 public sealed class Subscription
 {
     public Guid Id { get; set; }
 
     public Guid UserId { get; set; }
-
-    public ApplicationUser User { get; set; } = null!;
 
     public SubscriptionTier Tier { get; set; } = SubscriptionTier.Basic;
 

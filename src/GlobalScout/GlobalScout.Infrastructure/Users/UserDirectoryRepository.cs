@@ -3,11 +3,11 @@ using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Users;
 using GlobalScout.Domain.Identity;
 using GlobalScout.Infrastructure.Data;
-using GlobalScout.Infrastructure.Data.Entities;
+using GlobalScout.Domain.Users;
 using GlobalScout.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-namespace GlobalScout.Infrastructure.Persistence;
+namespace GlobalScout.Infrastructure.Users;
 
 internal sealed class UserDirectoryRepository(
     GlobalScoutDbContext db,
@@ -388,19 +388,22 @@ internal sealed class UserDirectoryRepository(
         CancellationToken cancellationToken)
     {
         var visits = await db.ProfileVisits.AsNoTracking()
-            .Include(v => v.Visitor)
-            .ThenInclude(u => u.Profile)
             .Where(v => v.ProfileOwnerId == profileOwnerId)
             .OrderByDescending(v => v.CreatedAt)
             .Take(50)
             .ToListAsync(cancellationToken);
 
         var visitorIds = visits.Select(v => v.VisitorId).Distinct().ToList();
+        var usersDict = await db.Users.AsNoTracking()
+            .Include(u => u.Profile)
+            .Where(u => visitorIds.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, cancellationToken);
         var roleMap = await GetRoleNamesForUsersAsync(visitorIds, cancellationToken);
 
         var entries = visits.Select(v =>
         {
-            var p = v.Visitor.Profile;
+            usersDict.TryGetValue(v.VisitorId, out ApplicationUser? visitor);
+            var p = visitor?.Profile;
             roleMap.TryGetValue(v.VisitorId, out var roleName);
             roleName ??= AppRoleNames.Player;
             return new ProfileVisitorEntry(
@@ -408,7 +411,7 @@ internal sealed class UserDirectoryRepository(
                 UserRoleToApiString(v.VisitorRole),
                 v.CreatedAt,
                 new VisitorSummary(
-                    v.Visitor.Id,
+                    v.VisitorId,
                     roleName,
                     new VisitorProfileSnippet(
                         p?.FirstName,

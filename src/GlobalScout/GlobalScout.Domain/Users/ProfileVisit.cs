@@ -1,7 +1,6 @@
 using GlobalScout.Domain.Identity;
-using GlobalScout.Infrastructure.Identity;
 
-namespace GlobalScout.Infrastructure.Data.Entities;
+namespace GlobalScout.Domain.Users;
 
 public sealed class ProfileVisit
 {
@@ -10,11 +9,7 @@ public sealed class ProfileVisit
     /// <summary>Profile owner user id (same as legacy profileId).</summary>
     public Guid ProfileOwnerId { get; set; }
 
-    public ApplicationUser ProfileOwner { get; set; } = null!;
-
     public Guid VisitorId { get; set; }
-
-    public ApplicationUser Visitor { get; set; } = null!;
 
     public UserRole VisitorRole { get; set; }
 

@@ -4,14 +4,13 @@ using GlobalScout.Application.Social;
 using GlobalScout.Application.Users;
 using GlobalScout.Domain.Identity;
 using GlobalScout.Domain.Social;
+using GlobalScout.Domain.Users;
 using GlobalScout.Infrastructure.Data;
-using GlobalScout.Infrastructure.Data.Entities;
 using GlobalScout.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Connection = GlobalScout.Infrastructure.Data.Entities.Connection;
 
-namespace GlobalScout.Infrastructure.Persistence;
+namespace GlobalScout.Infrastructure.Social;
 
 internal sealed class SocialGraphRepository(
     GlobalScoutDbContext db,
@@ -65,13 +64,11 @@ internal sealed class SocialGraphRepository(
         db.Connections.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
 
-        var loaded = await db.Connections
-            .AsNoTracking()
-            .Include(c => c.Sender).ThenInclude(s => s.Profile)
-            .Include(c => c.Receiver).ThenInclude(r => r.Profile)
-            .FirstAsync(c => c.Id == entity.Id, cancellationToken);
-
-        return await MapSendResponseAsync(loaded, cancellationToken);
+        var loaded = await db.Connections.AsNoTracking().FirstAsync(c => c.Id == entity.Id, cancellationToken);
+        var users = await LoadUsersWithProfilesAsync(
+            [loaded.SenderId, loaded.ReceiverId],
+            cancellationToken);
+        return await MapSendResponseAsync(loaded, users, cancellationToken);
     }
 
     public async Task<RespondToConnectionResponseDto?> RespondToPendingConnectionAsync(
@@ -81,8 +78,6 @@ internal sealed class SocialGraphRepository(
         CancellationToken cancellationToken)
     {
         var entity = await db.Connections
-            .Include(c => c.Sender).ThenInclude(s => s.Profile)
-            .Include(c => c.Receiver).ThenInclude(r => r.Profile)
             .FirstOrDefaultAsync(
                 c => c.Id == connectionId && c.ReceiverId == receiverId && c.Status == ConnectionStatus.Pending,
                 cancellationToken);
@@ -96,7 +91,8 @@ internal sealed class SocialGraphRepository(
         entity.UpdatedAt = DateTimeOffset.UtcNow;
         await db.SaveChangesAsync(cancellationToken);
 
-        return await MapRespondResponseAsync(entity, cancellationToken);
+        var users = await LoadUsersWithProfilesAsync([entity.SenderId, entity.ReceiverId], cancellationToken);
+        return await MapRespondResponseAsync(entity, users, cancellationToken);
     }
 
     public async Task<(IReadOnlyList<ConnectionListItemDto> Items, int Total)> GetConnectionsPageAsync(
@@ -107,8 +103,6 @@ internal sealed class SocialGraphRepository(
         CancellationToken cancellationToken)
     {
         var query = db.Connections.AsNoTracking()
-            .Include(c => c.Sender).ThenInclude(s => s.Profile)
-            .Include(c => c.Receiver).ThenInclude(r => r.Profile)
             .Where(c => c.Status == status && (c.SenderId == userId || c.ReceiverId == userId));
 
         var total = await query.CountAsync(cancellationToken);
@@ -119,10 +113,18 @@ internal sealed class SocialGraphRepository(
             .Take(limit)
             .ToListAsync(cancellationToken);
 
+        var userIds = rows.SelectMany(c => new[] { c.SenderId, c.ReceiverId }).Distinct().ToList();
+        var usersDict = await LoadUsersWithProfilesAsync(userIds, cancellationToken);
+
         var items = new List<ConnectionListItemDto>(rows.Count);
         foreach (var c in rows)
         {
-            var other = c.SenderId == userId ? c.Receiver : c.Sender;
+            var otherId = c.SenderId == userId ? c.ReceiverId : c.SenderId;
+            if (!usersDict.TryGetValue(otherId, out ApplicationUser? other))
+            {
+                continue;
+            }
+
             var role = await GetRoleNameAsync(other.Id, cancellationToken);
             items.Add(
                 new ConnectionListItemDto(
@@ -145,8 +147,6 @@ internal sealed class SocialGraphRepository(
         CancellationToken cancellationToken)
     {
         IQueryable<Connection> query = db.Connections.AsNoTracking()
-            .Include(c => c.Sender).ThenInclude(s => s.Profile)
-            .Include(c => c.Receiver).ThenInclude(r => r.Profile)
             .Where(c => c.Status == ConnectionStatus.Pending);
 
         query = received
@@ -161,19 +161,28 @@ internal sealed class SocialGraphRepository(
             .Take(limit)
             .ToListAsync(cancellationToken);
 
+        var userIds = rows.SelectMany(c => new[] { c.SenderId, c.ReceiverId }).Distinct().ToList();
+        var usersDict = await LoadUsersWithProfilesAsync(userIds, cancellationToken);
+
         var items = new List<ConnectionRequestRowDto>(rows.Count);
         foreach (var c in rows)
         {
-            var senderRole = await GetRoleNameAsync(c.Sender.Id, cancellationToken);
-            var receiverRole = await GetRoleNameAsync(c.Receiver.Id, cancellationToken);
+            if (!usersDict.TryGetValue(c.SenderId, out ApplicationUser? sender)
+                || !usersDict.TryGetValue(c.ReceiverId, out ApplicationUser? receiver))
+            {
+                continue;
+            }
+
+            var senderRole = await GetRoleNameAsync(sender.Id, cancellationToken);
+            var receiverRole = await GetRoleNameAsync(receiver.Id, cancellationToken);
             items.Add(
                 new ConnectionRequestRowDto(
                     c.Id,
                     ConnectionStatusToApi(c.Status),
                     c.InvitationNote,
                     c.CreatedAt,
-                    new ConnectionUserSummaryDto(c.Sender.Id, senderRole, MapProfile(c.Sender.Profile)),
-                    new ConnectionUserSummaryDto(c.Receiver.Id, receiverRole, MapProfile(c.Receiver.Profile))));
+                    new ConnectionUserSummaryDto(sender.Id, senderRole, MapProfile(sender.Profile)),
+                    new ConnectionUserSummaryDto(receiver.Id, receiverRole, MapProfile(receiver.Profile))));
         }
 
         return (items, total);
@@ -233,7 +242,6 @@ internal sealed class SocialGraphRepository(
         CancellationToken cancellationToken)
     {
         var query = db.Follows.AsNoTracking()
-            .Include(f => f.Follower).ThenInclude(u => u.Profile)
             .Where(f => f.FollowingId == userId);
 
         var total = await query.CountAsync(cancellationToken);
@@ -244,14 +252,22 @@ internal sealed class SocialGraphRepository(
             .Take(limit)
             .ToListAsync(cancellationToken);
 
+        var followerIds = rows.Select(f => f.FollowerId).Distinct().ToList();
+        var usersDict = await LoadUsersWithProfilesAsync(followerIds, cancellationToken);
+
         var items = new List<FollowListEntryDto>(rows.Count);
         foreach (var f in rows)
         {
-            var role = await GetRoleNameAsync(f.Follower.Id, cancellationToken);
+            if (!usersDict.TryGetValue(f.FollowerId, out ApplicationUser? follower))
+            {
+                continue;
+            }
+
+            var role = await GetRoleNameAsync(follower.Id, cancellationToken);
             items.Add(
                 new FollowListEntryDto(
                     f.Id,
-                    new ConnectionUserSummaryDto(f.Follower.Id, role, MapProfile(f.Follower.Profile)),
+                    new ConnectionUserSummaryDto(follower.Id, role, MapProfile(follower.Profile)),
                     f.CreatedAt));
         }
 
@@ -265,7 +281,6 @@ internal sealed class SocialGraphRepository(
         CancellationToken cancellationToken)
     {
         var query = db.Follows.AsNoTracking()
-            .Include(f => f.Following).ThenInclude(u => u.Profile)
             .Where(f => f.FollowerId == userId);
 
         var total = await query.CountAsync(cancellationToken);
@@ -276,14 +291,22 @@ internal sealed class SocialGraphRepository(
             .Take(limit)
             .ToListAsync(cancellationToken);
 
+        var followingIds = rows.Select(f => f.FollowingId).Distinct().ToList();
+        var usersDict = await LoadUsersWithProfilesAsync(followingIds, cancellationToken);
+
         var items = new List<FollowListEntryDto>(rows.Count);
         foreach (var f in rows)
         {
-            var role = await GetRoleNameAsync(f.Following.Id, cancellationToken);
+            if (!usersDict.TryGetValue(f.FollowingId, out ApplicationUser? following))
+            {
+                continue;
+            }
+
+            var role = await GetRoleNameAsync(following.Id, cancellationToken);
             items.Add(
                 new FollowListEntryDto(
                     f.Id,
-                    new ConnectionUserSummaryDto(f.Following.Id, role, MapProfile(f.Following.Profile)),
+                    new ConnectionUserSummaryDto(following.Id, role, MapProfile(following.Profile)),
                     f.CreatedAt));
         }
 
@@ -314,35 +337,64 @@ internal sealed class SocialGraphRepository(
         return (followers, following);
     }
 
-    private async Task<SendConnectionResponseDto?> MapSendResponseAsync(
-        Connection c,
+    private async Task<Dictionary<Guid, ApplicationUser>> LoadUsersWithProfilesAsync(
+        IReadOnlyCollection<Guid> userIds,
         CancellationToken cancellationToken)
     {
-        var senderRole = await GetRoleNameAsync(c.Sender.Id, cancellationToken);
-        var receiverRole = await GetRoleNameAsync(c.Receiver.Id, cancellationToken);
+        if (userIds.Count == 0)
+        {
+            return new Dictionary<Guid, ApplicationUser>();
+        }
+
+        return await db.Users.AsNoTracking()
+            .Include(u => u.Profile)
+            .Where(u => userIds.Contains(u.Id))
+            .ToDictionaryAsync(u => u.Id, cancellationToken);
+    }
+
+    private async Task<SendConnectionResponseDto?> MapSendResponseAsync(
+        Connection c,
+        IReadOnlyDictionary<Guid, ApplicationUser> users,
+        CancellationToken cancellationToken)
+    {
+        if (!users.TryGetValue(c.SenderId, out ApplicationUser? sender)
+            || !users.TryGetValue(c.ReceiverId, out ApplicationUser? receiver))
+        {
+            return null;
+        }
+
+        var senderRole = await GetRoleNameAsync(sender.Id, cancellationToken);
+        var receiverRole = await GetRoleNameAsync(receiver.Id, cancellationToken);
         return new SendConnectionResponseDto(
             c.Id,
             ConnectionStatusToApi(c.Status),
             c.InvitationNote,
             c.CreatedAt,
-            new ConnectionUserSummaryDto(c.Sender.Id, senderRole, MapProfile(c.Sender.Profile)),
-            new ConnectionUserSummaryDto(c.Receiver.Id, receiverRole, MapProfile(c.Receiver.Profile)));
+            new ConnectionUserSummaryDto(sender.Id, senderRole, MapProfile(sender.Profile)),
+            new ConnectionUserSummaryDto(receiver.Id, receiverRole, MapProfile(receiver.Profile)));
     }
 
     private async Task<RespondToConnectionResponseDto> MapRespondResponseAsync(
         Connection c,
+        IReadOnlyDictionary<Guid, ApplicationUser> users,
         CancellationToken cancellationToken)
     {
-        var senderRole = await GetRoleNameAsync(c.Sender.Id, cancellationToken);
-        var receiverRole = await GetRoleNameAsync(c.Receiver.Id, cancellationToken);
+        if (!users.TryGetValue(c.SenderId, out ApplicationUser? sender)
+            || !users.TryGetValue(c.ReceiverId, out ApplicationUser? receiver))
+        {
+            throw new InvalidOperationException("Connection participants missing from store.");
+        }
+
+        var senderRole = await GetRoleNameAsync(sender.Id, cancellationToken);
+        var receiverRole = await GetRoleNameAsync(receiver.Id, cancellationToken);
         return new RespondToConnectionResponseDto(
             c.Id,
             ConnectionStatusToApi(c.Status),
             c.InvitationNote,
             c.CreatedAt,
             c.UpdatedAt,
-            new ConnectionUserSummaryDto(c.Sender.Id, senderRole, MapProfile(c.Sender.Profile)),
-            new ConnectionUserSummaryDto(c.Receiver.Id, receiverRole, MapProfile(c.Receiver.Profile)));
+            new ConnectionUserSummaryDto(sender.Id, senderRole, MapProfile(sender.Profile)),
+            new ConnectionUserSummaryDto(receiver.Id, receiverRole, MapProfile(receiver.Profile)));
     }
 
     private async Task<string> GetRoleNameAsync(Guid userId, CancellationToken cancellationToken)

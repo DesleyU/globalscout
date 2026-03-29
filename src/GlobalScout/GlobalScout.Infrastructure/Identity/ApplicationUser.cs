@@ -1,5 +1,7 @@
 using GlobalScout.Domain.Identity;
-using GlobalScout.Infrastructure.Data.Entities;
+using GlobalScout.Domain.Social;
+using GlobalScout.Domain.Subscriptions;
+using GlobalScout.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 
 namespace GlobalScout.Infrastructure.Identity;

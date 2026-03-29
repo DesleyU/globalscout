@@ -1,4 +1,4 @@
-namespace GlobalScout.Infrastructure.Data.Entities;
+namespace GlobalScout.Domain.Clubs;
 
 public sealed class Club
 {

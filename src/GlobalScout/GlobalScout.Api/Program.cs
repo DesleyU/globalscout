@@ -1,7 +1,10 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
+using GlobalScout.Api.Hubs;
 using GlobalScout.Api.Infrastructure;
+using GlobalScout.Api.RealTime;
 using GlobalScout.Application;
+using GlobalScout.Application.Abstractions.RealTime;
 using GlobalScout.Infrastructure;
 using GlobalScout.Infrastructure.Data;
 using GlobalScout.Infrastructure.Identity;
@@ -27,6 +30,8 @@ builder.Services.AddGlobalScoutAvatarStorage(
 builder.Services.AddOpenApi(options => options.AddScalarTransformers());
 
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
+builder.Services.AddSignalR();
+builder.Services.AddScoped<IMessageRealtimeNotifier, SignalRMessageNotifier>();
 
 var app = builder.Build();
 
@@ -44,6 +49,8 @@ app.UseStaticFiles();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapHub<MessageHub>("/hubs/messages");
 
 if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("IntegrationTesting"))
 {

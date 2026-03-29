@@ -1,14 +1,11 @@
 using System.Text.Json;
 using GlobalScout.Domain.Identity;
-using GlobalScout.Infrastructure.Identity;
 
-namespace GlobalScout.Infrastructure.Data.Entities;
+namespace GlobalScout.Domain.Users;
 
 public sealed class Profile
 {
     public Guid UserId { get; set; }
-
-    public ApplicationUser User { get; set; } = null!;
 
     public string FirstName { get; set; } = string.Empty;
 

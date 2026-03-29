@@ -1,7 +1,7 @@
 using System.Text.Json;
 using GlobalScout.Infrastructure.Identity;
 
-namespace GlobalScout.Infrastructure.Data.Entities;
+namespace GlobalScout.Infrastructure.Data;
 
 public sealed class AuditLog
 {

@@ -1,7 +1,4 @@
-using GlobalScout.Domain.Social;
-using GlobalScout.Infrastructure.Identity;
-
-namespace GlobalScout.Infrastructure.Data.Entities;
+namespace GlobalScout.Domain.Social;
 
 public sealed class Connection
 {
@@ -9,11 +6,7 @@ public sealed class Connection
 
     public Guid SenderId { get; set; }
 
-    public ApplicationUser Sender { get; set; } = null!;
-
     public Guid ReceiverId { get; set; }
-
-    public ApplicationUser Receiver { get; set; } = null!;
 
     public ConnectionStatus Status { get; set; } = ConnectionStatus.Pending;
 

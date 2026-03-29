@@ -1,4 +1,7 @@
-using GlobalScout.Infrastructure.Data.Entities;
+using GlobalScout.Domain.Clubs;
+using GlobalScout.Domain.Social;
+using GlobalScout.Domain.Subscriptions;
+using GlobalScout.Domain.Users;
 using GlobalScout.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -57,9 +60,10 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("profiles");
             b.HasKey(p => p.UserId);
-            b.HasOne(p => p.User)
+            b.HasOne<ApplicationUser>()
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserId)
+                .HasConstraintName("fk_profiles_users_user_id")
                 .OnDelete(DeleteBehavior.Cascade);
             b.Property(p => p.StatsData).HasColumnType("jsonb");
         });
@@ -74,11 +78,11 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("connections");
             b.HasIndex(c => new { c.SenderId, c.ReceiverId }).IsUnique();
-            b.HasOne(c => c.Sender)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.SentConnections)
                 .HasForeignKey(c => c.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
-            b.HasOne(c => c.Receiver)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.ReceivedConnections)
                 .HasForeignKey(c => c.ReceiverId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -88,11 +92,11 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("follows");
             b.HasIndex(f => new { f.FollowerId, f.FollowingId }).IsUnique();
-            b.HasOne(f => f.Follower)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.Following)
                 .HasForeignKey(f => f.FollowerId)
                 .OnDelete(DeleteBehavior.Restrict);
-            b.HasOne(f => f.Following)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.Followers)
                 .HasForeignKey(f => f.FollowingId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -101,11 +105,11 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         builder.Entity<Message>(b =>
         {
             b.ToTable("messages");
-            b.HasOne(m => m.Sender)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.SentMessages)
                 .HasForeignKey(m => m.SenderId)
                 .OnDelete(DeleteBehavior.Restrict);
-            b.HasOne(m => m.Receiver)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.ReceivedMessages)
                 .HasForeignKey(m => m.ReceiverId)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -114,7 +118,7 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         builder.Entity<MediaItem>(b =>
         {
             b.ToTable("media");
-            b.HasOne(m => m.User)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.Media)
                 .HasForeignKey(m => m.UserId)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -124,9 +128,10 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("player_statistics");
             b.HasIndex(p => new { p.UserId, p.Season }).IsUnique();
-            b.HasOne(p => p.User)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.PlayerStatistics)
                 .HasForeignKey(p => p.UserId)
+                .HasConstraintName("fk_player_statistics_users_user_id")
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -134,9 +139,10 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("subscriptions");
             b.HasIndex(s => s.UserId).IsUnique();
-            b.HasOne(s => s.User)
+            b.HasOne<ApplicationUser>()
                 .WithOne(u => u.Subscription)
                 .HasForeignKey<Subscription>(s => s.UserId)
+                .HasConstraintName("fk_subscriptions_users_user_id")
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
@@ -144,13 +150,15 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("profile_visits");
             b.HasIndex(v => new { v.ProfileOwnerId, v.VisitorId }).IsUnique();
-            b.HasOne(v => v.ProfileOwner)
+            b.HasOne<ApplicationUser>()
                 .WithMany()
                 .HasForeignKey(v => v.ProfileOwnerId)
+                .HasConstraintName("fk_profile_visits_users_profile_owner_id")
                 .OnDelete(DeleteBehavior.Cascade);
-            b.HasOne(v => v.Visitor)
+            b.HasOne<ApplicationUser>()
                 .WithMany()
                 .HasForeignKey(v => v.VisitorId)
+                .HasConstraintName("fk_profile_visits_users_visitor_id")
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
@@ -161,6 +169,7 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
             b.HasOne(a => a.User)
                 .WithMany()
                 .HasForeignKey(a => a.UserId)
+                .HasConstraintName("fk_audit_logs_users_user_id")
                 .OnDelete(DeleteBehavior.SetNull);
         });
 
@@ -168,11 +177,11 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("user_blocks");
             b.HasKey(x => new { x.BlockerId, x.BlockedId });
-            b.HasOne(x => x.Blocker)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.BlockedUsers)
                 .HasForeignKey(x => x.BlockerId)
                 .OnDelete(DeleteBehavior.Restrict);
-            b.HasOne(x => x.Blocked)
+            b.HasOne<ApplicationUser>()
                 .WithMany(u => u.BlockedByUsers)
                 .HasForeignKey(x => x.BlockedId)
                 .OnDelete(DeleteBehavior.Restrict);
