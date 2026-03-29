@@ -41,6 +41,7 @@ public static class DependencyInjection
         });
 
         services.AddScoped<IUserDirectoryRepository, UserDirectoryRepository>();
+        services.AddScoped<ISocialGraphRepository, SocialGraphRepository>();
         services.AddScoped<IUserIdentityStore, UserIdentityStore>();
 
         return services;

@@ -1,3 +1,4 @@
+using GlobalScout.Api.IntegrationTests.Social;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Testcontainers.PostgreSql;
@@ -12,6 +13,10 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
         .Build();
 
     public WebApplicationFactory<Program> Factory { get; private set; } = null!;
+
+    /// <summary>Registers a club user through <c>POST /api/auth/register</c> (shared IT database).</summary>
+    public Task<(Guid UserId, string Token)> RegisterClubUserAsync(CancellationToken cancellationToken) =>
+        SocialIntegrationTestHelpers.RegisterClubUserAsync(Factory.CreateClient(), cancellationToken);
 
     public async ValueTask InitializeAsync()
     {

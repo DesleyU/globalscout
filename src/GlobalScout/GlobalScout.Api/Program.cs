@@ -1,7 +1,5 @@
 using System.Reflection;
 using System.Text.Json.Serialization;
-using GlobalScout.Api.Features.Admin;
-using GlobalScout.Api.Features.Auth;
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application;
 using GlobalScout.Infrastructure;
@@ -56,8 +54,6 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Integratio
 
 await IdentityDataSeeder.SeedRolesAsync(app.Services);
 
-app.MapAuthEndpoints();
-app.MapAdminEndpoints();
 app.MapEndpoints();
 
 app.Run();

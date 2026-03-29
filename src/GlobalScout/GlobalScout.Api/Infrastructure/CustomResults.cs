@@ -14,15 +14,25 @@ public static class CustomResults
             ErrorType.NotFound => StatusCodes.Status404NotFound,
             ErrorType.Conflict => StatusCodes.Status409Conflict,
             ErrorType.Problem => StatusCodes.Status400BadRequest,
+            ErrorType.Forbidden => StatusCodes.Status403Forbidden,
             _ => StatusCodes.Status400BadRequest
         };
+
+        var extensions = new Dictionary<string, object?> { ["code"] = error.Code };
+        if (error.Extensions is not null)
+        {
+            foreach (KeyValuePair<string, object?> kv in error.Extensions)
+            {
+                extensions[kv.Key] = kv.Value;
+            }
+        }
 
         return TypedResults.Problem(
             title: GetTitle(error.Type),
             detail: error.Description,
             statusCode: statusCode,
             type: $"https://httpstatuses.com/{statusCode}",
-            extensions: new Dictionary<string, object?> { ["code"] = error.Code });
+            extensions: extensions);
     }
 
     private static string GetTitle(ErrorType type) =>
@@ -32,6 +42,7 @@ public static class CustomResults
             ErrorType.NotFound => "Not found",
             ErrorType.Conflict => "Conflict",
             ErrorType.Problem => "Bad request",
+            ErrorType.Forbidden => "Forbidden",
             _ => "Error"
         };
 }
