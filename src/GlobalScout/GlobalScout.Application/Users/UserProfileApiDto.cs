@@ -23,6 +23,5 @@ public sealed record UserProfileApiDto(
     string? Linkedin,
     string? Country,
     string? City,
-    object? StatsData,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt);

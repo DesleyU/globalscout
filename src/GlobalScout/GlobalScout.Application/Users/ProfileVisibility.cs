@@ -30,8 +30,7 @@ internal static class ProfileVisibility
             Twitter = null,
             Linkedin = null,
             Country = null,
-            City = null,
-            StatsData = null
+            City = null
         };
     }
 }

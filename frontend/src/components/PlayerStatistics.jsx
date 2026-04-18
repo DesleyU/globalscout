@@ -55,34 +55,6 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
     setShowPaymentModal(true);
   };
 
-  // Handle successful payment and account upgrade
-  const handlePaymentSuccess = async () => {
-    try {
-      const response = await fetch('/api/account/upgrade', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upgrade account');
-      }
-
-      const data = await response.json();
-      setAccountType(data.data.accountType);
-      toast.success('Account upgraded to Premium!');
-      
-      // Refresh stats to get full data
-      fetchStats();
-    } catch (error) {
-      console.error('Error upgrading account:', error);
-      toast.error('Failed to upgrade account');
-      throw error; // Re-throw to let PaymentModal handle it
-    }
-  };
-
   // Refresh statistics
   const handleRefresh = async () => {
     if (!isOwnProfile) return;
@@ -100,11 +72,11 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
         throw new Error('Failed to refresh statistics');
       }
 
-      toast.success('Statistieken succesvol bijgewerkt!');
+      toast.success('Statistics updated successfully!');
       await fetchStats();
     } catch (error) {
       console.error('Error refreshing stats:', error);
-      toast.error('Fout bij het bijwerken van statistieken');
+      toast.error('Error updating statistics');
     } finally {
       setRefreshing(false);
     }
@@ -160,14 +132,14 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
         <div className="text-center py-12">
           <AlertCircle className="mx-auto h-16 w-16 text-red-500 mb-4" />
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Fout bij laden van statistieken
+            Error loading statistics
           </h3>
           <p className="text-gray-600 mb-4">{error}</p>
           <button
             onClick={fetchStats}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
           >
-            Opnieuw proberen
+            Try again
           </button>
         </div>
       </div>
@@ -180,7 +152,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-800 flex items-center">
             <TrendingUp className="mr-2 text-blue-600" />
-            Speler Statistieken
+            Player Statistics
           </h2>
           {isOwnProfile && (
             <button
@@ -189,7 +161,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
               className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
               <RefreshCw className={`mr-2 h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-              {refreshing ? 'Bijwerken...' : 'Vernieuwen'}
+              {refreshing ? 'Refreshing...' : 'Refresh'}
             </button>
           )}
         </div>
@@ -197,12 +169,12 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
         <div className="text-center py-12">
           <AlertCircle className="mx-auto h-16 w-16 text-blue-500 mb-4" />
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Geen statistieken gevonden
+            No statistics found
           </h3>
           <p className="text-gray-600 max-w-md mx-auto">
             {isOwnProfile 
-              ? 'Je hebt nog geen statistieken. Klik op "Vernieuwen" om je statistieken op te halen van API-Football.'
-              : 'Deze speler heeft nog geen statistieken beschikbaar.'
+              ? 'You don\'t have any statistics yet. Click "Refresh" to fetch your statistics from API-Football.'
+              : 'This player has no statistics available yet.'
             }
           </p>
         </div>
@@ -217,7 +189,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl font-bold text-gray-800 flex items-center">
             <TrendingUp className="mr-2 text-blue-600" />
-            Speler Statistieken
+            Player Statistics
           </h2>
           {isOwnProfile && (
             <button
@@ -226,7 +198,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
               className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50"
             >
               <RefreshCw className={`mr-2 h-4 w-4 ${refreshing ? 'animate-spin' : ''}`} />
-              {refreshing ? 'Bijwerken...' : 'Vernieuwen'}
+              {refreshing ? 'Refreshing...' : 'Refresh'}
             </button>
           )}
         </div>
@@ -236,7 +208,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
           <div className="mb-6">
             <label className="block text-sm font-medium text-gray-700 mb-2">
               <Calendar className="inline h-4 w-4 mr-1" />
-              Seizoen
+              Season
             </label>
             <select
               value={selectedSeason}
@@ -253,10 +225,10 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
         <div className="text-center py-12">
           <AlertCircle className="mx-auto h-16 w-16 text-blue-500 mb-4" />
           <h3 className="text-xl font-semibold text-gray-800 mb-2">
-            Geen statistieken gevonden voor {selectedSeason}
+            No statistics found for {selectedSeason}
           </h3>
           <p className="text-gray-600 max-w-md mx-auto">
-            Er zijn geen statistieken beschikbaar voor het geselecteerde seizoen.
+            No statistics are available for the selected season.
           </p>
         </div>
       </div>
@@ -271,7 +243,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
         <div className="mb-6 bg-white rounded-lg shadow-md p-6">
           <label className="block text-sm font-medium text-gray-700 mb-2">
             <Calendar className="inline h-4 w-4 mr-1" />
-            Seizoen
+            Season
           </label>
           <select
             value={selectedSeason}
@@ -288,7 +260,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
       {/* Individual Competitions */}
       {selectedSeasonStats.length > 1 && (
         <div className="mb-6 bg-white rounded-lg shadow-md p-6">
-          <h4 className="text-md font-semibold text-gray-800 mb-3">Competities:</h4>
+          <h4 className="text-md font-semibold text-gray-800 mb-3">Competitions:</h4>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {selectedSeasonStats.map((stat, index) => (
               <div key={index} className="bg-gray-50 rounded-lg p-4">
@@ -301,11 +273,11 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
                 )}
                 <div className="grid grid-cols-2 gap-2 text-xs">
                   <div>
-                    <span className="text-gray-500">Wedstrijden:</span>
+                    <span className="text-gray-500">Appearances:</span>
                     <span className="font-medium ml-1">{stat.appearances || 0}</span>
                   </div>
                   <div>
-                    <span className="text-gray-500">Minuten:</span>
+                    <span className="text-gray-500">Minutes:</span>
                     <span className="font-medium ml-1">{stat.minutes || 0}</span>
                   </div>
                   <div>
@@ -336,7 +308,6 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
-        onSuccess={handlePaymentSuccess}
       />
     </div>
   );

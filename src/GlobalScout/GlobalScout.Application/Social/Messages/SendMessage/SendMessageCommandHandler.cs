@@ -1,6 +1,7 @@
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
-using GlobalScout.Application.Abstractions.RealTime;
+using GlobalScout.Application.Abstractions.Social.Messages;
+using GlobalScout.Application.Social.Messages;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Social.Messages.SendMessage;
@@ -17,24 +18,24 @@ internal sealed class SendMessageCommandHandler(
     {
         if (command.SenderId == command.ReceiverId)
         {
-            return Result.Failure<MessageDetailDto>(MessagingErrors.CannotMessageSelf);
+            return Result.Failure<MessageDetailDto>(MessageErrors.CannotMessageSelf);
         }
 
         if (!await social.IsActiveUserAsync(command.ReceiverId, cancellationToken))
         {
-            return Result.Failure<MessageDetailDto>(MessagingErrors.ReceiverNotFound);
+            return Result.Failure<MessageDetailDto>(MessageErrors.ReceiverNotFound);
         }
 
         if (!await messages.HasAcceptedConnectionAsync(command.SenderId, command.ReceiverId, cancellationToken))
         {
-            return Result.Failure<MessageDetailDto>(MessagingErrors.NotConnected);
+            return Result.Failure<MessageDetailDto>(MessageErrors.NotConnected);
         }
 
         string content = command.Content.Trim();
         if (content.Length == 0)
         {
             return Result.Failure<MessageDetailDto>(
-                Error.Validation("Messaging.EmptyContent", "Message content cannot be empty."));
+                Error.Validation("Messages.EmptyContent", "Message content cannot be empty."));
         }
 
         MessageDetailDto created = await messages.CreateMessageAsync(

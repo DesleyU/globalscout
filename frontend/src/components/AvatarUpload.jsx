@@ -13,7 +13,7 @@ const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
   const uploadMutation = useMutation({
     mutationFn: (formData) => api.users.uploadAvatar(formData),
     onSuccess: (data) => {
-      toast.success('Profielfoto succesvol geüpload!');
+      toast.success('Profile picture uploaded successfully!');
       setPreview(null);
       setIsUploading(false);
       onAvatarUpdate?.(data.avatar);
@@ -21,7 +21,7 @@ const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
       queryClient.invalidateQueries(['profile']);
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Fout bij uploaden van foto');
+      toast.error(error.response?.data?.error || 'Error uploading picture');
       setIsUploading(false);
       setPreview(null);
     }
@@ -34,13 +34,13 @@ const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
     // Validate file type
     const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
     if (!allowedTypes.includes(file.type)) {
-      toast.error('Alleen JPEG, PNG en GIF bestanden zijn toegestaan');
+      toast.error('Only JPEG, PNG and GIF files are allowed');
       return;
     }
 
     // Validate file size (5MB)
     if (file.size > 5 * 1024 * 1024) {
-      toast.error('Bestand is te groot. Maximum grootte is 5MB');
+      toast.error('File is too large. Maximum size is 5MB');
       return;
     }
 
@@ -139,7 +139,7 @@ const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
           disabled={isUploading}
           className="text-sm text-blue-600 hover:text-blue-800 disabled:text-gray-400"
         >
-          {isUploading ? 'Uploaden...' : 'Foto wijzigen'}
+          {isUploading ? 'Uploading...' : 'Change photo'}
         </button>
         <p className="text-xs text-gray-500 mt-1">
           JPEG, PNG, GIF (max 5MB)

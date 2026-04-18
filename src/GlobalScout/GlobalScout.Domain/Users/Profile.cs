@@ -1,4 +1,3 @@
-using System.Text.Json;
 using GlobalScout.Domain.Identity;
 
 namespace GlobalScout.Domain.Users;
@@ -42,8 +41,6 @@ public sealed class Profile
     public string? Country { get; set; }
 
     public string? City { get; set; }
-
-    public JsonDocument? StatsData { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; }
 

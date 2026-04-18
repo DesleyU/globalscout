@@ -43,6 +43,4 @@ public sealed class UpdateUsersProfileCommand : ICommand<UsersFullProfileResult>
     public string? Country { get; init; }
 
     public string? City { get; init; }
-
-    public string? StatsDataJson { get; init; }
 }

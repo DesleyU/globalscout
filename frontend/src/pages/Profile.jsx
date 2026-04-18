@@ -14,7 +14,7 @@ import toast from 'react-hot-toast';
 import Cookies from 'js-cookie';
 
 const Profile = () => {
-  const { user, updateUser, refreshUser, token } = useAuth();
+  const { user, updateUser, refreshUser } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [formData, setFormData] = useState({
@@ -161,13 +161,13 @@ const Profile = () => {
             });
 
             if (response.ok) {
-              toast.success('Profiel bijgewerkt en statistieken automatisch geïmporteerd!');
+              toast.success('Profile updated and statistics imported automatically!');
             } else {
-              toast.success('Profiel bijgewerkt! Statistieken konden niet automatisch worden geïmporteerd.');
+              toast.success('Profile updated! Statistics could not be imported automatically.');
             }
           } catch (error) {
             console.error('Error auto-importing statistics:', error);
-            toast.success('Profiel bijgewerkt! Statistieken konden niet automatisch worden geïmporteerd.');
+            toast.success('Profile updated! Statistics could not be imported automatically.');
           }
         }
       }
@@ -206,35 +206,6 @@ const Profile = () => {
   // Handle account upgrade - show payment modal
   const handleUpgrade = () => {
     setShowPaymentModal(true);
-  };
-
-  // Handle successful payment and account upgrade
-  const handlePaymentSuccess = async () => {
-    try {
-      const response = await fetch('/api/account/upgrade', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to upgrade account');
-      }
-
-      const data = await response.json();
-      // Update user in auth context
-      updateUser({ ...user, accountType: data.data.accountType });
-      toast.success('Account upgraded to Premium!');
-      
-      // Refresh queries to get updated data
-      queryClient.invalidateQueries();
-    } catch (error) {
-      console.error('Error upgrading account:', error);
-      toast.error('Failed to upgrade account');
-      throw error; // Re-throw to let PaymentModal handle it
-    }
   };
 
   if (isLoading) {
@@ -310,7 +281,7 @@ const Profile = () => {
                   <div>
                     <div className="flex items-center gap-3 mb-2">
                       <h2 className="text-xl font-bold text-gray-900">
-                        {profile?.profile?.firstName || 'Onbekend'} {profile?.profile?.lastName || 'Gebruiker'}
+                        {profile?.profile?.firstName || 'Unknown'} {profile?.profile?.lastName || 'User'}
                       </h2>
                       {profile?.accountType === 'PREMIUM' && (
                         <PremiumBadge size="sm" variant="gold" />
@@ -478,26 +449,6 @@ const Profile = () => {
                     </>
                   )}
 
-                  {profile?.role === 'PLAYER' && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        API-Football Speler ID
-                      </label>
-                      <input
-                        type="number"
-                        name="playerId"
-                        value={formData.playerId}
-                        onChange={handleChange}
-                        className="input"
-                        placeholder="Voer je API-Football speler ID in (optioneel)"
-                      />
-                      <p className="mt-1 text-sm text-gray-500">
-                        Met je speler-ID kunnen we automatisch je statistieken ophalen van API-Football. 
-                        Laat leeg als je deze niet weet - je kunt deze later toevoegen.
-                      </p>
-                    </div>
-                  )}
-
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">
                       Bio
@@ -593,7 +544,7 @@ const Profile = () => {
       {user?.role === 'PLAYER' && (
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
           <div className="px-8 py-6 border-b border-gray-200/50">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Speler Statistieken</h2>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Player Statistics</h2>
           </div>
           <div className="p-8">
             <PlayerStatistics 
@@ -662,7 +613,6 @@ const Profile = () => {
       <PaymentModal
         isOpen={showPaymentModal}
         onClose={() => setShowPaymentModal(false)}
-        onSuccess={handlePaymentSuccess}
       />
       </div>
     </div>

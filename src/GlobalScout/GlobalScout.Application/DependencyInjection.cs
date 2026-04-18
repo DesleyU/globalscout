@@ -2,6 +2,7 @@ using System.Reflection;
 using FluentValidation;
 using GlobalScout.Application.Abstractions.Behaviors;
 using GlobalScout.Application.Abstractions.Messaging;
+using GlobalScout.Application.Statistics.RefreshMyStats;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GlobalScout.Application;
@@ -11,6 +12,8 @@ public static class DependencyInjection
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
         Assembly assembly = typeof(DependencyInjection).Assembly;
+
+        services.AddScoped<IPlayerStatisticsRefreshExecutor, PlayerStatisticsRefreshExecutor>();
 
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 

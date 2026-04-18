@@ -1,4 +1,3 @@
-using System.Text.Json;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Users;
 using GlobalScout.Domain.Identity;
@@ -115,11 +114,6 @@ internal sealed class UserDirectoryRepository(
         if (patch.City is not null)
         {
             profile.City = patch.City;
-        }
-
-        if (patch.StatsData is not null)
-        {
-            profile.StatsData = patch.StatsData;
         }
 
         profile.UpdatedAt = DateTimeOffset.UtcNow;
@@ -502,12 +496,6 @@ internal sealed class UserDirectoryRepository(
             return null;
         }
 
-        object? stats = null;
-        if (p.StatsData is not null)
-        {
-            stats = JsonSerializer.Deserialize<JsonElement>(p.StatsData.RootElement.GetRawText());
-        }
-
         return new UserProfileApiDto(
             p.UserId,
             p.FirstName,
@@ -528,7 +516,6 @@ internal sealed class UserDirectoryRepository(
             p.Linkedin,
             p.Country,
             p.City,
-            stats,
             p.CreatedAt,
             p.UpdatedAt);
     }
@@ -565,5 +552,22 @@ internal sealed class UserDirectoryRepository(
     {
         position = p;
         return true;
+    }
+
+    public async Task<MediaUploadContext?> GetMediaUploadContextAsync(
+        Guid userId,
+        CancellationToken cancellationToken)
+    {
+        _ = cancellationToken;
+        var user = await userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+        {
+            return null;
+        }
+
+        var roles = await userManager.GetRolesAsync(user);
+        var roleName = roles.FirstOrDefault() ?? AppRoleNames.Player;
+        var role = AppRoleNames.ToUserRole(roleName);
+        return new MediaUploadContext(role, user.AccountType);
     }
 }

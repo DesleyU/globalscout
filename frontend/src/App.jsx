@@ -14,6 +14,8 @@ import Connections from './pages/Connections';
 import Messages from './pages/Messages';
 import UserProfile from './pages/UserProfile';
 import Admin from './pages/Admin';
+import PaymentSuccess from './pages/PaymentSuccess';
+import PaymentCancel from './pages/PaymentCancel';
 
 // Protected Route Component
 const ProtectedRoute = ({ children, adminOnly = false }) => {
@@ -92,6 +94,8 @@ function App() {
         <Route path="connections" element={<Connections />} />
         <Route path="messages" element={<Messages />} />
         <Route path="user/:id" element={<UserProfile />} />
+        <Route path="payment/success" element={<PaymentSuccess />} />
+        <Route path="payment/cancel" element={<PaymentCancel />} />
         
         {/* Admin Routes */}
         <Route

@@ -1,8 +1,9 @@
-using System.Text.Json;
 using GlobalScout.Application.Users;
 using GlobalScout.Domain.Identity;
 
 namespace GlobalScout.Application.Abstractions.Persistence;
+
+public sealed record MediaUploadContext(UserRole Role, AccountType AccountType);
 
 public sealed record SearchUsersCriteria(
     Guid ExcludeUserId,
@@ -42,6 +43,9 @@ public interface IUserDirectoryRepository
     Task<GetProfileVisitorsResult> GetProfileVisitorsAsync(Guid profileOwnerId, bool premiumDetails, CancellationToken cancellationToken);
 
     Task SetAvatarAsync(Guid userId, string avatarUrl, CancellationToken cancellationToken);
+
+    /// <summary>Role and subscription tier for media upload rules (players only; basic video cap).</summary>
+    Task<MediaUploadContext?> GetMediaUploadContextAsync(Guid userId, CancellationToken cancellationToken);
 }
 
 /// <summary>Non-null properties are applied to the profile row.</summary>
@@ -81,8 +85,6 @@ public sealed class ProfileFieldPatch
 
     public string? City { get; init; }
 
-    public JsonDocument? StatsData { get; init; }
-
     public bool HasAny =>
         FirstName is not null
         || LastName is not null
@@ -100,6 +102,5 @@ public sealed class ProfileFieldPatch
         || Twitter is not null
         || Linkedin is not null
         || Country is not null
-        || City is not null
-        || StatsData is not null;
+        || City is not null;
 }

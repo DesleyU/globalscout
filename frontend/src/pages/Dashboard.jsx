@@ -150,7 +150,7 @@ const Dashboard = () => {
             <div>
               <div className="flex items-center gap-3 mb-2">
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">
-                  {getWelcomeMessage()}, {profile?.profile?.firstName || user?.profile?.firstName || 'Gebruiker'}!
+                  {getWelcomeMessage()}, {profile?.profile?.firstName || user?.profile?.firstName || 'User'}!
                 </h1>
                 {(user?.accountType === 'PREMIUM' || profile?.accountType === 'PREMIUM') && (
                   <PremiumBadge size="md" variant="gold" />
@@ -253,9 +253,9 @@ const Dashboard = () => {
       {user?.role === 'PLAYER' && (
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
           <div className="p-8 border-b border-gray-200/50">
-            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Mijn Statistieken</h2>
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">My Statistics</h2>
             <p className="text-sm text-gray-500 mt-1">
-              Bekijk je prestaties en statistieken per seizoen en competitie
+              View your performance and statistics by season and competition
             </p>
           </div>
           <div className="p-8">

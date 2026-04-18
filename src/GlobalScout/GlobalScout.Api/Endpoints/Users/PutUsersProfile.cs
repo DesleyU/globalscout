@@ -1,4 +1,3 @@
-using System.Text.Json;
 using System.Text.Json.Serialization;
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application.Abstractions.Messaging;
@@ -47,9 +46,6 @@ internal sealed class PutUsersProfile : IEndpoint
         public string? Country { get; set; }
 
         public string? City { get; set; }
-
-        [JsonPropertyName("statsData")]
-        public JsonElement? StatsData { get; set; }
     }
 
     public void MapEndpoint(IEndpointRouteBuilder app)
@@ -67,10 +63,6 @@ internal sealed class PutUsersProfile : IEndpoint
                     {
                         return Results.Unauthorized();
                     }
-
-                    string? statsJson = body.StatsData is { ValueKind: not JsonValueKind.Undefined and not JsonValueKind.Null } e
-                        ? e.GetRawText()
-                        : null;
 
                     var command = new UpdateUsersProfileCommand
                     {
@@ -93,7 +85,6 @@ internal sealed class PutUsersProfile : IEndpoint
                         Linkedin = body.Linkedin,
                         Country = body.Country,
                         City = body.City,
-                        StatsDataJson = statsJson
                     };
 
                     var result = await handler.Handle(command, cancellationToken);

@@ -345,74 +345,30 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("Assists")
-                        .HasColumnType("integer")
-                        .HasColumnName("assists");
-
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<int?>("DuelsWon")
-                        .HasColumnType("integer")
-                        .HasColumnName("duels_won");
+                    b.Property<JsonDocument>("Data")
+                        .HasColumnType("jsonb")
+                        .HasColumnName("data");
 
-                    b.Property<int?>("FoulsCommitted")
-                        .HasColumnType("integer")
-                        .HasColumnName("fouls_committed");
-
-                    b.Property<int?>("FoulsDrawn")
-                        .HasColumnType("integer")
-                        .HasColumnName("fouls_drawn");
-
-                    b.Property<int>("Goals")
-                        .HasColumnType("integer")
-                        .HasColumnName("goals");
-
-                    b.Property<int>("Matches")
-                        .HasColumnType("integer")
-                        .HasColumnName("matches");
-
-                    b.Property<int>("Minutes")
-                        .HasColumnType("integer")
-                        .HasColumnName("minutes");
-
-                    b.Property<double?>("PassesAccuracy")
-                        .HasColumnType("double precision")
-                        .HasColumnName("passes_accuracy");
-
-                    b.Property<int?>("PassesTotal")
-                        .HasColumnType("integer")
-                        .HasColumnName("passes_total");
-
-                    b.Property<double?>("Rating")
-                        .HasColumnType("double precision")
-                        .HasColumnName("rating");
-
-                    b.Property<int>("RedCards")
-                        .HasColumnType("integer")
-                        .HasColumnName("red_cards");
+                    b.Property<string>("SchemaVersion")
+                        .IsRequired()
+                        .HasMaxLength(32)
+                        .HasColumnType("character varying(32)")
+                        .HasColumnName("schema_version");
 
                     b.Property<string>("Season")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("season");
 
-                    b.Property<int?>("ShotsOnTarget")
-                        .HasColumnType("integer")
-                        .HasColumnName("shots_on_target");
-
-                    b.Property<int?>("ShotsTotal")
-                        .HasColumnType("integer")
-                        .HasColumnName("shots_total");
-
-                    b.Property<int?>("TacklesInterceptions")
-                        .HasColumnType("integer")
-                        .HasColumnName("tackles_interceptions");
-
-                    b.Property<int?>("TacklesTotal")
-                        .HasColumnType("integer")
-                        .HasColumnName("tackles_total");
+                    b.Property<string>("Source")
+                        .IsRequired()
+                        .HasMaxLength(64)
+                        .HasColumnType("character varying(64)")
+                        .HasColumnName("source");
 
                     b.Property<DateTimeOffset>("UpdatedAt")
                         .HasColumnType("timestamp with time zone")
@@ -422,16 +378,12 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("user_id");
 
-                    b.Property<int>("YellowCards")
-                        .HasColumnType("integer")
-                        .HasColumnName("yellow_cards");
-
                     b.HasKey("Id")
                         .HasName("pk_player_statistics");
 
-                    b.HasIndex("UserId", "Season")
+                    b.HasIndex("UserId", "Season", "Source")
                         .IsUnique()
-                        .HasDatabaseName("ix_player_statistics_user_id_season");
+                        .HasDatabaseName("ix_player_statistics_user_id_season_source");
 
                     b.ToTable("player_statistics", (string)null);
                 });
@@ -507,10 +459,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Property<int?>("Position")
                         .HasColumnType("integer")
                         .HasColumnName("position");
-
-                    b.Property<JsonDocument>("StatsData")
-                        .HasColumnType("jsonb")
-                        .HasColumnName("stats_data");
 
                     b.Property<string>("Twitter")
                         .HasColumnType("text")
@@ -617,6 +565,23 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasDatabaseName("ix_audit_logs_user_id");
 
                     b.ToTable("audit_logs", (string)null);
+                });
+
+            modelBuilder.Entity("GlobalScout.Infrastructure.Data.StripeProcessedWebhookEvent", b =>
+                {
+                    b.Property<string>("EventId")
+                        .HasMaxLength(128)
+                        .HasColumnType("character varying(128)")
+                        .HasColumnName("event_id");
+
+                    b.Property<DateTimeOffset>("ProcessedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("processed_at");
+
+                    b.HasKey("EventId")
+                        .HasName("pk_stripe_processed_webhook_events");
+
+                    b.ToTable("stripe_processed_webhook_events", (string)null);
                 });
 
             modelBuilder.Entity("GlobalScout.Infrastructure.Identity.ApplicationRole", b =>

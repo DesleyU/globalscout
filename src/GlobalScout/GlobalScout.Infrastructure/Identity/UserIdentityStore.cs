@@ -1,4 +1,5 @@
 using GlobalScout.Application.Abstractions.Auth;
+using GlobalScout.Application.Account;
 using GlobalScout.Application.Auth;
 using GlobalScout.Application.Auth.GetProfile;
 using GlobalScout.Application.Auth.Login;
@@ -175,6 +176,87 @@ internal sealed class UserIdentityStore(
             user.Status,
             user.AccountType,
             payload));
+    }
+
+    public async Task<AccountSummary?> GetAccountSummaryAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var user = await userManager.Users.AsNoTracking().FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        if (user is null)
+        {
+            return null;
+        }
+
+        return new AccountSummary(user.Id, user.Email!, user.AccountType, user.CreatedAt);
+    }
+
+    public async Task<Result<AccountType>> SetAccountTierAsync(
+        Guid userId,
+        AccountType targetTier,
+        CancellationToken cancellationToken)
+    {
+        var user = await userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+        {
+            return Result.Failure<AccountType>(AccountErrors.UserNotFound);
+        }
+
+        if (user.AccountType == targetTier)
+        {
+            var err = targetTier == AccountType.Premium ? AccountErrors.AlreadyPremium : AccountErrors.AlreadyBasic;
+            return Result.Failure<AccountType>(err);
+        }
+
+        user.AccountType = targetTier;
+        user.UpdatedAt = DateTimeOffset.UtcNow;
+        var update = await userManager.UpdateAsync(user);
+        if (!update.Succeeded)
+        {
+            logger.LogWarning(
+                "Account tier update failed: {Errors}",
+                string.Join(", ", update.Errors.Select(e => $"{e.Code}:{e.Description}")));
+            return Result.Failure<AccountType>(
+                Error.Problem("Account.UpdateFailed", "Failed to update account."));
+        }
+
+        return Result.Success(targetTier);
+    }
+
+    public async Task<Result> SetAccountTierFromBillingAsync(
+        Guid userId,
+        AccountType targetTier,
+        CancellationToken cancellationToken)
+    {
+        var user = await userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+        {
+            return Result.Failure(AccountErrors.UserNotFound);
+        }
+
+        if (user.AccountType == targetTier)
+        {
+            return Result.Success();
+        }
+
+        user.AccountType = targetTier;
+        user.UpdatedAt = DateTimeOffset.UtcNow;
+        var update = await userManager.UpdateAsync(user);
+        if (!update.Succeeded)
+        {
+            logger.LogWarning(
+                "Billing account tier update failed: {Errors}",
+                string.Join(", ", update.Errors.Select(e => $"{e.Code}:{e.Description}")));
+            return Result.Failure(
+                Error.Problem("Account.BillingUpdateFailed", "Failed to update account from billing."));
+        }
+
+        return Result.Success();
+    }
+
+    public async Task<string?> GetStripeCustomerIdAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var user = await userManager.Users.AsNoTracking()
+            .FirstOrDefaultAsync(u => u.Id == userId, cancellationToken);
+        return user?.StripeCustomerId;
     }
 
     private static string? PositionToApi(Position? position) =>

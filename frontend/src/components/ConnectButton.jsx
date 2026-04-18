@@ -27,21 +27,21 @@ const ConnectButton = ({ userId, size = 'medium', className = '' }) => {
     mutationFn: () => api.connections.sendRequest(userId),
     onSuccess: () => {
       queryClient.invalidateQueries(['connections']);
-      toast.success('Verbindingsverzoek verzonden!');
+      toast.success('Connection request sent!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Fout bij het verzenden van verbindingsverzoek');
+      toast.error(error.response?.data?.error || 'Error sending connection request');
     },
   });
 
   const handleClick = () => {
     if (userId === currentUser?.id) {
-      toast.error('Je kunt geen verbinding maken met jezelf');
+      toast.error('You cannot connect with yourself');
       return;
     }
     
     if (isConnected) {
-      toast.info('Je bent al verbonden met deze gebruiker');
+      toast.info('You are already connected with this user');
       return;
     }
     
@@ -94,7 +94,7 @@ const ConnectButton = ({ userId, size = 'medium', className = '' }) => {
       )}
       {size !== 'small' && (
         <span>
-          {isConnected ? 'Verbonden' : 'Verbinden'}
+          {isConnected ? 'Connected' : 'Connect'}
         </span>
       )}
     </button>

@@ -1,3 +1,4 @@
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -6,6 +7,35 @@ namespace GlobalScout.Api.IntegrationTests.Social;
 /// <summary>Registers club users (minimal validation surface) and calls Social HTTP APIs.</summary>
 internal static class SocialIntegrationTestHelpers
 {
+    public static async Task<(Guid UserId, string Token)> RegisterPlayerUserAsync(
+        HttpClient client,
+        CancellationToken cancellationToken)
+    {
+        var email = $"player-{Guid.NewGuid():N}@example.com";
+        using var response = await client.PostAsJsonAsync(
+            "/api/auth/register",
+            new
+            {
+                email,
+                password = "secret12",
+                role = "PLAYER",
+                firstName = "Test",
+                lastName = "Player",
+                position = "GOALKEEPER",
+                age = 20,
+                clubName = (string?)null
+            },
+            cancellationToken);
+
+        response.EnsureSuccessStatusCode();
+        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        var doc = await JsonDocument.ParseAsync(stream, default, cancellationToken);
+        var root = doc.RootElement;
+        var token = root.GetProperty("token").GetString()!;
+        var userId = root.GetProperty("user").GetProperty("id").GetGuid();
+        return (userId, token);
+    }
+
     public static async Task<(Guid UserId, string Token)> RegisterClubUserAsync(
         HttpClient client,
         CancellationToken cancellationToken)
@@ -83,4 +113,22 @@ internal static class SocialIntegrationTestHelpers
         Guid targetUserId,
         CancellationToken cancellationToken) =>
         client.DeleteAsync($"/api/follow/{targetUserId}/unfollow", cancellationToken);
+
+    public static async Task<HttpResponseMessage> UploadVideoAsync(
+        HttpClient client,
+        byte[] fileBytes,
+        string fileName,
+        string contentType,
+        CancellationToken cancellationToken)
+    {
+        using var content = new MultipartFormDataContent();
+        var stream = new MemoryStream(fileBytes);
+        var streamContent = new StreamContent(stream);
+        streamContent.Headers.ContentType = new MediaTypeHeaderValue(contentType);
+        content.Add(streamContent, "video", fileName);
+        content.Add(new StringContent("Integration title"), "title");
+        content.Add(new StringContent("Integration description"), "description");
+        content.Add(new StringContent(""), "tags");
+        return await client.PostAsync("/api/media/video", content, cancellationToken);
+    }
 }

@@ -240,7 +240,7 @@ const Connections = () => {
                               receiverId: connectedUser.id,
                               receiverName: connectedUser.profile?.firstName && connectedUser.profile?.lastName 
                                 ? `${connectedUser.profile.firstName} ${connectedUser.profile.lastName}` 
-                                : connectedUser.email || 'Gebruiker'
+                                : connectedUser.email || 'User'
                             })}
                           >
                             <MessageCircle className="h-4 w-4" />
@@ -420,7 +420,7 @@ const Connections = () => {
                               receiverId: followedUser.id,
                               receiverName: followedUser.profile?.firstName && followedUser.profile?.lastName 
                                 ? `${followedUser.profile.firstName} ${followedUser.profile.lastName}` 
-                                : followedUser.email || 'Gebruiker'
+                                : followedUser.email || 'User'
                             })}
                           >
                             <MessageCircle className="h-4 w-4" />
@@ -529,7 +529,7 @@ const Connections = () => {
                               receiverId: followerUser.id,
                               receiverName: followerUser.profile?.firstName && followerUser.profile?.lastName 
                                 ? `${followerUser.profile.firstName} ${followerUser.profile.lastName}` 
-                                : followerUser.email || 'Gebruiker'
+                                : followerUser.email || 'User'
                             })}
                           >
                             <MessageCircle className="h-4 w-4" />

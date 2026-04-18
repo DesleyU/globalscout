@@ -84,10 +84,10 @@ const UserProfile = () => {
     mutationFn: () => api.connections.sendRequest(id),
     onSuccess: () => {
       queryClient.invalidateQueries(['connections']);
-      toast.success('Verbindingsverzoek verzonden!');
+      toast.success('Connection request sent!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Fout bij het verzenden van verbindingsverzoek');
+      toast.error(error.response?.data?.error || 'Error sending connection request');
     },
   });
 
@@ -105,7 +105,7 @@ const UserProfile = () => {
 
   const handleConnect = () => {
     if (id === currentUser?.id) {
-      toast.error('Je kunt geen verbinding maken met jezelf');
+      toast.error('You cannot connect with yourself');
       return;
     }
     connectionMutation.mutate();
@@ -137,7 +137,7 @@ const UserProfile = () => {
     return (
       <div className="max-w-4xl mx-auto p-6">
         <div className="text-center text-gray-500">
-          Gebruiker niet gevonden
+          User not found
         </div>
       </div>
     );
@@ -158,7 +158,7 @@ const UserProfile = () => {
             <div>
               <div className="flex items-center gap-3 mb-2">
                 <h1 className="text-3xl font-bold">
-                  {profile?.firstName || 'Onbekend'} {profile?.lastName || 'Gebruiker'}
+                  {profile?.firstName || 'Unknown'} {profile?.lastName || 'User'}
                 </h1>
                 {user?.accountType === 'PREMIUM' && (
                   <PremiumBadge size="md" variant="dark" />
@@ -166,7 +166,7 @@ const UserProfile = () => {
               </div>
               <p className="text-blue-100 text-lg">
                 {user?.role === 'PLAYER' && profile?.position && `${profile.position} • `}
-                {profile?.clubName || (user?.role === 'CLUB' ? 'Club' : user?.role === 'SCOUT_AGENT' ? 'Scout Agent' : 'Gebruiker')}
+                {profile?.clubName || (user?.role === 'CLUB' ? 'Club' : user?.role === 'SCOUT_AGENT' ? 'Scout Agent' : 'User')}
               </p>
               {(profile?.city || profile?.country) && (
                 <p className="text-blue-200">
@@ -182,14 +182,14 @@ const UserProfile = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Bio Section */}
             <div>
-              <h2 className="text-xl font-semibold mb-3 text-gray-800">Over</h2>
+              <h2 className="text-xl font-semibold mb-3 text-gray-800">About</h2>
               <p className="text-gray-600 leading-relaxed">
                 {profile?.bio || (
                   <span className="italic text-gray-400">
-                    {user?.role === 'PLAYER' ? 'Deze speler heeft nog geen bio toegevoegd.' :
-                     user?.role === 'CLUB' ? 'Deze club heeft nog geen beschrijving toegevoegd.' :
-                     user?.role === 'SCOUT_AGENT' ? 'Deze scout heeft nog geen bio toegevoegd.' :
-                     'Geen bio beschikbaar.'}
+                    {user?.role === 'PLAYER' ? 'This player has not added a bio yet.' :
+                     user?.role === 'CLUB' ? 'This club has not added a description yet.' :
+                     user?.role === 'SCOUT_AGENT' ? 'This scout has not added a bio yet.' :
+                     'No bio available.'}
                   </span>
                 )}
               </p>
@@ -200,17 +200,17 @@ const UserProfile = () => {
               <h2 className="text-xl font-semibold mb-3 text-gray-800">Details</h2>
               <div className="space-y-2">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Rol:</span>
+                  <span className="text-gray-600">Role:</span>
                   <span className="font-medium">
-                    {user?.role === 'PLAYER' ? 'Speler' : 
+                    {user?.role === 'PLAYER' ? 'Player' : 
                      user?.role === 'CLUB' ? 'Club' :
                      user?.role === 'SCOUT_AGENT' ? 'Scout Agent' :
-                     user?.role || 'Onbekend'}
+                     user?.role || 'Unknown'}
                   </span>
                 </div>
                 {profile?.position && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Positie:</span>
+                    <span className="text-gray-600">Position:</span>
                     <span className="font-medium">{profile.position}</span>
                   </div>
                 )}
@@ -222,24 +222,24 @@ const UserProfile = () => {
                 )}
                 {profile?.age && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Leeftijd:</span>
-                    <span className="font-medium">{profile.age} jaar</span>
+                    <span className="text-gray-600">Age:</span>
+                    <span className="font-medium">{profile.age} years</span>
                   </div>
                 )}
                 {(profile?.city || profile?.country) && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Locatie:</span>
+                    <span className="text-gray-600">Location:</span>
                     <span className="font-medium">
                       {[profile?.city, profile?.country].filter(Boolean).join(', ')}
                     </span>
                   </div>
                 )}
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Abonnement:</span>
+                  <span className="text-gray-600">Subscription:</span>
                   <span className={`font-medium ${user?.subscriptionTier === 'PREMIUM' ? 'text-yellow-600' : 'text-gray-600'}`}>
-                    {user?.subscriptionTier === 'BASIC' ? 'Basis' : 
+                    {user?.subscriptionTier === 'BASIC' ? 'Basic' : 
                      user?.subscriptionTier === 'PREMIUM' ? 'Premium' :
-                     user?.subscriptionTier || 'Onbekend'}
+                     user?.subscriptionTier || 'Unknown'}
                   </span>
                 </div>
               </div>
@@ -249,7 +249,7 @@ const UserProfile = () => {
           {/* Videos Section - Only for Players */}
           {user?.role === 'PLAYER' && (
             <div className="mt-8">
-              <h2 className="text-xl font-semibold mb-4 text-gray-800">Video's</h2>
+              <h2 className="text-xl font-semibold mb-4 text-gray-800">Videos</h2>
               {videosLoading ? (
                 <div className="animate-pulse">
                   <div className="h-48 bg-gray-300 rounded-lg"></div>
@@ -267,7 +267,7 @@ const UserProfile = () => {
                 </div>
               ) : (
                 <div className="text-center py-8 bg-gray-50 rounded-lg">
-                  <p className="text-gray-500">Deze speler heeft nog geen video's geüpload.</p>
+                  <p className="text-gray-500">This player has not uploaded any videos yet.</p>
                 </div>
               )}
             </div>
@@ -297,13 +297,13 @@ const UserProfile = () => {
               disabled={connectionMutation.isPending || id === currentUser?.id}
               className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-6 py-3 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 disabled:bg-gray-400 disabled:cursor-not-allowed disabled:transform-none"
             >
-              {connectionMutation.isPending ? 'Verzenden...' : 'Verbinden'}
+              {connectionMutation.isPending ? 'Sending...' : 'Connect'}
             </button>
             <button 
               onClick={() => setIsMessageModalOpen(true)}
               className="bg-white/60 border border-white/30 text-gray-700 px-6 py-3 rounded-xl hover:bg-white/80 hover:shadow-lg transition-all duration-300"
             >
-              Bericht sturen
+              Send Message
             </button>
           </div>
         </div>
@@ -316,7 +316,7 @@ const UserProfile = () => {
         receiverId={id}
         receiverName={user?.profile?.firstName && user?.profile?.lastName 
           ? `${user.profile.firstName} ${user.profile.lastName}` 
-          : user?.email || 'Gebruiker'}
+          : user?.email || 'User'}
       />
       </div>
     </div>

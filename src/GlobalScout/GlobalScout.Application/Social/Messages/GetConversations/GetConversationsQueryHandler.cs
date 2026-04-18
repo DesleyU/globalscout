@@ -1,5 +1,5 @@
 using GlobalScout.Application.Abstractions.Messaging;
-using GlobalScout.Application.Abstractions.Persistence;
+using GlobalScout.Application.Abstractions.Social.Messages;
 using GlobalScout.SharedKernel;
 using GlobalScout.Application.Social.Messages;
 

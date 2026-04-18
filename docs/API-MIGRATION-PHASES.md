@@ -61,6 +61,8 @@ Use this doc to scope **one chat per phase**. Source of truth for behaviour is t
 
 **Data:** `Profile.StatsData`, `PlayerStatistics`.
 
+**Configuration (.NET):** Bindings under `ApiFootball` in [`appsettings.json`](src/GlobalScout/GlobalScout.Api/appsettings.json). For local dev, set the key with user secrets (do not commit): `dotnet user-secrets set "ApiFootball:ApiKey" "<your-key>" --project src/GlobalScout/GlobalScout.Api/GlobalScout.Api.csproj`. If `ApiKey` is empty, the app falls back to the legacy env var `API_FOOTBALL_KEY` (and optional `API_FOOTBALL_HOST`, `API_FOOTBALL_BASE_URL`) as in `backend/src/services/apiFootballService.js`.
+
 ---
 
 ## Phase 6 — Admin

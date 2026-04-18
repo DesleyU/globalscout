@@ -1,4 +1,3 @@
-using System.Text.Json;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Users;
@@ -28,20 +27,6 @@ internal sealed class UpdateUsersProfileCommandHandler(IUserDirectoryRepository 
             await users.SetPlayerIdAsync(command.UserId, null, cancellationToken);
         }
 
-        JsonDocument? statsDoc = null;
-        if (command.StatsDataJson is { Length: > 0 } json)
-        {
-            try
-            {
-                statsDoc = JsonDocument.Parse(json);
-            }
-            catch (JsonException)
-            {
-                return Result.Failure<UsersFullProfileResult>(
-                    Error.Validation("Users.StatsData.Invalid", "StatsData must be valid JSON."));
-            }
-        }
-
         var patch = new ProfileFieldPatch
         {
             FirstName = command.FirstName,
@@ -61,10 +46,9 @@ internal sealed class UpdateUsersProfileCommandHandler(IUserDirectoryRepository 
             Linkedin = command.Linkedin,
             Country = command.Country,
             City = command.City,
-            StatsData = statsDoc
         };
 
-        if (patch.HasAny || statsDoc is not null)
+        if (patch.HasAny)
         {
             await users.UpdateProfileFieldsAsync(command.UserId, patch, cancellationToken);
         }

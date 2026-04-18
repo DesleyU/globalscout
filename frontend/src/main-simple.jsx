@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 
-// Eenvoudige test component
+// Simple test component
 function SimpleApp() {
   return (
     <div style={{
@@ -20,13 +20,13 @@ function SimpleApp() {
         margin: '20px auto',
         maxWidth: '600px'
       }}>
-        <h2>✅ React Werkt!</h2>
-        <p>Als je dit ziet, dan werkt React correct.</p>
-        <p><strong>Tijd:</strong> {new Date().toLocaleString('nl-NL')}</p>
+        <h2>✅ React Works!</h2>
+        <p>If you see this, React is working correctly.</p>
+        <p><strong>Time:</strong> {new Date().toLocaleString('en-US')}</p>
         
         <div style={{ margin: '20px 0' }}>
           <button 
-            onClick={() => alert('JavaScript werkt!')}
+            onClick={() => alert('JavaScript works!')}
             style={{
               background: '#3b82f6',
               color: 'white',
@@ -52,7 +52,7 @@ function SimpleApp() {
               margin: '5px'
             }}
           >
-            Ga naar HTML Test
+            Go to HTML Test
           </button>
         </div>
 
@@ -62,11 +62,11 @@ function SimpleApp() {
           borderRadius: '5px',
           textAlign: 'left'
         }}>
-          <h3>🔧 Volgende Stappen:</h3>
+          <h3>🔧 Next Steps:</h3>
           <ol>
-            <li>Als je dit ziet → React mounting werkt ✅</li>
-            <li>Probleem ligt waarschijnlijk bij AuthContext of routing</li>
-            <li>Ga terug naar normale app en check console</li>
+            <li>If you see this → React mounting works ✅</li>
+            <li>The issue is likely with AuthContext or routing</li>
+            <li>Go back to normal app and check the console</li>
           </ol>
         </div>
       </div>

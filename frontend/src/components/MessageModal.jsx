@@ -10,23 +10,23 @@ const MessageModal = ({ isOpen, onClose, receiverId, receiverName }) => {
   const sendMessageMutation = useMutation({
     mutationFn: ({ receiverId, content }) => api.messages.sendMessage(receiverId, content),
     onSuccess: () => {
-      toast.success('Bericht verzonden!');
+      toast.success('Message sent!');
       setMessage('');
       onClose();
     },
     onError: (error) => {
-      toast.error(error.response?.data?.error || 'Fout bij verzenden van bericht');
+      toast.error(error.response?.data?.error || 'Error sending message');
     }
   });
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!message.trim()) {
-      toast.error('Bericht kan niet leeg zijn');
+      toast.error('Message cannot be empty');
       return;
     }
     if (message.length > 1000) {
-      toast.error('Bericht is te lang (max 1000 karakters)');
+      toast.error('Message is too long (max 1000 characters)');
       return;
     }
     sendMessageMutation.mutate({ receiverId, content: message.trim() });
@@ -38,7 +38,7 @@ const MessageModal = ({ isOpen, onClose, receiverId, receiverName }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
       <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-xl font-semibold">Bericht sturen naar {receiverName}</h2>
+          <h2 className="text-xl font-semibold">Send message to {receiverName}</h2>
           <button
             onClick={onClose}
             className="text-gray-400 hover:text-gray-600 transition-colors"
@@ -50,13 +50,13 @@ const MessageModal = ({ isOpen, onClose, receiverId, receiverName }) => {
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
-              Bericht
+              Message
             </label>
             <textarea
               id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Typ je bericht hier..."
+              placeholder="Type your message here..."
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
               rows={4}
               maxLength={1000}
@@ -74,7 +74,7 @@ const MessageModal = ({ isOpen, onClose, receiverId, receiverName }) => {
               className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
               disabled={sendMessageMutation.isPending}
             >
-              Annuleren
+              Cancel
             </button>
             <button
               type="submit"
@@ -84,12 +84,12 @@ const MessageModal = ({ isOpen, onClose, receiverId, receiverName }) => {
               {sendMessageMutation.isPending ? (
                 <>
                   <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-                  <span>Verzenden...</span>
+                  <span>Sending...</span>
                 </>
               ) : (
                 <>
                   <Send className="h-4 w-4" />
-                  <span>Verzenden</span>
+                  <span>Send</span>
                 </>
               )}
             </button>

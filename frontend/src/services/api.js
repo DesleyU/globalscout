@@ -63,6 +63,14 @@ export const authAPI = {
   getCurrentUser: () => apiClient.get('/users/profile').then(res => res.data),
 };
 
+// Billing (Stripe Checkout)
+export const billingAPI = {
+  createCheckoutSession: () =>
+    apiClient.post('/billing/checkout-session').then((res) => res.data),
+  createPortalSession: () =>
+    apiClient.post('/billing/portal-session').then((res) => res.data),
+};
+
 // Users API
 export const usersAPI = {
   getProfile: () => apiClient.get('/users/profile').then(res => res.data),
@@ -140,6 +148,7 @@ export const messagesAPI = {
 
 export const api = {
   auth: authAPI,
+  billing: billingAPI,
   users: usersAPI,
   connections: connectionsAPI,
   admin: adminAPI,

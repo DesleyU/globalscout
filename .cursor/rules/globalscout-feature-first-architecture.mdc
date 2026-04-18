@@ -1,0 +1,39 @@
+---
+description: GlobalScout .NET — feature-first folders, namespaces, and layer boundaries
+globs: src/GlobalScout/**/*.cs
+alwaysApply: false
+---
+
+# GlobalScout — feature-first architecture
+
+Match the **clean-architecture template**: **feature/use-case folders** inside each project; **technical/cross-cutting** folders only for shared plumbing.
+
+## Application (`GlobalScout.Application`)
+
+- **Social** is one bounded area. Use **`Social/<Feature>/<UseCase>/`** (not loose `Social/SendConnection` without `Connections/`).
+  - **Connections:** `Social/Connections/SendConnection`, `RespondConnection`, `GetConnections`, `GetPendingRequests`
+  - **Follow:** commands in `Social/Follow/`; queries in `Social/Follow/GetFollowers`, `GetFollowing`, `GetFollowStats`, `GetFollowStatus` (not `FollowLists`)
+  - **Messages:** `Social/Messages/<UseCase>/` (e.g. `SendMessage`, `GetConversation`, `GetConversations`, `MarkRead`)
+- **Namespace = folder path:** e.g. `GlobalScout.Application.Social.Connections.SendConnection`, `...Social.Follow.GetFollowers`, `...Social.Messages.SendMessage`
+- **Shared social DTOs/errors:** `Social/SocialDtos.cs`, `Social/SocialErrors.cs`; messages: `Social/Messages/MessageDtos.cs`, `MessageErrors.cs`
+- **Abstractions:** message ports in `Abstractions/Social/Messages/`; graph + user directory in `Abstractions/Persistence/`; cross-cutting in `Abstractions/Messaging`, `Behaviors`, `Files`, `Auth`
+
+## Infrastructure (`GlobalScout.Infrastructure`)
+
+- **Social graph** (connections + follows): `Social/Graph/SocialGraphRepository.cs` — `GlobalScout.Infrastructure.Social.Graph`
+- **Messages:** `Social/Messages/MessageRepository.cs` — `GlobalScout.Infrastructure.Social.Messages`
+- **Users:** `Users/UserDirectoryRepository.cs`
+- **Technical:** `Data/`, `Auth/`, `Identity/`
+
+## Api (`GlobalScout.Api`)
+
+- **HTTP:** `Endpoints/Social/<Feature>/` (`Connections`, `Follow`, `Messages`)
+- **Messages SignalR:** `Social/Messages/MessageHub.cs`, `SignalRMessageNotifier.cs` — `GlobalScout.Api.Social.Messages`
+- **Cross-cutting:** `Infrastructure/` (e.g. `CustomResults`, avatar storage)
+
+## Anti-patterns (avoid)
+
+- `Application/Social/FollowLists` or connection handlers outside `Social/Connections/`
+- `IMessageRepository` / `IMessageRealtimeNotifier` under `Persistence` or `RealTime`
+- `SocialGraphRepository` directly under `Infrastructure/Social/` (use `Social/Graph/`)
+- Message hub/notifier only under `Hubs/` or `RealTime/` (use `Social/Messages/`)

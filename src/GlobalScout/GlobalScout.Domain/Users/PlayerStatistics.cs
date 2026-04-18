@@ -1,3 +1,5 @@
+using System.Text.Json;
+
 namespace GlobalScout.Domain.Users;
 
 public sealed class PlayerStatistics
@@ -8,37 +10,14 @@ public sealed class PlayerStatistics
 
     public string Season { get; set; } = string.Empty;
 
-    public int Goals { get; set; }
+    /// <summary>e.g. <c>manual</c>, <c>api-football</c></summary>
+    public string Source { get; set; } = "manual";
 
-    public int Assists { get; set; }
+    /// <summary>Contract version for <see cref="Data"/> payload shape.</summary>
+    public string SchemaVersion { get; set; } = "1";
 
-    public int Matches { get; set; }
-
-    public int Minutes { get; set; }
-
-    public int YellowCards { get; set; }
-
-    public int RedCards { get; set; }
-
-    public double? Rating { get; set; }
-
-    public int? ShotsTotal { get; set; }
-
-    public int? ShotsOnTarget { get; set; }
-
-    public int? PassesTotal { get; set; }
-
-    public double? PassesAccuracy { get; set; }
-
-    public int? TacklesTotal { get; set; }
-
-    public int? TacklesInterceptions { get; set; }
-
-    public int? DuelsWon { get; set; }
-
-    public int? FoulsCommitted { get; set; }
-
-    public int? FoulsDrawn { get; set; }
+    /// <summary>All metrics and provider-specific payload (single source of truth).</summary>
+    public JsonDocument? Data { get; set; }
 
     public DateTimeOffset CreatedAt { get; set; }
 

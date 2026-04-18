@@ -8,7 +8,8 @@ export default defineConfig({
     port: 5173,
     proxy: {
       '/api': {
-        target: 'http://localhost:5000',
+        // Must match GlobalScout.Api HTTP URL (see Properties/launchSettings.json, e.g. http://localhost:5288)
+        target: 'http://localhost:5288',
         changeOrigin: true,
         secure: false,
       }

@@ -38,6 +38,8 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
 
     public DbSet<UserBlock> UserBlocks => Set<UserBlock>();
 
+    public DbSet<StripeProcessedWebhookEvent> StripeProcessedWebhookEvents => Set<StripeProcessedWebhookEvent>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -65,7 +67,6 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
                 .HasForeignKey<Profile>(p => p.UserId)
                 .HasConstraintName("fk_profiles_users_user_id")
                 .OnDelete(DeleteBehavior.Cascade);
-            b.Property(p => p.StatsData).HasColumnType("jsonb");
         });
 
         builder.Entity<Club>(b =>
@@ -127,7 +128,10 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         builder.Entity<PlayerStatistics>(b =>
         {
             b.ToTable("player_statistics");
-            b.HasIndex(p => new { p.UserId, p.Season }).IsUnique();
+            b.HasIndex(p => new { p.UserId, p.Season, p.Source }).IsUnique();
+            b.Property(p => p.Source).HasMaxLength(64).IsRequired();
+            b.Property(p => p.SchemaVersion).HasMaxLength(32).IsRequired();
+            b.Property(p => p.Data).HasColumnType("jsonb");
             b.HasOne<ApplicationUser>()
                 .WithMany(u => u.PlayerStatistics)
                 .HasForeignKey(p => p.UserId)
@@ -171,6 +175,13 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
                 .HasForeignKey(a => a.UserId)
                 .HasConstraintName("fk_audit_logs_users_user_id")
                 .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        builder.Entity<StripeProcessedWebhookEvent>(b =>
+        {
+            b.ToTable("stripe_processed_webhook_events");
+            b.HasKey(e => e.EventId);
+            b.Property(e => e.EventId).HasMaxLength(128);
         });
 
         builder.Entity<UserBlock>(b =>

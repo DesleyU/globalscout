@@ -1,7 +1,7 @@
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Social;
-using GlobalScout.Application.Social.FollowLists;
+using GlobalScout.Application.Social.Follow.GetFollowStats;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Api.Endpoints.Social.Follow;

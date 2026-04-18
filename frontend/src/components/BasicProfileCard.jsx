@@ -61,7 +61,7 @@ const BasicProfileCard = ({ user, isOwnProfile = false, onUpgrade }) => {
               <div>
                 <div className="flex items-center gap-2 mb-1">
                   <h3 className="text-lg font-semibold text-gray-900 truncate">
-                    {profile?.firstName || 'Onbekend'} {profile?.lastName || 'Gebruiker'}
+                    {profile?.firstName || 'Unknown'} {profile?.lastName || 'User'}
                   </h3>
                   {isPremiumUser && (
                     <PremiumBadge size="xs" variant="gold" />
@@ -69,7 +69,7 @@ const BasicProfileCard = ({ user, isOwnProfile = false, onUpgrade }) => {
                 </div>
                 <div className="flex items-center mt-1">
                   <span className="text-sm text-gray-600">
-                    {profile?.position || (userRole === 'PLAYER' ? 'Speler' : userRole === 'CLUB' ? 'Club' : userRole === 'SCOUT_AGENT' ? 'Scout/Agent' : 'Gebruiker')}
+                    {profile?.position || (userRole === 'PLAYER' ? 'Player' : userRole === 'CLUB' ? 'Club' : userRole === 'SCOUT_AGENT' ? 'Scout/Agent' : 'User')}
                   </span>
                   {isBasicUser && !isPremiumUser && (
                     <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-800">
@@ -84,7 +84,7 @@ const BasicProfileCard = ({ user, isOwnProfile = false, onUpgrade }) => {
             <div className="mt-4 space-y-2">
               {profile?.age && (
                 <div className="text-sm text-gray-600">
-                  <span className="font-medium">Leeftijd:</span> {profile.age}
+                  <span className="font-medium">Age:</span> {profile.age}
                 </div>
               )}
               

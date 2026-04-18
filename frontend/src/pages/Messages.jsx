@@ -45,10 +45,10 @@ const Messages = () => {
       setNewMessage('');
       queryClient.invalidateQueries(['conversations']);
       queryClient.invalidateQueries(['conversation', selectedConversation?.id]);
-      toast.success('Bericht verzonden!');
+      toast.success('Message sent!');
     },
     onError: (error) => {
-      toast.error(error.response?.data?.message || 'Fout bij verzenden van bericht');
+      toast.error(error.response?.data?.message || 'Error sending message');
     }
   });
 
@@ -91,11 +91,11 @@ const Messages = () => {
     const diffInHours = (now - date) / (1000 * 60 * 60);
 
     if (diffInHours < 24) {
-      return date.toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
+      return date.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
     } else if (diffInHours < 168) { // 7 days
-      return date.toLocaleDateString('nl-NL', { weekday: 'short' });
+      return date.toLocaleDateString('en-US', { weekday: 'short' });
     } else {
-      return date.toLocaleDateString('nl-NL', { day: 'numeric', month: 'short' });
+      return date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
     }
   };
 
@@ -116,14 +116,14 @@ const Messages = () => {
             <div className={`${selectedConversation ? 'hidden md:block' : 'block'} w-full md:w-1/3 border-r border-gray-200 flex flex-col`}>
               {/* Header */}
               <div className="p-4 border-b border-gray-200">
-                <h1 className="text-xl font-semibold text-gray-900 mb-4">Berichten</h1>
+                <h1 className="text-xl font-semibold text-gray-900 mb-4">Messages</h1>
                 
                 {/* Search */}
                 <div className="relative">
                   <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                   <input
                     type="text"
-                    placeholder="Zoek conversaties..."
+                    placeholder="Search conversations..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -136,7 +136,7 @@ const Messages = () => {
                 {filteredConversations.length === 0 ? (
                   <div className="p-8 text-center">
                     <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                    <p className="text-gray-500">Geen conversaties gevonden</p>
+                    <p className="text-gray-500">No conversations found</p>
                   </div>
                 ) : (
                   filteredConversations.map((conversation) => (
@@ -207,7 +207,7 @@ const Messages = () => {
                             : selectedConversation.otherUser.email}
                         </h2>
                         <p className="text-sm text-gray-500">
-                          {selectedConversation.otherUser.profile?.company || 'Geen bedrijf'}
+                          {selectedConversation.otherUser.profile?.company || 'No company'}
                         </p>
                       </div>
                     </div>
@@ -222,7 +222,7 @@ const Messages = () => {
                     ) : messages?.length === 0 ? (
                       <div className="text-center py-8">
                         <MessageCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <p className="text-gray-500">Nog geen berichten in deze conversatie</p>
+                        <p className="text-gray-500">No messages in this conversation yet</p>
                       </div>
                     ) : (
                       messages?.map((message) => (
@@ -259,7 +259,7 @@ const Messages = () => {
                         type="text"
                         value={newMessage}
                         onChange={(e) => setNewMessage(e.target.value)}
-                        placeholder="Typ een bericht..."
+                        placeholder="Type a message..."
                         className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                         disabled={sendMessageMutation.isLoading}
                       />
@@ -277,8 +277,8 @@ const Messages = () => {
                 <div className="flex-1 flex items-center justify-center">
                   <div className="text-center">
                     <MessageCircle className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-                    <h3 className="text-lg font-medium text-gray-900 mb-2">Selecteer een conversatie</h3>
-                    <p className="text-gray-500">Kies een conversatie om berichten te bekijken</p>
+                    <h3 className="text-lg font-medium text-gray-900 mb-2">Select a conversation</h3>
+                    <p className="text-gray-500">Choose a conversation to view messages</p>
                   </div>
                 </div>
               )}

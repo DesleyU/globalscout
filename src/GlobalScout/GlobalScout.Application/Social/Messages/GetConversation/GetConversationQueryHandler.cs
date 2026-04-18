@@ -1,5 +1,6 @@
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
+using GlobalScout.Application.Abstractions.Social.Messages;
 using GlobalScout.SharedKernel;
 using GlobalScout.Application.Social.Messages;
 
@@ -16,7 +17,7 @@ internal sealed class GetConversationQueryHandler(
     {
         if (!await social.UserExistsAsync(query.OtherUserId, cancellationToken))
         {
-            return Result.Failure<GetConversationResult>(MessagingErrors.ReceiverNotFound);
+            return Result.Failure<GetConversationResult>(MessageErrors.ReceiverNotFound);
         }
 
         (IReadOnlyList<MessageThreadDto> page, bool hasMore) = await messages.GetConversationPageAsync(

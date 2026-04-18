@@ -1,7 +1,7 @@
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Social;
-using GlobalScout.Application.Social.SendConnection;
+using GlobalScout.Application.Social.Connections.SendConnection;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Api.Endpoints.Social.Connections;
