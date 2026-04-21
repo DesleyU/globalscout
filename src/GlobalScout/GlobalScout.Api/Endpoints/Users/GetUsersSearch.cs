@@ -20,8 +20,8 @@ internal sealed class GetUsersSearch : IEndpoint
                     string? club,
                     string? country,
                     string? city,
-                    int? minAge,
-                    int? maxAge,
+                    string? minAge,
+                    string? maxAge,
                     string? search,
                     int? page,
                     int? limit,
@@ -33,6 +33,34 @@ internal sealed class GetUsersSearch : IEndpoint
                         return Results.Unauthorized();
                     }
 
+                    int? parsedMinAge;
+                    if (string.IsNullOrWhiteSpace(minAge))
+                    {
+                        parsedMinAge = null;
+                    }
+                    else if (int.TryParse(minAge, out var minAgeValue))
+                    {
+                        parsedMinAge = minAgeValue;
+                    }
+                    else
+                    {
+                        return Results.BadRequest(new { error = "Invalid minAge. Expected an integer." });
+                    }
+
+                    int? parsedMaxAge;
+                    if (string.IsNullOrWhiteSpace(maxAge))
+                    {
+                        parsedMaxAge = null;
+                    }
+                    else if (int.TryParse(maxAge, out var maxAgeValue))
+                    {
+                        parsedMaxAge = maxAgeValue;
+                    }
+                    else
+                    {
+                        return Results.BadRequest(new { error = "Invalid maxAge. Expected an integer." });
+                    }
+
                     var query = new SearchUsersQuery(
                         userId.Value,
                         role,
@@ -40,8 +68,8 @@ internal sealed class GetUsersSearch : IEndpoint
                         club,
                         country,
                         city,
-                        minAge,
-                        maxAge,
+                        parsedMinAge,
+                        parsedMaxAge,
                         search,
                         page ?? 1,
                         limit ?? 20);

@@ -82,7 +82,19 @@ const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
     large: 'w-6 h-6'
   };
 
-  const avatarSrc = preview || (currentAvatar ? `http://localhost:5000${currentAvatar}` : null);
+  const apiBaseUrl = import.meta.env.VITE_API_URL;
+  const apiOrigin =
+    typeof apiBaseUrl === 'string' && /^https?:\/\//i.test(apiBaseUrl)
+      ? new URL(apiBaseUrl).origin
+      : '';
+
+  const avatarSrc =
+    preview ||
+    (currentAvatar
+      ? /^https?:\/\//i.test(currentAvatar)
+        ? currentAvatar
+        : `${apiOrigin}${currentAvatar}`
+      : null);
 
   return (
     <div className="flex flex-col items-center space-y-4">

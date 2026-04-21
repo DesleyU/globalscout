@@ -12,6 +12,12 @@ export default defineConfig({
         target: 'http://localhost:5288',
         changeOrigin: true,
         secure: false,
+      },
+      // Serve uploaded media in dev (e.g. /uploads/avatars/...)
+      '/uploads': {
+        target: 'http://localhost:5288',
+        changeOrigin: true,
+        secure: false,
       }
     }
   },

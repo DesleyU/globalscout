@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize, Download, Trash2 } from 'lucide-react';
-import { api } from '../services/api';
+import { api, resolveApiAssetUrl } from '../services/api';
 import toast from 'react-hot-toast';
 
 const VideoDisplay = ({ video, onDelete, showControls = true, autoPlay = false }) => {
@@ -12,11 +12,7 @@ const VideoDisplay = ({ video, onDelete, showControls = true, autoPlay = false }
   const [videoError, setVideoError] = useState(null);
   const videoRef = useRef(null);
 
-  // Debug video URL construction
-  // Check if URL already includes the base URL to avoid duplication
-  const videoUrl = video.url.startsWith('http') ? video.url : `http://localhost:5000${video.url}`;
-  console.log('🎥 VideoDisplay - Video object:', video);
-  console.log('🎥 VideoDisplay - Constructed URL:', videoUrl);
+  const videoUrl = resolveApiAssetUrl(video?.url);
 
   const handlePlayPause = () => {
     if (videoRef.current) {
@@ -78,7 +74,6 @@ const VideoDisplay = ({ video, onDelete, showControls = true, autoPlay = false }
   };
 
   const handleCanPlay = () => {
-    console.log('Video can play:', video.url);
     setVideoError(null);
   };
 

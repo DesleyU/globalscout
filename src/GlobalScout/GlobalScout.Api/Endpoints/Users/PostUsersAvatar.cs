@@ -14,7 +14,7 @@ internal sealed class PostUsersAvatar : IEndpoint
                 UsersRoutes.Avatar,
                 async (
                     ClaimsPrincipal principal,
-                    IFormFile file,
+                    IFormFile avatar,
                     ICommandHandler<UploadUserAvatarCommand, UploadUserAvatarResult> handler,
                     CancellationToken cancellationToken) =>
                 {
@@ -24,13 +24,18 @@ internal sealed class PostUsersAvatar : IEndpoint
                         return Results.Unauthorized();
                     }
 
-                    var stream = file.OpenReadStream();
+                    if (avatar is null || avatar.Length <= 0)
+                    {
+                        return Results.BadRequest(new { error = "Missing avatar file." });
+                    }
+
+                    var stream = avatar.OpenReadStream();
                     var command = new UploadUserAvatarCommand
                     {
                         UserId = userId.Value,
                         FileStream = stream,
-                        FileName = file.FileName,
-                        ContentType = file.ContentType ?? "application/octet-stream"
+                        FileName = avatar.FileName,
+                        ContentType = avatar.ContentType ?? "application/octet-stream"
                     };
 
                     var result = await handler.Handle(command, cancellationToken);

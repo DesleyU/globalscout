@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { resolveApiAssetUrl } from '../services/api';
 
 const Avatar = ({ 
   src, 
@@ -25,7 +26,7 @@ const Avatar = ({
     return `${firstInitial}${lastInitial}`.toUpperCase();
   };
 
-  const avatarSrc = src ? `http://localhost:5000${src}` : null;
+  const avatarSrc = src ? resolveApiAssetUrl(src) : null;
   const shouldShowImage = avatarSrc && !imageError;
 
   const handleImageError = () => {

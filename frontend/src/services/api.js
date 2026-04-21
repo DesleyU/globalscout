@@ -4,6 +4,19 @@ import toast from 'react-hot-toast';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
 
+const API_ORIGIN =
+  typeof API_BASE_URL === 'string' && /^https?:\/\//i.test(API_BASE_URL)
+    ? new URL(API_BASE_URL).origin
+    : '';
+
+export function resolveApiAssetUrl(path) {
+  if (!path) return path;
+  if (typeof path !== 'string') return path;
+  if (/^https?:\/\//i.test(path)) return path;
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  return `${API_ORIGIN}${normalized}`;
+}
+
 // Create axios instance
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -134,6 +147,7 @@ export const followAPI = {
   unfollowUser: (userId) => apiClient.delete(`/follow/${userId}/unfollow`).then(res => res.data),
   getFollowers: (userId) => apiClient.get(`/follow/${userId}/followers`).then(res => res.data),
   getFollowing: (userId) => apiClient.get(`/follow/${userId}/following`).then(res => res.data),
+  getFollowStats: (userId) => apiClient.get(`/follow/${userId}/stats`).then(res => res.data),
   checkFollowStatus: (userId) => apiClient.get(`/follow/${userId}/status`).then(res => res.data),
 };
 

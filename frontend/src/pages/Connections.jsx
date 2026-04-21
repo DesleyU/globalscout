@@ -54,7 +54,7 @@ const Connections = () => {
     enabled: !!user?.id
   });
 
-  const followers = followersData?.followers || [];
+  const followersList = followersData?.followers || [];
 
   // Fetch following
   const { data: followingData, isLoading: followingLoading } = useQuery({
@@ -63,7 +63,7 @@ const Connections = () => {
     enabled: !!user?.id
   });
 
-  const following = followingData?.following || [];
+  const followingList = followingData?.following || [];
 
   // Respond to connection request mutation
   const respondToRequestMutation = useMutation({
@@ -125,8 +125,8 @@ const Connections = () => {
   const tabs = [
     { id: 'connections', label: 'My Connections', count: connections?.length || 0 },
     { id: 'pending', label: 'Pending Requests', count: pendingRequests?.length || 0 },
-    { id: 'following', label: 'Following', count: following?.following?.length || 0 },
-    { id: 'followers', label: 'Followers', count: followers?.followers?.length || 0 },
+    { id: 'following', label: 'Following', count: followingList?.length || 0 },
+    { id: 'followers', label: 'Followers', count: followersList?.length || 0 },
   ];
 
   return (
@@ -365,9 +365,9 @@ const Connections = () => {
                 <div className="flex justify-center py-8">
                   <LoadingSpinner />
                 </div>
-              ) : following?.following && following.following.length > 0 ? (
+              ) : followingList.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {following.following.map((followItem) => {
+                  {followingList.map((followItem) => {
                     const followedUser = followItem.user;
                     const RoleIcon = getRoleIcon(followedUser.role);
                     
@@ -469,9 +469,9 @@ const Connections = () => {
                 <div className="flex justify-center py-8">
                   <LoadingSpinner />
                 </div>
-              ) : followers?.followers && followers.followers.length > 0 ? (
+              ) : followersList.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {followers.followers.map((followerItem) => {
+                  {followersList.map((followerItem) => {
                     const followerUser = followerItem.user;
                     const RoleIcon = getRoleIcon(followerUser.role);
                     
@@ -590,7 +590,7 @@ const Connections = () => {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Following</p>
-              <p className="text-2xl font-bold text-gray-900">{following?.following?.length || 0}</p>
+              <p className="text-2xl font-bold text-gray-900">{followingList.length || 0}</p>
             </div>
           </div>
         </div>
@@ -602,7 +602,7 @@ const Connections = () => {
             </div>
             <div className="ml-4">
               <p className="text-sm font-medium text-gray-600">Followers</p>
-              <p className="text-2xl font-bold text-gray-900">{followers?.followers?.length || 0}</p>
+              <p className="text-2xl font-bold text-gray-900">{followersList.length || 0}</p>
             </div>
           </div>
         </div>

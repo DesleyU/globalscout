@@ -23,16 +23,20 @@ const Dashboard = () => {
   });
 
   // Fetch user connections
-  const { data: connections, isLoading: connectionsLoading } = useQuery({
+  const { data: connectionsData, isLoading: connectionsLoading } = useQuery({
     queryKey: ['connections'],
     queryFn: api.connections.getConnections,
   });
 
+  const connectionsList = connectionsData?.connections || [];
+
   // Fetch pending connection requests
-  const { data: pendingRequests, isLoading: pendingLoading } = useQuery({
+  const { data: pendingRequestsData, isLoading: pendingLoading } = useQuery({
     queryKey: ['pending-requests'],
     queryFn: api.connections.getPendingRequests,
   });
+
+  const pendingRequestsList = pendingRequestsData?.requests || [];
 
   // Fetch recommendations
   const { data: recommendations, isLoading: recommendationsLoading } = useQuery({
@@ -70,7 +74,7 @@ const Dashboard = () => {
   const stats = [
     {
       name: 'Total Connections',
-      value: connections?.length || 0,
+      value: connectionsList.length || 0,
       icon: Users,
       color: 'text-blue-600',
       bgColor: 'bg-blue-100',
@@ -91,7 +95,7 @@ const Dashboard = () => {
     },
     {
       name: 'Pending Requests',
-      value: pendingRequests?.length || 0,
+      value: pendingRequestsList.length || 0,
       icon: Clock,
       color: 'text-yellow-600',
       bgColor: 'bg-yellow-100',
@@ -221,10 +225,7 @@ const Dashboard = () => {
                 {userVideos.map((video) => (
                   <VideoDisplay 
                     key={video.id} 
-                    video={{
-                      ...video,
-                      url: `http://localhost:5000${video.url}`
-                    }} 
+                    video={video}
                   />
                 ))}
               </div>
@@ -284,12 +285,10 @@ const Dashboard = () => {
           <div className="p-8">
             {connectionsLoading ? (
               <LoadingSpinner />
-            ) : connections && connections.length > 0 ? (
+            ) : connectionsList.length > 0 ? (
               <div className="space-y-4">
-                {connections.slice(0, 5).map((connection) => {
-                  const connectedUser = connection.requester.id === user.id 
-                    ? connection.receiver 
-                    : connection.requester;
+                {connectionsList.slice(0, 5).map((connection) => {
+                  const connectedUser = connection.user;
                   
                   return (
                     <div key={connection.id} className="flex items-center space-x-3">
@@ -402,7 +401,7 @@ const Dashboard = () => {
       </div>
 
       {/* Pending Requests */}
-      {pendingRequests && pendingRequests.length > 0 && (
+      {pendingRequestsList.length > 0 && (
         <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20">
           <div className="p-8 border-b border-gray-200/50">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-gray-900 via-blue-800 to-indigo-800 bg-clip-text text-transparent">Pending Connection Requests</h2>
@@ -412,7 +411,7 @@ const Dashboard = () => {
               <LoadingSpinner />
             ) : (
               <div className="space-y-4">
-                {pendingRequests.slice(0, 3).map((request) => (
+                {pendingRequestsList.slice(0, 3).map((request) => (
                   <div key={request.id} className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
                       <div className="flex-shrink-0">
@@ -439,13 +438,13 @@ const Dashboard = () => {
                     </div>
                   </div>
                 ))}
-                {pendingRequests.length > 3 && (
+                {pendingRequestsList.length > 3 && (
                   <div className="text-center pt-4">
                     <Link
                       to="/connections"
                       className="text-sm font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
                     >
-                      View all {pendingRequests.length} pending requests
+                      View all {pendingRequestsList.length} pending requests
                     </Link>
                   </div>
                 )}

@@ -19,7 +19,7 @@ const FollowButton = ({ userId, size = 'medium', className = '' }) => {
     mutationFn: () => api.follow.followUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries(['followStatus', userId]);
-      queryClient.invalidateQueries(['followStats', userId]);
+      queryClient.invalidateQueries({ queryKey: ['followStats'] });
       queryClient.invalidateQueries(['recommendations']);
       toast.success('Successfully followed user');
     },
@@ -33,7 +33,7 @@ const FollowButton = ({ userId, size = 'medium', className = '' }) => {
     mutationFn: () => api.follow.unfollowUser(userId),
     onSuccess: () => {
       queryClient.invalidateQueries(['followStatus', userId]);
-      queryClient.invalidateQueries(['followStats', userId]);
+      queryClient.invalidateQueries({ queryKey: ['followStats'] });
       queryClient.invalidateQueries(['recommendations']);
       toast.success('Successfully unfollowed user');
     },

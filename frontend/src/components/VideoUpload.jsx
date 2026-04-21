@@ -304,10 +304,7 @@ const VideoUpload = ({ userVideos = [], onVideoUpdate }) => {
             {userVideos.map((video) => (
               <VideoDisplay
                 key={video.id}
-                video={{
-                  ...video,
-                  url: `http://localhost:5000${video.url}`
-                }}
+                video={video}
                 onDelete={handleDeleteVideo}
                 showControls={true}
                 autoPlay={false}
