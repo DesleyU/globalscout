@@ -1,0 +1,95 @@
+name: Deploy to AWS
+
+on:
+  workflow_dispatch:
+    inputs:
+      image_tag:
+        description: Optional image tag override. Defaults to the current commit SHA.
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  AWS_REGION: ${{ vars.AWS_REGION }}
+  ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
+  DEPLOY_PATH: ${{ vars.DEPLOY_PATH || '/opt/globalscout' }}
+  IMAGE_TAG: ${{ inputs.image_tag || github.sha }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Log in to Amazon ECR
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Build and push API image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: src/GlobalScout/GlobalScout.Api/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.ECR_REGISTRY }}/globalscout-api:${{ env.IMAGE_TAG }}
+            ${{ env.ECR_REGISTRY }}/globalscout-api:latest
+
+      - name: Build and push migrator image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: src/GlobalScout/GlobalScout.Migrator/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: |
+            ${{ env.ECR_REGISTRY }}/globalscout-migrator:${{ env.IMAGE_TAG }}
+            ${{ env.ECR_REGISTRY }}/globalscout-migrator:latest
+
+      - name: Build and push UI image
+        uses: docker/build-push-action@v6
+        with:
+          context: frontend
+          platforms: linux/amd64
+          push: true
+          build-args: |
+            VITE_API_URL=/api
+          tags: |
+            ${{ env.ECR_REGISTRY }}/globalscout-ui:${{ env.IMAGE_TAG }}
+            ${{ env.ECR_REGISTRY }}/globalscout-ui:latest
+
+      - name: Prepare SSH key
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Copy compose file to EC2
+        run: |
+          ssh "${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}" "sudo mkdir -p '${DEPLOY_PATH}' && sudo chown '${{ vars.EC2_USER }}':'${{ vars.EC2_USER }}' '${DEPLOY_PATH}'"
+          scp deploy/docker-compose.ec2.yml "${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:${DEPLOY_PATH}/docker-compose.yml"
+
+      - name: Deploy on EC2
+        run: |
+          ssh "${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}" "set -euo pipefail
+          cd '${DEPLOY_PATH}'
+          test -f .env
+          aws ecr get-login-password --region '${AWS_REGION}' | docker login --username AWS --password-stdin '${ECR_REGISTRY}'
+          ECR_REGISTRY='${ECR_REGISTRY}' IMAGE_TAG='${IMAGE_TAG}' docker compose --env-file .env pull
+          ECR_REGISTRY='${ECR_REGISTRY}' IMAGE_TAG='${IMAGE_TAG}' docker compose --env-file .env up -d --remove-orphans
+          docker image prune -f"

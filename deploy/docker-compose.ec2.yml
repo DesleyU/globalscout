@@ -1,0 +1,58 @@
+services:
+  postgres:
+    image: postgres:17-alpine
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-globalscout}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  migrator:
+    image: ${ECR_REGISTRY}/globalscout-migrator:${IMAGE_TAG}
+    env_file:
+      - .env
+    environment:
+      ConnectionStrings__globalscout: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-globalscout};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD}"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    image: ${ECR_REGISTRY}/globalscout-api:${IMAGE_TAG}
+    env_file:
+      - .env
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
+      ConnectionStrings__globalscout: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-globalscout};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD}"
+      AvatarStorage__PhysicalAvatarsDirectory: /app/wwwroot/uploads/avatars
+      VideoStorage__PhysicalVideosDirectory: /app/wwwroot/uploads/videos
+    volumes:
+      - uploads-data:/app/wwwroot/uploads
+    depends_on:
+      migrator:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  ui:
+    image: ${ECR_REGISTRY}/globalscout-ui:${IMAGE_TAG}
+    ports:
+      - "${HTTP_PORT:-80}:80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  postgres-data:
+  uploads-data:
