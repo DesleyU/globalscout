@@ -16,6 +16,7 @@ using GlobalScout.Infrastructure.Statistics;
 using GlobalScout.Domain.Identity;
 using GlobalScout.Infrastructure.Users;
 using GlobalScout.Infrastructure.Billing;
+using GlobalScout.Infrastructure.Files;
 using GlobalScout.Application.Abstractions.Billing;
 using EFCore.NamingConventions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -37,6 +38,7 @@ public static class DependencyInjection
             .AddDatabase(configuration)
             .AddGlobalScoutIdentity(configuration)
             .AddStripeBilling(configuration)
+            .AddFileStorage(configuration)
             .AddPersistenceHealthChecks(configuration);
 
     private static IServiceCollection AddDatabase(

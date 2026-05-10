@@ -35,7 +35,7 @@ const Avatar = ({
 
   return (
     <div className={`${sizeClasses[size]} rounded-full overflow-hidden bg-gray-200 flex items-center justify-center`}>
-      {avatarSrc ? (
+      {shouldShowImage ? (
         <img 
           src={avatarSrc} 
           alt={`${firstName} ${lastName}`}

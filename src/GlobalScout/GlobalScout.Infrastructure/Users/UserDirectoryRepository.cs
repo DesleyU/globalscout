@@ -1,3 +1,4 @@
+using GlobalScout.Application.Abstractions.Files;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Users;
 using GlobalScout.Domain.Identity;
@@ -10,7 +11,8 @@ namespace GlobalScout.Infrastructure.Users;
 
 internal sealed class UserDirectoryRepository(
     GlobalScoutDbContext db,
-    UserManager<ApplicationUser> userManager) : IUserDirectoryRepository
+    UserManager<ApplicationUser> userManager,
+    IAvatarUrlResolver avatarUrls) : IUserDirectoryRepository
 {
     public async Task<UsersFullProfileResult?> GetFullProfileAsync(Guid userId, CancellationToken cancellationToken)
     {
@@ -219,7 +221,7 @@ internal sealed class UserDirectoryRepository(
         foreach (var u in users)
         {
             var roleName = await GetRoleNameAsync(u.Id, cancellationToken);
-            items.Add(new SearchUserItem(u.Id, roleName, AccountTypeToApi(u.AccountType), MapProfile(u.Profile)));
+            items.Add(new SearchUserItem(u.Id, roleName, AccountTypeToApi(u.AccountType), await MapProfileAsync(u.Profile, cancellationToken)));
         }
 
         var pages = (int)Math.Ceiling(total / (double)c.Limit);
@@ -275,7 +277,7 @@ internal sealed class UserDirectoryRepository(
         foreach (var u in users)
         {
             var roleName = await GetRoleNameAsync(u.Id, cancellationToken);
-            list.Add(new SearchUserItem(u.Id, roleName, AccountTypeToApi(u.AccountType), MapProfile(u.Profile)));
+            list.Add(new SearchUserItem(u.Id, roleName, AccountTypeToApi(u.AccountType), await MapProfileAsync(u.Profile, cancellationToken)));
         }
 
         return list;
@@ -329,7 +331,7 @@ internal sealed class UserDirectoryRepository(
             roleName,
             tier,
             user.AccountType,
-            MapProfile(user.Profile),
+            await MapProfileAsync(user.Profile, cancellationToken),
             tier);
     }
 
@@ -363,7 +365,7 @@ internal sealed class UserDirectoryRepository(
         return await BuildPremiumVisitorsAsync(profileOwnerId, stats, cancellationToken);
     }
 
-    public async Task SetAvatarAsync(Guid userId, string avatarUrl, CancellationToken cancellationToken)
+    public async Task SetAvatarStorageKeyAsync(Guid userId, string storageKey, CancellationToken cancellationToken)
     {
         var profile = await db.Profiles.FirstOrDefaultAsync(p => p.UserId == userId, cancellationToken);
         if (profile is null)
@@ -371,10 +373,16 @@ internal sealed class UserDirectoryRepository(
             return;
         }
 
-        profile.Avatar = avatarUrl;
+        profile.AvatarStorageKey = storageKey;
         profile.UpdatedAt = DateTimeOffset.UtcNow;
         await db.SaveChangesAsync(cancellationToken);
     }
+
+    public async Task<string?> GetAvatarStorageKeyAsync(Guid userId, CancellationToken cancellationToken) =>
+        await db.Profiles.AsNoTracking()
+            .Where(p => p.UserId == userId)
+            .Select(p => p.AvatarStorageKey)
+            .FirstOrDefaultAsync(cancellationToken);
 
     private async Task<GetProfileVisitorsResult> BuildPremiumVisitorsAsync(
         Guid profileOwnerId,
@@ -394,13 +402,14 @@ internal sealed class UserDirectoryRepository(
             .ToDictionaryAsync(u => u.Id, cancellationToken);
         var roleMap = await GetRoleNamesForUsersAsync(visitorIds, cancellationToken);
 
-        var entries = visits.Select(v =>
+        var entries = new List<ProfileVisitorEntry>();
+        foreach (var v in visits)
         {
             usersDict.TryGetValue(v.VisitorId, out ApplicationUser? visitor);
             var p = visitor?.Profile;
             roleMap.TryGetValue(v.VisitorId, out var roleName);
             roleName ??= AppRoleNames.Player;
-            return new ProfileVisitorEntry(
+            entries.Add(new ProfileVisitorEntry(
                 v.Id,
                 UserRoleToApiString(v.VisitorRole),
                 v.CreatedAt,
@@ -410,9 +419,9 @@ internal sealed class UserDirectoryRepository(
                     new VisitorProfileSnippet(
                         p?.FirstName,
                         p?.LastName,
-                        p?.Avatar,
-                        p?.ClubName)));
-        }).ToList();
+                        await avatarUrls.ResolveAsync(p?.AvatarStorageKey, cancellationToken),
+                        p?.ClubName))));
+        }
 
         return new GetProfileVisitorsResult("PREMIUM", null, stats, entries.Count, entries);
     }
@@ -484,12 +493,12 @@ internal sealed class UserDirectoryRepository(
             UserStatusToApi(user.Status),
             AccountTypeToApi(user.AccountType),
             user.PlayerId,
-            MapProfile(user.Profile),
+            await MapProfileAsync(user.Profile, cancellationToken),
             user.CreatedAt,
             user.UpdatedAt);
     }
 
-    private static UserProfileApiDto? MapProfile(Profile? p)
+    private async Task<UserProfileApiDto?> MapProfileAsync(Profile? p, CancellationToken cancellationToken)
     {
         if (p is null)
         {
@@ -500,7 +509,7 @@ internal sealed class UserDirectoryRepository(
             p.UserId,
             p.FirstName,
             p.LastName,
-            p.Avatar,
+            await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken),
             p.Bio,
             PositionToApi(p.Position),
             p.Age,

@@ -1,3 +1,4 @@
+using GlobalScout.Application.Abstractions.Files;
 using GlobalScout.Application.Abstractions.Social.Messages;
 using GlobalScout.Application.Social.Messages;
 using GlobalScout.Domain.Social;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GlobalScout.Infrastructure.Social.Messages;
 
-internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepository
+internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResolver avatarUrls) : IMessageRepository
 {
     public async Task<bool> HasAcceptedConnectionAsync(
         Guid userId,
@@ -49,7 +50,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepos
             .Include(u => u.Profile)
             .FirstAsync(u => u.Id == loaded.ReceiverId, cancellationToken);
 
-        return MapDetail(loaded, sender, receiver);
+        return await MapDetailAsync(loaded, sender, receiver, cancellationToken);
     }
 
     public async Task<(IReadOnlyList<MessageThreadDto> Messages, bool HasMore)> GetConversationPageAsync(
@@ -81,7 +82,12 @@ internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepos
             .Where(u => senderIds.Contains(u.Id))
             .ToDictionaryAsync(u => u.Id, cancellationToken);
 
-        var messages = batch.Select(m => MapThread(m, users)).ToList();
+        var messages = new List<MessageThreadDto>(batch.Count);
+        foreach (var message in batch)
+        {
+            messages.Add(await MapThreadAsync(message, users, cancellationToken));
+        }
+
         return (messages, hasMore);
     }
 
@@ -147,7 +153,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepos
                     : new ConversationPartnerProfileDto(
                         profile.FirstName,
                         profile.LastName,
-                        profile.Avatar));
+                        await avatarUrls.ResolveAsync(profile.AvatarStorageKey, cancellationToken)));
 
             result.Add(new ConversationListItemDto(
                 otherId,
@@ -172,7 +178,11 @@ internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepos
         return rows;
     }
 
-    private static MessageDetailDto MapDetail(Message m, ApplicationUser sender, ApplicationUser receiver)
+    private async Task<MessageDetailDto> MapDetailAsync(
+        Message m,
+        ApplicationUser sender,
+        ApplicationUser receiver,
+        CancellationToken cancellationToken)
     {
         var senderProfile = sender.Profile;
         var receiverProfile = receiver.Profile;
@@ -192,7 +202,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepos
                     : new MessageParticipantProfileDto(
                         senderProfile.FirstName,
                         senderProfile.LastName,
-                        senderProfile.Avatar)),
+                        await avatarUrls.ResolveAsync(senderProfile.AvatarStorageKey, cancellationToken))),
             new MessageParticipantDto(
                 receiver.Id,
                 receiver.Email ?? string.Empty,
@@ -201,10 +211,13 @@ internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepos
                     : new MessageParticipantProfileDto(
                         receiverProfile.FirstName,
                         receiverProfile.LastName,
-                        receiverProfile.Avatar)));
+                        await avatarUrls.ResolveAsync(receiverProfile.AvatarStorageKey, cancellationToken))));
     }
 
-    private static MessageThreadDto MapThread(Message m, Dictionary<Guid, ApplicationUser> usersBySenderId)
+    private async Task<MessageThreadDto> MapThreadAsync(
+        Message m,
+        Dictionary<Guid, ApplicationUser> usersBySenderId,
+        CancellationToken cancellationToken)
     {
         usersBySenderId.TryGetValue(m.SenderId, out ApplicationUser? sender);
         var p = sender?.Profile;
@@ -212,7 +225,10 @@ internal sealed class MessageRepository(GlobalScoutDbContext db) : IMessageRepos
             m.SenderId,
             p is null
                 ? null
-                : new MessageSenderProfilePreviewDto(p.FirstName, p.LastName, p.Avatar));
+                : new MessageSenderProfilePreviewDto(
+                    p.FirstName,
+                    p.LastName,
+                    await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken)));
 
         return new MessageThreadDto(
             m.Id,

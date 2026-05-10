@@ -42,7 +42,9 @@ public interface IUserDirectoryRepository
 
     Task<GetProfileVisitorsResult> GetProfileVisitorsAsync(Guid profileOwnerId, bool premiumDetails, CancellationToken cancellationToken);
 
-    Task SetAvatarAsync(Guid userId, string avatarUrl, CancellationToken cancellationToken);
+    Task SetAvatarStorageKeyAsync(Guid userId, string storageKey, CancellationToken cancellationToken);
+
+    Task<string?> GetAvatarStorageKeyAsync(Guid userId, CancellationToken cancellationToken);
 
     /// <summary>Role and subscription tier for media upload rules (players only; basic video cap).</summary>
     Task<MediaUploadContext?> GetMediaUploadContextAsync(Guid userId, CancellationToken cancellationToken);

@@ -9,10 +9,22 @@ var postgres = builder.AddPostgres("postgres")
 
 var globalscoutDb = postgres.AddDatabase("globalscout");
 
+var ministack = builder.AddContainer("ministack", "ministackorg/ministack")
+    .WithHttpEndpoint(port: 4566, targetPort: 4566, name: "http")
+    .WithLifetime(ContainerLifetime.Persistent);
+
 var api = builder.AddProject<Projects.GlobalScout_Api>("globalscout-api")
     .WithExternalHttpEndpoints()
     .WithReference(globalscoutDb)
-    .WaitFor(globalscoutDb);
+    .WaitFor(globalscoutDb)
+    .WaitFor(ministack)
+    .WithEnvironment("ObjectStorage__EndpointUrl", ministack.GetEndpoint("http"))
+    .WithEnvironment("ObjectStorage__BucketName", "globalscout-dev-media")
+    .WithEnvironment("ObjectStorage__Region", "us-east-1")
+    .WithEnvironment("ObjectStorage__AccessKey", "test")
+    .WithEnvironment("ObjectStorage__SecretKey", "test")
+    .WithEnvironment("ObjectStorage__ForcePathStyle", "true")
+    .WithEnvironment("ObjectStorage__CreateBucketIfMissing", "true");
 
 // Use the HTTPS endpoint so the browser talks to the API directly; the HTTP endpoint
 // triggers UseHttpsRedirection which breaks CORS preflight (browsers don't follow

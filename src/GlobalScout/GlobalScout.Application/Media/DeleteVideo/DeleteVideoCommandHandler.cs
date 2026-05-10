@@ -8,7 +8,7 @@ namespace GlobalScout.Application.Media.DeleteVideo;
 
 internal sealed class DeleteVideoCommandHandler(
     IMediaRepository media,
-    IVideoStorage videoStorage)
+    IFileStorage fileStorage)
     : ICommandHandler<DeleteVideoCommand, DeleteVideoResult>
 {
     public async Task<Result<DeleteVideoResult>> Handle(
@@ -21,7 +21,7 @@ internal sealed class DeleteVideoCommandHandler(
             return Result.Failure<DeleteVideoResult>(MediaErrors.VideoNotFound);
         }
 
-        var deleteFile = await videoStorage.DeleteByPublicUrlAsync(item.Url, cancellationToken);
+        var deleteFile = await fileStorage.DeleteAsync(item.StorageKey, cancellationToken);
         if (deleteFile.IsFailure)
         {
             return Result.Failure<DeleteVideoResult>(deleteFile.Error);

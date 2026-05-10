@@ -9,6 +9,12 @@ internal static class UsersRoutes
 
     public static string Avatar => $"{Base}/avatar";
 
+    public static string AvatarUploadUrl => $"{Base}/avatar/upload-url";
+
+    public static string CompleteAvatarUpload => $"{Base}/avatar/complete";
+
+    public static string AvatarReadUrl => $"{Base}/{{userId:guid}}/avatar/url";
+
     public static string Search => $"{Base}/search";
 
     public static string Recommendations => $"{Base}/recommendations";

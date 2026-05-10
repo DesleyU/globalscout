@@ -16,6 +16,8 @@ public interface ISocialGraphRepository
 
     Task<bool> ConnectionExistsAsync(Guid senderId, Guid receiverId, CancellationToken cancellationToken);
 
+    Task<bool> AcceptedConnectionExistsAsync(Guid firstUserId, Guid secondUserId, CancellationToken cancellationToken);
+
     Task<SendConnectionResponseDto?> CreateConnectionAsync(
         Guid senderId,
         Guid receiverId,

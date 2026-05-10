@@ -10,7 +10,7 @@ public sealed class MediaItem
 
     public MediaType Type { get; set; }
 
-    public string Url { get; set; } = string.Empty;
+    public string StorageKey { get; set; } = string.Empty;
 
     public string? Filename { get; set; }
 

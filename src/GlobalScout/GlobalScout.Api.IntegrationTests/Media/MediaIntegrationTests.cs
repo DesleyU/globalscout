@@ -1,4 +1,5 @@
 using System.Net;
+using System.Net.Http.Json;
 using System.Text.Json;
 using GlobalScout.Api.IntegrationTests.Social;
 using Xunit;
@@ -72,16 +73,17 @@ public sealed class MediaIntegrationTests
     }
 
     [Fact]
-    public async Task PostVideo_Player_MissingVideoPart_Returns400()
+    public async Task PostVideo_Player_MissingFileMetadata_Returns400()
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
         var (_, token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(anon, Ct);
         var client = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, token);
 
-        using var content = new MultipartFormDataContent();
-        content.Add(new StringContent("only title"), "title");
-        using var response = await client.PostAsync("/api/media/video", content, Ct);
+        using var response = await client.PostAsJsonAsync(
+            "/api/media/video/upload-url",
+            new { fileName = "", contentType = "video/mp4", contentLength = 0 },
+            Ct);
 
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
@@ -105,9 +107,38 @@ public sealed class MediaIntegrationTests
         await using var stream = await response.Content.ReadAsStreamAsync(Ct);
         var doc = await JsonDocument.ParseAsync(stream, default, Ct);
         var root = doc.RootElement;
-        Assert.Equal(JsonValueKind.String, root.GetProperty("url").ValueKind);
+        Assert.Equal(JsonValueKind.String, root.GetProperty("storageKey").ValueKind);
         Assert.True(root.GetProperty("id").TryGetGuid(out _));
         Assert.Equal("Integration title", root.GetProperty("title").GetString());
+    }
+
+    [Fact]
+    public async Task GetMediaUrl_Owner_AfterUpload_ReturnsSignedUrl()
+    {
+        var factory = _fixture.Factory;
+        var anon = factory.CreateClient();
+        var (_, token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(anon, Ct);
+        var client = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, token);
+
+        Guid videoId;
+        using (var upload = await SocialIntegrationTestHelpers.UploadVideoAsync(
+                   client,
+                   MinimalVideoBytes,
+                   "clip.mp4",
+                   "video/mp4",
+                   Ct))
+        {
+            await using var stream = await upload.Content.ReadAsStreamAsync(Ct);
+            var doc = await JsonDocument.ParseAsync(stream, default, Ct);
+            videoId = doc.RootElement.GetProperty("id").GetGuid();
+        }
+
+        using var response = await client.GetAsync($"/api/media/{videoId}/url", Ct);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+
+        await using var readStream = await response.Content.ReadAsStreamAsync(Ct);
+        var readDoc = await JsonDocument.ParseAsync(readStream, default, Ct);
+        Assert.StartsWith("http://", readDoc.RootElement.GetProperty("url").GetString());
     }
 
     [Fact]

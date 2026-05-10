@@ -1,4 +1,5 @@
 using System.Text.Json;
+using GlobalScout.Application.Abstractions.Files;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Users;
 using GlobalScout.Domain.Identity;
@@ -15,7 +16,8 @@ namespace GlobalScout.Infrastructure.Users;
 
 internal sealed class AdminRepository(
     GlobalScoutDbContext db,
-    UserManager<ApplicationUser> userManager) : IAdminRepository
+    UserManager<ApplicationUser> userManager,
+    IAvatarUrlResolver avatarUrls) : IAdminRepository
 {
     public async Task<AdminUsersListResult> ListUsersAsync(
         AdminListUsersCriteria c,
@@ -91,7 +93,7 @@ internal sealed class AdminRepository(
                 UserStatusToApi(u.Status),
                 u.CreatedAt,
                 u.UpdatedAt,
-                MapProfile(u.Profile),
+                await MapProfileAsync(u.Profile, cancellationToken),
                 cc));
         }
 
@@ -127,7 +129,7 @@ internal sealed class AdminRepository(
             user.Email ?? string.Empty,
             roleName,
             UserStatusToApi(user.Status),
-            MapProfile(profile));
+            await MapProfileAsync(profile, cancellationToken));
 
         return Result.Success(summary);
     }
@@ -227,7 +229,7 @@ internal sealed class AdminRepository(
 
     private static string UserStatusToApi(UserStatus s) => s.ToString().ToUpperInvariant();
 
-    private static UserProfileApiDto? MapProfile(Profile? p)
+    private async Task<UserProfileApiDto?> MapProfileAsync(Profile? p, CancellationToken cancellationToken)
     {
         if (p is null)
         {
@@ -238,7 +240,7 @@ internal sealed class AdminRepository(
             p.UserId,
             p.FirstName,
             p.LastName,
-            p.Avatar,
+            await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken),
             p.Bio,
             PositionToApi(p.Position),
             p.Age,

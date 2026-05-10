@@ -13,6 +13,8 @@ public interface IMediaRepository
 
     Task<MediaItem?> FindOwnedVideoAsync(Guid userId, Guid videoId, CancellationToken cancellationToken);
 
+    Task<MediaItem?> FindVideoAsync(Guid videoId, CancellationToken cancellationToken);
+
     Task AddAsync(MediaItem item, CancellationToken cancellationToken);
 
     Task DeleteAsync(Guid videoId, CancellationToken cancellationToken);

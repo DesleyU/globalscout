@@ -10,7 +10,7 @@ public sealed class Profile
 
     public string LastName { get; set; } = string.Empty;
 
-    public string? Avatar { get; set; }
+    public string? AvatarStorageKey { get; set; }
 
     public string? Bio { get; set; }
 

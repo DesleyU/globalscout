@@ -1,4 +1,5 @@
 using System.Text.Json;
+using GlobalScout.Application.Abstractions.Files;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Social;
 using GlobalScout.Application.Users;
@@ -14,7 +15,8 @@ namespace GlobalScout.Infrastructure.Social.Graph;
 
 internal sealed class SocialGraphRepository(
     GlobalScoutDbContext db,
-    UserManager<ApplicationUser> userManager) : ISocialGraphRepository
+    UserManager<ApplicationUser> userManager,
+    IAvatarUrlResolver avatarUrls) : ISocialGraphRepository
 {
     public async Task<AccountType?> GetAccountTypeAsync(Guid userId, CancellationToken cancellationToken)
     {
@@ -42,6 +44,17 @@ internal sealed class SocialGraphRepository(
     public async Task<bool> ConnectionExistsAsync(Guid senderId, Guid receiverId, CancellationToken cancellationToken) =>
         await db.Connections.AsNoTracking()
             .AnyAsync(c => c.SenderId == senderId && c.ReceiverId == receiverId, cancellationToken);
+
+    public async Task<bool> AcceptedConnectionExistsAsync(
+        Guid firstUserId,
+        Guid secondUserId,
+        CancellationToken cancellationToken) =>
+        await db.Connections.AsNoTracking()
+            .AnyAsync(
+                c => c.Status == ConnectionStatus.Accepted
+                     && ((c.SenderId == firstUserId && c.ReceiverId == secondUserId)
+                         || (c.SenderId == secondUserId && c.ReceiverId == firstUserId)),
+                cancellationToken);
 
     public async Task<SendConnectionResponseDto?> CreateConnectionAsync(
         Guid senderId,
@@ -133,7 +146,7 @@ internal sealed class SocialGraphRepository(
                     c.InvitationNote,
                     c.CreatedAt,
                     c.UpdatedAt,
-                    new ConnectionUserSummaryDto(other.Id, role, MapProfile(other.Profile))));
+                    new ConnectionUserSummaryDto(other.Id, role, await MapProfileAsync(other.Profile, cancellationToken))));
         }
 
         return (items, total);
@@ -181,8 +194,8 @@ internal sealed class SocialGraphRepository(
                     ConnectionStatusToApi(c.Status),
                     c.InvitationNote,
                     c.CreatedAt,
-                    new ConnectionUserSummaryDto(sender.Id, senderRole, MapProfile(sender.Profile)),
-                    new ConnectionUserSummaryDto(receiver.Id, receiverRole, MapProfile(receiver.Profile))));
+                    new ConnectionUserSummaryDto(sender.Id, senderRole, await MapProfileAsync(sender.Profile, cancellationToken)),
+                    new ConnectionUserSummaryDto(receiver.Id, receiverRole, await MapProfileAsync(receiver.Profile, cancellationToken))));
         }
 
         return (items, total);
@@ -216,7 +229,7 @@ internal sealed class SocialGraphRepository(
         var role = await GetRoleNameAsync(following.Id, cancellationToken);
         return new FollowUserResponseDto(
             entity.Id,
-            new FollowingUserDto(following.Id, role, MapProfile(following.Profile)),
+            new FollowingUserDto(following.Id, role, await MapProfileAsync(following.Profile, cancellationToken)),
             entity.CreatedAt);
     }
 
@@ -267,7 +280,7 @@ internal sealed class SocialGraphRepository(
             items.Add(
                 new FollowListEntryDto(
                     f.Id,
-                    new ConnectionUserSummaryDto(follower.Id, role, MapProfile(follower.Profile)),
+                    new ConnectionUserSummaryDto(follower.Id, role, await MapProfileAsync(follower.Profile, cancellationToken)),
                     f.CreatedAt));
         }
 
@@ -306,7 +319,7 @@ internal sealed class SocialGraphRepository(
             items.Add(
                 new FollowListEntryDto(
                     f.Id,
-                    new ConnectionUserSummaryDto(following.Id, role, MapProfile(following.Profile)),
+                    new ConnectionUserSummaryDto(following.Id, role, await MapProfileAsync(following.Profile, cancellationToken)),
                     f.CreatedAt));
         }
 
@@ -370,8 +383,8 @@ internal sealed class SocialGraphRepository(
             ConnectionStatusToApi(c.Status),
             c.InvitationNote,
             c.CreatedAt,
-            new ConnectionUserSummaryDto(sender.Id, senderRole, MapProfile(sender.Profile)),
-            new ConnectionUserSummaryDto(receiver.Id, receiverRole, MapProfile(receiver.Profile)));
+            new ConnectionUserSummaryDto(sender.Id, senderRole, await MapProfileAsync(sender.Profile, cancellationToken)),
+            new ConnectionUserSummaryDto(receiver.Id, receiverRole, await MapProfileAsync(receiver.Profile, cancellationToken)));
     }
 
     private async Task<RespondToConnectionResponseDto> MapRespondResponseAsync(
@@ -393,8 +406,8 @@ internal sealed class SocialGraphRepository(
             c.InvitationNote,
             c.CreatedAt,
             c.UpdatedAt,
-            new ConnectionUserSummaryDto(sender.Id, senderRole, MapProfile(sender.Profile)),
-            new ConnectionUserSummaryDto(receiver.Id, receiverRole, MapProfile(receiver.Profile)));
+            new ConnectionUserSummaryDto(sender.Id, senderRole, await MapProfileAsync(sender.Profile, cancellationToken)),
+            new ConnectionUserSummaryDto(receiver.Id, receiverRole, await MapProfileAsync(receiver.Profile, cancellationToken)));
     }
 
     private async Task<string> GetRoleNameAsync(Guid userId, CancellationToken cancellationToken)
@@ -418,7 +431,7 @@ internal sealed class SocialGraphRepository(
             _ => s.ToString().ToUpperInvariant()
         };
 
-    private static UserProfileApiDto? MapProfile(Profile? p)
+    private async Task<UserProfileApiDto?> MapProfileAsync(Profile? p, CancellationToken cancellationToken)
     {
         if (p is null)
         {
@@ -429,7 +442,7 @@ internal sealed class SocialGraphRepository(
             p.UserId,
             p.FirstName,
             p.LastName,
-            p.Avatar,
+            await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken),
             p.Bio,
             PositionToApi(p.Position),
             p.Age,

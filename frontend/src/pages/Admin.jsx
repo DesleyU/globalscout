@@ -254,6 +254,7 @@ const Admin = () => {
                     <div className="flex items-center">
                       <Avatar 
                         src={user.profile?.avatar}
+                        userId={user.id}
                         firstName={user.profile?.firstName}
                         lastName={user.profile?.lastName}
                         size="medium"
@@ -351,6 +352,7 @@ const Admin = () => {
               <div className="flex items-center space-x-4">
                 <Avatar 
                   src={selectedUser.profile?.avatar}
+                  userId={selectedUser.id}
                   firstName={selectedUser.profile?.firstName}
                   lastName={selectedUser.profile?.lastName}
                   size="xl"

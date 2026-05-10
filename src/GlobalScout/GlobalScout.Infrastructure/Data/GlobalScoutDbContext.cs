@@ -62,6 +62,7 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("profiles");
             b.HasKey(p => p.UserId);
+            b.Property(p => p.AvatarStorageKey).HasColumnName("avatar_storage_key");
             b.HasOne<ApplicationUser>()
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserId)
@@ -119,6 +120,7 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         builder.Entity<MediaItem>(b =>
         {
             b.ToTable("media");
+            b.Property(m => m.StorageKey).HasColumnName("storage_key");
             b.HasOne<ApplicationUser>()
                 .WithMany(u => u.Media)
                 .HasForeignKey(m => m.UserId)

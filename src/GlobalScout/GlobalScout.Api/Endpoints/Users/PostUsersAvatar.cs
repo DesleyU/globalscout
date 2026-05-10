@@ -1,21 +1,22 @@
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Users;
+using GlobalScout.Application.Users.GetAvatarReadUrl;
 using GlobalScout.Application.Users.UploadAvatar;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Api.Endpoints.Users;
 
-internal sealed class PostUsersAvatar : IEndpoint
+internal sealed class PostUsersAvatarUploadUrl : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost(
-                UsersRoutes.Avatar,
+                UsersRoutes.AvatarUploadUrl,
                 async (
                     ClaimsPrincipal principal,
-                    IFormFile avatar,
-                    ICommandHandler<UploadUserAvatarCommand, UploadUserAvatarResult> handler,
+                    InitiateAvatarUploadRequest request,
+                    ICommandHandler<InitiateAvatarUploadCommand, InitiateAvatarUploadResult> handler,
                     CancellationToken cancellationToken) =>
                 {
                     var userId = HttpUser.ResolveId(principal);
@@ -24,27 +25,83 @@ internal sealed class PostUsersAvatar : IEndpoint
                         return Results.Unauthorized();
                     }
 
-                    if (avatar is null || avatar.Length <= 0)
-                    {
-                        return Results.BadRequest(new { error = "Missing avatar file." });
-                    }
-
-                    var stream = avatar.OpenReadStream();
-                    var command = new UploadUserAvatarCommand
+                    var command = new InitiateAvatarUploadCommand
                     {
                         UserId = userId.Value,
-                        FileStream = stream,
-                        FileName = avatar.FileName,
-                        ContentType = avatar.ContentType ?? "application/octet-stream"
+                        FileName = request.FileName,
+                        ContentType = request.ContentType,
+                        ContentLength = request.ContentLength
                     };
 
                     var result = await handler.Handle(command, cancellationToken);
 
                     return result.Match(Results.Ok, CustomResults.Problem);
                 })
-            .DisableAntiforgery()
             .RequireAuthorization()
-            .WithName("PostUsersAvatar")
+            .WithName("PostUsersAvatarUploadUrl")
             .WithTags(UsersEndpointTags.Users);
     }
 }
+
+internal sealed class PostUsersAvatarComplete : IEndpoint
+{
+    public void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapPost(
+                UsersRoutes.CompleteAvatarUpload,
+                async (
+                    ClaimsPrincipal principal,
+                    CompleteAvatarUploadRequest request,
+                    ICommandHandler<CompleteAvatarUploadCommand, CompleteAvatarUploadResult> handler,
+                    CancellationToken cancellationToken) =>
+                {
+                    var userId = HttpUser.ResolveId(principal);
+                    if (userId is null)
+                    {
+                        return Results.Unauthorized();
+                    }
+
+                    var result = await handler.Handle(
+                        new CompleteAvatarUploadCommand
+                        {
+                            UserId = userId.Value,
+                            StorageKey = request.StorageKey
+                        },
+                        cancellationToken);
+
+                    return result.Match(Results.Ok, CustomResults.Problem);
+                })
+            .RequireAuthorization()
+            .WithName("PostUsersAvatarComplete")
+            .WithTags(UsersEndpointTags.Users);
+    }
+}
+
+internal sealed class GetUsersAvatarUrl : IEndpoint
+{
+    public void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapGet(
+                UsersRoutes.AvatarReadUrl,
+                async (
+                    Guid userId,
+                    IQueryHandler<GetAvatarReadUrlQuery, AvatarReadUrlResult> handler,
+                    CancellationToken cancellationToken) =>
+                {
+                    var result = await handler.Handle(
+                        new GetAvatarReadUrlQuery(userId),
+                        cancellationToken);
+
+                    return result.Match(Results.Ok, CustomResults.Problem);
+                })
+            .WithName("GetUsersAvatarUrl")
+            .WithTags(UsersEndpointTags.Users);
+    }
+}
+
+internal sealed record InitiateAvatarUploadRequest(
+    string FileName,
+    string ContentType,
+    long ContentLength);
+
+internal sealed record CompleteAvatarUploadRequest(string StorageKey);

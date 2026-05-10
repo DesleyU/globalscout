@@ -89,3 +89,70 @@ internal sealed class UploadVideoCommandValidator : AbstractValidator<UploadVide
         public const long MaxVideoBytes = 500L * 1024 * 1024;
     }
 }
+
+internal sealed class InitiateVideoUploadCommandValidator : AbstractValidator<InitiateVideoUploadCommand>
+{
+    private const long MaxVideoBytes = 500L * 1024 * 1024;
+    private static readonly string[] AllowedExtensions = [".mp4", ".mov", ".avi"];
+
+    private static readonly HashSet<string> AllowedContentTypes =
+    [
+        "video/mp4",
+        "video/mov",
+        "video/avi",
+        "video/quicktime",
+        "video/x-msvideo"
+    ];
+
+    public InitiateVideoUploadCommandValidator()
+    {
+        RuleFor(c => c.FileName).NotEmpty();
+
+        RuleFor(c => c.FileName)
+            .Must(name => AllowedExtensions.Contains(Path.GetExtension(name).ToLowerInvariant()))
+            .WithMessage("Invalid file extension. Only .mp4, .mov, and .avi files are allowed.");
+
+        RuleFor(c => c.ContentType)
+            .Must(type => string.IsNullOrWhiteSpace(type) || AllowedContentTypes.Contains(type.ToLowerInvariant()))
+            .WithMessage("Invalid file type. Only MP4, MOV, and AVI videos are allowed!");
+
+        RuleFor(c => c.FileName)
+            .Must(name => !HasSuspiciousFileName(name))
+            .WithMessage("Invalid filename detected!");
+
+        RuleFor(c => c.ContentLength)
+            .GreaterThan(0)
+            .WithMessage("No video file provided.")
+            .LessThanOrEqualTo(MaxVideoBytes)
+            .WithMessage($"File size must not exceed {MaxVideoBytes / (1024 * 1024)} MB.");
+    }
+
+    private static bool HasSuspiciousFileName(string name)
+    {
+        if (name.Contains("..", StringComparison.Ordinal))
+        {
+            return true;
+        }
+
+        foreach (char ch in Path.GetFileName(name))
+        {
+            if (ch is '<' or '>' or ':' or '"' or '|' or '?' or '*')
+            {
+                return true;
+            }
+        }
+
+        string ext = Path.GetExtension(name).ToLowerInvariant();
+        return ext is ".exe" or ".bat" or ".cmd" or ".scr" or ".pif" or ".com"
+            or ".php" or ".jsp" or ".asp" or ".js" or ".html" or ".htm";
+    }
+}
+
+internal sealed class CompleteVideoUploadCommandValidator : AbstractValidator<CompleteVideoUploadCommand>
+{
+    public CompleteVideoUploadCommandValidator()
+    {
+        RuleFor(c => c.StorageKey).NotEmpty();
+        RuleFor(c => c.FileName).NotEmpty();
+    }
+}

@@ -49,6 +49,7 @@ const BasicProfileCard = ({ user, isOwnProfile = false, onUpgrade }) => {
           <div className="flex-shrink-0">
             <Avatar
               src={profile?.avatar}
+              userId={profile?.userId}
               firstName={profile?.firstName}
               lastName={profile?.lastName}
               size="lg"

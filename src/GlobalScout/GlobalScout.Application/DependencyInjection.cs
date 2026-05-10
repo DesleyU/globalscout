@@ -1,6 +1,7 @@
 using System.Reflection;
 using FluentValidation;
 using GlobalScout.Application.Abstractions.Behaviors;
+using GlobalScout.Application.Abstractions.Files;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Statistics.RefreshMyStats;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,6 +15,7 @@ public static class DependencyInjection
         Assembly assembly = typeof(DependencyInjection).Assembly;
 
         services.AddScoped<IPlayerStatisticsRefreshExecutor, PlayerStatisticsRefreshExecutor>();
+        services.AddSingleton<IFileKeyGenerator, FileKeyGenerator>();
 
         services.AddValidatorsFromAssembly(assembly, includeInternalTypes: true);
 

@@ -196,6 +196,7 @@ const Connections = () => {
                         <div className="flex items-center mb-4">
                           <Avatar 
                             src={connectedUser.profile?.avatar}
+                            userId={connectedUser.id}
                             firstName={connectedUser.profile?.firstName}
                             lastName={connectedUser.profile?.lastName}
                             size="large"
@@ -293,6 +294,7 @@ const Connections = () => {
                           <div className="flex items-center space-x-4">
                             <Avatar 
                               src={request.sender.profile?.avatar}
+                              userId={request.sender.id}
                               firstName={request.sender.profile?.firstName}
                               lastName={request.sender.profile?.lastName}
                               size="large"
@@ -376,6 +378,7 @@ const Connections = () => {
                         <div className="flex items-center mb-4">
                           <Avatar 
                             src={followedUser.profile?.avatar}
+                            userId={followedUser.id}
                             firstName={followedUser.profile?.firstName}
                             lastName={followedUser.profile?.lastName}
                             size="large"
@@ -480,6 +483,7 @@ const Connections = () => {
                         <div className="flex items-center mb-4">
                           <Avatar 
                             src={followerUser.profile?.avatar}
+                            userId={followerUser.id}
                             firstName={followerUser.profile?.firstName}
                             lastName={followerUser.profile?.lastName}
                             size="large"

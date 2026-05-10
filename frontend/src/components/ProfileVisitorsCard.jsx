@@ -147,6 +147,7 @@ const ProfileVisitorsCard = ({
                     <div className="flex items-center">
                       <Avatar
                         src={visitor.visitor?.profile?.avatar}
+                        userId={visitor.visitor?.id}
                         firstName={visitor.visitor?.profile?.firstName}
                         lastName={visitor.visitor?.profile?.lastName}
                         size="sm"

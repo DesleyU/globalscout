@@ -350,6 +350,7 @@ const Search = () => {
                         <div className="flex items-center">
                           <Avatar 
                             src={user.profile?.avatar}
+                            userId={user.id}
                             firstName={user.profile?.firstName}
                             lastName={user.profile?.lastName}
                             size="large"

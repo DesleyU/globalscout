@@ -11,44 +11,65 @@ using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Media.UploadVideo;
 
-internal sealed class UploadVideoCommandHandler(
+internal sealed class InitiateVideoUploadCommandHandler(
     IUserDirectoryRepository users,
     IMediaRepository media,
-    IVideoStorage videoStorage)
-    : ICommandHandler<UploadVideoCommand, UploadVideoResult>
+    IFileKeyGenerator keyGenerator,
+    IFileStorage fileStorage)
+    : ICommandHandler<InitiateVideoUploadCommand, InitiateVideoUploadResult>
 {
-    public async Task<Result<UploadVideoResult>> Handle(
-        UploadVideoCommand command,
+    public async Task<Result<InitiateVideoUploadResult>> Handle(
+        InitiateVideoUploadCommand command,
         CancellationToken cancellationToken)
     {
-        await using var stream = command.FileStream!;
-        long? byteLength = stream.CanSeek ? stream.Length : null;
-
-        var ctx = await users.GetMediaUploadContextAsync(command.UserId, cancellationToken);
-        if (ctx is null)
+        var access = await VideoUploadAccess.EnsureCanUploadVideoAsync(users, media, command.UserId, cancellationToken);
+        if (access.IsFailure)
         {
-            return Result.Failure<UploadVideoResult>(UsersErrors.UserNotFound);
+            return Result.Failure<InitiateVideoUploadResult>(access.Error);
         }
 
-        if (ctx.Role != UserRole.Player)
+        var storageKey = keyGenerator.CreateVideoKey(command.UserId, command.FileName);
+        var upload = await fileStorage.CreateUploadUrlAsync(
+            new FileUploadRequest(storageKey, command.ContentType, command.ContentLength),
+            cancellationToken);
+
+        return upload.IsFailure
+            ? Result.Failure<InitiateVideoUploadResult>(upload.Error)
+            : Result.Success(new InitiateVideoUploadResult(
+                upload.Value.StorageKey,
+                upload.Value.UploadUrl,
+                upload.Value.HttpMethod,
+                upload.Value.ExpiresAt));
+    }
+}
+
+internal sealed class CompleteVideoUploadCommandHandler(
+    IUserDirectoryRepository users,
+    IMediaRepository media,
+    IFileKeyGenerator keyGenerator,
+    IFileStorage fileStorage)
+    : ICommandHandler<CompleteVideoUploadCommand, CompleteVideoUploadResult>
+{
+    public async Task<Result<CompleteVideoUploadResult>> Handle(
+        CompleteVideoUploadCommand command,
+        CancellationToken cancellationToken)
+    {
+        var access = await VideoUploadAccess.EnsureCanUploadVideoAsync(users, media, command.UserId, cancellationToken);
+        if (access.IsFailure)
         {
-            return Result.Failure<UploadVideoResult>(MediaErrors.OnlyPlayersCanUpload);
+            return Result.Failure<CompleteVideoUploadResult>(access.Error);
         }
 
-        if (ctx.AccountType == AccountType.Basic)
+        if (!keyGenerator.IsVideoKeyForUser(command.UserId, command.StorageKey))
         {
-            int count = await media.CountVideosAsync(command.UserId, cancellationToken);
-            if (count >= SubscriptionLimits.BasicMaxVideos)
-            {
-                return Result.Failure<UploadVideoResult>(
-                    MediaErrors.VideoLimitReached(count, SubscriptionLimits.BasicMaxVideos));
-            }
+            return Result.Failure<CompleteVideoUploadResult>(
+                Error.Forbidden("Media.StorageKeyForbidden", "The uploaded video does not belong to the current user."));
         }
 
-        var saved = await videoStorage.SaveAsync(stream, command.FileName, cancellationToken);
-        if (saved.IsFailure)
+        var metadata = await fileStorage.GetMetadataAsync(command.StorageKey, cancellationToken);
+        if (metadata.IsFailure)
         {
-            return Result.Failure<UploadVideoResult>(saved.Error);
+            return Result.Failure<CompleteVideoUploadResult>(metadata.Error);
         }
 
         var now = DateTimeOffset.UtcNow;
@@ -61,11 +82,13 @@ internal sealed class UploadVideoCommandHandler(
             Id = Guid.NewGuid(),
             UserId = command.UserId,
             Type = MediaType.Video,
-            Url = saved.Value,
-            Filename = Path.GetFileName(saved.Value),
+            StorageKey = command.StorageKey,
+            Filename = Path.GetFileName(command.StorageKey),
             OriginalName = command.FileName,
-            MimeType = string.IsNullOrWhiteSpace(command.ContentType) ? null : command.ContentType,
-            Size = byteLength is null ? null : (int)Math.Min(byteLength.Value, int.MaxValue),
+            MimeType = string.IsNullOrWhiteSpace(command.ContentType)
+                ? metadata.Value.ContentType
+                : command.ContentType,
+            Size = (int)Math.Min(metadata.Value.ContentLength, int.MaxValue),
             Title = title,
             Description = description,
             Tags = tags,
@@ -75,12 +98,44 @@ internal sealed class UploadVideoCommandHandler(
 
         await media.AddAsync(entity, cancellationToken);
 
-        return Result.Success(new UploadVideoResult(
+        return Result.Success(new CompleteVideoUploadResult(
             entity.Id,
-            entity.Url,
+            entity.StorageKey,
             title,
             description,
             tags,
             entity.CreatedAt));
+    }
+}
+
+file static class VideoUploadAccess
+{
+    public static async Task<Result> EnsureCanUploadVideoAsync(
+        IUserDirectoryRepository users,
+        IMediaRepository media,
+        Guid userId,
+        CancellationToken cancellationToken)
+    {
+        var ctx = await users.GetMediaUploadContextAsync(userId, cancellationToken);
+        if (ctx is null)
+        {
+            return Result.Failure(UsersErrors.UserNotFound);
+        }
+
+        if (ctx.Role != UserRole.Player)
+        {
+            return Result.Failure(MediaErrors.OnlyPlayersCanUpload);
+        }
+
+        if (ctx.AccountType == AccountType.Basic)
+        {
+            int count = await media.CountVideosAsync(userId, cancellationToken);
+            if (count >= SubscriptionLimits.BasicMaxVideos)
+            {
+                return Result.Failure(MediaErrors.VideoLimitReached(count, SubscriptionLimits.BasicMaxVideos));
+            }
+        }
+
+        return Result.Success();
     }
 }

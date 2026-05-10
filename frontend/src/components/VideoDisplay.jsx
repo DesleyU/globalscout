@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Play, Pause, Volume2, VolumeX, Maximize, Download, Trash2 } from 'lucide-react';
 import { api, resolveApiAssetUrl } from '../services/api';
 import toast from 'react-hot-toast';
@@ -10,9 +10,39 @@ const VideoDisplay = ({ video, onDelete, showControls = true, autoPlay = false }
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [videoError, setVideoError] = useState(null);
+  const [signedVideoUrl, setSignedVideoUrl] = useState(null);
   const videoRef = useRef(null);
 
-  const videoUrl = resolveApiAssetUrl(video?.url);
+  useEffect(() => {
+    let cancelled = false;
+    setSignedVideoUrl(null);
+    setVideoError(null);
+
+    if (!video?.id) {
+      return () => {
+        cancelled = true;
+      };
+    }
+
+    api.media.getMediaUrl(video.id)
+      .then((data) => {
+        if (!cancelled) {
+          setSignedVideoUrl(data.url);
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setVideoError(error.response?.data?.error || 'Unable to load video');
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [video?.id]);
+
+  const legacyVideoUrl = video?.url ? resolveApiAssetUrl(video.url) : null;
+  const videoUrl = signedVideoUrl || legacyVideoUrl;
 
   const handlePlayPause = () => {
     if (videoRef.current) {

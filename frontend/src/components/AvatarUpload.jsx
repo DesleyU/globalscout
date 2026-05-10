@@ -93,7 +93,9 @@ const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
     (currentAvatar
       ? /^https?:\/\//i.test(currentAvatar)
         ? currentAvatar
-        : `${apiOrigin}${currentAvatar}`
+        : currentAvatar.startsWith('/')
+          ? `${apiOrigin}${currentAvatar}`
+          : null
       : null);
 
   return (

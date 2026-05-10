@@ -17,6 +17,14 @@ export function resolveApiAssetUrl(path) {
   return `${API_ORIGIN}${normalized}`;
 }
 
+async function uploadFileWithSignedUrl({ uploadUrl, file, contentType }) {
+  await axios.put(uploadUrl, file, {
+    headers: {
+      'Content-Type': contentType || file.type || 'application/octet-stream',
+    },
+  });
+}
+
 // Create axios instance
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
@@ -89,12 +97,23 @@ export const usersAPI = {
   getProfile: () => apiClient.get('/users/profile').then(res => res.data),
   updateProfile: (data) => apiClient.put('/users/profile', data).then(res => res.data),
   uploadAvatar: (formData) => {
-    return apiClient.post('/users/avatar', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }).then(res => res.data);
+    const file = formData.get('avatar');
+    return apiClient.post('/users/avatar/upload-url', {
+      fileName: file.name,
+      contentType: file.type || 'application/octet-stream',
+      contentLength: file.size,
+    }).then(async ({ data }) => {
+      await uploadFileWithSignedUrl({
+        uploadUrl: data.uploadUrl,
+        file,
+        contentType: file.type || 'application/octet-stream',
+      });
+      return apiClient.post('/users/avatar/complete', {
+        storageKey: data.storageKey,
+      }).then(res => res.data);
+    });
   },
+  getAvatarUrl: (userId) => apiClient.get(`/users/${userId}/avatar/url`).then(res => res.data),
   searchUsers: (params) => apiClient.get('/users/search', { params }).then(res => res.data),
   getRecommendations: () => apiClient.get('/users/recommendations').then(res => res.data),
   getUserById: (userId) => apiClient.get(`/users/${userId}`).then(res => res.data.user),
@@ -120,16 +139,32 @@ export const adminAPI = {
 // Media API
 export const mediaAPI = {
   uploadVideo: (formData) => {
-    return apiClient.post('/media/video', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    }).then(res => res.data);
+    const file = formData.get('video');
+    return apiClient.post('/media/video/upload-url', {
+      fileName: file.name,
+      contentType: file.type || 'application/octet-stream',
+      contentLength: file.size,
+    }).then(async ({ data }) => {
+      await uploadFileWithSignedUrl({
+        uploadUrl: data.uploadUrl,
+        file,
+        contentType: file.type || 'application/octet-stream',
+      });
+      return apiClient.post('/media/video/complete', {
+        storageKey: data.storageKey,
+        fileName: file.name,
+        contentType: file.type || 'application/octet-stream',
+        title: formData.get('title') || '',
+        description: formData.get('description') || '',
+        tags: formData.get('tags') || '',
+      }).then(res => res.data);
+    });
   },
   getUserVideos: (userId) => {
     const endpoint = userId ? `/media/videos/${userId}` : '/media/videos';
     return apiClient.get(endpoint).then(res => res.data);
   },
+  getMediaUrl: (mediaId) => apiClient.get(`/media/${mediaId}/url`).then(res => res.data),
   deleteVideo: (videoId) => apiClient.delete(`/media/video/${videoId}`).then(res => res.data),
 };
 

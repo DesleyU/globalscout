@@ -6,33 +6,61 @@ using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Users.UploadAvatar;
 
-internal sealed class UploadUserAvatarCommandHandler(
-    IUserDirectoryRepository users,
-    IAvatarStorage avatarStorage) : ICommandHandler<UploadUserAvatarCommand, UploadUserAvatarResult>
+internal sealed class InitiateAvatarUploadCommandHandler(
+    IFileKeyGenerator keyGenerator,
+    IFileStorage fileStorage) : ICommandHandler<InitiateAvatarUploadCommand, InitiateAvatarUploadResult>
 {
-    public async Task<Result<UploadUserAvatarResult>> Handle(
-        UploadUserAvatarCommand command,
+    public async Task<Result<InitiateAvatarUploadResult>> Handle(
+        InitiateAvatarUploadCommand command,
         CancellationToken cancellationToken)
     {
-        await using var stream = command.FileStream!;
+        var storageKey = keyGenerator.CreateAvatarKey(command.UserId, command.FileName);
+        var upload = await fileStorage.CreateUploadUrlAsync(
+            new FileUploadRequest(storageKey, command.ContentType, command.ContentLength),
+            cancellationToken);
 
-        var saved = await avatarStorage.SaveAsync(stream, command.FileName, cancellationToken);
-        if (saved.IsFailure)
+        return upload.IsFailure
+            ? Result.Failure<InitiateAvatarUploadResult>(upload.Error)
+            : Result.Success(new InitiateAvatarUploadResult(
+                upload.Value.StorageKey,
+                upload.Value.UploadUrl,
+                upload.Value.HttpMethod,
+                upload.Value.ExpiresAt));
+    }
+}
+
+internal sealed class CompleteAvatarUploadCommandHandler(
+    IUserDirectoryRepository users,
+    IFileKeyGenerator keyGenerator,
+    IFileStorage fileStorage) : ICommandHandler<CompleteAvatarUploadCommand, CompleteAvatarUploadResult>
+{
+    public async Task<Result<CompleteAvatarUploadResult>> Handle(
+        CompleteAvatarUploadCommand command,
+        CancellationToken cancellationToken)
+    {
+        if (!keyGenerator.IsAvatarKeyForUser(command.UserId, command.StorageKey))
         {
-            return Result.Failure<UploadUserAvatarResult>(saved.Error);
+            return Result.Failure<CompleteAvatarUploadResult>(
+                Error.Forbidden("Avatar.StorageKeyForbidden", "The uploaded avatar does not belong to the current user."));
         }
 
-        await users.SetAvatarAsync(command.UserId, saved.Value, cancellationToken);
+        var metadata = await fileStorage.GetMetadataAsync(command.StorageKey, cancellationToken);
+        if (metadata.IsFailure)
+        {
+            return Result.Failure<CompleteAvatarUploadResult>(metadata.Error);
+        }
+
+        await users.SetAvatarStorageKeyAsync(command.UserId, command.StorageKey, cancellationToken);
 
         var full = await users.GetFullProfileAsync(command.UserId, cancellationToken);
         if (full?.Profile is null)
         {
-            return Result.Failure<UploadUserAvatarResult>(UsersErrors.UserNotFound);
+            return Result.Failure<CompleteAvatarUploadResult>(UsersErrors.UserNotFound);
         }
 
-        return Result.Success(new UploadUserAvatarResult(
+        return Result.Success(new CompleteAvatarUploadResult(
             "Avatar uploaded successfully",
-            saved.Value,
+            command.StorageKey,
             full.Profile));
     }
 }

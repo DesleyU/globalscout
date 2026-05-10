@@ -30,6 +30,11 @@ internal sealed class MediaRepository(GlobalScoutDbContext db) : IMediaRepositor
             m => m.Id == videoId && m.UserId == userId && m.Type == MediaType.Video,
             cancellationToken);
 
+    public Task<MediaItem?> FindVideoAsync(Guid videoId, CancellationToken cancellationToken) =>
+        db.MediaItems.AsNoTracking().FirstOrDefaultAsync(
+            m => m.Id == videoId && m.Type == MediaType.Video,
+            cancellationToken);
+
     public async Task AddAsync(MediaItem item, CancellationToken cancellationToken)
     {
         db.MediaItems.Add(item);
@@ -51,7 +56,7 @@ internal sealed class MediaRepository(GlobalScoutDbContext db) : IMediaRepositor
             m.Id,
             m.UserId,
             "VIDEO",
-            m.Url,
+            m.StorageKey,
             m.Filename,
             m.OriginalName,
             m.MimeType,

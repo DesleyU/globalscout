@@ -3,6 +3,7 @@ using System.Text.Json.Serialization;
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Api.Social.Messages;
 using GlobalScout.Application;
+using GlobalScout.Application.Abstractions.Files;
 using GlobalScout.Application.Abstractions.Social.Messages;
 using GlobalScout.Infrastructure;
 using GlobalScout.Infrastructure.Data;
@@ -72,15 +73,6 @@ builder.AddServiceDefaults();
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
-builder.Services.AddGlobalScoutAvatarStorage(
-    builder.Configuration,
-    builder.Environment.ContentRootPath,
-    builder.Environment.WebRootPath);
-
-builder.Services.AddGlobalScoutVideoStorage(
-    builder.Configuration,
-    builder.Environment.ContentRootPath,
-    builder.Environment.WebRootPath);
 
 builder.Services.AddOpenApi(options => options.AddScalarTransformers());
 
@@ -117,6 +109,9 @@ if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("Integratio
     using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<GlobalScoutDbContext>();
     await db.Database.MigrateAsync();
+
+    var fileStorage = scope.ServiceProvider.GetRequiredService<IFileStorageInitializer>();
+    await fileStorage.EnsureReadyAsync(CancellationToken.None);
 }
 
 await IdentityDataSeeder.SeedRolesAsync(app.Services);

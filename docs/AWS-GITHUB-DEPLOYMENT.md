@@ -18,6 +18,36 @@ aws ecr create-repository --repository-name globalscout/ui --region "$AWS_REGION
 aws ecr create-repository --repository-name globalscout/migrator --region "$AWS_REGION"
 ```
 
+Create one private S3 bucket for user avatars and media. Keep Block Public Access enabled; the API stores only object keys and returns short-lived presigned URLs after authorization checks.
+
+```bash
+aws s3api create-bucket \
+  --bucket globalscout-prod-media \
+  --region "$AWS_REGION" \
+  --create-bucket-configuration LocationConstraint="$AWS_REGION"
+
+aws s3api put-public-access-block \
+  --bucket globalscout-prod-media \
+  --public-access-block-configuration \
+    BlockPublicAcls=true,IgnorePublicAcls=true,BlockPublicPolicy=true,RestrictPublicBuckets=true
+```
+
+If `AWS_REGION` is `us-east-1`, omit `--create-bucket-configuration`.
+
+Configure CORS on the bucket so the browser can upload directly with presigned PUT URLs from the hosted frontend origin:
+
+```json
+[
+  {
+    "AllowedOrigins": ["https://your-domain.example"],
+    "AllowedMethods": ["PUT", "GET", "HEAD"],
+    "AllowedHeaders": ["*"],
+    "ExposeHeaders": ["ETag"],
+    "MaxAgeSeconds": 3000
+  }
+]
+```
+
 The image registry value used by GitHub Actions is:
 
 ```bash
@@ -107,7 +137,7 @@ sudo usermod -aG docker "$USER"
 
 Log out and back in so the `docker` group membership is active.
 
-Give the EC2 instance an IAM instance profile that can pull from ECR:
+Give the EC2 instance an IAM instance profile that can pull from ECR and access the private media bucket:
 
 ```json
 {
@@ -130,6 +160,23 @@ Give the EC2 instance an IAM instance profile that can pull from ECR:
         "arn:aws:ecr:<region>:<account-id>:repository/globalscout/ui",
         "arn:aws:ecr:<region>:<account-id>:repository/globalscout/migrator"
       ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject",
+        "s3:DeleteObject"
+      ],
+      "Resource": "arn:aws:s3:::globalscout-prod-media/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetBucketLocation",
+        "s3:ListBucket"
+      ],
+      "Resource": "arn:aws:s3:::globalscout-prod-media"
     }
   ]
 }
@@ -153,6 +200,8 @@ Edit `/opt/globalscout/.env` on the instance. At minimum, set:
 - `POSTGRES_PASSWORD`
 - `Jwt__SigningKey`
 - `Stripe__PublicAppBaseUrl`
+- `ObjectStorage__BucketName`
+- `ObjectStorage__Region`
 - Stripe secrets if billing is enabled
 - `ApiFootball__ApiKey` if football statistics are enabled
 
@@ -189,13 +238,12 @@ The workflow will:
 
 The migrator runs before the API starts. If migrations fail, Compose will not start the API because the API depends on the migrator completing successfully.
 
-## Local Compose
+## Local Development
 
-For local smoke testing:
+Use Aspire for local development so Postgres, MiniStack, the API, and the Vite frontend start together:
 
 ```bash
-docker compose build
-docker compose up
+dotnet run --project src/GlobalScout/GlobalScout.AppHost/GlobalScout.AppHost.csproj
 ```
 
-The local UI is available at `http://localhost:8080`, the API at `http://localhost:5288`, and Postgres at `localhost:5432`.
+The AppHost starts MiniStack on port `4566` and configures the API to create/use the local development bucket automatically.

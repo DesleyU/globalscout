@@ -147,6 +147,7 @@ const Dashboard = () => {
           <div className="flex items-center space-x-4">
             <Avatar 
               src={profile?.profile?.avatar}
+              userId={profile?.id}
               firstName={profile?.profile?.firstName}
               lastName={profile?.profile?.lastName}
               size="large"
@@ -294,6 +295,7 @@ const Dashboard = () => {
                     <div key={connection.id} className="flex items-center space-x-3">
                       <Avatar 
                         src={connectedUser.profile?.avatar}
+                        userId={connectedUser.id}
                         firstName={connectedUser.profile?.firstName}
                         lastName={connectedUser.profile?.lastName}
                         size="medium"
@@ -356,6 +358,7 @@ const Dashboard = () => {
                     <div className="flex items-center space-x-3">
                       <Avatar 
                         src={recommendation.profile?.avatar}
+                        userId={recommendation.id}
                         firstName={recommendation.profile?.firstName}
                         lastName={recommendation.profile?.lastName}
                         size="medium"
@@ -417,6 +420,7 @@ const Dashboard = () => {
                       <div className="flex-shrink-0">
                         <Avatar 
                           src={request.sender.profile?.avatar}
+                          userId={request.sender.id}
                           firstName={request.sender.profile?.firstName}
                           lastName={request.sender.profile?.lastName}
                           size="medium"

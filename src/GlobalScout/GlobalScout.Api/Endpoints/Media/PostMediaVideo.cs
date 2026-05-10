@@ -1,21 +1,22 @@
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Media;
+using GlobalScout.Application.Media.GetMediaReadUrl;
 using GlobalScout.Application.Media.UploadVideo;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Api.Endpoints.Media;
 
-internal sealed class PostMediaVideo : IEndpoint
+internal sealed class PostMediaVideoUploadUrl : IEndpoint
 {
     public void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost(
-                MediaRoutes.Video,
+                MediaRoutes.VideoUploadUrl,
                 async (
-                    HttpContext httpContext,
                     ClaimsPrincipal principal,
-                    ICommandHandler<UploadVideoCommand, UploadVideoResult> handler,
+                    InitiateVideoUploadRequest request,
+                    ICommandHandler<InitiateVideoUploadCommand, InitiateVideoUploadResult> handler,
                     CancellationToken cancellationToken) =>
                 {
                     var userId = HttpUser.ResolveId(principal);
@@ -24,34 +25,65 @@ internal sealed class PostMediaVideo : IEndpoint
                         return Results.Unauthorized();
                     }
 
-                    if (!httpContext.Request.HasFormContentType)
-                    {
-                        return Results.BadRequest(new { error = "Expected multipart form data." });
-                    }
-
-                    var form = await httpContext.Request.ReadFormAsync(cancellationToken);
-                    var file = form.Files["video"];
-                    if (file is null || file.Length == 0)
-                    {
-                        return Results.BadRequest(new { error = "No video file provided" });
-                    }
-
-                    var command = new UploadVideoCommand
+                    var command = new InitiateVideoUploadCommand
                     {
                         UserId = userId.Value,
-                        FileStream = file.OpenReadStream(),
-                        FileName = file.FileName,
-                        ContentType = file.ContentType ?? string.Empty,
-                        Title = form["title"].ToString(),
-                        Description = form["description"].ToString(),
-                        Tags = form["tags"].ToString()
+                        FileName = request.FileName,
+                        ContentType = request.ContentType,
+                        ContentLength = request.ContentLength
                     };
 
                     var result = await handler.Handle(command, cancellationToken);
 
                     if (result.IsFailure && result.Error.Code == "Media.VideoLimitReached")
                     {
-                        return VideoLimitReached(result.Error);
+                        return MediaVideoUploadResponses.VideoLimitReached(result.Error);
+                    }
+
+                    return result.Match(
+                        ok => Results.Ok(ok),
+                        CustomResults.Problem);
+                })
+            .RequireAuthorization()
+            .WithName("PostMediaVideoUploadUrl")
+            .WithTags(MediaEndpointTags.Media);
+    }
+
+}
+
+internal sealed class PostMediaVideoComplete : IEndpoint
+{
+    public void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapPost(
+                MediaRoutes.CompleteVideoUpload,
+                async (
+                    ClaimsPrincipal principal,
+                    CompleteVideoUploadRequest request,
+                    ICommandHandler<CompleteVideoUploadCommand, CompleteVideoUploadResult> handler,
+                    CancellationToken cancellationToken) =>
+                {
+                    var userId = HttpUser.ResolveId(principal);
+                    if (userId is null)
+                    {
+                        return Results.Unauthorized();
+                    }
+
+                    var command = new CompleteVideoUploadCommand
+                    {
+                        UserId = userId.Value,
+                        StorageKey = request.StorageKey,
+                        FileName = request.FileName,
+                        ContentType = request.ContentType,
+                        Title = request.Title,
+                        Description = request.Description,
+                        Tags = request.Tags
+                    };
+
+                    var result = await handler.Handle(command, cancellationToken);
+                    if (result.IsFailure && result.Error.Code == "Media.VideoLimitReached")
+                    {
+                        return MediaVideoUploadResponses.VideoLimitReached(result.Error);
                     }
 
                     return result.Match(
@@ -59,7 +91,7 @@ internal sealed class PostMediaVideo : IEndpoint
                             new
                             {
                                 id = ok.Id,
-                                url = ok.Url,
+                                storageKey = ok.StorageKey,
                                 title = ok.Title,
                                 description = ok.Description,
                                 tags = ok.Tags,
@@ -67,13 +99,58 @@ internal sealed class PostMediaVideo : IEndpoint
                             }),
                         CustomResults.Problem);
                 })
-            .DisableAntiforgery()
             .RequireAuthorization()
-            .WithName("PostMediaVideo")
+            .WithName("PostMediaVideoComplete")
             .WithTags(MediaEndpointTags.Media);
     }
+}
 
-    private static IResult VideoLimitReached(Error error)
+internal sealed class GetMediaReadUrl : IEndpoint
+{
+    public void MapEndpoint(IEndpointRouteBuilder app)
+    {
+        app.MapGet(
+                MediaRoutes.MediaReadUrl,
+                async (
+                    ClaimsPrincipal principal,
+                    Guid mediaId,
+                    IQueryHandler<GetMediaReadUrlQuery, MediaReadUrlResult> handler,
+                    CancellationToken cancellationToken) =>
+                {
+                    var requesterId = HttpUser.ResolveId(principal);
+                    if (requesterId is null)
+                    {
+                        return Results.Unauthorized();
+                    }
+
+                    var result = await handler.Handle(
+                        new GetMediaReadUrlQuery(requesterId.Value, mediaId),
+                        cancellationToken);
+
+                    return result.Match(Results.Ok, CustomResults.Problem);
+                })
+            .RequireAuthorization()
+            .WithName("GetMediaReadUrl")
+            .WithTags(MediaEndpointTags.Media);
+    }
+}
+
+internal sealed record InitiateVideoUploadRequest(
+    string FileName,
+    string ContentType,
+    long ContentLength);
+
+internal sealed record CompleteVideoUploadRequest(
+    string StorageKey,
+    string FileName,
+    string ContentType,
+    string? Title,
+    string? Description,
+    string? Tags);
+
+file static class MediaVideoUploadResponses
+{
+    public static IResult VideoLimitReached(Error error)
     {
         var ext = error.Extensions!;
         return Results.Json(
