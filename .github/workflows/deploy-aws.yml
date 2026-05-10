@@ -46,8 +46,8 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ env.ECR_REGISTRY }}/globalscout-api:${{ env.IMAGE_TAG }}
-            ${{ env.ECR_REGISTRY }}/globalscout-api:latest
+            ${{ env.ECR_REGISTRY }}/globalscout/api:${{ env.IMAGE_TAG }}
+            ${{ env.ECR_REGISTRY }}/globalscout/api:latest
 
       - name: Build and push migrator image
         uses: docker/build-push-action@v6
@@ -57,8 +57,8 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            ${{ env.ECR_REGISTRY }}/globalscout-migrator:${{ env.IMAGE_TAG }}
-            ${{ env.ECR_REGISTRY }}/globalscout-migrator:latest
+            ${{ env.ECR_REGISTRY }}/globalscout/migrator:${{ env.IMAGE_TAG }}
+            ${{ env.ECR_REGISTRY }}/globalscout/migrator:latest
 
       - name: Build and push UI image
         uses: docker/build-push-action@v6
@@ -69,8 +69,8 @@ jobs:
           build-args: |
             VITE_API_URL=/api
           tags: |
-            ${{ env.ECR_REGISTRY }}/globalscout-ui:${{ env.IMAGE_TAG }}
-            ${{ env.ECR_REGISTRY }}/globalscout-ui:latest
+            ${{ env.ECR_REGISTRY }}/globalscout/ui:${{ env.IMAGE_TAG }}
+            ${{ env.ECR_REGISTRY }}/globalscout/ui:latest
 
       - name: Prepare SSH key
         run: |

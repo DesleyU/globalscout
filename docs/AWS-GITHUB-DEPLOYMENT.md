@@ -2,9 +2,9 @@
 
 This repo ships three containers:
 
-- `globalscout-ui`: React/Vite static files served by nginx.
-- `globalscout-api`: ASP.NET Core API.
-- `globalscout-migrator`: one-shot EF Core migration runner.
+- `globalscout/ui`: React/Vite static files served by nginx.
+- `globalscout/api`: ASP.NET Core API.
+- `globalscout/migrator`: one-shot EF Core migration runner.
 
 The manual GitHub Actions workflow builds and pushes these images to ECR, then SSHes into EC2 and runs Docker Compose.
 
@@ -13,9 +13,9 @@ The manual GitHub Actions workflow builds and pushes these images to ECR, then S
 Create three private ECR repositories:
 
 ```bash
-aws ecr create-repository --repository-name globalscout-api --region "$AWS_REGION"
-aws ecr create-repository --repository-name globalscout-ui --region "$AWS_REGION"
-aws ecr create-repository --repository-name globalscout-migrator --region "$AWS_REGION"
+aws ecr create-repository --repository-name globalscout/api --region "$AWS_REGION"
+aws ecr create-repository --repository-name globalscout/ui --region "$AWS_REGION"
+aws ecr create-repository --repository-name globalscout/migrator --region "$AWS_REGION"
 ```
 
 The image registry value used by GitHub Actions is:
@@ -78,9 +78,9 @@ Attach a policy that allows pushing to the three ECR repositories:
         "ecr:UploadLayerPart"
       ],
       "Resource": [
-        "arn:aws:ecr:<region>:<account-id>:repository/globalscout-api",
-        "arn:aws:ecr:<region>:<account-id>:repository/globalscout-ui",
-        "arn:aws:ecr:<region>:<account-id>:repository/globalscout-migrator"
+        "arn:aws:ecr:<region>:<account-id>:repository/globalscout/api",
+        "arn:aws:ecr:<region>:<account-id>:repository/globalscout/ui",
+        "arn:aws:ecr:<region>:<account-id>:repository/globalscout/migrator"
       ]
     }
   ]
@@ -126,9 +126,9 @@ Give the EC2 instance an IAM instance profile that can pull from ECR:
         "ecr:GetDownloadUrlForLayer"
       ],
       "Resource": [
-        "arn:aws:ecr:<region>:<account-id>:repository/globalscout-api",
-        "arn:aws:ecr:<region>:<account-id>:repository/globalscout-ui",
-        "arn:aws:ecr:<region>:<account-id>:repository/globalscout-migrator"
+        "arn:aws:ecr:<region>:<account-id>:repository/globalscout/api",
+        "arn:aws:ecr:<region>:<account-id>:repository/globalscout/ui",
+        "arn:aws:ecr:<region>:<account-id>:repository/globalscout/migrator"
       ]
     }
   ]
