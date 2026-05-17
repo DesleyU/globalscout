@@ -45,7 +45,7 @@ stripe trigger checkout.session.completed
 
 ## Frontend
 
-- Set `VITE_API_URL` to your API base (e.g. `https://localhost:7xxx/api`).
+- Set `VITE_API_BASE_URL` to your API base (e.g. `https://localhost:7xxx/api`; production is `https://api.globalscout.eu/api`).
 - Optional: `VITE_STRIPE_PUBLISHABLE_KEY` if you add client-side Stripe.js later (Checkout redirect does not require it).
 
 Upgrade flow: `POST /api/billing/checkout-session` (authenticated) → redirect to returned `url` → Stripe sends `checkout.session.completed` to `/api/billing/webhook` → user becomes **PREMIUM** in the database.

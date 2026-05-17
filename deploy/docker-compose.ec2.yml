@@ -41,6 +41,8 @@ services:
       ObjectStorage__Region: ${ObjectStorage__Region}
       ObjectStorage__ForcePathStyle: ${ObjectStorage__ForcePathStyle:-false}
       ObjectStorage__CreateBucketIfMissing: ${ObjectStorage__CreateBucketIfMissing:-false}
+      Cors__AllowedOrigins__0: https://globalscout.eu
+      Cors__AllowedOrigins__1: https://www.globalscout.eu
     depends_on:
       migrator:
         condition: service_completed_successfully

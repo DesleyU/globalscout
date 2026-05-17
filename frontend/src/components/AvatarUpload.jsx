@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Camera, Upload, X } from 'lucide-react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../services/api';
+import { api, resolveApiAssetUrl } from '../services/api';
 import toast from 'react-hot-toast';
 
 const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
@@ -82,19 +82,13 @@ const AvatarUpload = ({ currentAvatar, onAvatarUpdate, size = 'large' }) => {
     large: 'w-6 h-6'
   };
 
-  const apiBaseUrl = import.meta.env.VITE_API_URL;
-  const apiOrigin =
-    typeof apiBaseUrl === 'string' && /^https?:\/\//i.test(apiBaseUrl)
-      ? new URL(apiBaseUrl).origin
-      : '';
-
   const avatarSrc =
     preview ||
     (currentAvatar
       ? /^https?:\/\//i.test(currentAvatar)
         ? currentAvatar
         : currentAvatar.startsWith('/')
-          ? `${apiOrigin}${currentAvatar}`
+          ? resolveApiAssetUrl(currentAvatar)
           : null
       : null);
 

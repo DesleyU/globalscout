@@ -123,6 +123,17 @@ globalscout/
    npm install
    ```
 
+   Create a `.env` file in the frontend directory when you need to override the API host:
+   ```env
+   # Local .NET API default
+   VITE_API_BASE_URL=http://localhost:5288/api
+
+   # Production
+   # VITE_API_BASE_URL=https://api.globalscout.eu/api
+   ```
+
+   Frontend API requests are built from `VITE_API_BASE_URL`, so production login posts to `https://api.globalscout.eu/api/auth/login`.
+
 ### Running the Application
 
 1. **Start the backend server**

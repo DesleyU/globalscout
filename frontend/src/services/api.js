@@ -2,19 +2,46 @@ import axios from 'axios';
 import Cookies from 'js-cookie';
 import toast from 'react-hot-toast';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || '/api';
+const DEFAULT_API_BASE_URL = 'http://localhost:5288/api';
 
-const API_ORIGIN =
-  typeof API_BASE_URL === 'string' && /^https?:\/\//i.test(API_BASE_URL)
-    ? new URL(API_BASE_URL).origin
-    : '';
+function normalizeApiBaseUrl(value) {
+  const candidate = value || DEFAULT_API_BASE_URL;
+  return /^https?:\/\//i.test(candidate)
+    ? candidate.replace(/\/+$/, '')
+    : DEFAULT_API_BASE_URL;
+}
+
+export const API_BASE_URL = normalizeApiBaseUrl(import.meta.env.VITE_API_BASE_URL);
+export const API_ORIGIN = new URL(API_BASE_URL).origin;
+
+export function resolveApiUrl(path) {
+  if (!path) return API_BASE_URL;
+  if (typeof path !== 'string') return path;
+  if (/^https?:\/\//i.test(path)) return path;
+
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  return `${API_BASE_URL}${normalized}`;
+}
+
+export function resolveApiHostUrl(path) {
+  if (!path) return API_ORIGIN;
+  if (typeof path !== 'string') return path;
+  if (/^https?:\/\//i.test(path)) return path;
+
+  const normalized = path.startsWith('/') ? path : `/${path}`;
+  return `${API_ORIGIN}${normalized}`;
+}
+
+export function resolveHubUrl(path) {
+  const normalized = path.startsWith('/hubs/') ? path : `/hubs/${path.replace(/^\/+/, '')}`;
+  return resolveApiHostUrl(normalized);
+}
 
 export function resolveApiAssetUrl(path) {
   if (!path) return path;
   if (typeof path !== 'string') return path;
   if (/^https?:\/\//i.test(path)) return path;
-  const normalized = path.startsWith('/') ? path : `/${path}`;
-  return `${API_ORIGIN}${normalized}`;
+  return resolveApiHostUrl(path);
 }
 
 async function uploadFileWithSignedUrl({ uploadUrl, file, contentType }) {
@@ -174,6 +201,13 @@ export const statsAPI = {
   getMyStats: () => apiClient.get('/stats/me').then(res => res.data),
   updateMyStats: (data) => apiClient.put('/stats/me', data).then(res => res.data),
   getUserStats: (userId) => apiClient.get(`/stats/user/${userId}`).then(res => res.data),
+  refresh: () => apiClient.post('/stats/refresh').then(res => res.data),
+};
+
+// Football API
+export const footballAPI = {
+  importPlayerStats: (playerId) =>
+    apiClient.post('/football/players/import', { playerId }).then(res => res.data),
 };
 
 // Follow API
@@ -203,6 +237,7 @@ export const api = {
   admin: adminAPI,
   media: mediaAPI,
   stats: statsAPI,
+  football: footballAPI,
   follow: followAPI,
   messages: messagesAPI,
 };

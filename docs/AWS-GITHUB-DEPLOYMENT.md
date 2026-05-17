@@ -39,7 +39,7 @@ Configure CORS on the bucket so the browser can upload directly with presigned P
 ```json
 [
   {
-    "AllowedOrigins": ["https://your-domain.example"],
+    "AllowedOrigins": ["https://globalscout.eu", "https://www.globalscout.eu"],
     "AllowedMethods": ["PUT", "GET", "HEAD"],
     "AllowedHeaders": ["*"],
     "ExposeHeaders": ["ETag"],
@@ -204,6 +204,8 @@ Edit `/opt/globalscout/.env` on the instance. At minimum, set:
 - `ObjectStorage__Region`
 - Stripe secrets if billing is enabled
 - `ApiFootball__ApiKey` if football statistics are enabled
+
+The UI image is built with `VITE_API_BASE_URL=https://api.globalscout.eu/api`, so browser API calls go to the ALB-backed API domain instead of the CloudFront frontend domain. The EC2 Compose file also sets API CORS origins for `https://globalscout.eu` and `https://www.globalscout.eu`.
 
 Do not commit the filled `.env` file.
 

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { TrendingUp, AlertCircle, RefreshCw, Calendar, Trophy, Target, Clock, Users, Activity, Shield, Zap } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-hot-toast';
+import { api } from '../services/api';
 import LimitedStatsCard from './LimitedStatsCard';
 import PaymentModal from './PaymentModal';
 
@@ -22,18 +23,9 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
       setLoading(true);
       setError(null);
       
-      const endpoint = isOwnProfile ? '/api/stats/me' : `/api/stats/user/${userId}`;
-      const response = await fetch(endpoint, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch statistics');
-      }
-
-      const data = await response.json();
+      const data = isOwnProfile
+        ? await api.stats.getMyStats()
+        : await api.stats.getUserStats(userId);
       setStats(data.data || []);
       setAccountType(data.accountType || 'BASIC');
       setAvailableFields(data.availableFields || []);
@@ -61,17 +53,7 @@ const PlayerStatistics = ({ userId, isOwnProfile = false }) => {
     
     try {
       setRefreshing(true);
-      const response = await fetch('/api/stats/refresh', {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to refresh statistics');
-      }
-
+      await api.stats.refresh();
       toast.success('Statistics updated successfully!');
       await fetchStats();
     } catch (error) {

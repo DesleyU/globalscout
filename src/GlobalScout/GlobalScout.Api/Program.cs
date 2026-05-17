@@ -54,7 +54,7 @@ if (enableCors)
                 policy.WithOrigins(configuredCorsOrigins);
             }
 
-            policy.AllowAnyHeader().AllowAnyMethod();
+            policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials();
         });
     });
 }

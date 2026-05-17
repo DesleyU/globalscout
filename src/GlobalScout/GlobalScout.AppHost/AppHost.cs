@@ -32,7 +32,7 @@ var api = builder.AddProject<Projects.GlobalScout_Api>("globalscout-api")
 var frontend = builder.AddViteApp("frontend", "../../../frontend")
     .WithReference(api)
     .WaitFor(api)
-    .WithEnvironment("VITE_API_URL", ReferenceExpression.Create($"{api.GetEndpoint("https")}/api"));
+    .WithEnvironment("VITE_API_BASE_URL", ReferenceExpression.Create($"{api.GetEndpoint("https")}/api"));
 
 // Aspire allocates a reverse-proxy endpoint for the Vite app (e.g. http(s)://frontend-*.dev.localhost:<port>),
 // so the browser's Origin is that URL rather than http://localhost:5173. Inject it into the API as an

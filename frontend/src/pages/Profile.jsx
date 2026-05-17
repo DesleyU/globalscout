@@ -11,7 +11,6 @@ import PremiumBadge from '../components/PremiumBadge';
 import PaymentModal from '../components/PaymentModal';
 import { User, Mail, Building, MapPin, Calendar, Edit3, Save, X, Crown } from 'lucide-react';
 import toast from 'react-hot-toast';
-import Cookies from 'js-cookie';
 
 const Profile = () => {
   const { user, updateUser, refreshUser } = useAuth();
@@ -150,21 +149,8 @@ const Profile = () => {
         // If playerId was set/changed for a PLAYER, automatically import statistics
         if (isPlayerIdChanged) {
           try {
-            const token = Cookies.get('token');
-            const response = await fetch('/api/football/players/import', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-              },
-              body: JSON.stringify({ playerId: newPlayerId })
-            });
-
-            if (response.ok) {
-              toast.success('Profile updated and statistics imported automatically!');
-            } else {
-              toast.success('Profile updated! Statistics could not be imported automatically.');
-            }
+            await api.football.importPlayerStats(newPlayerId);
+            toast.success('Profile updated and statistics imported automatically!');
           } catch (error) {
             console.error('Error auto-importing statistics:', error);
             toast.success('Profile updated! Statistics could not be imported automatically.');
