@@ -15,7 +15,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Build solution
-        run: dotnet build src/GlobalScout/GlobalScout.slnx -c Release
+        run: dotnet build src/api/GlobalScout.slnx -c Release
 
       - name: Test solution
-        run: dotnet test src/GlobalScout/GlobalScout.slnx -c Release --no-build
+        run: dotnet test src/api/GlobalScout.slnx -c Release --no-build

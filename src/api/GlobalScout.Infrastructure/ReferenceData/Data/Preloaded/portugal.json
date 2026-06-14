@@ -1,0 +1,3455 @@
+{
+    "country":  "Portugal",
+    "leagues":  [
+                    {
+                        "externalLeagueId":  94,
+                        "name":  "Primeira Liga",
+                        "type":  "League",
+                        "logoUrl":  "https://media.api-sports.io/football/leagues/94.png"
+                    }
+                ],
+    "teams":  [
+                  {
+                      "id":  4718,
+                      "name":  "1Âº Dezembro",
+                      "code":  "DEZ",
+                      "country":  "Portugal",
+                      "founded":  1938,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4718.png"
+                  },
+                  {
+                      "id":  20350,
+                      "name":  "1Âº Maio Funchal",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20350.png"
+                  },
+                  {
+                      "id":  17378,
+                      "name":  "Abrantes e Benfica",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17378.png"
+                  },
+                  {
+                      "id":  4869,
+                      "name":  "Acad. Coimbra/S.Futebol",
+                      "country":  "Portugal",
+                      "founded":  1977,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4869.png"
+                  },
+                  {
+                      "id":  239,
+                      "name":  "Academica",
+                      "code":  "ACA",
+                      "country":  "Portugal",
+                      "founded":  1887,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/239.png"
+                  },
+                  {
+                      "id":  22504,
+                      "name":  "Academica U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22504.png"
+                  },
+                  {
+                      "id":  15458,
+                      "name":  "AcadÃ©mica U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15458.png"
+                  },
+                  {
+                      "id":  4870,
+                      "name":  "AcadÃ©mico do FundÃ£o",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4870.png"
+                  },
+                  {
+                      "id":  238,
+                      "name":  "Academico Viseu",
+                      "code":  "ACA",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/238.png"
+                  },
+                  {
+                      "id":  22505,
+                      "name":  "Academico Viseu U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22505.png"
+                  },
+                  {
+                      "id":  21718,
+                      "name":  "Academico Viseu U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21718.png"
+                  },
+                  {
+                      "id":  4819,
+                      "name":  "AD Fornos Algodres",
+                      "code":  "ORN",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4819.png"
+                  },
+                  {
+                      "id":  22089,
+                      "name":  "AD Marco 09",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22089.png"
+                  },
+                  {
+                      "id":  4719,
+                      "name":  "AD Nogueirense",
+                      "code":  "NOG",
+                      "country":  "Portugal",
+                      "founded":  1973,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4719.png"
+                  },
+                  {
+                      "id":  6347,
+                      "name":  "AD Portomosense",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6347.png"
+                  },
+                  {
+                      "id":  4868,
+                      "name":  "AD Satao",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4868.png"
+                  },
+                  {
+                      "id":  4817,
+                      "name":  "Ãgueda",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4817.png"
+                  },
+                  {
+                      "id":  4866,
+                      "name":  "Ãguia FC Vimioso",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4866.png"
+                  },
+                  {
+                      "id":  4871,
+                      "name":  "Aguiar da Beira",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4871.png"
+                  },
+                  {
+                      "id":  4867,
+                      "name":  "Ãguias do Moradal",
+                      "code":  "AGU",
+                      "country":  "Portugal",
+                      "founded":  1978,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4867.png"
+                  },
+                  {
+                      "id":  22102,
+                      "name":  "Alba",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22102.png"
+                  },
+                  {
+                      "id":  20505,
+                      "name":  "Albergaria W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20505.png"
+                  },
+                  {
+                      "id":  27746,
+                      "name":  "Albergaria/Durit W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/27746.png"
+                  },
+                  {
+                      "id":  4721,
+                      "name":  "Alcains",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4721.png"
+                  },
+                  {
+                      "id":  4820,
+                      "name":  "Alcanenense",
+                      "code":  "ALC",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4820.png"
+                  },
+                  {
+                      "id":  6348,
+                      "name":  "Alcochetense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6348.png"
+                  },
+                  {
+                      "id":  22158,
+                      "name":  "Aliados Lordelo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22158.png"
+                  },
+                  {
+                      "id":  4821,
+                      "name":  "AlianÃ§a de Gandra",
+                      "country":  "Portugal",
+                      "founded":  1946,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4821.png"
+                  },
+                  {
+                      "id":  4722,
+                      "name":  "Aljustrelense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4722.png"
+                  },
+                  {
+                      "id":  4723,
+                      "name":  "Almancilense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4723.png"
+                  },
+                  {
+                      "id":  4822,
+                      "name":  "AlmodÃ´var",
+                      "code":  "ALM",
+                      "country":  "Portugal",
+                      "founded":  1981,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4822.png"
+                  },
+                  {
+                      "id":  17775,
+                      "name":  "Alpendorada",
+                      "country":  "Portugal",
+                      "founded":  1960,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17775.png"
+                  },
+                  {
+                      "id":  15202,
+                      "name":  "AlqueidÃ£o da Serra",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15202.png"
+                  },
+                  {
+                      "id":  4823,
+                      "name":  "Alta Lisboa",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4823.png"
+                  },
+                  {
+                      "id":  4724,
+                      "name":  "Alverca",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4724.png"
+                  },
+                  {
+                      "id":  22506,
+                      "name":  "Alverca U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22506.png"
+                  },
+                  {
+                      "id":  4725,
+                      "name":  "Amarante",
+                      "code":  "AMA",
+                      "country":  "Portugal",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4725.png"
+                  },
+                  {
+                      "id":  15203,
+                      "name":  "Amares",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15203.png"
+                  },
+                  {
+                      "id":  22159,
+                      "name":  "Amiense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22159.png"
+                  },
+                  {
+                      "id":  4726,
+                      "name":  "Amora",
+                      "country":  "Portugal",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4726.png"
+                  },
+                  {
+                      "id":  20507,
+                      "name":  "Amora W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20507.png"
+                  },
+                  {
+                      "id":  4727,
+                      "name":  "Anadia",
+                      "code":  "ANA",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4727.png"
+                  },
+                  {
+                      "id":  6349,
+                      "name":  "AnÃ§Ã£",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6349.png"
+                  },
+                  {
+                      "id":  4728,
+                      "name":  "Angrense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4728.png"
+                  },
+                  {
+                      "id":  26194,
+                      "name":  "Aparecida",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26194.png"
+                  },
+                  {
+                      "id":  4720,
+                      "name":  "AR SÃ£o Martinho",
+                      "country":  "Portugal",
+                      "founded":  1958,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4720.png"
+                  },
+                  {
+                      "id":  4729,
+                      "name":  "Armacenenses",
+                      "country":  "Portugal",
+                      "founded":  1935,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4729.png"
+                  },
+                  {
+                      "id":  4824,
+                      "name":  "ArÃµes",
+                      "country":  "Portugal",
+                      "founded":  1991,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4824.png"
+                  },
+                  {
+                      "id":  240,
+                      "name":  "Arouca",
+                      "code":  "ARO",
+                      "country":  "Portugal",
+                      "founded":  1951,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/240.png"
+                  },
+                  {
+                      "id":  17379,
+                      "name":  "Arronches e Benfica",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17379.png"
+                  },
+                  {
+                      "id":  4825,
+                      "name":  "AtlÃ©tico Arcos",
+                      "country":  "Portugal",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4825.png"
+                  },
+                  {
+                      "id":  4872,
+                      "name":  "AtlÃ©tico CP",
+                      "code":  "ATL",
+                      "country":  "Portugal",
+                      "founded":  1942,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4872.png"
+                  },
+                  {
+                      "id":  4873,
+                      "name":  "AtlÃ©tico Malveira",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4873.png"
+                  },
+                  {
+                      "id":  20035,
+                      "name":  "AtlÃ©tico Reguengos",
+                      "country":  "Portugal",
+                      "founded":  1929,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20035.png"
+                  },
+                  {
+                      "id":  4826,
+                      "name":  "AtlÃ©tico Riachense",
+                      "code":  "RIA",
+                      "country":  "Portugal",
+                      "founded":  1932,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4826.png"
+                  },
+                  {
+                      "id":  220,
+                      "name":  "Aves",
+                      "code":  "AVE",
+                      "country":  "Portugal",
+                      "founded":  1930,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/220.png"
+                  },
+                  {
+                      "id":  21595,
+                      "name":  "AVS",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21595.png"
+                  },
+                  {
+                      "id":  17393,
+                      "name":  "Ã‚ncora Praia",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17393.png"
+                  },
+                  {
+                      "id":  4874,
+                      "name":  "Barrosas",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4874.png"
+                  },
+                  {
+                      "id":  22507,
+                      "name":  "Beira Mar U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22507.png"
+                  },
+                  {
+                      "id":  4661,
+                      "name":  "Beira-Mar",
+                      "code":  "BEI",
+                      "country":  "Portugal",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4661.png"
+                  },
+                  {
+                      "id":  4875,
+                      "name":  "Beira-Mar Almada",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4875.png"
+                  },
+                  {
+                      "id":  221,
+                      "name":  "Belenenses",
+                      "code":  "BEL",
+                      "country":  "Portugal",
+                      "founded":  1919,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/221.png"
+                  },
+                  {
+                      "id":  15129,
+                      "name":  "Belenenses II",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15129.png"
+                  },
+                  {
+                      "id":  22508,
+                      "name":  "Belenenses U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22508.png"
+                  },
+                  {
+                      "id":  15459,
+                      "name":  "Belenenses U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15459.png"
+                  },
+                  {
+                      "id":  4730,
+                      "name":  "Beneditense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4730.png"
+                  },
+                  {
+                      "id":  211,
+                      "name":  "Benfica",
+                      "code":  "BEN",
+                      "country":  "Portugal",
+                      "founded":  1904,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/211.png"
+                  },
+                  {
+                      "id":  229,
+                      "name":  "Benfica B",
+                      "code":  "BEN",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/229.png"
+                  },
+                  {
+                      "id":  4731,
+                      "name":  "Benfica Castelo Branco",
+                      "code":  "CAS",
+                      "country":  "Portugal",
+                      "founded":  1924,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4731.png"
+                  },
+                  {
+                      "id":  7888,
+                      "name":  "Benfica U19",
+                      "code":  "BEN",
+                      "country":  "Portugal",
+                      "founded":  0,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7888.png"
+                  },
+                  {
+                      "id":  22415,
+                      "name":  "Benfica U21",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22415.png"
+                  },
+                  {
+                      "id":  15460,
+                      "name":  "Benfica U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15460.png"
+                  },
+                  {
+                      "id":  6350,
+                      "name":  "BerÃ§o",
+                      "country":  "Portugal",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6350.png"
+                  },
+                  {
+                      "id":  222,
+                      "name":  "Boavista",
+                      "country":  "Portugal",
+                      "founded":  1903,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/222.png"
+                  },
+                  {
+                      "id":  22509,
+                      "name":  "Boavista U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22509.png"
+                  },
+                  {
+                      "id":  15461,
+                      "name":  "Boavista U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15461.png"
+                  },
+                  {
+                      "id":  4827,
+                      "name":  "BraganÃ§a",
+                      "code":  "BRA",
+                      "country":  "Portugal",
+                      "founded":  1947,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4827.png"
+                  },
+                  {
+                      "id":  15126,
+                      "name":  "Brito",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15126.png"
+                  },
+                  {
+                      "id":  6351,
+                      "name":  "Bustelo",
+                      "code":  "BUS",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6351.png"
+                  },
+                  {
+                      "id":  4734,
+                      "name":  "CaÃ§adores das Taipas",
+                      "country":  "Portugal",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4734.png"
+                  },
+                  {
+                      "id":  4733,
+                      "name":  "Caldas",
+                      "code":  "CAL",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4733.png"
+                  },
+                  {
+                      "id":  15204,
+                      "name":  "CalvÃ£o",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15204.png"
+                  },
+                  {
+                      "id":  4828,
+                      "name":  "Camacha",
+                      "code":  "CAM",
+                      "country":  "Portugal",
+                      "founded":  1978,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4828.png"
+                  },
+                  {
+                      "id":  4829,
+                      "name":  "Canelas 2010",
+                      "country":  "Portugal",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4829.png"
+                  },
+                  {
+                      "id":  4876,
+                      "name":  "CaniÃ§al",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4876.png"
+                  },
+                  {
+                      "id":  4877,
+                      "name":  "Carapinheirense",
+                      "code":  "CAR",
+                      "country":  "Portugal",
+                      "founded":  1959,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4877.png"
+                  },
+                  {
+                      "id":  6352,
+                      "name":  "CarÃ§Ã£o",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6352.png"
+                  },
+                  {
+                      "id":  24638,
+                      "name":  "Cardielense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24638.png"
+                  },
+                  {
+                      "id":  26476,
+                      "name":  "Carregal",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26476.png"
+                  },
+                  {
+                      "id":  4878,
+                      "name":  "Cartaxo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4878.png"
+                  },
+                  {
+                      "id":  4716,
+                      "name":  "Casa Pia",
+                      "code":  "CAS",
+                      "country":  "Portugal",
+                      "founded":  1920,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4716.png"
+                  },
+                  {
+                      "id":  24442,
+                      "name":  "Casa Pia U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24442.png"
+                  },
+                  {
+                      "id":  4830,
+                      "name":  "Castrense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4830.png"
+                  },
+                  {
+                      "id":  6353,
+                      "name":  "Castro Daire",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6353.png"
+                  },
+                  {
+                      "id":  4835,
+                      "name":  "CÃ¢mara de Lobos",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4835.png"
+                  },
+                  {
+                      "id":  17776,
+                      "name":  "CD Olivais e Moscavide",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17776.png"
+                  },
+                  {
+                      "id":  4732,
+                      "name":  "CD Torres Novas",
+                      "code":  "TOR",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4732.png"
+                  },
+                  {
+                      "id":  26477,
+                      "name":  "CeleirÃ³s",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26477.png"
+                  },
+                  {
+                      "id":  26193,
+                      "name":  "Celoricense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26193.png"
+                  },
+                  {
+                      "id":  4879,
+                      "name":  "Cerva",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4879.png"
+                  },
+                  {
+                      "id":  4831,
+                      "name":  "Cerveira",
+                      "country":  "Portugal",
+                      "founded":  1972,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4831.png"
+                  },
+                  {
+                      "id":  4735,
+                      "name":  "Cesarense",
+                      "code":  "CES",
+                      "country":  "Portugal",
+                      "founded":  1932,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4735.png"
+                  },
+                  {
+                      "id":  24637,
+                      "name":  "CF Benfica",
+                      "country":  "Portugal",
+                      "founded":  1916,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24637.png"
+                  },
+                  {
+                      "id":  22090,
+                      "name":  "CF Oliveira Douro",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22090.png"
+                  },
+                  {
+                      "id":  17692,
+                      "name":  "CF Os Belenenses",
+                      "country":  "Portugal",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17692.png"
+                  },
+                  {
+                      "id":  26478,
+                      "name":  "Ch. Caparica",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26478.png"
+                  },
+                  {
+                      "id":  4832,
+                      "name":  "Charneca Caparica",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4832.png"
+                  },
+                  {
+                      "id":  223,
+                      "name":  "Chaves",
+                      "code":  "CHA",
+                      "country":  "Portugal",
+                      "founded":  1949,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/223.png"
+                  },
+                  {
+                      "id":  4736,
+                      "name":  "Chaves II",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4736.png"
+                  },
+                  {
+                      "id":  22510,
+                      "name":  "Chaves U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22510.png"
+                  },
+                  {
+                      "id":  4737,
+                      "name":  "CinfÃ£es",
+                      "code":  "CIN",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4737.png"
+                  },
+                  {
+                      "id":  4738,
+                      "name":  "CoimbrÃµes",
+                      "code":  "COI",
+                      "country":  "Portugal",
+                      "founded":  1920,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4738.png"
+                  },
+                  {
+                      "id":  17985,
+                      "name":  "ComÃ©rcio IndÃºstria",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17985.png"
+                  },
+                  {
+                      "id":  4739,
+                      "name":  "Condeixa",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4739.png"
+                  },
+                  {
+                      "id":  26479,
+                      "name":  "CorrelhÃ£",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26479.png"
+                  },
+                  {
+                      "id":  4833,
+                      "name":  "Coruchense",
+                      "country":  "Portugal",
+                      "founded":  1948,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4833.png"
+                  },
+                  {
+                      "id":  20351,
+                      "name":  "Courense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20351.png"
+                  },
+                  {
+                      "id":  4740,
+                      "name":  "Coutada",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4740.png"
+                  },
+                  {
+                      "id":  15462,
+                      "name":  "Cova da Piedade U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15462.png"
+                  },
+                  {
+                      "id":  241,
+                      "name":  "Cova De Piedade",
+                      "code":  "COV",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/241.png"
+                  },
+                  {
+                      "id":  4834,
+                      "name":  "Crato",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4834.png"
+                  },
+                  {
+                      "id":  4880,
+                      "name":  "Cruzado Canicense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4880.png"
+                  },
+                  {
+                      "id":  15205,
+                      "name":  "Culatrense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15205.png"
+                  },
+                  {
+                      "id":  17380,
+                      "name":  "Damaiense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17380.png"
+                  },
+                  {
+                      "id":  20508,
+                      "name":  "Damaiense W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20508.png"
+                  },
+                  {
+                      "id":  17381,
+                      "name":  "Desportos de GlÃ³ria",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17381.png"
+                  },
+                  {
+                      "id":  20036,
+                      "name":  "Dumiense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20036.png"
+                  },
+                  {
+                      "id":  4741,
+                      "name":  "Eirense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4741.png"
+                  },
+                  {
+                      "id":  4836,
+                      "name":  "ElÃ©ctrico",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4836.png"
+                  },
+                  {
+                      "id":  4837,
+                      "name":  "Esmoriz",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4837.png"
+                  },
+                  {
+                      "id":  4742,
+                      "name":  "Espinho",
+                      "code":  "ESP",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4742.png"
+                  },
+                  {
+                      "id":  4838,
+                      "name":  "Esposende",
+                      "country":  "Portugal",
+                      "founded":  1978,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4838.png"
+                  },
+                  {
+                      "id":  4881,
+                      "name":  "Estarreja",
+                      "code":  "EST",
+                      "country":  "Portugal",
+                      "founded":  1944,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4881.png"
+                  },
+                  {
+                      "id":  230,
+                      "name":  "Estoril",
+                      "code":  "EST",
+                      "country":  "Portugal",
+                      "founded":  1939,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/230.png"
+                  },
+                  {
+                      "id":  24458,
+                      "name":  "Estoril Praia W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24458.png"
+                  },
+                  {
+                      "id":  22511,
+                      "name":  "Estoril U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22511.png"
+                  },
+                  {
+                      "id":  15463,
+                      "name":  "Estoril U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15463.png"
+                  },
+                  {
+                      "id":  15130,
+                      "name":  "Estrela",
+                      "country":  "Portugal",
+                      "founded":  0,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15130.png"
+                  },
+                  {
+                      "id":  24536,
+                      "name":  "Estrela II",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24536.png"
+                  },
+                  {
+                      "id":  19824,
+                      "name":  "Estrela U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19824.png"
+                  },
+                  {
+                      "id":  4839,
+                      "name":  "Estrela Vendas Novas",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4839.png"
+                  },
+                  {
+                      "id":  15297,
+                      "name":  "Estudantes Africanos",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15297.png"
+                  },
+                  {
+                      "id":  4882,
+                      "name":  "Fabril Barreiro",
+                      "country":  "Portugal",
+                      "founded":  1937,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4882.png"
+                  },
+                  {
+                      "id":  809,
+                      "name":  "Fafe",
+                      "code":  "FAF",
+                      "country":  "Portugal",
+                      "founded":  1958,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/809.png"
+                  },
+                  {
+                      "id":  242,
+                      "name":  "Famalicao",
+                      "code":  "FAM",
+                      "country":  "Portugal",
+                      "founded":  1931,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/242.png"
+                  },
+                  {
+                      "id":  22394,
+                      "name":  "FamalicÃ£o U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22394.png"
+                  },
+                  {
+                      "id":  15464,
+                      "name":  "FamalicÃ£o U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15464.png"
+                  },
+                  {
+                      "id":  20509,
+                      "name":  "FamalicÃ£o W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20509.png"
+                  },
+                  {
+                      "id":  231,
+                      "name":  "Farense",
+                      "code":  "FAR",
+                      "country":  "Portugal",
+                      "founded":  1910,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/231.png"
+                  },
+                  {
+                      "id":  17474,
+                      "name":  "Farense U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17474.png"
+                  },
+                  {
+                      "id":  4746,
+                      "name":  "FÃ¡tima",
+                      "code":  "FAT",
+                      "country":  "Portugal",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4746.png"
+                  },
+                  {
+                      "id":  6354,
+                      "name":  "Fayal",
+                      "country":  "Portugal",
+                      "founded":  1909,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6354.png"
+                  },
+                  {
+                      "id":  4883,
+                      "name":  "Fazendense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4883.png"
+                  },
+                  {
+                      "id":  22092,
+                      "name":  "FC Alverca II",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22092.png"
+                  },
+                  {
+                      "id":  4743,
+                      "name":  "FC Barreirense",
+                      "code":  "BAR",
+                      "country":  "Portugal",
+                      "founded":  1911,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4743.png"
+                  },
+                  {
+                      "id":  212,
+                      "name":  "FC Porto",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "founded":  1893,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/212.png"
+                  },
+                  {
+                      "id":  243,
+                      "name":  "FC Porto B",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/243.png"
+                  },
+                  {
+                      "id":  17442,
+                      "name":  "FC Serpa",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17442.png"
+                  },
+                  {
+                      "id":  213,
+                      "name":  "Feirense",
+                      "code":  "FEI",
+                      "country":  "Portugal",
+                      "founded":  1918,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/213.png"
+                  },
+                  {
+                      "id":  24443,
+                      "name":  "Feirense U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24443.png"
+                  },
+                  {
+                      "id":  4744,
+                      "name":  "Felgueiras 1932",
+                      "country":  "Portugal",
+                      "founded":  2006,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4744.png"
+                  },
+                  {
+                      "id":  4840,
+                      "name":  "Ferreira de Aves",
+                      "country":  "Portugal",
+                      "founded":  1958,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4840.png"
+                  },
+                  {
+                      "id":  24639,
+                      "name":  "Ferreira ZÃªzere",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24639.png"
+                  },
+                  {
+                      "id":  4745,
+                      "name":  "Ferreiras",
+                      "code":  "FER",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4745.png"
+                  },
+                  {
+                      "id":  4841,
+                      "name":  "Flamengos",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4841.png"
+                  },
+                  {
+                      "id":  22091,
+                      "name":  "Florgrade",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22091.png"
+                  },
+                  {
+                      "id":  6355,
+                      "name":  "Fontinhas",
+                      "country":  "Portugal",
+                      "founded":  1975,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6355.png"
+                  },
+                  {
+                      "id":  17382,
+                      "name":  "ForjÃ£es SC",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17382.png"
+                  },
+                  {
+                      "id":  15206,
+                      "name":  "Foz",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15206.png"
+                  },
+                  {
+                      "id":  808,
+                      "name":  "Freamunde",
+                      "code":  "FRE",
+                      "country":  "Portugal",
+                      "founded":  1933,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/808.png"
+                  },
+                  {
+                      "id":  4748,
+                      "name":  "Gafanha",
+                      "country":  "Portugal",
+                      "founded":  1957,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4748.png"
+                  },
+                  {
+                      "id":  4749,
+                      "name":  "Gafetense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4749.png"
+                  },
+                  {
+                      "id":  4884,
+                      "name":  "Gavionenses",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4884.png"
+                  },
+                  {
+                      "id":  6356,
+                      "name":  "GD Prado",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6356.png"
+                  },
+                  {
+                      "id":  762,
+                      "name":  "GIL Vicente",
+                      "code":  "VIC",
+                      "country":  "Portugal",
+                      "founded":  1924,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/762.png"
+                  },
+                  {
+                      "id":  22512,
+                      "name":  "Gil Vicente U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22512.png"
+                  },
+                  {
+                      "id":  19825,
+                      "name":  "Gil Vicente U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19825.png"
+                  },
+                  {
+                      "id":  27745,
+                      "name":  "Gil Vicente W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/27745.png"
+                  },
+                  {
+                      "id":  4885,
+                      "name":  "GinÃ¡sio de AlcobaÃ§a",
+                      "country":  "Portugal",
+                      "founded":  1946,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4885.png"
+                  },
+                  {
+                      "id":  10122,
+                      "name":  "GinÃ¡sio Figueirense",
+                      "country":  "Portugal",
+                      "founded":  1953,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10122.png"
+                  },
+                  {
+                      "id":  4750,
+                      "name":  "Gondomar",
+                      "code":  "GON",
+                      "country":  "Portugal",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4750.png"
+                  },
+                  {
+                      "id":  4751,
+                      "name":  "Gouveia",
+                      "country":  "Portugal",
+                      "founded":  1963,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4751.png"
+                  },
+                  {
+                      "id":  17383,
+                      "name":  "GR Vigor Mocidade",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17383.png"
+                  },
+                  {
+                      "id":  4752,
+                      "name":  "Graciosa",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4752.png"
+                  },
+                  {
+                      "id":  4747,
+                      "name":  "GRAP",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4747.png"
+                  },
+                  {
+                      "id":  4842,
+                      "name":  "Guadalupe",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4842.png"
+                  },
+                  {
+                      "id":  24535,
+                      "name":  "Guarda",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24535.png"
+                  },
+                  {
+                      "id":  17384,
+                      "name":  "Guarda Desportiva",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17384.png"
+                  },
+                  {
+                      "id":  224,
+                      "name":  "Guimaraes",
+                      "code":  "GUI",
+                      "country":  "Portugal",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/224.png"
+                  },
+                  {
+                      "id":  232,
+                      "name":  "Guimaraes B",
+                      "code":  "GUI",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/232.png"
+                  },
+                  {
+                      "id":  4753,
+                      "name":  "Ideal",
+                      "code":  "SPO",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4753.png"
+                  },
+                  {
+                      "id":  17385,
+                      "name":  "Imortal Albufeira",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17385.png"
+                  },
+                  {
+                      "id":  4754,
+                      "name":  "Joane",
+                      "code":  "JOA",
+                      "country":  "Portugal",
+                      "founded":  1930,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4754.png"
+                  },
+                  {
+                      "id":  4755,
+                      "name":  "Juventude Ã‰vora",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4755.png"
+                  },
+                  {
+                      "id":  24640,
+                      "name":  "Juventude Gaula",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24640.png"
+                  },
+                  {
+                      "id":  4886,
+                      "name":  "Lagoa",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4886.png"
+                  },
+                  {
+                      "id":  6357,
+                      "name":  "Lagos",
+                      "code":  "ESP",
+                      "country":  "Portugal",
+                      "founded":  1912,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6357.png"
+                  },
+                  {
+                      "id":  20037,
+                      "name":  "Lajense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20037.png"
+                  },
+                  {
+                      "id":  4756,
+                      "name":  "Lamego",
+                      "country":  "Portugal",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4756.png"
+                  },
+                  {
+                      "id":  22160,
+                      "name":  "Lanheses",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22160.png"
+                  },
+                  {
+                      "id":  4757,
+                      "name":  "LeÃ§a",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4757.png"
+                  },
+                  {
+                      "id":  4843,
+                      "name":  "Leiria e Marrazes",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4843.png"
+                  },
+                  {
+                      "id":  244,
+                      "name":  "Leixoes",
+                      "code":  "LEI",
+                      "country":  "Portugal",
+                      "founded":  1907,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/244.png"
+                  },
+                  {
+                      "id":  15465,
+                      "name":  "LeixÃµes U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15465.png"
+                  },
+                  {
+                      "id":  22161,
+                      "name":  "LobÃ£o",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22161.png"
+                  },
+                  {
+                      "id":  4758,
+                      "name":  "Louletano",
+                      "code":  "LOU",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4758.png"
+                  },
+                  {
+                      "id":  4759,
+                      "name":  "Loures",
+                      "code":  "LOU",
+                      "country":  "Portugal",
+                      "founded":  1913,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4759.png"
+                  },
+                  {
+                      "id":  4760,
+                      "name":  "Lourinhanense",
+                      "code":  "LOU",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4760.png"
+                  },
+                  {
+                      "id":  22513,
+                      "name":  "Lusitania FC U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22513.png"
+                  },
+                  {
+                      "id":  15207,
+                      "name":  "Lusitano Ã‰vora 1911",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15207.png"
+                  },
+                  {
+                      "id":  4761,
+                      "name":  "Lusitano FCV",
+                      "code":  "LUS",
+                      "country":  "Portugal",
+                      "founded":  1916,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4761.png"
+                  },
+                  {
+                      "id":  4762,
+                      "name":  "Lusitano GC Ã‰vora",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4762.png"
+                  },
+                  {
+                      "id":  4844,
+                      "name":  "Lusitano VRSA",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4844.png"
+                  },
+                  {
+                      "id":  4763,
+                      "name":  "LusitÃ¢nia",
+                      "code":  "LUS",
+                      "country":  "Portugal",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4763.png"
+                  },
+                  {
+                      "id":  6358,
+                      "name":  "LusitÃ¢nia Lourosa",
+                      "country":  "Portugal",
+                      "founded":  1924,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6358.png"
+                  },
+                  {
+                      "id":  22514,
+                      "name":  "LusitÃ¢nia U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22514.png"
+                  },
+                  {
+                      "id":  22162,
+                      "name":  "Luzense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22162.png"
+                  },
+                  {
+                      "id":  4767,
+                      "name":  "MaÃ§Ã£o",
+                      "country":  "Portugal",
+                      "founded":  1978,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/4767.png"
+                  },
+                  {
+                      "id":  10144,
+                      "name":  "MaÃ§Ã£o",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10144.png"
+                  },
+                  {
+                      "id":  17386,
+                      "name":  "Macedo Cavaleiros",
+                      "country":  "Portugal",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17386.png"
+                  },
+                  {
+                      "id":  4764,
+                      "name":  "Machico",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4764.png"
+                  },
+                  {
+                      "id":  15208,
+                      "name":  "Madalena",
+                      "country":  "Portugal",
+                      "founded":  0,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15208.png"
+                  },
+                  {
+                      "id":  245,
+                      "name":  "Mafra",
+                      "code":  "MAF",
+                      "country":  "Portugal",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/245.png"
+                  },
+                  {
+                      "id":  24444,
+                      "name":  "Mafra U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24444.png"
+                  },
+                  {
+                      "id":  19826,
+                      "name":  "Mafra U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19826.png"
+                  },
+                  {
+                      "id":  24641,
+                      "name":  "Maia Lidador",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24641.png"
+                  },
+                  {
+                      "id":  26813,
+                      "name":  "Malmesbury Victoria W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26813.png"
+                  },
+                  {
+                      "id":  6359,
+                      "name":  "Manteigas",
+                      "code":  "MAN",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6359.png"
+                  },
+                  {
+                      "id":  4765,
+                      "name":  "Maria da Fonte",
+                      "country":  "Portugal",
+                      "founded":  1925,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4765.png"
+                  },
+                  {
+                      "id":  4845,
+                      "name":  "Marinhense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4845.png"
+                  },
+                  {
+                      "id":  214,
+                      "name":  "Maritimo",
+                      "code":  "MAR",
+                      "country":  "Portugal",
+                      "founded":  1910,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/214.png"
+                  },
+                  {
+                      "id":  4766,
+                      "name":  "MarÃ­timo Graciosa",
+                      "country":  "Portugal",
+                      "founded":  1957,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4766.png"
+                  },
+                  {
+                      "id":  9911,
+                      "name":  "MarÃ­timo II",
+                      "code":  "MAR",
+                      "country":  "Portugal",
+                      "founded":  1910,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/9911.png"
+                  },
+                  {
+                      "id":  22515,
+                      "name":  "Maritimo U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22515.png"
+                  },
+                  {
+                      "id":  15466,
+                      "name":  "MarÃ­timo U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15466.png"
+                  },
+                  {
+                      "id":  20510,
+                      "name":  "MarÃ­timo W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20510.png"
+                  },
+                  {
+                      "id":  17387,
+                      "name":  "Matamourisquense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17387.png"
+                  },
+                  {
+                      "id":  4768,
+                      "name":  "Merelinense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4768.png"
+                  },
+                  {
+                      "id":  4846,
+                      "name":  "Minas de Argozelo",
+                      "country":  "Portugal",
+                      "founded":  1975,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4846.png"
+                  },
+                  {
+                      "id":  4769,
+                      "name":  "Mirandela",
+                      "code":  "MIR",
+                      "country":  "Portugal",
+                      "founded":  1926,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4769.png"
+                  },
+                  {
+                      "id":  10148,
+                      "name":  "MirandÃªs",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10148.png"
+                  },
+                  {
+                      "id":  4887,
+                      "name":  "Moimenta da Beira",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4887.png"
+                  },
+                  {
+                      "id":  17777,
+                      "name":  "Moitense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17777.png"
+                  },
+                  {
+                      "id":  4849,
+                      "name":  "MonÃ§Ã£o",
+                      "country":  "Portugal",
+                      "founded":  1933,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4849.png"
+                  },
+                  {
+                      "id":  4847,
+                      "name":  "Moncarapachense",
+                      "country":  "Portugal",
+                      "founded":  1953,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4847.png"
+                  },
+                  {
+                      "id":  4848,
+                      "name":  "Mondinense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4848.png"
+                  },
+                  {
+                      "id":  4770,
+                      "name":  "Montalegre",
+                      "country":  "Portugal",
+                      "founded":  1964,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4770.png"
+                  },
+                  {
+                      "id":  20352,
+                      "name":  "Monte Trigo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20352.png"
+                  },
+                  {
+                      "id":  215,
+                      "name":  "Moreirense",
+                      "code":  "MOR",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/215.png"
+                  },
+                  {
+                      "id":  26300,
+                      "name":  "Moreirense U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26300.png"
+                  },
+                  {
+                      "id":  4850,
+                      "name":  "MortÃ¡gua",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4850.png"
+                  },
+                  {
+                      "id":  4851,
+                      "name":  "Mosteirense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4851.png"
+                  },
+                  {
+                      "id":  4771,
+                      "name":  "Moura",
+                      "code":  "MOU",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4771.png"
+                  },
+                  {
+                      "id":  225,
+                      "name":  "Nacional",
+                      "code":  "NAC",
+                      "country":  "Portugal",
+                      "founded":  1910,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/225.png"
+                  },
+                  {
+                      "id":  4664,
+                      "name":  "Naval 1893",
+                      "code":  "NAV",
+                      "country":  "Portugal",
+                      "founded":  1893,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4664.png"
+                  },
+                  {
+                      "id":  26480,
+                      "name":  "Nazarenos",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26480.png"
+                  },
+                  {
+                      "id":  17388,
+                      "name":  "O Elvas",
+                      "code":  "ELV",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17388.png"
+                  },
+                  {
+                      "id":  24642,
+                      "name":  "O Grandolense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24642.png"
+                  },
+                  {
+                      "id":  4772,
+                      "name":  "Oleiros",
+                      "country":  "Portugal",
+                      "founded":  1976,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4772.png"
+                  },
+                  {
+                      "id":  807,
+                      "name":  "Olhanense",
+                      "code":  "OLH",
+                      "country":  "Portugal",
+                      "founded":  1912,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/807.png"
+                  },
+                  {
+                      "id":  4774,
+                      "name":  "OlÃ­mpico do Montijo",
+                      "country":  "Portugal",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4774.png"
+                  },
+                  {
+                      "id":  24643,
+                      "name":  "Oliveira de Frades",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24643.png"
+                  },
+                  {
+                      "id":  4773,
+                      "name":  "Oliveira Hospital",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4773.png"
+                  },
+                  {
+                      "id":  233,
+                      "name":  "Oliveirense",
+                      "code":  "OLI",
+                      "country":  "Portugal",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/233.png"
+                  },
+                  {
+                      "id":  24445,
+                      "name":  "Oliveirense U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24445.png"
+                  },
+                  {
+                      "id":  4852,
+                      "name":  "OperÃ¡rio",
+                      "code":  "OPE",
+                      "country":  "Portugal",
+                      "founded":  1948,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4852.png"
+                  },
+                  {
+                      "id":  15131,
+                      "name":  "Oriental Dragon",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15131.png"
+                  },
+                  {
+                      "id":  4775,
+                      "name":  "Oriental Lisboa",
+                      "code":  "ORI",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4775.png"
+                  },
+                  {
+                      "id":  4776,
+                      "name":  "Os Limianos",
+                      "code":  "LIM",
+                      "country":  "Portugal",
+                      "founded":  1953,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4776.png"
+                  },
+                  {
+                      "id":  20038,
+                      "name":  "Os Marialvas",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20038.png"
+                  },
+                  {
+                      "id":  22163,
+                      "name":  "Os Vilanovenses",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22163.png"
+                  },
+                  {
+                      "id":  20506,
+                      "name":  "Ouriense W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20506.png"
+                  },
+                  {
+                      "id":  15363,
+                      "name":  "Ovarense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15363.png"
+                  },
+                  {
+                      "id":  234,
+                      "name":  "Pacos Ferreira",
+                      "code":  "FER",
+                      "country":  "Portugal",
+                      "founded":  1950,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/234.png"
+                  },
+                  {
+                      "id":  22516,
+                      "name":  "Pacos Ferreira U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22516.png"
+                  },
+                  {
+                      "id":  22164,
+                      "name":  "Padernense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22164.png"
+                  },
+                  {
+                      "id":  4777,
+                      "name":  "Pampilhosa",
+                      "code":  "PAM",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4777.png"
+                  },
+                  {
+                      "id":  6360,
+                      "name":  "Pampilhosense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6360.png"
+                  },
+                  {
+                      "id":  4778,
+                      "name":  "Paredes",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4778.png"
+                  },
+                  {
+                      "id":  4779,
+                      "name":  "Pedras Rubras",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4779.png"
+                  },
+                  {
+                      "id":  4780,
+                      "name":  "Pedras Salgadas",
+                      "code":  "PES",
+                      "country":  "Portugal",
+                      "founded":  1977,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4780.png"
+                  },
+                  {
+                      "id":  20039,
+                      "name":  "PedrÃ³gÃ£o SÃ£o Pedro",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20039.png"
+                  },
+                  {
+                      "id":  17389,
+                      "name":  "Pedroso",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17389.png"
+                  },
+                  {
+                      "id":  235,
+                      "name":  "Penafiel",
+                      "code":  "PEN",
+                      "country":  "Portugal",
+                      "founded":  1951,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/235.png"
+                  },
+                  {
+                      "id":  4781,
+                      "name":  "Penalva Castelo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4781.png"
+                  },
+                  {
+                      "id":  6361,
+                      "name":  "Penedo Gordo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6361.png"
+                  },
+                  {
+                      "id":  4782,
+                      "name":  "Peniche",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4782.png"
+                  },
+                  {
+                      "id":  4854,
+                      "name":  "PÃªro Pinheiro",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4854.png"
+                  },
+                  {
+                      "id":  6362,
+                      "name":  "Pevidem",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6362.png"
+                  },
+                  {
+                      "id":  4783,
+                      "name":  "Pinhalnovense",
+                      "code":  "PIN",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4783.png"
+                  },
+                  {
+                      "id":  4853,
+                      "name":  "Pombal",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4853.png"
+                  },
+                  {
+                      "id":  26481,
+                      "name":  "Pontassolense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26481.png"
+                  },
+                  {
+                      "id":  22165,
+                      "name":  "Ponte",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22165.png"
+                  },
+                  {
+                      "id":  4888,
+                      "name":  "Ponte da Barca",
+                      "country":  "Portugal",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4888.png"
+                  },
+                  {
+                      "id":  4784,
+                      "name":  "Portalegrense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4784.png"
+                  },
+                  {
+                      "id":  22166,
+                      "name":  "Portel",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22166.png"
+                  },
+                  {
+                      "id":  216,
+                      "name":  "Portimonense",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/216.png"
+                  },
+                  {
+                      "id":  26823,
+                      "name":  "Portimonense B",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26823.png"
+                  },
+                  {
+                      "id":  15467,
+                      "name":  "Portimonense U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15467.png"
+                  },
+                  {
+                      "id":  6363,
+                      "name":  "Porto Cruz",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6363.png"
+                  },
+                  {
+                      "id":  7922,
+                      "name":  "Porto U19",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "founded":  0,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7922.png"
+                  },
+                  {
+                      "id":  22087,
+                      "name":  "Portosantense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22087.png"
+                  },
+                  {
+                      "id":  27,
+                      "name":  "Portugal",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/27.png"
+                  },
+                  {
+                      "id":  22499,
+                      "name":  "Portugal U16",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22499.png"
+                  },
+                  {
+                      "id":  17971,
+                      "name":  "Portugal U17",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/17971.png"
+                  },
+                  {
+                      "id":  23624,
+                      "name":  "Portugal U17 W",
+                      "country":  "Portugal",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/23624.png"
+                  },
+                  {
+                      "id":  19073,
+                      "name":  "Portugal U18",
+                      "country":  "Portugal",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/19073.png"
+                  },
+                  {
+                      "id":  10343,
+                      "name":  "Portugal U19",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/10343.png"
+                  },
+                  {
+                      "id":  26029,
+                      "name":  "Portugal U19 W",
+                      "country":  "Portugal",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/26029.png"
+                  },
+                  {
+                      "id":  10299,
+                      "name":  "Portugal U20",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/10299.png"
+                  },
+                  {
+                      "id":  8216,
+                      "name":  "Portugal U21",
+                      "code":  "POR",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/8216.png"
+                  },
+                  {
+                      "id":  10194,
+                      "name":  "Portugal U23",
+                      "country":  "Portugal",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/10194.png"
+                  },
+                  {
+                      "id":  1769,
+                      "name":  "Portugal W",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/1769.png"
+                  },
+                  {
+                      "id":  4785,
+                      "name":  "Praia Milfontes",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4785.png"
+                  },
+                  {
+                      "id":  4786,
+                      "name":  "Praiense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4786.png"
+                  },
+                  {
+                      "id":  22167,
+                      "name":  "ProenÃ§a-a-Nova",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22167.png"
+                  },
+                  {
+                      "id":  4855,
+                      "name":  "Quarteirense",
+                      "code":  "QUA",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4855.png"
+                  },
+                  {
+                      "id":  22168,
+                      "name":  "Quarteirense SAD",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22168.png"
+                  },
+                  {
+                      "id":  4787,
+                      "name":  "Rabo Peixe",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4787.png"
+                  },
+                  {
+                      "id":  26782,
+                      "name":  "Racing Power W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26782.png"
+                  },
+                  {
+                      "id":  21653,
+                      "name":  "Racing Seixal W",
+                      "country":  "Portugal",
+                      "founded":  2020,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21653.png"
+                  },
+                  {
+                      "id":  4889,
+                      "name":  "Raimonda",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4889.png"
+                  },
+                  {
+                      "id":  10149,
+                      "name":  "Real",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10149.png"
+                  },
+                  {
+                      "id":  6364,
+                      "name":  "Rebordelo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6364.png"
+                  },
+                  {
+                      "id":  6365,
+                      "name":  "Rebordosa",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6365.png"
+                  },
+                  {
+                      "id":  20353,
+                      "name":  "Recreativa de Lamelas",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20353.png"
+                  },
+                  {
+                      "id":  4856,
+                      "name":  "Recreativo Canaviais",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4856.png"
+                  },
+                  {
+                      "id":  4788,
+                      "name":  "Redondense",
+                      "country":  "Portugal",
+                      "founded":  1940,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4788.png"
+                  },
+                  {
+                      "id":  4790,
+                      "name":  "RÃ©gua",
+                      "country":  "Portugal",
+                      "founded":  1944,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4790.png"
+                  },
+                  {
+                      "id":  13162,
+                      "name":  "Resende",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13162.png"
+                  },
+                  {
+                      "id":  20040,
+                      "name":  "Ribeira Brava",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20040.png"
+                  },
+                  {
+                      "id":  17778,
+                      "name":  "RibeirÃ£o",
+                      "code":  "RIB",
+                      "country":  "Portugal",
+                      "founded":  1968,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17778.png"
+                  },
+                  {
+                      "id":  226,
+                      "name":  "Rio Ave",
+                      "code":  "RIO",
+                      "country":  "Portugal",
+                      "founded":  1939,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/226.png"
+                  },
+                  {
+                      "id":  15127,
+                      "name":  "Rio Ave II",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15127.png"
+                  },
+                  {
+                      "id":  22517,
+                      "name":  "Rio Ave U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22517.png"
+                  },
+                  {
+                      "id":  15468,
+                      "name":  "Rio Ave U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15468.png"
+                  },
+                  {
+                      "id":  26783,
+                      "name":  "Rio Ave W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26783.png"
+                  },
+                  {
+                      "id":  4789,
+                      "name":  "Rio Tinto",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4789.png"
+                  },
+                  {
+                      "id":  4858,
+                      "name":  "Sabugal",
+                      "country":  "Portugal",
+                      "founded":  1939,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4858.png"
+                  },
+                  {
+                      "id":  4791,
+                      "name":  "Sacavenense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4791.png"
+                  },
+                  {
+                      "id":  4859,
+                      "name":  "Salgueiros",
+                      "code":  "SAL",
+                      "country":  "Portugal",
+                      "founded":  2008,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4859.png"
+                  },
+                  {
+                      "id":  26195,
+                      "name":  "Samora Correir",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26195.png"
+                  },
+                  {
+                      "id":  22088,
+                      "name":  "Sandinenses",
+                      "country":  "Portugal",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22088.png"
+                  },
+                  {
+                      "id":  4792,
+                      "name":  "Sanjoanense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4792.png"
+                  },
+                  {
+                      "id":  227,
+                      "name":  "Santa Clara",
+                      "code":  "SAN",
+                      "country":  "Portugal",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/227.png"
+                  },
+                  {
+                      "id":  26301,
+                      "name":  "Santa Clara U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26301.png"
+                  },
+                  {
+                      "id":  21719,
+                      "name":  "Santa Clara U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21719.png"
+                  },
+                  {
+                      "id":  17390,
+                      "name":  "Santa Cruz de Alvarenga",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17390.png"
+                  },
+                  {
+                      "id":  13163,
+                      "name":  "Santa EulÃ¡lia",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13163.png"
+                  },
+                  {
+                      "id":  4793,
+                      "name":  "Santa Iria",
+                      "country":  "Portugal",
+                      "founded":  1941,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4793.png"
+                  },
+                  {
+                      "id":  22495,
+                      "name":  "Santa Maria FC",
+                      "country":  "Portugal",
+                      "founded":  1943,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22495.png"
+                  },
+                  {
+                      "id":  15209,
+                      "name":  "Santa Marta PenaguiÃ£o",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15209.png"
+                  },
+                  {
+                      "id":  6367,
+                      "name":  "SÃ£o JoÃ£o Ver",
+                      "code":  "JOA",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6367.png"
+                  },
+                  {
+                      "id":  17779,
+                      "name":  "SÃ£o Roque",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17779.png"
+                  },
+                  {
+                      "id":  4892,
+                      "name":  "SÃ£o Roque (AÃ§ores)",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4892.png"
+                  },
+                  {
+                      "id":  217,
+                      "name":  "SC Braga",
+                      "code":  "BRA",
+                      "country":  "Portugal",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/217.png"
+                  },
+                  {
+                      "id":  246,
+                      "name":  "SC Braga B",
+                      "code":  "BRA",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/246.png"
+                  },
+                  {
+                      "id":  26482,
+                      "name":  "SC Celoricense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26482.png"
+                  },
+                  {
+                      "id":  236,
+                      "name":  "SC Covilha",
+                      "code":  "COV",
+                      "country":  "Portugal",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/236.png"
+                  },
+                  {
+                      "id":  22518,
+                      "name":  "SC Farense U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22518.png"
+                  },
+                  {
+                      "id":  20355,
+                      "name":  "SC Paivense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20355.png"
+                  },
+                  {
+                      "id":  4860,
+                      "name":  "Sendim",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4860.png"
+                  },
+                  {
+                      "id":  4794,
+                      "name":  "Sertanense",
+                      "code":  "SER",
+                      "country":  "Portugal",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4794.png"
+                  },
+                  {
+                      "id":  15298,
+                      "name":  "Sesimbra",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15298.png"
+                  },
+                  {
+                      "id":  4795,
+                      "name":  "Silves",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4795.png"
+                  },
+                  {
+                      "id":  6366,
+                      "name":  "Sintra",
+                      "country":  "Portugal",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6366.png"
+                  },
+                  {
+                      "id":  4796,
+                      "name":  "Sintrense",
+                      "code":  "SIN",
+                      "country":  "Portugal",
+                      "founded":  1911,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4796.png"
+                  },
+                  {
+                      "id":  15495,
+                      "name":  "SL Benfica W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15495.png"
+                  },
+                  {
+                      "id":  4861,
+                      "name":  "Sourense",
+                      "code":  "SOU",
+                      "country":  "Portugal",
+                      "founded":  1947,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4861.png"
+                  },
+                  {
+                      "id":  4862,
+                      "name":  "Sousense",
+                      "code":  "SOU",
+                      "country":  "Portugal",
+                      "founded":  1937,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4862.png"
+                  },
+                  {
+                      "id":  22375,
+                      "name":  "Sporting Braga U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22375.png"
+                  },
+                  {
+                      "id":  15469,
+                      "name":  "Sporting Braga U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15469.png"
+                  },
+                  {
+                      "id":  10905,
+                      "name":  "Sporting Braga W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10905.png"
+                  },
+                  {
+                      "id":  228,
+                      "name":  "Sporting CP",
+                      "code":  "SPO",
+                      "country":  "Portugal",
+                      "founded":  1906,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/228.png"
+                  },
+                  {
+                      "id":  761,
+                      "name":  "Sporting CP B",
+                      "code":  "SPO",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/761.png"
+                  },
+                  {
+                      "id":  7997,
+                      "name":  "Sporting CP U19",
+                      "country":  "Portugal",
+                      "founded":  0,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7997.png"
+                  },
+                  {
+                      "id":  15470,
+                      "name":  "Sporting CP U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15470.png"
+                  },
+                  {
+                      "id":  20511,
+                      "name":  "Sporting CP W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20511.png"
+                  },
+                  {
+                      "id":  4891,
+                      "name":  "Sporting de Lourel",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4891.png"
+                  },
+                  {
+                      "id":  4797,
+                      "name":  "Sporting MÃªda",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4797.png"
+                  },
+                  {
+                      "id":  15128,
+                      "name":  "Tirsense",
+                      "code":  "TIR",
+                      "country":  "Portugal",
+                      "founded":  1938,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15128.png"
+                  },
+                  {
+                      "id":  4863,
+                      "name":  "Tocha",
+                      "code":  "TOC",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4863.png"
+                  },
+                  {
+                      "id":  218,
+                      "name":  "Tondela",
+                      "code":  "TON",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/218.png"
+                  },
+                  {
+                      "id":  24446,
+                      "name":  "Tondela U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24446.png"
+                  },
+                  {
+                      "id":  4798,
+                      "name":  "Torcatense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4798.png"
+                  },
+                  {
+                      "id":  4893,
+                      "name":  "Torre de Moncorvo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4893.png"
+                  },
+                  {
+                      "id":  4799,
+                      "name":  "Torreense",
+                      "code":  "TOR",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4799.png"
+                  },
+                  {
+                      "id":  22519,
+                      "name":  "Torreense U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22519.png"
+                  },
+                  {
+                      "id":  21720,
+                      "name":  "Torreense U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21720.png"
+                  },
+                  {
+                      "id":  20512,
+                      "name":  "Torreense W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20512.png"
+                  },
+                  {
+                      "id":  4894,
+                      "name":  "Tourizense",
+                      "code":  "TOU",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4894.png"
+                  },
+                  {
+                      "id":  4800,
+                      "name":  "Trancoso",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4800.png"
+                  },
+                  {
+                      "id":  4801,
+                      "name":  "Trofense",
+                      "code":  "TRO",
+                      "country":  "Portugal",
+                      "founded":  1930,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4801.png"
+                  },
+                  {
+                      "id":  763,
+                      "name":  "U. Madeira",
+                      "code":  "MAD",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/763.png"
+                  },
+                  {
+                      "id":  20042,
+                      "name":  "UD da Serra",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20042.png"
+                  },
+                  {
+                      "id":  20041,
+                      "name":  "UD Rio Maior",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20041.png"
+                  },
+                  {
+                      "id":  6368,
+                      "name":  "UniÃ£o Almeirim",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6368.png"
+                  },
+                  {
+                      "id":  17391,
+                      "name":  "UniÃ£o de Coimbra",
+                      "country":  "Portugal",
+                      "founded":  1919,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17391.png"
+                  },
+                  {
+                      "id":  4662,
+                      "name":  "UniÃ£o de Leiria",
+                      "code":  "LEI",
+                      "country":  "Portugal",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4662.png"
+                  },
+                  {
+                      "id":  4804,
+                      "name":  "UniÃ£o de Tomar",
+                      "country":  "Portugal",
+                      "founded":  1940,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4804.png"
+                  },
+                  {
+                      "id":  15210,
+                      "name":  "UniÃ£o Ericeirense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15210.png"
+                  },
+                  {
+                      "id":  4802,
+                      "name":  "UniÃ£o Idanhense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4802.png"
+                  },
+                  {
+                      "id":  4864,
+                      "name":  "UniÃ£o Lamas",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4864.png"
+                  },
+                  {
+                      "id":  26302,
+                      "name":  "UniÃ£o Leiria U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26302.png"
+                  },
+                  {
+                      "id":  26257,
+                      "name":  "UniÃ£o Leiria U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26257.png"
+                  },
+                  {
+                      "id":  22169,
+                      "name":  "UniÃ£o Micaelense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22169.png"
+                  },
+                  {
+                      "id":  15299,
+                      "name":  "UniÃ£o Montemor",
+                      "code":  "UNI",
+                      "country":  "Portugal",
+                      "founded":  1914,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15299.png"
+                  },
+                  {
+                      "id":  26671,
+                      "name":  "Uniao Nogueirense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26671.png"
+                  },
+                  {
+                      "id":  24447,
+                      "name":  "UniÃ£o Nogueirense U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24447.png"
+                  },
+                  {
+                      "id":  6369,
+                      "name":  "UniÃ£o SantarÃ©m",
+                      "country":  "Portugal",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6369.png"
+                  },
+                  {
+                      "id":  4803,
+                      "name":  "UniÃ£o Santiago",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4803.png"
+                  },
+                  {
+                      "id":  26483,
+                      "name":  "Urzelinense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26483.png"
+                  },
+                  {
+                      "id":  4805,
+                      "name":  "Valadares Gaia",
+                      "country":  "Portugal",
+                      "founded":  2011,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4805.png"
+                  },
+                  {
+                      "id":  20513,
+                      "name":  "Valadares Gaia W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20513.png"
+                  },
+                  {
+                      "id":  4806,
+                      "name":  "Vale Formoso",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4806.png"
+                  },
+                  {
+                      "id":  4807,
+                      "name":  "Valenciano",
+                      "code":  "VAL",
+                      "country":  "Portugal",
+                      "founded":  1925,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4807.png"
+                  },
+                  {
+                      "id":  24644,
+                      "name":  "ValpaÃ§os",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24644.png"
+                  },
+                  {
+                      "id":  237,
+                      "name":  "Varzim",
+                      "code":  "VAR",
+                      "country":  "Portugal",
+                      "founded":  1915,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/237.png"
+                  },
+                  {
+                      "id":  4818,
+                      "name":  "Vasco da Gama",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4818.png"
+                  },
+                  {
+                      "id":  13164,
+                      "name":  "Vasco da Gama AC",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13164.png"
+                  },
+                  {
+                      "id":  4808,
+                      "name":  "Vasco da Gama Vidigueira",
+                      "country":  "Portugal",
+                      "founded":  1945,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4808.png"
+                  },
+                  {
+                      "id":  17392,
+                      "name":  "Vasco Gama VF do Campo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17392.png"
+                  },
+                  {
+                      "id":  6371,
+                      "name":  "Velense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6371.png"
+                  },
+                  {
+                      "id":  4895,
+                      "name":  "Viana Alentejo",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4895.png"
+                  },
+                  {
+                      "id":  4809,
+                      "name":  "Vianense",
+                      "code":  "VIA",
+                      "country":  "Portugal",
+                      "founded":  1898,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4809.png"
+                  },
+                  {
+                      "id":  15125,
+                      "name":  "Vidago",
+                      "country":  "Portugal",
+                      "founded":  1949,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15125.png"
+                  },
+                  {
+                      "id":  4810,
+                      "name":  "Vieira",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4810.png"
+                  },
+                  {
+                      "id":  24645,
+                      "name":  "Vieirense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24645.png"
+                  },
+                  {
+                      "id":  20356,
+                      "name":  "Vila CaÃ­z",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20356.png"
+                  },
+                  {
+                      "id":  6372,
+                      "name":  "Vila Cortez",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6372.png"
+                  },
+                  {
+                      "id":  4811,
+                      "name":  "Vila Flor",
+                      "code":  "VIL",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4811.png"
+                  },
+                  {
+                      "id":  15211,
+                      "name":  "Vila MeÃ£",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15211.png"
+                  },
+                  {
+                      "id":  6373,
+                      "name":  "Vila Pouca",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6373.png"
+                  },
+                  {
+                      "id":  4812,
+                      "name":  "Vila Real",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4812.png"
+                  },
+                  {
+                      "id":  4813,
+                      "name":  "Vila Silgueiros",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4813.png"
+                  },
+                  {
+                      "id":  6374,
+                      "name":  "Vila Velha de RÃ³dÃ£o",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6374.png"
+                  },
+                  {
+                      "id":  4717,
+                      "name":  "Vilafranquense",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4717.png"
+                  },
+                  {
+                      "id":  4896,
+                      "name":  "Vilar de Perdizes",
+                      "country":  "Portugal",
+                      "founded":  1976,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4896.png"
+                  },
+                  {
+                      "id":  6375,
+                      "name":  "Vilarinho",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6375.png"
+                  },
+                  {
+                      "id":  4814,
+                      "name":  "Vilaverdense",
+                      "code":  "VIL",
+                      "country":  "Portugal",
+                      "founded":  1953,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4814.png"
+                  },
+                  {
+                      "id":  20514,
+                      "name":  "Vilaverdense W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20514.png"
+                  },
+                  {
+                      "id":  4897,
+                      "name":  "Vinha da Rainha",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4897.png"
+                  },
+                  {
+                      "id":  4815,
+                      "name":  "Vinhais",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4815.png"
+                  },
+                  {
+                      "id":  4816,
+                      "name":  "VitÃ³ria de Sernache",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4816.png"
+                  },
+                  {
+                      "id":  22170,
+                      "name":  "VitÃ³ria do Pico",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22170.png"
+                  },
+                  {
+                      "id":  22520,
+                      "name":  "Vitoria Guimaraes U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22520.png"
+                  },
+                  {
+                      "id":  15471,
+                      "name":  "VitÃ³ria GuimarÃ£es U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15471.png"
+                  },
+                  {
+                      "id":  26784,
+                      "name":  "Vitoria Guimaraes W",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26784.png"
+                  },
+                  {
+                      "id":  4865,
+                      "name":  "VitÃ³ria Horta",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/4865.png"
+                  },
+                  {
+                      "id":  219,
+                      "name":  "Vitoria Setubal",
+                      "code":  "SET",
+                      "country":  "Portugal",
+                      "founded":  1910,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/219.png"
+                  },
+                  {
+                      "id":  22521,
+                      "name":  "Vitoria Setubal U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22521.png"
+                  },
+                  {
+                      "id":  810,
+                      "name":  "Vizela",
+                      "code":  "VIZ",
+                      "country":  "Portugal",
+                      "founded":  1939,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/810.png"
+                  },
+                  {
+                      "id":  22522,
+                      "name":  "Vizela U19",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22522.png"
+                  },
+                  {
+                      "id":  17475,
+                      "name":  "Vizela U23",
+                      "country":  "Portugal",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17475.png"
+                  }
+              ]
+}

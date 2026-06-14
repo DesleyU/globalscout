@@ -1,0 +1,14 @@
+{
+  "name": "globalscout",
+  "private": true,
+  "scripts": {
+    "dev:web": "pnpm -C src/ui dev:web",
+    "build:web": "pnpm -C src/ui build:web",
+    "start:web": "pnpm -C src/ui start:web",
+    "lint:web": "pnpm -C src/ui lint:web",
+    "typecheck:web": "pnpm -C src/ui typecheck:web",
+    "typecheck": "pnpm -C src/ui typecheck",
+    "install:web": "pnpm -C src/ui install:web"
+  },
+  "packageManager": "pnpm@10.12.1"
+}

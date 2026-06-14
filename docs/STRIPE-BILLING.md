@@ -4,7 +4,7 @@ Premium subscriptions use **Stripe Checkout** (hosted) and **webhooks** to sync 
 
 ## Configuration (.NET API)
 
-Bind these under the `Stripe` section (see [`appsettings.json`](../src/GlobalScout/GlobalScout.Api/appsettings.json)):
+Bind these under the `Stripe` section (see [`appsettings.json`](../src/api/GlobalScout.Api/appsettings.json)):
 
 | Key | Purpose |
 |-----|---------|
@@ -19,7 +19,7 @@ Bind these under the `Stripe` section (see [`appsettings.json`](../src/GlobalSco
 **User secrets (recommended):**
 
 ```bash
-cd src/GlobalScout/GlobalScout.Api
+cd src/api/GlobalScout.Api
 dotnet user-secrets set "Stripe:SecretKey" "sk_test_..."
 dotnet user-secrets set "Stripe:WebhookSecret" "whsec_..."
 dotnet user-secrets set "Stripe:PremiumPriceId" "price_..."

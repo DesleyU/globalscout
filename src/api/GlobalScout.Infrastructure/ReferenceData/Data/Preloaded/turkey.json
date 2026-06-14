@@ -1,0 +1,2940 @@
+{
+    "country":  "Turkey",
+    "leagues":  [
+                    {
+                        "externalLeagueId":  203,
+                        "name":  "SÃƒÂ¼per Lig",
+                        "type":  "League",
+                        "logoUrl":  "https://media.api-sports.io/football/leagues/203.png"
+                    }
+                ],
+    "teams":  [
+                  {
+                      "id":  24601,
+                      "name":  " KahramanmaraÅŸ Ä°stiklal Spor",
+                      "country":  "Turkey",
+                      "founded":  1920,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24601.png"
+                  },
+                  {
+                      "id":  6503,
+                      "name":  "1074 Ã‡ankÄ±rÄ±spor",
+                      "country":  "Turkey",
+                      "founded":  2014,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6503.png"
+                  },
+                  {
+                      "id":  6504,
+                      "name":  "12 BingÃ¶lspor",
+                      "country":  "Turkey",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6504.png"
+                  },
+                  {
+                      "id":  11097,
+                      "name":  "1461 Trabzon",
+                      "country":  "Turkey",
+                      "founded":  1998,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11097.png"
+                  },
+                  {
+                      "id":  6340,
+                      "name":  "1461 Trabzon FK",
+                      "country":  "Turkey",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6340.png"
+                  },
+                  {
+                      "id":  6505,
+                      "name":  "1877 AlemdaÄŸspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6505.png"
+                  },
+                  {
+                      "id":  13405,
+                      "name":  "1920 MaraÅŸspor",
+                      "code":  "KAH",
+                      "country":  "Turkey",
+                      "founded":  1976,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13405.png"
+                  },
+                  {
+                      "id":  26469,
+                      "name":  "1926 Bulancak",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26469.png"
+                  },
+                  {
+                      "id":  24600,
+                      "name":  "1926 PolatlÄ± Belediye",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24600.png"
+                  },
+                  {
+                      "id":  13427,
+                      "name":  "1930 Bafraspor",
+                      "code":  "BAF",
+                      "country":  "Turkey",
+                      "founded":  1999,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13427.png"
+                  },
+                  {
+                      "id":  6506,
+                      "name":  "1954 Kelkit Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6506.png"
+                  },
+                  {
+                      "id":  13364,
+                      "name":  "1955 Batman Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13364.png"
+                  },
+                  {
+                      "id":  7392,
+                      "name":  "24 Erzincanspor",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7392.png"
+                  },
+                  {
+                      "id":  6507,
+                      "name":  "68 Aksaray Belediyespor",
+                      "code":  "AKS",
+                      "country":  "Turkey",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6507.png"
+                  },
+                  {
+                      "id":  22009,
+                      "name":  "Adana 01 FK",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22009.png"
+                  },
+                  {
+                      "id":  3563,
+                      "name":  "Adana Demirspor",
+                      "code":  "ADA",
+                      "country":  "Turkey",
+                      "founded":  1941,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3563.png"
+                  },
+                  {
+                      "id":  3564,
+                      "name":  "Adanaspor",
+                      "code":  "ADA",
+                      "country":  "Turkey",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3564.png"
+                  },
+                  {
+                      "id":  11095,
+                      "name":  "AdÄ±yaman 1954",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11095.png"
+                  },
+                  {
+                      "id":  13417,
+                      "name":  "AdÄ±yaman Ä°l Ã–zel Ä°dare",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13417.png"
+                  },
+                  {
+                      "id":  13428,
+                      "name":  "AdÄ±yamanspor",
+                      "code":  "ADI",
+                      "country":  "Turkey",
+                      "founded":  1946,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13428.png"
+                  },
+                  {
+                      "id":  3565,
+                      "name":  "Afjet Afyonspor",
+                      "country":  "Turkey",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3565.png"
+                  },
+                  {
+                      "id":  13442,
+                      "name":  "Afyonkarahisarspor",
+                      "country":  "Turkey",
+                      "founded":  2005,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13442.png"
+                  },
+                  {
+                      "id":  6509,
+                      "name":  "AÄŸrÄ± 1970",
+                      "country":  "Turkey",
+                      "founded":  1970,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6509.png"
+                  },
+                  {
+                      "id":  13408,
+                      "name":  "AÄŸrÄ± GenÃ§lerbirliÄŸi",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13408.png"
+                  },
+                  {
+                      "id":  13456,
+                      "name":  "AkÃ§aabat Sebatspor",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13456.png"
+                  },
+                  {
+                      "id":  995,
+                      "name":  "Akhisarspor",
+                      "code":  "AKH",
+                      "country":  "Turkey",
+                      "founded":  1970,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/995.png"
+                  },
+                  {
+                      "id":  6508,
+                      "name":  "AkÅŸehirspor",
+                      "country":  "Turkey",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6508.png"
+                  },
+                  {
+                      "id":  15361,
+                      "name":  "Alanya 1221 FK",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15361.png"
+                  },
+                  {
+                      "id":  996,
+                      "name":  "Alanyaspor",
+                      "code":  "ALA",
+                      "country":  "Turkey",
+                      "founded":  1948,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/996.png"
+                  },
+                  {
+                      "id":  15489,
+                      "name":  "ALG Spor W",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15489.png"
+                  },
+                  {
+                      "id":  21993,
+                      "name":  "AliaÄŸa FAÅž",
+                      "country":  "Turkey",
+                      "founded":  2014,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21993.png"
+                  },
+                  {
+                      "id":  11096,
+                      "name":  "AlibeykÃ¶yspor",
+                      "country":  "Turkey",
+                      "founded":  1950,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11096.png"
+                  },
+                  {
+                      "id":  3566,
+                      "name":  "Altay",
+                      "code":  "ALT",
+                      "country":  "Turkey",
+                      "founded":  1914,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3566.png"
+                  },
+                  {
+                      "id":  15360,
+                      "name":  "AltÄ±ndaÄŸ",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15360.png"
+                  },
+                  {
+                      "id":  7393,
+                      "name":  "AltÄ±ndaÄŸ Belediyesispor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7393.png"
+                  },
+                  {
+                      "id":  3567,
+                      "name":  "AltÄ±nordu",
+                      "code":  "ALT",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3567.png"
+                  },
+                  {
+                      "id":  7947,
+                      "name":  "AltÄ±nordu U19",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7947.png"
+                  },
+                  {
+                      "id":  13365,
+                      "name":  "AltÄ±nova Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13365.png"
+                  },
+                  {
+                      "id":  19299,
+                      "name":  "Amasyaspor 1968",
+                      "country":  "Turkey",
+                      "founded":  2011,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19299.png"
+                  },
+                  {
+                      "id":  3579,
+                      "name":  "Amed",
+                      "code":  "DIY",
+                      "country":  "Turkey",
+                      "founded":  1990,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3579.png"
+                  },
+                  {
+                      "id":  11098,
+                      "name":  "Anadolu BaÄŸcÄ±lar",
+                      "country":  "Turkey",
+                      "founded":  1908,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11098.png"
+                  },
+                  {
+                      "id":  3580,
+                      "name":  "Anadolu SelÃ§ukspor",
+                      "code":  "ANA",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3580.png"
+                  },
+                  {
+                      "id":  21997,
+                      "name":  "Anadolu Ãœniversitesi",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21997.png"
+                  },
+                  {
+                      "id":  13384,
+                      "name":  "Anadolu ÃœskÃ¼dar",
+                      "code":  "ANA",
+                      "country":  "Turkey",
+                      "founded":  1953,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13384.png"
+                  },
+                  {
+                      "id":  3581,
+                      "name":  "Ankara Demirspor",
+                      "code":  "ANK",
+                      "country":  "Turkey",
+                      "founded":  1932,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3581.png"
+                  },
+                  {
+                      "id":  1010,
+                      "name":  "AnkaragÃ¼cÃ¼",
+                      "code":  "ANK",
+                      "country":  "Turkey",
+                      "founded":  1910,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1010.png"
+                  },
+                  {
+                      "id":  780,
+                      "name":  "Ankaraspor",
+                      "code":  "ANK",
+                      "country":  "Turkey",
+                      "founded":  1978,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/780.png"
+                  },
+                  {
+                      "id":  1005,
+                      "name":  "Antalyaspor",
+                      "code":  "ANT",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1005.png"
+                  },
+                  {
+                      "id":  13396,
+                      "name":  "AraklÄ±spor",
+                      "country":  "Turkey",
+                      "founded":  1961,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13396.png"
+                  },
+                  {
+                      "id":  19302,
+                      "name":  "Arguvan Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19302.png"
+                  },
+                  {
+                      "id":  13406,
+                      "name":  "Arhavispor",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13406.png"
+                  },
+                  {
+                      "id":  13429,
+                      "name":  "Armutlu Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13429.png"
+                  },
+                  {
+                      "id":  15101,
+                      "name":  "ArnavutkÃ¶y Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15101.png"
+                  },
+                  {
+                      "id":  11106,
+                      "name":  "Arsinspor",
+                      "code":  "ARS",
+                      "country":  "Turkey",
+                      "founded":  1973,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11106.png"
+                  },
+                  {
+                      "id":  7394,
+                      "name":  "Artvin Hopaspor",
+                      "country":  "Turkey",
+                      "founded":  1961,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7394.png"
+                  },
+                  {
+                      "id":  13397,
+                      "name":  "AyancÄ±k Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13397.png"
+                  },
+                  {
+                      "id":  13443,
+                      "name":  "AyancÄ±kspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13443.png"
+                  },
+                  {
+                      "id":  11107,
+                      "name":  "AydÄ±nspor",
+                      "code":  "AYD",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11107.png"
+                  },
+                  {
+                      "id":  11108,
+                      "name":  "AydÄ±nspor 1923",
+                      "country":  "Turkey",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11108.png"
+                  },
+                  {
+                      "id":  13407,
+                      "name":  "Ayvalikgucu",
+                      "code":  "AYV",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13407.png"
+                  },
+                  {
+                      "id":  3582,
+                      "name":  "BAK",
+                      "code":  "POL",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3582.png"
+                  },
+                  {
+                      "id":  13418,
+                      "name":  "BalÃ§ova YaÅŸamspor",
+                      "code":  "BAL",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13418.png"
+                  },
+                  {
+                      "id":  3568,
+                      "name":  "BalÄ±kesirspor",
+                      "code":  "BAL",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3568.png"
+                  },
+                  {
+                      "id":  3584,
+                      "name":  "BandÄ±rmaspor",
+                      "code":  "BAN",
+                      "country":  "Turkey",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3584.png"
+                  },
+                  {
+                      "id":  6510,
+                      "name":  "BartÄ±nspor",
+                      "country":  "Turkey",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6510.png"
+                  },
+                  {
+                      "id":  564,
+                      "name":  "BaÅŸakÅŸehir",
+                      "code":  "IST",
+                      "country":  "Turkey",
+                      "founded":  1990,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/564.png"
+                  },
+                  {
+                      "id":  7395,
+                      "name":  "Batman Petrolspor",
+                      "code":  "BAT",
+                      "country":  "Turkey",
+                      "founded":  1960,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7395.png"
+                  },
+                  {
+                      "id":  6338,
+                      "name":  "Bayburt Ä°Ã–Ä°",
+                      "country":  "Turkey",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6338.png"
+                  },
+                  {
+                      "id":  3585,
+                      "name":  "BayrampaÅŸaspor",
+                      "code":  "BAY",
+                      "country":  "Turkey",
+                      "founded":  1959,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3585.png"
+                  },
+                  {
+                      "id":  13430,
+                      "name":  "Belediye BingÃ¶lspor",
+                      "code":  "BIN",
+                      "country":  "Turkey",
+                      "founded":  1981,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13430.png"
+                  },
+                  {
+                      "id":  13444,
+                      "name":  "BeÅŸikdÃ¼zÃ¼spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13444.png"
+                  },
+                  {
+                      "id":  549,
+                      "name":  "BeÅŸiktaÅŸ",
+                      "code":  "BES",
+                      "country":  "Turkey",
+                      "founded":  1903,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/549.png"
+                  },
+                  {
+                      "id":  13419,
+                      "name":  "BeykÃ¶y Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1978,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13419.png"
+                  },
+                  {
+                      "id":  19209,
+                      "name":  "Beykoz",
+                      "country":  "Turkey",
+                      "founded":  1908,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19209.png"
+                  },
+                  {
+                      "id":  3609,
+                      "name":  "Beykoz Anadolu",
+                      "code":  "TUZ",
+                      "country":  "Turkey",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3609.png"
+                  },
+                  {
+                      "id":  24603,
+                      "name":  "Beykoz Ä°shaklÄ±spor",
+                      "country":  "Turkey",
+                      "founded":  2017,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24603.png"
+                  },
+                  {
+                      "id":  11090,
+                      "name":  "Beylerbeyispor",
+                      "code":  "BEY",
+                      "country":  "Turkey",
+                      "founded":  1903,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11090.png"
+                  },
+                  {
+                      "id":  7406,
+                      "name":  "BeyoÄŸlu Yeni Ã‡arÅŸÄ±",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7406.png"
+                  },
+                  {
+                      "id":  13388,
+                      "name":  "Beypazari Sekerspor",
+                      "code":  "CAS",
+                      "country":  "Turkey",
+                      "founded":  1947,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13388.png"
+                  },
+                  {
+                      "id":  6512,
+                      "name":  "Bigaspor",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6512.png"
+                  },
+                  {
+                      "id":  20292,
+                      "name":  "Bilecik 1969 Spor",
+                      "country":  "Turkey",
+                      "founded":  1979,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20292.png"
+                  },
+                  {
+                      "id":  13409,
+                      "name":  "Bilecik Ä°l Ã–zel Ä°daresi",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13409.png"
+                  },
+                  {
+                      "id":  26493,
+                      "name":  "Bilecik Sogut",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26493.png"
+                  },
+                  {
+                      "id":  6513,
+                      "name":  "Bitlis Ã–zgÃ¼zelderespor",
+                      "country":  "Turkey",
+                      "founded":  1926,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6513.png"
+                  },
+                  {
+                      "id":  3583,
+                      "name":  "Bodrum FK",
+                      "country":  "Turkey",
+                      "founded":  1931,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3583.png"
+                  },
+                  {
+                      "id":  3569,
+                      "name":  "Boluspor",
+                      "code":  "BOL",
+                      "country":  "Turkey",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3569.png"
+                  },
+                  {
+                      "id":  21999,
+                      "name":  "Bornova 1877",
+                      "country":  "Turkey",
+                      "founded":  2020,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21999.png"
+                  },
+                  {
+                      "id":  6514,
+                      "name":  "Boyabat 1868 Spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6514.png"
+                  },
+                  {
+                      "id":  6515,
+                      "name":  "BozÃ¼yÃ¼k Vitraspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6515.png"
+                  },
+                  {
+                      "id":  13389,
+                      "name":  "BozÃ¼yÃ¼kspor",
+                      "code":  "BOZ",
+                      "country":  "Turkey",
+                      "founded":  1973,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13389.png"
+                  },
+                  {
+                      "id":  6516,
+                      "name":  "Bucak OÄŸuzhanspor",
+                      "country":  "Turkey",
+                      "founded":  1957,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6516.png"
+                  },
+                  {
+                      "id":  11105,
+                      "name":  "Bucaspor",
+                      "code":  "BUC",
+                      "country":  "Turkey",
+                      "founded":  1928,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11105.png"
+                  },
+                  {
+                      "id":  7396,
+                      "name":  "Bucaspor 1928",
+                      "country":  "Turkey",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7396.png"
+                  },
+                  {
+                      "id":  17020,
+                      "name":  "Burdur MAKÃœ Spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17020.png"
+                  },
+                  {
+                      "id":  22442,
+                      "name":  "Burhaniye Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22442.png"
+                  },
+                  {
+                      "id":  6517,
+                      "name":  "Bursa YÄ±ldÄ±rÄ±mspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6517.png"
+                  },
+                  {
+                      "id":  1003,
+                      "name":  "Bursaspor",
+                      "code":  "BUR",
+                      "country":  "Turkey",
+                      "founded":  1963,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1003.png"
+                  },
+                  {
+                      "id":  11089,
+                      "name":  "Ã‡anakkale Dardanel",
+                      "code":  "DAR",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11089.png"
+                  },
+                  {
+                      "id":  7428,
+                      "name":  "Ã‡ankaya FK",
+                      "code":  "ANK",
+                      "country":  "Turkey",
+                      "founded":  1993,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7428.png"
+                  },
+                  {
+                      "id":  13415,
+                      "name":  "Ã‡ankÄ±rÄ± Belediye GenÃ§lik",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13415.png"
+                  },
+                  {
+                      "id":  22450,
+                      "name":  "Ã‡ankÄ±rÄ± Saray 18",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22450.png"
+                  },
+                  {
+                      "id":  13387,
+                      "name":  "Ã‡ankÄ±rÄ±spor",
+                      "code":  "CAN",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13387.png"
+                  },
+                  {
+                      "id":  6544,
+                      "name":  "Ã‡arÅŸambaspor",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6544.png"
+                  },
+                  {
+                      "id":  7429,
+                      "name":  "Ã‡atalcaspor",
+                      "country":  "Turkey",
+                      "founded":  1942,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7429.png"
+                  },
+                  {
+                      "id":  24606,
+                      "name":  "Ã‡ayelispor",
+                      "country":  "Turkey",
+                      "founded":  1949,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24606.png"
+                  },
+                  {
+                      "id":  13377,
+                      "name":  "Ã‡ayÄ±rovaspor",
+                      "country":  "Turkey",
+                      "founded":  1980,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13377.png"
+                  },
+                  {
+                      "id":  13378,
+                      "name":  "Ã‡engelkÃ¶yspor",
+                      "country":  "Turkey",
+                      "founded":  1980,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13378.png"
+                  },
+                  {
+                      "id":  13379,
+                      "name":  "Ã‡erkezkÃ¶y 1911",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13379.png"
+                  },
+                  {
+                      "id":  13452,
+                      "name":  "Ã‡erkezkÃ¶yspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13452.png"
+                  },
+                  {
+                      "id":  15100,
+                      "name":  "Ceyhanspor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15100.png"
+                  },
+                  {
+                      "id":  13440,
+                      "name":  "Ã‡Ä±ksalÄ±nspor",
+                      "code":  "CIK",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13440.png"
+                  },
+                  {
+                      "id":  13416,
+                      "name":  "Ã‡ine Madranspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13416.png"
+                  },
+                  {
+                      "id":  20293,
+                      "name":  "Cizre Serhatspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20293.png"
+                  },
+                  {
+                      "id":  7397,
+                      "name":  "Cizrespor",
+                      "country":  "Turkey",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7397.png"
+                  },
+                  {
+                      "id":  22451,
+                      "name":  "Ã‡orluspor 1947",
+                      "country":  "Turkey",
+                      "founded":  1991,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22451.png"
+                  },
+                  {
+                      "id":  6343,
+                      "name":  "Ã‡orum FK",
+                      "code":  "COR",
+                      "country":  "Turkey",
+                      "founded":  1997,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6343.png"
+                  },
+                  {
+                      "id":  13391,
+                      "name":  "Ã‡orumspor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13391.png"
+                  },
+                  {
+                      "id":  6545,
+                      "name":  "Ã‡ubukspor",
+                      "country":  "Turkey",
+                      "founded":  1950,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6545.png"
+                  },
+                  {
+                      "id":  3586,
+                      "name":  "DarÄ±ca GenÃ§lerbirliÄŸi",
+                      "code":  "DAR",
+                      "country":  "Turkey",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3586.png"
+                  },
+                  {
+                      "id":  11102,
+                      "name":  "Denizli BB",
+                      "code":  "DEN",
+                      "country":  "Turkey",
+                      "founded":  1981,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11102.png"
+                  },
+                  {
+                      "id":  26470,
+                      "name":  "Denizli Ä°YG",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26470.png"
+                  },
+                  {
+                      "id":  3570,
+                      "name":  "Denizlispor",
+                      "code":  "DEN",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3570.png"
+                  },
+                  {
+                      "id":  6518,
+                      "name":  "Dersimspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6518.png"
+                  },
+                  {
+                      "id":  13366,
+                      "name":  "DiyarbakÄ±r Yolspor",
+                      "country":  "Turkey",
+                      "founded":  1983,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13366.png"
+                  },
+                  {
+                      "id":  13390,
+                      "name":  "Diyarbakirspor",
+                      "code":  "DIY",
+                      "country":  "Turkey",
+                      "founded":  1968,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13390.png"
+                  },
+                  {
+                      "id":  7398,
+                      "name":  "Diyarbekirspor",
+                      "country":  "Turkey",
+                      "founded":  1977,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7398.png"
+                  },
+                  {
+                      "id":  22443,
+                      "name":  "DoÄŸubayazÄ±t FK",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22443.png"
+                  },
+                  {
+                      "id":  7399,
+                      "name":  "DÃ¼zcespor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7399.png"
+                  },
+                  {
+                      "id":  11103,
+                      "name":  "DÃ¼zyurtspor",
+                      "code":  "DUZ",
+                      "country":  "Turkey",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11103.png"
+                  },
+                  {
+                      "id":  6519,
+                      "name":  "Edirnespor",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6519.png"
+                  },
+                  {
+                      "id":  13410,
+                      "name":  "Edirnespor GenÃ§lik",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13410.png"
+                  },
+                  {
+                      "id":  13398,
+                      "name":  "EÄŸirdirspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13398.png"
+                  },
+                  {
+                      "id":  7400,
+                      "name":  "ElazÄ±ÄŸ Belediyespor FK",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7400.png"
+                  },
+                  {
+                      "id":  13432,
+                      "name":  "ElazÄ±ÄŸ Belediyespor SK",
+                      "code":  "ELA",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13432.png"
+                  },
+                  {
+                      "id":  13431,
+                      "name":  "ElazÄ±ÄŸ Belediyespor SK",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13431.png"
+                  },
+                  {
+                      "id":  3571,
+                      "name":  "ElazÄ±ÄŸspor",
+                      "code":  "ELA",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3571.png"
+                  },
+                  {
+                      "id":  13445,
+                      "name":  "Emrespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13445.png"
+                  },
+                  {
+                      "id":  7401,
+                      "name":  "Erbaaspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7401.png"
+                  },
+                  {
+                      "id":  13460,
+                      "name":  "Erganispor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13460.png"
+                  },
+                  {
+                      "id":  6339,
+                      "name":  "Ergene VelimeÅŸespor",
+                      "country":  "Turkey",
+                      "founded":  2014,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6339.png"
+                  },
+                  {
+                      "id":  13459,
+                      "name":  "Erzincan Refahiyespor",
+                      "code":  "ERZ",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13459.png"
+                  },
+                  {
+                      "id":  1009,
+                      "name":  "Erzurumspor FK",
+                      "code":  "ERZ",
+                      "country":  "Turkey",
+                      "founded":  2005,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1009.png"
+                  },
+                  {
+                      "id":  7402,
+                      "name":  "Esenler Erokspor",
+                      "country":  "Turkey",
+                      "founded":  1959,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7402.png"
+                  },
+                  {
+                      "id":  3572,
+                      "name":  "EskiÅŸehirspor",
+                      "code":  "ESK",
+                      "country":  "Turkey",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3572.png"
+                  },
+                  {
+                      "id":  3587,
+                      "name":  "Etimesgut SK",
+                      "country":  "Turkey",
+                      "founded":  1990,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3587.png"
+                  },
+                  {
+                      "id":  19300,
+                      "name":  "Eynesil Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19300.png"
+                  },
+                  {
+                      "id":  3588,
+                      "name":  "EyÃ¼pspor",
+                      "code":  "EYU",
+                      "country":  "Turkey",
+                      "founded":  1919,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3588.png"
+                  },
+                  {
+                      "id":  26491,
+                      "name":  "Ezinespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26491.png"
+                  },
+                  {
+                      "id":  3589,
+                      "name":  "Fatih KaragÃ¼mrÃ¼k",
+                      "code":  "KAR",
+                      "country":  "Turkey",
+                      "founded":  0,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3589.png"
+                  },
+                  {
+                      "id":  7404,
+                      "name":  "Fatsa Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7404.png"
+                  },
+                  {
+                      "id":  611,
+                      "name":  "FenerbahÃ§e",
+                      "code":  "FEN",
+                      "country":  "Turkey",
+                      "founded":  1907,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/611.png"
+                  },
+                  {
+                      "id":  3590,
+                      "name":  "Fethiyespor",
+                      "code":  "FET",
+                      "country":  "Turkey",
+                      "founded":  1933,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3590.png"
+                  },
+                  {
+                      "id":  21582,
+                      "name":  "Fomget GenÃ§lik W",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21582.png"
+                  },
+                  {
+                      "id":  26465,
+                      "name":  "Galata",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26465.png"
+                  },
+                  {
+                      "id":  645,
+                      "name":  "Galatasaray",
+                      "code":  "GAL",
+                      "country":  "Turkey",
+                      "founded":  1905,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/645.png"
+                  },
+                  {
+                      "id":  23031,
+                      "name":  "Galatasaray U18",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/23031.png"
+                  },
+                  {
+                      "id":  7900,
+                      "name":  "Galatasaray U19",
+                      "code":  "GAL",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7900.png"
+                  },
+                  {
+                      "id":  24209,
+                      "name":  "Galatasaray W",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24209.png"
+                  },
+                  {
+                      "id":  3573,
+                      "name":  "Gaziantep FK",
+                      "code":  "GAZ",
+                      "country":  "Turkey",
+                      "founded":  1988,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3573.png"
+                  },
+                  {
+                      "id":  1008,
+                      "name":  "Gaziantepspor",
+                      "code":  "GAZ",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1008.png"
+                  },
+                  {
+                      "id":  13367,
+                      "name":  "GaziosmanpaÅŸaspor",
+                      "code":  "GAZ",
+                      "country":  "Turkey",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13367.png"
+                  },
+                  {
+                      "id":  11085,
+                      "name":  "Gebzespor",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11085.png"
+                  },
+                  {
+                      "id":  997,
+                      "name":  "GenÃ§lerbirliÄŸi S.K.",
+                      "code":  "GEN",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/997.png"
+                  },
+                  {
+                      "id":  3574,
+                      "name":  "Giresunspor",
+                      "code":  "GIR",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3574.png"
+                  },
+                  {
+                      "id":  13433,
+                      "name":  "Girmeli Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13433.png"
+                  },
+                  {
+                      "id":  7405,
+                      "name":  "GÃ¶lcÃ¼kspor",
+                      "code":  "GOL",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7405.png"
+                  },
+                  {
+                      "id":  13434,
+                      "name":  "GÃ¶le Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13434.png"
+                  },
+                  {
+                      "id":  6520,
+                      "name":  "GÃ¶relespor",
+                      "country":  "Turkey",
+                      "founded":  1956,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6520.png"
+                  },
+                  {
+                      "id":  994,
+                      "name":  "GÃ¶ztepe",
+                      "code":  "GOZ",
+                      "country":  "Turkey",
+                      "founded":  1925,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/994.png"
+                  },
+                  {
+                      "id":  3591,
+                      "name":  "GÃ¼mÃ¼ÅŸhanespor",
+                      "code":  "GUM",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3591.png"
+                  },
+                  {
+                      "id":  6511,
+                      "name":  "GÃ¼zide Gebzespor",
+                      "code":  "DER",
+                      "country":  "Turkey",
+                      "founded":  1943,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6511.png"
+                  },
+                  {
+                      "id":  3592,
+                      "name":  "Hacettepe Spor",
+                      "code":  "HAC",
+                      "country":  "Turkey",
+                      "founded":  1949,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3592.png"
+                  },
+                  {
+                      "id":  13446,
+                      "name":  "Hakkari Zapspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13446.png"
+                  },
+                  {
+                      "id":  13399,
+                      "name":  "Hakkarispor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13399.png"
+                  },
+                  {
+                      "id":  13420,
+                      "name":  "HaskÃ¶y Yildizspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13420.png"
+                  },
+                  {
+                      "id":  3575,
+                      "name":  "Hatayspor",
+                      "code":  "HAT",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3575.png"
+                  },
+                  {
+                      "id":  6521,
+                      "name":  "Hendek Spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6521.png"
+                  },
+                  {
+                      "id":  6522,
+                      "name":  "HoÃ§van Spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6522.png"
+                  },
+                  {
+                      "id":  6524,
+                      "name":  "IÄŸdÄ±r Es",
+                      "country":  "Turkey",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6524.png"
+                  },
+                  {
+                      "id":  17259,
+                      "name":  "IÄŸdÄ±r FK",
+                      "country":  "Turkey",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17259.png"
+                  },
+                  {
+                      "id":  13436,
+                      "name":  "IÄŸdÄ±r GenÃ§lerbirliÄŸispor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13436.png"
+                  },
+                  {
+                      "id":  13447,
+                      "name":  "IÄŸdÄ±r Ãœniversitesi",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13447.png"
+                  },
+                  {
+                      "id":  21996,
+                      "name":  "Ä°negÃ¶l Kafkas GenÃ§lik",
+                      "country":  "Turkey",
+                      "founded":  1980,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21996.png"
+                  },
+                  {
+                      "id":  3612,
+                      "name":  "Ä°negÃ¶lspor",
+                      "code":  "INE",
+                      "country":  "Turkey",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3612.png"
+                  },
+                  {
+                      "id":  26467,
+                      "name":  "Ä°nkÄ±lapspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26467.png"
+                  },
+                  {
+                      "id":  7403,
+                      "name":  "Ä°skenderunspor",
+                      "country":  "Turkey",
+                      "founded":  1978,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7403.png"
+                  },
+                  {
+                      "id":  13453,
+                      "name":  "Ä°skenderunspor 1967",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13453.png"
+                  },
+                  {
+                      "id":  6523,
+                      "name":  "Isparta 32 Spor",
+                      "country":  "Turkey",
+                      "founded":  1976,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6523.png"
+                  },
+                  {
+                      "id":  13435,
+                      "name":  "Ispartaspor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13435.png"
+                  },
+                  {
+                      "id":  13383,
+                      "name":  "Ä°stanbul GÃ¼ngÃ¶renspor",
+                      "code":  "GUN",
+                      "country":  "Turkey",
+                      "founded":  1983,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13383.png"
+                  },
+                  {
+                      "id":  3578,
+                      "name":  "Ä°stanbulspor",
+                      "code":  "IST",
+                      "country":  "Turkey",
+                      "founded":  1926,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3578.png"
+                  },
+                  {
+                      "id":  11087,
+                      "name":  "Ä°zmir Ã‡oruhlu FK",
+                      "code":  "BER",
+                      "country":  "Turkey",
+                      "founded":  1970,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11087.png"
+                  },
+                  {
+                      "id":  13448,
+                      "name":  "Kadirlispor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13448.png"
+                  },
+                  {
+                      "id":  3593,
+                      "name":  "KahramanmaraÅŸspor",
+                      "code":  "KAH",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3593.png"
+                  },
+                  {
+                      "id":  6525,
+                      "name":  "Kahta 02 Spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6525.png"
+                  },
+                  {
+                      "id":  13368,
+                      "name":  "Kale Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13368.png"
+                  },
+                  {
+                      "id":  26468,
+                      "name":  "Kapadokyaspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26468.png"
+                  },
+                  {
+                      "id":  20294,
+                      "name":  "KarabÃ¼k Ä°dman Yurdu",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20294.png"
+                  },
+                  {
+                      "id":  7407,
+                      "name":  "Karacabey Belediyespor",
+                      "code":  "BUR",
+                      "country":  "Turkey",
+                      "founded":  2008,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7407.png"
+                  },
+                  {
+                      "id":  13369,
+                      "name":  "Karadeniz EreÄŸli BSK",
+                      "country":  "Turkey",
+                      "founded":  1980,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13369.png"
+                  },
+                  {
+                      "id":  7408,
+                      "name":  "KarakÃ¶prÃ¼ Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1992,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7408.png"
+                  },
+                  {
+                      "id":  6526,
+                      "name":  "Karaman FK",
+                      "country":  "Turkey",
+                      "founded":  1992,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6526.png"
+                  },
+                  {
+                      "id":  1000,
+                      "name":  "Kardemir Karabukspor",
+                      "code":  "KAR",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1000.png"
+                  },
+                  {
+                      "id":  13370,
+                      "name":  "KarlÄ±ova YÄ±ldÄ±rÄ±m",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13370.png"
+                  },
+                  {
+                      "id":  6527,
+                      "name":  "Kars 36",
+                      "country":  "Turkey",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6527.png"
+                  },
+                  {
+                      "id":  7409,
+                      "name":  "Karsiyaka",
+                      "code":  "KAR",
+                      "country":  "Turkey",
+                      "founded":  1912,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7409.png"
+                  },
+                  {
+                      "id":  13421,
+                      "name":  "Karsspor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13421.png"
+                  },
+                  {
+                      "id":  19301,
+                      "name":  "Kartal Bulvarspor",
+                      "country":  "Turkey",
+                      "founded":  1985,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19301.png"
+                  },
+                  {
+                      "id":  11091,
+                      "name":  "Kartalspor",
+                      "code":  "KAR",
+                      "country":  "Turkey",
+                      "founded":  1949,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11091.png"
+                  },
+                  {
+                      "id":  1004,
+                      "name":  "KasÄ±mpaÅŸa",
+                      "code":  "KAS",
+                      "country":  "Turkey",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1004.png"
+                  },
+                  {
+                      "id":  6528,
+                      "name":  "Kastamonu Ã–zel Ä°dare KHS",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6528.png"
+                  },
+                  {
+                      "id":  3594,
+                      "name":  "Kastamonuspor",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3594.png"
+                  },
+                  {
+                      "id":  13463,
+                      "name":  "Kayapinar Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13463.png"
+                  },
+                  {
+                      "id":  11099,
+                      "name":  "Kayseri Erciyesspor",
+                      "code":  "ERC",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11099.png"
+                  },
+                  {
+                      "id":  13422,
+                      "name":  "Kayseri Åžekerspor",
+                      "code":  "KAY",
+                      "country":  "Turkey",
+                      "founded":  1956,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13422.png"
+                  },
+                  {
+                      "id":  1001,
+                      "name":  "Kayserispor",
+                      "code":  "KAY",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1001.png"
+                  },
+                  {
+                      "id":  13457,
+                      "name":  "KeÃ§iÃ¶ren Sportif",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13457.png"
+                  },
+                  {
+                      "id":  3595,
+                      "name":  "KeÃ§iÃ¶rengÃ¼cÃ¼",
+                      "code":  "KEC",
+                      "country":  "Turkey",
+                      "founded":  1945,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3595.png"
+                  },
+                  {
+                      "id":  7410,
+                      "name":  "Kemerspor 2003",
+                      "code":  "TEK",
+                      "country":  "Turkey",
+                      "founded":  2003,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7410.png"
+                  },
+                  {
+                      "id":  6529,
+                      "name":  "Kepezspor",
+                      "country":  "Turkey",
+                      "founded":  1995,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6529.png"
+                  },
+                  {
+                      "id":  26466,
+                      "name":  "Kestel Ã‡ilek",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26466.png"
+                  },
+                  {
+                      "id":  13449,
+                      "name":  "Kilimli Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13449.png"
+                  },
+                  {
+                      "id":  6530,
+                      "name":  "Kilis Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6530.png"
+                  },
+                  {
+                      "id":  11100,
+                      "name":  "KÄ±rÄ±khanspor",
+                      "code":  "KIR",
+                      "country":  "Turkey",
+                      "founded":  1938,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11100.png"
+                  },
+                  {
+                      "id":  6531,
+                      "name":  "KÄ±rÄ±kkale BÃ¼yÃ¼k Anadolu",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6531.png"
+                  },
+                  {
+                      "id":  3596,
+                      "name":  "KÄ±rklarelispor",
+                      "code":  "KRK",
+                      "country":  "Turkey",
+                      "founded":  1968,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3596.png"
+                  },
+                  {
+                      "id":  6341,
+                      "name":  "KÄ±rÅŸehir Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6341.png"
+                  },
+                  {
+                      "id":  7413,
+                      "name":  "KÄ±zÄ±lcabÃ¶lÃ¼kspor",
+                      "code":  "KIZ",
+                      "country":  "Turkey",
+                      "founded":  1982,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7413.png"
+                  },
+                  {
+                      "id":  13411,
+                      "name":  "KÄ±zÄ±ltepe FÄ±ratspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13411.png"
+                  },
+                  {
+                      "id":  13385,
+                      "name":  "Kocaeli Birlikspor",
+                      "code":  "KOR",
+                      "country":  "Turkey",
+                      "founded":  1995,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13385.png"
+                  },
+                  {
+                      "id":  7411,
+                      "name":  "Kocaelispor",
+                      "code":  "KOC",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7411.png"
+                  },
+                  {
+                      "id":  607,
+                      "name":  "Konyaspor",
+                      "code":  "KON",
+                      "country":  "Turkey",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/607.png"
+                  },
+                  {
+                      "id":  13386,
+                      "name":  "KÃ¶rfez Ä°skenderunspor",
+                      "code":  "ISK",
+                      "country":  "Turkey",
+                      "founded":  1991,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13386.png"
+                  },
+                  {
+                      "id":  11086,
+                      "name":  "KÃ¶rfez Spor",
+                      "country":  "Turkey",
+                      "founded":  1995,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11086.png"
+                  },
+                  {
+                      "id":  7412,
+                      "name":  "Kozan Spor FK",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7412.png"
+                  },
+                  {
+                      "id":  21994,
+                      "name":  "KÃ¼Ã§Ã¼kÃ§ekmece Sinopspor",
+                      "country":  "Turkey",
+                      "founded":  1977,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21994.png"
+                  },
+                  {
+                      "id":  13461,
+                      "name":  "KÃ¼Ã§Ã¼kÃ§ekmecespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13461.png"
+                  },
+                  {
+                      "id":  22444,
+                      "name":  "Kumluca Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22444.png"
+                  },
+                  {
+                      "id":  13400,
+                      "name":  "Kurtalanspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13400.png"
+                  },
+                  {
+                      "id":  17260,
+                      "name":  "KuÅŸadasÄ±spor",
+                      "country":  "Turkey",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17260.png"
+                  },
+                  {
+                      "id":  11092,
+                      "name":  "KÃ¼tahyaspor",
+                      "country":  "Turkey",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11092.png"
+                  },
+                  {
+                      "id":  13458,
+                      "name":  "LÃ¼leburgazspor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13458.png"
+                  },
+                  {
+                      "id":  6532,
+                      "name":  "Maltepespor",
+                      "code":  "MAL",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6532.png"
+                  },
+                  {
+                      "id":  11093,
+                      "name":  "Manavgatspor",
+                      "code":  "MAN",
+                      "country":  "Turkey",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11093.png"
+                  },
+                  {
+                      "id":  3597,
+                      "name":  "Manisa F.K.",
+                      "country":  "Turkey",
+                      "founded":  1994,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3597.png"
+                  },
+                  {
+                      "id":  3598,
+                      "name":  "Manisaspor",
+                      "code":  "MAN",
+                      "country":  "Turkey",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3598.png"
+                  },
+                  {
+                      "id":  6533,
+                      "name":  "Mardin 1969",
+                      "country":  "Turkey",
+                      "founded":  2015,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6533.png"
+                  },
+                  {
+                      "id":  13393,
+                      "name":  "Mardin 47 Spor",
+                      "country":  "Turkey",
+                      "founded":  1947,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13393.png"
+                  },
+                  {
+                      "id":  13423,
+                      "name":  "Mardinspor",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13423.png"
+                  },
+                  {
+                      "id":  20295,
+                      "name":  "MazÄ±daÄŸÄ± Fosfatspor",
+                      "country":  "Turkey",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20295.png"
+                  },
+                  {
+                      "id":  3599,
+                      "name":  "Menemen FK",
+                      "code":  "MEN",
+                      "country":  "Turkey",
+                      "founded":  1993,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3599.png"
+                  },
+                  {
+                      "id":  13382,
+                      "name":  "Mersin Talimyurdu SK",
+                      "code":  "MER",
+                      "country":  "Turkey",
+                      "founded":  1925,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13382.png"
+                  },
+                  {
+                      "id":  6534,
+                      "name":  "Merzifonspor",
+                      "country":  "Turkey",
+                      "founded":  1968,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6534.png"
+                  },
+                  {
+                      "id":  13392,
+                      "name":  "MKE KÄ±rÄ±kkalespor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13392.png"
+                  },
+                  {
+                      "id":  6535,
+                      "name":  "Modafen",
+                      "country":  "Turkey",
+                      "founded":  2011,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6535.png"
+                  },
+                  {
+                      "id":  7414,
+                      "name":  "MuÄŸlaspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7414.png"
+                  },
+                  {
+                      "id":  13412,
+                      "name":  "MuÅŸ Demirspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13412.png"
+                  },
+                  {
+                      "id":  13437,
+                      "name":  "MuÅŸ OvasÄ±spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13437.png"
+                  },
+                  {
+                      "id":  6536,
+                      "name":  "MuÅŸ Sport KlÃ¼bÃ¼",
+                      "country":  "Turkey",
+                      "founded":  2015,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6536.png"
+                  },
+                  {
+                      "id":  13394,
+                      "name":  "MuÅŸspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13394.png"
+                  },
+                  {
+                      "id":  13371,
+                      "name":  "Mut Ä°dmanyurdu Belediye",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13371.png"
+                  },
+                  {
+                      "id":  7415,
+                      "name":  "Nazilli Spor",
+                      "code":  "NAZ",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7415.png"
+                  },
+                  {
+                      "id":  7416,
+                      "name":  "NevÅŸehir Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7416.png"
+                  },
+                  {
+                      "id":  3600,
+                      "name":  "NiÄŸde Anadolu",
+                      "country":  "Turkey",
+                      "founded":  1990,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3600.png"
+                  },
+                  {
+                      "id":  22445,
+                      "name":  "NiÄŸde Belediyesispor",
+                      "country":  "Turkey",
+                      "founded":  1990,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22445.png"
+                  },
+                  {
+                      "id":  24602,
+                      "name":  "NilÃ¼fer Belediye",
+                      "country":  "Turkey",
+                      "founded":  1999,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24602.png"
+                  },
+                  {
+                      "id":  13380,
+                      "name":  "Ã–demiÅŸspor",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13380.png"
+                  },
+                  {
+                      "id":  7417,
+                      "name":  "Ofspor",
+                      "code":  "OFS",
+                      "country":  "Turkey",
+                      "founded":  1968,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7417.png"
+                  },
+                  {
+                      "id":  11104,
+                      "name":  "Orduspor",
+                      "code":  "ORD",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11104.png"
+                  },
+                  {
+                      "id":  17261,
+                      "name":  "Orduspor 1967",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17261.png"
+                  },
+                  {
+                      "id":  11088,
+                      "name":  "Orhangazispor",
+                      "code":  "ORH",
+                      "country":  "Turkey",
+                      "founded":  1982,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11088.png"
+                  },
+                  {
+                      "id":  7418,
+                      "name":  "Osmaniyespor",
+                      "country":  "Turkey",
+                      "founded":  2011,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7418.png"
+                  },
+                  {
+                      "id":  3576,
+                      "name":  "OsmanlÄ±spor",
+                      "country":  "Turkey",
+                      "founded":  1978,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3576.png"
+                  },
+                  {
+                      "id":  13454,
+                      "name":  "OYAK-Renaultspor",
+                      "country":  "Turkey",
+                      "founded":  1974,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13454.png"
+                  },
+                  {
+                      "id":  13424,
+                      "name":  "Patnos GenÃ§likspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13424.png"
+                  },
+                  {
+                      "id":  7419,
+                      "name":  "Payasspor",
+                      "code":  "PAY",
+                      "country":  "Turkey",
+                      "founded":  1975,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7419.png"
+                  },
+                  {
+                      "id":  7420,
+                      "name":  "Pazarspor",
+                      "code":  "PAZ",
+                      "country":  "Turkey",
+                      "founded":  1973,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7420.png"
+                  },
+                  {
+                      "id":  3601,
+                      "name":  "Pendikspor",
+                      "code":  "PEN",
+                      "country":  "Turkey",
+                      "founded":  1950,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3601.png"
+                  },
+                  {
+                      "id":  1007,
+                      "name":  "Rizespor",
+                      "code":  "RIZ",
+                      "country":  "Turkey",
+                      "founded":  1953,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1007.png"
+                  },
+                  {
+                      "id":  3602,
+                      "name":  "Sakaryaspor",
+                      "code":  "SAK",
+                      "country":  "Turkey",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3602.png"
+                  },
+                  {
+                      "id":  3603,
+                      "name":  "Samsunspor",
+                      "code":  "SAM",
+                      "country":  "Turkey",
+                      "founded":  1965,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3603.png"
+                  },
+                  {
+                      "id":  3604,
+                      "name":  "Sancaktepe Belediyespor",
+                      "code":  "SAN",
+                      "country":  "Turkey",
+                      "founded":  2008,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3604.png"
+                  },
+                  {
+                      "id":  13413,
+                      "name":  "SandÄ±klÄ±spor",
+                      "code":  "SAN",
+                      "country":  "Turkey",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13413.png"
+                  },
+                  {
+                      "id":  19304,
+                      "name":  "Sapanca GenÃ§likspor",
+                      "country":  "Turkey",
+                      "founded":  1952,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19304.png"
+                  },
+                  {
+                      "id":  13401,
+                      "name":  "SarayÃ¶nÃ¼ Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1948,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13401.png"
+                  },
+                  {
+                      "id":  13402,
+                      "name":  "SarÄ±kamÄ±ÅŸ Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13402.png"
+                  },
+                  {
+                      "id":  13372,
+                      "name":  "SarÄ±kamÄ±ÅŸ GenÃ§lerbirliÄŸi",
+                      "country":  "Turkey",
+                      "founded":  2017,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13372.png"
+                  },
+                  {
+                      "id":  3605,
+                      "name":  "SarÄ±yer",
+                      "code":  "SAR",
+                      "country":  "Turkey",
+                      "founded":  1940,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3605.png"
+                  },
+                  {
+                      "id":  22010,
+                      "name":  "Sebat GenÃ§likspor",
+                      "country":  "Turkey",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22010.png"
+                  },
+                  {
+                      "id":  13373,
+                      "name":  "Serhat Ardahanspor",
+                      "country":  "Turkey",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13373.png"
+                  },
+                  {
+                      "id":  7421,
+                      "name":  "Serik Spor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7421.png"
+                  },
+                  {
+                      "id":  6537,
+                      "name":  "Siirt Ä°l Ã–zel Ä°daresi",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6537.png"
+                  },
+                  {
+                      "id":  13438,
+                      "name":  "Siirtspor",
+                      "code":  "SII",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13438.png"
+                  },
+                  {
+                      "id":  21998,
+                      "name":  "Silifke Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1964,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21998.png"
+                  },
+                  {
+                      "id":  7422,
+                      "name":  "Silivrispor",
+                      "code":  "SIL",
+                      "country":  "Turkey",
+                      "founded":  1957,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7422.png"
+                  },
+                  {
+                      "id":  22446,
+                      "name":  "Sincan Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22446.png"
+                  },
+                  {
+                      "id":  13374,
+                      "name":  "Sinopspor",
+                      "country":  "Turkey",
+                      "founded":  1970,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13374.png"
+                  },
+                  {
+                      "id":  13455,
+                      "name":  "Sivas 4 EylÃ¼l",
+                      "code":  "SIV",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13455.png"
+                  },
+                  {
+                      "id":  3606,
+                      "name":  "Sivas Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3606.png"
+                  },
+                  {
+                      "id":  1002,
+                      "name":  "Sivasspor",
+                      "code":  "SIV",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/1002.png"
+                  },
+                  {
+                      "id":  19303,
+                      "name":  "SÃ¶ke 1970",
+                      "country":  "Turkey",
+                      "founded":  2021,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19303.png"
+                  },
+                  {
+                      "id":  22447,
+                      "name":  "SÃ¶kespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22447.png"
+                  },
+                  {
+                      "id":  6538,
+                      "name":  "Somaspor",
+                      "country":  "Turkey",
+                      "founded":  1985,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6538.png"
+                  },
+                  {
+                      "id":  13425,
+                      "name":  "Sorgun Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1959,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13425.png"
+                  },
+                  {
+                      "id":  7423,
+                      "name":  "Sultanbeyli Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7423.png"
+                  },
+                  {
+                      "id":  13403,
+                      "name":  "Sultangazispor",
+                      "country":  "Turkey",
+                      "founded":  1985,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13403.png"
+                  },
+                  {
+                      "id":  3613,
+                      "name":  "ÅžanlÄ±urfaspor",
+                      "code":  "SAN",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3613.png"
+                  },
+                  {
+                      "id":  7430,
+                      "name":  "Åžile YÄ±ldÄ±zspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7430.png"
+                  },
+                  {
+                      "id":  26494,
+                      "name":  "Åžiran",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26494.png"
+                  },
+                  {
+                      "id":  22452,
+                      "name":  "ÅžÄ±rnak Ä°dmanyurdu",
+                      "country":  "Turkey",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22452.png"
+                  },
+                  {
+                      "id":  21995,
+                      "name":  "TalasgÃ¼cÃ¼ Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21995.png"
+                  },
+                  {
+                      "id":  3607,
+                      "name":  "Tarsus Ä°dman Yurdu",
+                      "code":  "TAR",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3607.png"
+                  },
+                  {
+                      "id":  13395,
+                      "name":  "Tatvan GenÃ§lerbirliÄŸi",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13395.png"
+                  },
+                  {
+                      "id":  6539,
+                      "name":  "TavÅŸanlÄ± Linyitspor",
+                      "code":  "TAV",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6539.png"
+                  },
+                  {
+                      "id":  11094,
+                      "name":  "TekirdaÄŸspor",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11094.png"
+                  },
+                  {
+                      "id":  7424,
+                      "name":  "Tepecikspor",
+                      "code":  "TEP",
+                      "country":  "Turkey",
+                      "founded":  1988,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7424.png"
+                  },
+                  {
+                      "id":  24604,
+                      "name":  "Tire 2021 FK",
+                      "country":  "Turkey",
+                      "founded":  2021,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24604.png"
+                  },
+                  {
+                      "id":  21035,
+                      "name":  "Tokat Bld Plevnespor",
+                      "country":  "Turkey",
+                      "founded":  1994,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21035.png"
+                  },
+                  {
+                      "id":  3608,
+                      "name":  "Tokatspor",
+                      "code":  "TOK",
+                      "country":  "Turkey",
+                      "founded":  1969,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3608.png"
+                  },
+                  {
+                      "id":  13439,
+                      "name":  "Tosya Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13439.png"
+                  },
+                  {
+                      "id":  13426,
+                      "name":  "Trabzon Kanuni",
+                      "country":  "Turkey",
+                      "founded":  1980,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13426.png"
+                  },
+                  {
+                      "id":  998,
+                      "name":  "Trabzonspor",
+                      "code":  "TRA",
+                      "country":  "Turkey",
+                      "founded":  1967,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/998.png"
+                  },
+                  {
+                      "id":  17701,
+                      "name":  "Trabzonspor U19",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17701.png"
+                  },
+                  {
+                      "id":  7425,
+                      "name":  "Turgutluspor",
+                      "code":  "TUR",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7425.png"
+                  },
+                  {
+                      "id":  24605,
+                      "name":  "TÃ¼rk Metal 1963",
+                      "country":  "Turkey",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24605.png"
+                  },
+                  {
+                      "id":  22501,
+                      "name":  "Turkey U16",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22501.png"
+                  },
+                  {
+                      "id":  17982,
+                      "name":  "Turkey U17",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/17982.png"
+                  },
+                  {
+                      "id":  19075,
+                      "name":  "Turkey U18",
+                      "country":  "Turkey",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/19075.png"
+                  },
+                  {
+                      "id":  10351,
+                      "name":  "Turkey U19",
+                      "code":  "TUR",
+                      "country":  "Turkey",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/10351.png"
+                  },
+                  {
+                      "id":  8227,
+                      "name":  "Turkey U21",
+                      "code":  "TUR",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/8227.png"
+                  },
+                  {
+                      "id":  19930,
+                      "name":  "Turkey U23",
+                      "country":  "Turkey",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/19930.png"
+                  },
+                  {
+                      "id":  1759,
+                      "name":  "Turkey W",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/1759.png"
+                  },
+                  {
+                      "id":  777,
+                      "name":  "TÃ¼rkiye",
+                      "code":  "TUR",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/777.png"
+                  },
+                  {
+                      "id":  23431,
+                      "name":  "TÃ¼rkiye U20",
+                      "country":  "Turkey",
+                      "founded":  1923,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/23431.png"
+                  },
+                  {
+                      "id":  3577,
+                      "name":  "Ãœmraniyespor",
+                      "code":  "UMR",
+                      "country":  "Turkey",
+                      "founded":  1938,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3577.png"
+                  },
+                  {
+                      "id":  13381,
+                      "name":  "Ãœnye 1957",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13381.png"
+                  },
+                  {
+                      "id":  13441,
+                      "name":  "Ãœnyespor",
+                      "code":  "UNY",
+                      "country":  "Turkey",
+                      "founded":  1957,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13441.png"
+                  },
+                  {
+                      "id":  13450,
+                      "name":  "UÅŸak Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13450.png"
+                  },
+                  {
+                      "id":  3610,
+                      "name":  "UÅŸak Spor",
+                      "country":  "Turkey",
+                      "founded":  1984,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3610.png"
+                  },
+                  {
+                      "id":  6342,
+                      "name":  "Vanspor FK",
+                      "code":  "VAN",
+                      "country":  "Turkey",
+                      "founded":  1982,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6342.png"
+                  },
+                  {
+                      "id":  24607,
+                      "name":  "ViranÅŸehir Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24607.png"
+                  },
+                  {
+                      "id":  6540,
+                      "name":  "Yalova KadÄ±kÃ¶y",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6540.png"
+                  },
+                  {
+                      "id":  24957,
+                      "name":  "Yalova YeÅŸilovaspor",
+                      "country":  "Turkey",
+                      "founded":  1997,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24957.png"
+                  },
+                  {
+                      "id":  15102,
+                      "name":  "Yalovaspor",
+                      "country":  "Turkey",
+                      "founded":  1963,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15102.png"
+                  },
+                  {
+                      "id":  13404,
+                      "name":  "YapraklÄ± Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13404.png"
+                  },
+                  {
+                      "id":  13375,
+                      "name":  "Yeni Amasyaspor",
+                      "country":  "Turkey",
+                      "founded":  2011,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13375.png"
+                  },
+                  {
+                      "id":  24958,
+                      "name":  "Yeni Ã‡anspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24958.png"
+                  },
+                  {
+                      "id":  13462,
+                      "name":  "Yeni Iskenderunspor",
+                      "country":  "Turkey",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13462.png"
+                  },
+                  {
+                      "id":  999,
+                      "name":  "Yeni Malatyaspor",
+                      "code":  "MAL",
+                      "country":  "Turkey",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/999.png"
+                  },
+                  {
+                      "id":  6546,
+                      "name":  "Yeni Mersin Idmanyurdu",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6546.png"
+                  },
+                  {
+                      "id":  7426,
+                      "name":  "Yeni Orduspor",
+                      "country":  "Turkey",
+                      "founded":  1973,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7426.png"
+                  },
+                  {
+                      "id":  13376,
+                      "name":  "YeniÃ§aÄŸaspor",
+                      "country":  "Turkey",
+                      "founded":  1976,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13376.png"
+                  },
+                  {
+                      "id":  11101,
+                      "name":  "YeÅŸil Bursa",
+                      "code":  "YES",
+                      "country":  "Turkey",
+                      "founded":  1974,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/11101.png"
+                  },
+                  {
+                      "id":  6541,
+                      "name":  "YeÅŸilyurt Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1985,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6541.png"
+                  },
+                  {
+                      "id":  17685,
+                      "name":  "Yevpatoriya",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17685.png"
+                  },
+                  {
+                      "id":  13464,
+                      "name":  "Yimpas Yozgatspor",
+                      "country":  "Turkey",
+                      "founded":  1959,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13464.png"
+                  },
+                  {
+                      "id":  7427,
+                      "name":  "Yomraspor",
+                      "country":  "Turkey",
+                      "founded":  1968,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7427.png"
+                  },
+                  {
+                      "id":  22448,
+                      "name":  "Yozgat Bld Bozokspor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22448.png"
+                  },
+                  {
+                      "id":  6542,
+                      "name":  "Yozgatspor 1959",
+                      "country":  "Turkey",
+                      "founded":  1959,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6542.png"
+                  },
+                  {
+                      "id":  13451,
+                      "name":  "Yozgatspor AÅž",
+                      "code":  "YOZ",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13451.png"
+                  },
+                  {
+                      "id":  6543,
+                      "name":  "YÃ¼ksekova Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1968,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6543.png"
+                  },
+                  {
+                      "id":  22449,
+                      "name":  "Yunus Emre Belediyespor",
+                      "country":  "Turkey",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22449.png"
+                  },
+                  {
+                      "id":  13414,
+                      "name":  "Zara Belediyespor",
+                      "country":  "Turkey",
+                      "founded":  1955,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/13414.png"
+                  },
+                  {
+                      "id":  3611,
+                      "name":  "Zonguldak KÃ¶mÃ¼rspor",
+                      "country":  "Turkey",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/3611.png"
+                  }
+              ]
+}

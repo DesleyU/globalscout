@@ -17,6 +17,9 @@ env:
   ECR_REGISTRY: ${{ vars.ECR_REGISTRY }}
   DEPLOY_PATH: ${{ vars.DEPLOY_PATH || '/opt/globalscout' }}
   IMAGE_TAG: ${{ inputs.image_tag || github.sha }}
+  EC2_HOST: ${{ vars.EC2_HOST }}
+  EC2_USER: ${{ vars.EC2_USER }}
+  EC2_SSH_PORT: ${{ vars.EC2_SSH_PORT || '22' }}
 
 jobs:
   deploy:
@@ -42,7 +45,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: src/GlobalScout/GlobalScout.Api/Dockerfile
+          file: src/api/GlobalScout.Api/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
@@ -53,7 +56,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: src/GlobalScout/GlobalScout.Migrator/Dockerfile
+          file: src/api/GlobalScout.Migrator/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
@@ -74,19 +77,22 @@ jobs:
 
       - name: Prepare SSH key
         run: |
-          mkdir -p ~/.ssh
+          install -m 700 -d ~/.ssh
           printf '%s\n' "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H "${{ vars.EC2_HOST }}" >> ~/.ssh/known_hosts
+          if ! ssh-keyscan -T 30 -p "${EC2_SSH_PORT}" -H "${EC2_HOST}" >> ~/.ssh/known_hosts; then
+            echo "::error::Could not reach SSH on ${EC2_HOST}:${EC2_SSH_PORT}. Verify EC2_HOST, the EC2 security group allows SSH from GitHub-hosted runners or your runner IP, the network ACL allows it, and sshd is running."
+            exit 1
+          fi
 
       - name: Copy compose file to EC2
         run: |
-          ssh "${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}" "sudo mkdir -p '${DEPLOY_PATH}' && sudo chown '${{ vars.EC2_USER }}':'${{ vars.EC2_USER }}' '${DEPLOY_PATH}'"
-          scp deploy/docker-compose.ec2.yml "${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}:${DEPLOY_PATH}/docker-compose.yml"
+          ssh -p "${EC2_SSH_PORT}" "${EC2_USER}@${EC2_HOST}" "sudo mkdir -p '${DEPLOY_PATH}' && sudo chown '${EC2_USER}':'${EC2_USER}' '${DEPLOY_PATH}'"
+          scp -P "${EC2_SSH_PORT}" deploy/docker-compose.ec2.yml "${EC2_USER}@${EC2_HOST}:${DEPLOY_PATH}/docker-compose.yml"
 
       - name: Deploy on EC2
         run: |
-          ssh "${{ vars.EC2_USER }}@${{ vars.EC2_HOST }}" "set -euo pipefail
+          ssh -p "${EC2_SSH_PORT}" "${EC2_USER}@${EC2_HOST}" "set -euo pipefail
           cd '${DEPLOY_PATH}'
           test -f .env
           aws ecr get-login-password --region '${AWS_REGION}' | docker login --username AWS --password-stdin '${ECR_REGISTRY}'

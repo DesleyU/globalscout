@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#bg)"/>
+  <rect x="200" y="180" width="400" height="280" rx="12" fill="#ffffff" opacity="0.08"/>
+  <rect x="240" y="220" width="320" height="8" rx="4" fill="#60a5fa" opacity="0.5"/>
+  <rect x="240" y="260" width="240" height="8" rx="4" fill="#ffffff" opacity="0.2"/>
+  <rect x="240" y="300" width="280" height="8" rx="4" fill="#ffffff" opacity="0.2"/>
+  <text x="400" y="540" text-anchor="middle" font-family="system-ui,sans-serif" font-size="20" fill="#ffffff" opacity="0.5">Placeholder  feature-scout.jpg</text>
+</svg>

@@ -1,6 +1,6 @@
 ---
 description: GlobalScout .NET — feature-first folders, namespaces, and layer boundaries
-globs: src/GlobalScout/**/*.cs
+globs: src/api/**/*.cs
 alwaysApply: false
 ---
 

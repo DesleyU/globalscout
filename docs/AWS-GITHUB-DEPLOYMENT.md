@@ -199,6 +199,7 @@ Edit `/opt/globalscout/.env` on the instance. At minimum, set:
 
 - `POSTGRES_PASSWORD`
 - `Jwt__SigningKey`
+- `AdminSeed__Email` and `AdminSeed__Password` (bootstrap admin account; recreated on API startup if missing)
 - `Stripe__PublicAppBaseUrl`
 - `ObjectStorage__BucketName`
 - `ObjectStorage__Region`
@@ -218,6 +219,7 @@ Configure these repository variables in GitHub Actions:
 - `ECR_REGISTRY`: for example `123456789012.dkr.ecr.eu-central-1.amazonaws.com`.
 - `EC2_HOST`: public DNS name or IP of the EC2 instance.
 - `EC2_USER`: usually `ubuntu`.
+- `EC2_SSH_PORT`: optional, defaults to `22`.
 - `DEPLOY_PATH`: optional, defaults to `/opt/globalscout`.
 
 Configure this repository secret:
@@ -245,7 +247,7 @@ The migrator runs before the API starts. If migrations fail, Compose will not st
 Use Aspire for local development so Postgres, MiniStack, the API, and the Vite frontend start together:
 
 ```bash
-dotnet run --project src/GlobalScout/GlobalScout.AppHost/GlobalScout.AppHost.csproj
+dotnet run --project src/api/GlobalScout.AppHost/GlobalScout.AppHost.csproj
 ```
 
 The AppHost starts MiniStack on port `4566` and configures the API to create/use the local development bucket automatically.

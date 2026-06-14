@@ -122,10 +122,10 @@ Portal return URL is built from `Stripe:PublicAppBaseUrl` + `BillingPortalReturn
 
 ## Related code (reference)
 
-- API routes: [`GlobalScout.Api/Endpoints/Billing/`](../src/GlobalScout/GlobalScout.Api/Endpoints/Billing/)
-- Webhook + Stripe SDK: [`GlobalScout.Infrastructure/Billing/`](../src/GlobalScout/GlobalScout.Infrastructure/Billing/)
-- Commands: [`GlobalScout.Application/Billing/`](../src/GlobalScout/GlobalScout.Application/Billing/)
-- Abstractions: [`IBillingEntitlementSync`](../src/GlobalScout/GlobalScout.Application/Abstractions/Persistence/IBillingEntitlementSync.cs), [`IBillingCheckoutService`](../src/GlobalScout/GlobalScout.Application/Abstractions/Billing/IBillingCheckoutService.cs)
+- API routes: [`GlobalScout.Api/Endpoints/Billing/`](../src/api/GlobalScout.Api/Endpoints/Billing/)
+- Webhook + Stripe SDK: [`GlobalScout.Infrastructure/Billing/`](../src/api/GlobalScout.Infrastructure/Billing/)
+- Commands: [`GlobalScout.Application/Billing/`](../src/api/GlobalScout.Application/Billing/)
+- Abstractions: [`IBillingEntitlementSync`](../src/api/GlobalScout.Application/Abstractions/Persistence/IBillingEntitlementSync.cs), [`IBillingCheckoutService`](../src/api/GlobalScout.Application/Abstractions/Billing/IBillingCheckoutService.cs)
 - SPA: checkout via [`frontend/src/services/api.js`](../frontend/src/services/api.js) (`billingAPI`), success/cancel under [`frontend/src/pages/`](../frontend/src/pages/)
 
 ---

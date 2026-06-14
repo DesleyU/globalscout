@@ -76,6 +76,9 @@ project.fragment.lock.json
 # NuGet v2 packages folder (scoped so JS monorepo workspaces named packages/ are not ignored)
 /packages/*
 !/packages/build/
+/src/ui/packages/*
+!src/ui/packages/shared/
+!src/ui/packages/build/
 src/**/[Pp]ackages/*
 !src/**/[Pp]ackages/build/
 *.nuget.props
@@ -127,7 +130,7 @@ temp/
 
 # Local Netlify folder
 .netlify
-/src/GlobalScout/.vs
-/src/GlobalScout/.vs
+/src/api/.vs
+/src/api/.vs
 *.vsidx
-/src/GlobalScout/.vs
+/src/api/.vs

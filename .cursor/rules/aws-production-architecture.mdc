@@ -1,0 +1,18 @@
+---
+description: GlobalScout AWS production architecture context
+alwaysApply: true
+---
+
+# AWS Production Architecture
+
+GlobalScout production runs on AWS with CloudFront, an Application Load Balancer, and a single EC2 host running Docker Compose.
+
+Before changing deployment, Docker, nginx, frontend API URL handling, CORS, object storage/media, or AWS documentation, read `docs/AWS-infrastructure_setup_documentation.md`.
+
+Key invariants:
+- Frontend public URLs are `https://globalscout.eu` and `https://www.globalscout.eu`.
+- API traffic must use `https://api.globalscout.eu/api`, not relative `/api` from the frontend domain.
+- The UI image contains nginx and the frontend SPA.
+- EC2 Compose runs `ui`, `api`, `postgres`, and `migrator`.
+- Production media uses private S3 with presigned upload/read URLs.
+- `media.globalscout.eu` CloudFront delivery is future/planned unless the docs and code say otherwise.

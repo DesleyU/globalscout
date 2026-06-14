@@ -1,0 +1,3257 @@
+{
+    "country":  "Romania",
+    "leagues":  [
+                    {
+                        "externalLeagueId":  283,
+                        "name":  "Liga I",
+                        "type":  "League",
+                        "logoUrl":  "https://media.api-sports.io/football/leagues/283.png"
+                    }
+                ],
+    "teams":  [
+                  {
+                      "id":  16278,
+                      "name":  "1910 Oradea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16278.png"
+                  },
+                  {
+                      "id":  26204,
+                      "name":  "Academica BalÈ™",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26204.png"
+                  },
+                  {
+                      "id":  16295,
+                      "name":  "Academica Clinceni II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16295.png"
+                  },
+                  {
+                      "id":  21662,
+                      "name":  "Academica Recea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21662.png"
+                  },
+                  {
+                      "id":  2614,
+                      "name":  "ACS Berceni",
+                      "code":  "BER",
+                      "country":  "Romania",
+                      "founded":  2008,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2614.png"
+                  },
+                  {
+                      "id":  24838,
+                      "name":  "ACS FC Dinamo Bucuresti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24838.png"
+                  },
+                  {
+                      "id":  2607,
+                      "name":  "ACS Foresta Suceava",
+                      "code":  "CFR",
+                      "country":  "Romania",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2607.png"
+                  },
+                  {
+                      "id":  22208,
+                      "name":  "ACS MediaÅŸ 2022",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22208.png"
+                  },
+                  {
+                      "id":  2588,
+                      "name":  "ACS Poli Timisoara",
+                      "code":  "POL",
+                      "country":  "Romania",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2588.png"
+                  },
+                  {
+                      "id":  2600,
+                      "name":  "ACS Sirineasa",
+                      "country":  "Romania",
+                      "founded":  1998,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2600.png"
+                  },
+                  {
+                      "id":  19167,
+                      "name":  "ACS TÃ¢rgu MureÈ™ 1898",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19167.png"
+                  },
+                  {
+                      "id":  2593,
+                      "name":  "Aerostar Bacau",
+                      "country":  "Romania",
+                      "founded":  1977,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2593.png"
+                  },
+                  {
+                      "id":  2579,
+                      "name":  "AFC Hermannstadt",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2579.png"
+                  },
+                  {
+                      "id":  24359,
+                      "name":  "Agigea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24359.png"
+                  },
+                  {
+                      "id":  6841,
+                      "name":  "Agricola Borcea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6841.png"
+                  },
+                  {
+                      "id":  7457,
+                      "name":  "Ajax Botoroaga",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7457.png"
+                  },
+                  {
+                      "id":  6842,
+                      "name":  "Alexandria",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6842.png"
+                  },
+                  {
+                      "id":  21428,
+                      "name":  "Amara",
+                      "country":  "Romania",
+                      "founded":  2011,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21428.png"
+                  },
+                  {
+                      "id":  10911,
+                      "name":  "Apollon Limassol W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10911.png"
+                  },
+                  {
+                      "id":  15971,
+                      "name":  "Arad W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15971.png"
+                  },
+                  {
+                      "id":  24360,
+                      "name":  "ArcuÅŸ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24360.png"
+                  },
+                  {
+                      "id":  19168,
+                      "name":  "ARD Snagov",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19168.png"
+                  },
+                  {
+                      "id":  21663,
+                      "name":  "Ardealul CriÅŸeni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21663.png"
+                  },
+                  {
+                      "id":  2592,
+                      "name":  "Arges Pitesti",
+                      "code":  "ARG",
+                      "country":  "Romania",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2592.png"
+                  },
+                  {
+                      "id":  6843,
+                      "name":  "ArgeÅŸul MihÄƒileÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6843.png"
+                  },
+                  {
+                      "id":  14578,
+                      "name":  "ArieÅŸul Mihai Viteazu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14578.png"
+                  },
+                  {
+                      "id":  7458,
+                      "name":  "ArieÅŸul Turda",
+                      "code":  "TUR",
+                      "country":  "Romania",
+                      "founded":  1907,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7458.png"
+                  },
+                  {
+                      "id":  17209,
+                      "name":  "Armata Aurul Brad",
+                      "country":  "Romania",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17209.png"
+                  },
+                  {
+                      "id":  22202,
+                      "name":  "ARO Muscelul CÃ¢mpulung",
+                      "country":  "Romania",
+                      "founded":  1947,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22202.png"
+                  },
+                  {
+                      "id":  2590,
+                      "name":  "ASA Targu Mures",
+                      "code":  "TAR",
+                      "country":  "Romania",
+                      "founded":  2008,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2590.png"
+                  },
+                  {
+                      "id":  17210,
+                      "name":  "Asalt BucureÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17210.png"
+                  },
+                  {
+                      "id":  16290,
+                      "name":  "Astra II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16290.png"
+                  },
+                  {
+                      "id":  6844,
+                      "name":  "Atletic Bradu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6844.png"
+                  },
+                  {
+                      "id":  24582,
+                      "name":  "Atletic Olimpia Gherla W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24582.png"
+                  },
+                  {
+                      "id":  19169,
+                      "name":  "Atletic United Ploiesti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19169.png"
+                  },
+                  {
+                      "id":  7459,
+                      "name":  "AvÃ¢ntul Periam",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7459.png"
+                  },
+                  {
+                      "id":  21664,
+                      "name":  "AvÃ¢ntul PieleÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21664.png"
+                  },
+                  {
+                      "id":  6846,
+                      "name":  "AvÃ¢ntul Reghin",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6846.png"
+                  },
+                  {
+                      "id":  16282,
+                      "name":  "AvÃ¢ntul Valea MÄƒrului",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16282.png"
+                  },
+                  {
+                      "id":  7460,
+                      "name":  "AvÃ¢ntul ZÄƒrneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7460.png"
+                  },
+                  {
+                      "id":  6845,
+                      "name":  "Avrig",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6845.png"
+                  },
+                  {
+                      "id":  24361,
+                      "name":  "Axi AdunaÈ›ii-CopÄƒceni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24361.png"
+                  },
+                  {
+                      "id":  6847,
+                      "name":  "Axiopolis",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6847.png"
+                  },
+                  {
+                      "id":  24839,
+                      "name":  "Baicoi",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24839.png"
+                  },
+                  {
+                      "id":  27325,
+                      "name":  "Bals",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/27325.png"
+                  },
+                  {
+                      "id":  15963,
+                      "name":  "Banat Girls W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15963.png"
+                  },
+                  {
+                      "id":  7463,
+                      "name":  "BÄƒrÄƒganul CiulniÅ£a",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7463.png"
+                  },
+                  {
+                      "id":  6848,
+                      "name":  "Becicherecu Mic",
+                      "country":  "Romania",
+                      "founded":  2002,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6848.png"
+                  },
+                  {
+                      "id":  20033,
+                      "name":  "Bihor Oradea",
+                      "country":  "Romania",
+                      "founded":  1958,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20033.png"
+                  },
+                  {
+                      "id":  24362,
+                      "name":  "Bihorul BeiuÅŸ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24362.png"
+                  },
+                  {
+                      "id":  14472,
+                      "name":  "Bistrita",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14472.png"
+                  },
+                  {
+                      "id":  7461,
+                      "name":  "Blejoi",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7461.png"
+                  },
+                  {
+                      "id":  7462,
+                      "name":  "Bradu Borca",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7462.png"
+                  },
+                  {
+                      "id":  6849,
+                      "name":  "Bragadiru",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6849.png"
+                  },
+                  {
+                      "id":  10163,
+                      "name":  "Braila",
+                      "code":  "BRA",
+                      "country":  "Romania",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10163.png"
+                  },
+                  {
+                      "id":  17358,
+                      "name":  "BraÈ™ov Steagul RenaÈ™te",
+                      "country":  "Romania",
+                      "founded":  2021,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17358.png"
+                  },
+                  {
+                      "id":  17211,
+                      "name":  "BrÄƒneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17211.png"
+                  },
+                  {
+                      "id":  6850,
+                      "name":  "Bucovina RÄƒdÄƒuÅ£i",
+                      "country":  "Romania",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6850.png"
+                  },
+                  {
+                      "id":  17022,
+                      "name":  "Buzau",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17022.png"
+                  },
+                  {
+                      "id":  15964,
+                      "name":  "Carmen BucureÈ™ti W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15964.png"
+                  },
+                  {
+                      "id":  24843,
+                      "name":  "CeahlÄƒul II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24843.png"
+                  },
+                  {
+                      "id":  6852,
+                      "name":  "CeahlÄƒul Piatra NeamÅ£",
+                      "code":  "CEA",
+                      "country":  "Romania",
+                      "founded":  1919,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6852.png"
+                  },
+                  {
+                      "id":  6853,
+                      "name":  "Cetate Deva",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6853.png"
+                  },
+                  {
+                      "id":  19174,
+                      "name":  "Cetatea",
+                      "country":  "Romania",
+                      "founded":  1962,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19174.png"
+                  },
+                  {
+                      "id":  26674,
+                      "name":  "Cetatea Suceava",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26674.png"
+                  },
+                  {
+                      "id":  2246,
+                      "name":  "CFR 1907 Cluj",
+                      "code":  "CLU",
+                      "country":  "Romania",
+                      "founded":  1907,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2246.png"
+                  },
+                  {
+                      "id":  19658,
+                      "name":  "CFR Cluj II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19658.png"
+                  },
+                  {
+                      "id":  24364,
+                      "name":  "Chimia 1973 R.VÃ¢lcea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24364.png"
+                  },
+                  {
+                      "id":  2586,
+                      "name":  "Chindia Targoviste",
+                      "code":  "TAR",
+                      "country":  "Romania",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2586.png"
+                  },
+                  {
+                      "id":  24841,
+                      "name":  "CIL Blaj",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24841.png"
+                  },
+                  {
+                      "id":  22204,
+                      "name":  "CiucaÅŸ TÄƒrlungeni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22204.png"
+                  },
+                  {
+                      "id":  19171,
+                      "name":  "Codlea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19171.png"
+                  },
+                  {
+                      "id":  24365,
+                      "name":  "Comstar Vaslui",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24365.png"
+                  },
+                  {
+                      "id":  6854,
+                      "name":  "Comuna Recea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6854.png"
+                  },
+                  {
+                      "id":  2580,
+                      "name":  "Concordia",
+                      "code":  "CON",
+                      "country":  "Romania",
+                      "founded":  1957,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2580.png"
+                  },
+                  {
+                      "id":  16285,
+                      "name":  "Concordia Chiajna II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16285.png"
+                  },
+                  {
+                      "id":  16291,
+                      "name":  "Corona BraÅŸov",
+                      "code":  "COR",
+                      "country":  "Romania",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16291.png"
+                  },
+                  {
+                      "id":  20034,
+                      "name":  "Corvinul Hunedoara",
+                      "country":  "Romania",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20034.png"
+                  },
+                  {
+                      "id":  26205,
+                      "name":  "Covurluiul",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26205.png"
+                  },
+                  {
+                      "id":  6855,
+                      "name":  "Cozia CÄƒlimÄƒneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6855.png"
+                  },
+                  {
+                      "id":  6856,
+                      "name":  "Crasna Moftinu Mic",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6856.png"
+                  },
+                  {
+                      "id":  21512,
+                      "name":  "Cristian",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21512.png"
+                  },
+                  {
+                      "id":  7468,
+                      "name":  "CriÅŸul ChiÅŸineu CriÅŸ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7468.png"
+                  },
+                  {
+                      "id":  19172,
+                      "name":  "CriÅŸul SÃ¢ntandrei",
+                      "country":  "Romania",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19172.png"
+                  },
+                  {
+                      "id":  6857,
+                      "name":  "CroaÅ£ia Clocotici",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6857.png"
+                  },
+                  {
+                      "id":  2608,
+                      "name":  "CS Afumati",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2608.png"
+                  },
+                  {
+                      "id":  2601,
+                      "name":  "CS Balotesti",
+                      "code":  "BAL",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2601.png"
+                  },
+                  {
+                      "id":  7464,
+                      "name":  "CS CÃ¢rcea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7464.png"
+                  },
+                  {
+                      "id":  19170,
+                      "name":  "CS Dinamo BucureÈ™ti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19170.png"
+                  },
+                  {
+                      "id":  7465,
+                      "name":  "CS FloreÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7465.png"
+                  },
+                  {
+                      "id":  2602,
+                      "name":  "CS Luceafarul Oradea",
+                      "country":  "Romania",
+                      "founded":  2001,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2602.png"
+                  },
+                  {
+                      "id":  2594,
+                      "name":  "CS Mioveni",
+                      "code":  "DAC",
+                      "country":  "Romania",
+                      "founded":  2000,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2594.png"
+                  },
+                  {
+                      "id":  2615,
+                      "name":  "Cs Soimii Pancota",
+                      "country":  "Romania",
+                      "founded":  1938,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2615.png"
+                  },
+                  {
+                      "id":  16296,
+                      "name":  "CS U Craiova II",
+                      "country":  "Romania",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16296.png"
+                  },
+                  {
+                      "id":  2612,
+                      "name":  "CS Unirea Tarlungeni",
+                      "code":  "TAR",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2612.png"
+                  },
+                  {
+                      "id":  7466,
+                      "name":  "CSA Steaua BucureÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7466.png"
+                  },
+                  {
+                      "id":  6230,
+                      "name":  "Csikszereda",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6230.png"
+                  },
+                  {
+                      "id":  21424,
+                      "name":  "Csikszereda II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21424.png"
+                  },
+                  {
+                      "id":  19903,
+                      "name":  "Csikszereda MC W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19903.png"
+                  },
+                  {
+                      "id":  24363,
+                      "name":  "CSL Nanov",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24363.png"
+                  },
+                  {
+                      "id":  21665,
+                      "name":  "CSM Adjud",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21665.png"
+                  },
+                  {
+                      "id":  14579,
+                      "name":  "CSM BacÄƒu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14579.png"
+                  },
+                  {
+                      "id":  14580,
+                      "name":  "CSM Deva",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14580.png"
+                  },
+                  {
+                      "id":  7467,
+                      "name":  "CSM FC Vaslui",
+                      "country":  "Romania",
+                      "founded":  2014,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7467.png"
+                  },
+                  {
+                      "id":  19847,
+                      "name":  "CSM FeteÈ™ti",
+                      "country":  "Romania",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19847.png"
+                  },
+                  {
+                      "id":  6851,
+                      "name":  "CSM Lugoj",
+                      "country":  "Romania",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6851.png"
+                  },
+                  {
+                      "id":  2616,
+                      "name":  "CSM Ramnicu Valcea",
+                      "code":  "RAM",
+                      "country":  "Romania",
+                      "founded":  2017,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2616.png"
+                  },
+                  {
+                      "id":  6229,
+                      "name":  "CSM ReÅŸiÅ£a",
+                      "country":  "Romania",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6229.png"
+                  },
+                  {
+                      "id":  16279,
+                      "name":  "CSM Satu Mare",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16279.png"
+                  },
+                  {
+                      "id":  26679,
+                      "name":  "CSM Targu Jiu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26679.png"
+                  },
+                  {
+                      "id":  10142,
+                      "name":  "CSMS Iasi",
+                      "country":  "Romania",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10142.png"
+                  },
+                  {
+                      "id":  21666,
+                      "name":  "CSO BoldeÅŸti-ScÄƒeni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21666.png"
+                  },
+                  {
+                      "id":  17657,
+                      "name":  "CSS TÃ¢rgoviÅŸte W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17657.png"
+                  },
+                  {
+                      "id":  6858,
+                      "name":  "Dacia Gepiu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6858.png"
+                  },
+                  {
+                      "id":  2595,
+                      "name":  "Dacia Unirea Braila",
+                      "country":  "Romania",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2595.png"
+                  },
+                  {
+                      "id":  14581,
+                      "name":  "Dante BotoÅŸani",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14581.png"
+                  },
+                  {
+                      "id":  6859,
+                      "name":  "Delta Dobrogea",
+                      "country":  "Romania",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6859.png"
+                  },
+                  {
+                      "id":  19848,
+                      "name":  "Dinamo BacÄƒu",
+                      "country":  "Romania",
+                      "founded":  2017,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19848.png"
+                  },
+                  {
+                      "id":  635,
+                      "name":  "Dinamo Bucuresti",
+                      "code":  "DIN",
+                      "country":  "Romania",
+                      "founded":  1948,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/635.png"
+                  },
+                  {
+                      "id":  16286,
+                      "name":  "Dinamo BucureÅŸti II",
+                      "country":  "Romania",
+                      "founded":  2004,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16286.png"
+                  },
+                  {
+                      "id":  21667,
+                      "name":  "Diosig-BihardiÃ³szeg",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21667.png"
+                  },
+                  {
+                      "id":  24366,
+                      "name":  "DomneÈ™ti AG",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24366.png"
+                  },
+                  {
+                      "id":  6860,
+                      "name":  "DrÄƒgÄƒneÅŸti-VlaÅŸca",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6860.png"
+                  },
+                  {
+                      "id":  7469,
+                      "name":  "DumbrÄƒviÅ£a",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7469.png"
+                  },
+                  {
+                      "id":  7470,
+                      "name":  "Dumitra",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7470.png"
+                  },
+                  {
+                      "id":  19173,
+                      "name":  "Dunarea Calafat",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19173.png"
+                  },
+                  {
+                      "id":  2582,
+                      "name":  "Dunarea Calarasi",
+                      "country":  "Romania",
+                      "founded":  1920,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2582.png"
+                  },
+                  {
+                      "id":  14582,
+                      "name":  "DunÄƒrea 2020 Giurgiu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14582.png"
+                  },
+                  {
+                      "id":  17212,
+                      "name":  "DunÄƒrea CiocÄƒneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17212.png"
+                  },
+                  {
+                      "id":  15966,
+                      "name":  "Fairplay BucureÅŸti W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15966.png"
+                  },
+                  {
+                      "id":  2596,
+                      "name":  "Farul Constanta",
+                      "country":  "Romania",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2596.png"
+                  },
+                  {
+                      "id":  22192,
+                      "name":  "Farul ConstanÅ£a W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22192.png"
+                  },
+                  {
+                      "id":  7472,
+                      "name":  "FÄƒurei",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7472.png"
+                  },
+                  {
+                      "id":  636,
+                      "name":  "FC Astra Giurgiu",
+                      "code":  "AST",
+                      "country":  "Romania",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/636.png"
+                  },
+                  {
+                      "id":  2584,
+                      "name":  "FC Astra II Giurgiu",
+                      "country":  "Romania",
+                      "founded":  1934,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2584.png"
+                  },
+                  {
+                      "id":  22000,
+                      "name":  "FC Bacau",
+                      "country":  "Romania",
+                      "founded":  2023,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22000.png"
+                  },
+                  {
+                      "id":  26675,
+                      "name":  "FC BacÄƒu II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26675.png"
+                  },
+                  {
+                      "id":  2581,
+                      "name":  "FC Botosani",
+                      "code":  "BOT",
+                      "country":  "Romania",
+                      "founded":  1973,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2581.png"
+                  },
+                  {
+                      "id":  2613,
+                      "name":  "FC Brasov",
+                      "code":  "BRA",
+                      "country":  "Romania",
+                      "founded":  1936,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2613.png"
+                  },
+                  {
+                      "id":  2603,
+                      "name":  "FC Clinceni",
+                      "country":  "Romania",
+                      "founded":  2008,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2603.png"
+                  },
+                  {
+                      "id":  26676,
+                      "name":  "FC OÅ£elul II",
+                      "country":  "Romania",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26676.png"
+                  },
+                  {
+                      "id":  2606,
+                      "name":  "FC Politehnica Timisoara",
+                      "country":  "Romania",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2606.png"
+                  },
+                  {
+                      "id":  2578,
+                      "name":  "FC Voluntari",
+                      "country":  "Romania",
+                      "founded":  1949,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2578.png"
+                  },
+                  {
+                      "id":  559,
+                      "name":  "FCSB",
+                      "code":  "STE",
+                      "country":  "Romania",
+                      "founded":  1947,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/559.png"
+                  },
+                  {
+                      "id":  16287,
+                      "name":  "FCSB II",
+                      "country":  "Romania",
+                      "founded":  1947,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16287.png"
+                  },
+                  {
+                      "id":  26817,
+                      "name":  "FCSB U19",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26817.png"
+                  },
+                  {
+                      "id":  21429,
+                      "name":  "FCV Farul ConstanÅ£a II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21429.png"
+                  },
+                  {
+                      "id":  24978,
+                      "name":  "FCV Farul U19",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24978.png"
+                  },
+                  {
+                      "id":  15965,
+                      "name":  "FF Baia Mare W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15965.png"
+                  },
+                  {
+                      "id":  6861,
+                      "name":  "FiliaÅŸi",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6861.png"
+                  },
+                  {
+                      "id":  7471,
+                      "name":  "FlacÄƒra Horezu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7471.png"
+                  },
+                  {
+                      "id":  14583,
+                      "name":  "FlacÄƒra M. KogÄƒlniceanu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14583.png"
+                  },
+                  {
+                      "id":  6862,
+                      "name":  "FlacÄƒra Moreni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6862.png"
+                  },
+                  {
+                      "id":  6863,
+                      "name":  "FocÅŸani",
+                      "country":  "Romania",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6863.png"
+                  },
+                  {
+                      "id":  17213,
+                      "name":  "Foresta Tileagd",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17213.png"
+                  },
+                  {
+                      "id":  6864,
+                      "name":  "Fortuna Becicherecu Mic",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6864.png"
+                  },
+                  {
+                      "id":  15972,
+                      "name":  "Fortuna Becicherecu Mic W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15972.png"
+                  },
+                  {
+                      "id":  19849,
+                      "name":  "Frontiera Curtici",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19849.png"
+                  },
+                  {
+                      "id":  21559,
+                      "name":  "FrÃ½dek-MÃ­stek U19",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21559.png"
+                  },
+                  {
+                      "id":  21668,
+                      "name":  "Gauss BacÄƒu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21668.png"
+                  },
+                  {
+                      "id":  2577,
+                      "name":  "GAZ Metan Medias",
+                      "code":  "MET",
+                      "country":  "Romania",
+                      "founded":  1924,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2577.png"
+                  },
+                  {
+                      "id":  16298,
+                      "name":  "Gaz Metan MediaÅŸ II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16298.png"
+                  },
+                  {
+                      "id":  7473,
+                      "name":  "Gheorgheni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7473.png"
+                  },
+                  {
+                      "id":  6865,
+                      "name":  "Ghiroda ÅŸi Giarmata Vii",
+                      "country":  "Romania",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6865.png"
+                  },
+                  {
+                      "id":  14584,
+                      "name":  "Gilortul",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14584.png"
+                  },
+                  {
+                      "id":  10891,
+                      "name":  "Gintra-Universitetas W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10891.png"
+                  },
+                  {
+                      "id":  19175,
+                      "name":  "Gloria al OraÅŸului Geoag",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19175.png"
+                  },
+                  {
+                      "id":  16283,
+                      "name":  "Gloria AlbeÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16283.png"
+                  },
+                  {
+                      "id":  21430,
+                      "name":  "Gloria BÄƒneasa",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21430.png"
+                  },
+                  {
+                      "id":  17200,
+                      "name":  "Gloria Bistrita",
+                      "code":  "GLO",
+                      "country":  "Romania",
+                      "founded":  1922,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17200.png"
+                  },
+                  {
+                      "id":  22824,
+                      "name":  "Gloria BistriÅ£a",
+                      "country":  "Romania",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22824.png"
+                  },
+                  {
+                      "id":  22191,
+                      "name":  "Gloria BistriÈ›a-NÄƒsÄƒud W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22191.png"
+                  },
+                  {
+                      "id":  6866,
+                      "name":  "Gloria BuzÄƒu",
+                      "code":  "GLO",
+                      "country":  "Romania",
+                      "founded":  1971,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6866.png"
+                  },
+                  {
+                      "id":  6867,
+                      "name":  "Gloria CorneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6867.png"
+                  },
+                  {
+                      "id":  24367,
+                      "name":  "Gloria Fundeni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24367.png"
+                  },
+                  {
+                      "id":  6868,
+                      "name":  "Gloria Lunca Teuz Cermei",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6868.png"
+                  },
+                  {
+                      "id":  24368,
+                      "name":  "Gloria MoÅŸniÅ£a NouÄƒ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24368.png"
+                  },
+                  {
+                      "id":  17214,
+                      "name":  "Golimpiakosz Odorheiu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17214.png"
+                  },
+                  {
+                      "id":  19049,
+                      "name":  "Hajvalia W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19049.png"
+                  },
+                  {
+                      "id":  21669,
+                      "name":  "Hamangia Baia",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21669.png"
+                  },
+                  {
+                      "id":  6870,
+                      "name":  "HÄƒrman",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6870.png"
+                  },
+                  {
+                      "id":  15967,
+                      "name":  "Heniu Prundu BÃ¢rgÄƒului W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15967.png"
+                  },
+                  {
+                      "id":  16299,
+                      "name":  "Hermannstadt II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16299.png"
+                  },
+                  {
+                      "id":  24583,
+                      "name":  "Hermannstadt W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24583.png"
+                  },
+                  {
+                      "id":  26680,
+                      "name":  "Hidro Mecanica Sugag",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26680.png"
+                  },
+                  {
+                      "id":  6869,
+                      "name":  "Hunedoara",
+                      "country":  "Romania",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6869.png"
+                  },
+                  {
+                      "id":  14585,
+                      "name":  "HuÈ™ana HuÈ™i",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14585.png"
+                  },
+                  {
+                      "id":  19176,
+                      "name":  "Iazu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19176.png"
+                  },
+                  {
+                      "id":  6871,
+                      "name":  "Iernut",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6871.png"
+                  },
+                  {
+                      "id":  6872,
+                      "name":  "Industria Galda de Jos",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6872.png"
+                  },
+                  {
+                      "id":  21433,
+                      "name":  "Ineu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21433.png"
+                  },
+                  {
+                      "id":  17215,
+                      "name":  "Inizio FocÅŸani",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17215.png"
+                  },
+                  {
+                      "id":  17216,
+                      "name":  "Inter Aninoasa",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17216.png"
+                  },
+                  {
+                      "id":  19177,
+                      "name":  "Inter CÃ¢mpulung",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19177.png"
+                  },
+                  {
+                      "id":  7474,
+                      "name":  "Inter Petrila",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7474.png"
+                  },
+                  {
+                      "id":  26845,
+                      "name":  "Inter Sibiu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26845.png"
+                  },
+                  {
+                      "id":  6873,
+                      "name":  "InternaÅ£ional BÄƒleÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6873.png"
+                  },
+                  {
+                      "id":  21670,
+                      "name":  "Iris Titulescu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21670.png"
+                  },
+                  {
+                      "id":  6874,
+                      "name":  "IzbÃ¢nda Hagilarea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6874.png"
+                  },
+                  {
+                      "id":  6932,
+                      "name":  "ÃŽnainte Modelu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6932.png"
+                  },
+                  {
+                      "id":  14599,
+                      "name":  "ÃŽnfrÄƒÅ£irea Jilavele",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14599.png"
+                  },
+                  {
+                      "id":  14586,
+                      "name":  "Jiul PetroÅŸani",
+                      "country":  "Romania",
+                      "founded":  1919,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14586.png"
+                  },
+                  {
+                      "id":  14587,
+                      "name":  "Jiul Rovinari",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14587.png"
+                  },
+                  {
+                      "id":  17217,
+                      "name":  "Juniorul Suceava",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17217.png"
+                  },
+                  {
+                      "id":  2587,
+                      "name":  "Juventus Bucuresti",
+                      "code":  "JUV",
+                      "country":  "Romania",
+                      "founded":  1992,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2587.png"
+                  },
+                  {
+                      "id":  16292,
+                      "name":  "Kids TÃ¢mpa BraÅŸov",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16292.png"
+                  },
+                  {
+                      "id":  17218,
+                      "name":  "Kinder SÃ¢ngeorgiu de Mur",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17218.png"
+                  },
+                  {
+                      "id":  17658,
+                      "name":  "Ladies TÃ¢rgu MureÅŸ W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17658.png"
+                  },
+                  {
+                      "id":  17220,
+                      "name":  "LÄƒpuÅŸ R",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17220.png"
+                  },
+                  {
+                      "id":  23382,
+                      "name":  "LPS HD Clinceni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/23382.png"
+                  },
+                  {
+                      "id":  17219,
+                      "name":  "Luceafarul Lotus",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17219.png"
+                  },
+                  {
+                      "id":  21671,
+                      "name":  "LuceafÄƒrul Trestieni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21671.png"
+                  },
+                  {
+                      "id":  24370,
+                      "name":  "Lupii Profa",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24370.png"
+                  },
+                  {
+                      "id":  21672,
+                      "name":  "Magica Balta",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21672.png"
+                  },
+                  {
+                      "id":  7476,
+                      "name":  "Mausoleul MÄƒrÄƒÅŸeÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7476.png"
+                  },
+                  {
+                      "id":  17221,
+                      "name":  "Maxima Hobaia",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17221.png"
+                  },
+                  {
+                      "id":  7481,
+                      "name":  "MÄƒgura CisnÄƒdie",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7481.png"
+                  },
+                  {
+                      "id":  7477,
+                      "name":  "Medgidia",
+                      "country":  "Romania",
+                      "founded":  1983,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7477.png"
+                  },
+                  {
+                      "id":  22258,
+                      "name":  "Medyk Konin W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22258.png"
+                  },
+                  {
+                      "id":  2604,
+                      "name":  "Metaloglobus",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2604.png"
+                  },
+                  {
+                      "id":  6875,
+                      "name":  "Metalul BuzÄƒu",
+                      "country":  "Romania",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6875.png"
+                  },
+                  {
+                      "id":  6876,
+                      "name":  "Metalurgistul Cugir",
+                      "country":  "Romania",
+                      "founded":  1939,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6876.png"
+                  },
+                  {
+                      "id":  7478,
+                      "name":  "Mihai Bravu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7478.png"
+                  },
+                  {
+                      "id":  6877,
+                      "name":  "Millenium Giarmata",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6877.png"
+                  },
+                  {
+                      "id":  6878,
+                      "name":  "Minaur Baia Mare",
+                      "country":  "Romania",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6878.png"
+                  },
+                  {
+                      "id":  7479,
+                      "name":  "Minerul CosteÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7479.png"
+                  },
+                  {
+                      "id":  24371,
+                      "name":  "Minerul Lupeni",
+                      "country":  "Romania",
+                      "founded":  1920,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24371.png"
+                  },
+                  {
+                      "id":  19850,
+                      "name":  "Minerul Ocna Dej",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19850.png"
+                  },
+                  {
+                      "id":  21673,
+                      "name":  "Minerul Rodna",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21673.png"
+                  },
+                  {
+                      "id":  17222,
+                      "name":  "Moldova CristeÈ™ti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17222.png"
+                  },
+                  {
+                      "id":  6879,
+                      "name":  "MostiÅŸtea Ulmu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6879.png"
+                  },
+                  {
+                      "id":  7475,
+                      "name":  "MSE TÃ¢rgu MureÅŸ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7475.png"
+                  },
+                  {
+                      "id":  7480,
+                      "name":  "Municipal BraÅŸov",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7480.png"
+                  },
+                  {
+                      "id":  6880,
+                      "name":  "MureÅŸul RuÅŸii-MunÅ£i",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6880.png"
+                  },
+                  {
+                      "id":  20831,
+                      "name":  "Muscelul CÃ¢mpulung Elite",
+                      "country":  "Romania",
+                      "founded":  2022,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/20831.png"
+                  },
+                  {
+                      "id":  6881,
+                      "name":  "NaÅ£ional SebiÅŸ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6881.png"
+                  },
+                  {
+                      "id":  17224,
+                      "name":  "NÄƒvodari",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17224.png"
+                  },
+                  {
+                      "id":  6882,
+                      "name":  "Nemere GhelinÅ£a",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6882.png"
+                  },
+                  {
+                      "id":  19178,
+                      "name":  "Nera BogodinÅ£i",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19178.png"
+                  },
+                  {
+                      "id":  17223,
+                      "name":  "Nera Bozovici",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17223.png"
+                  },
+                  {
+                      "id":  10897,
+                      "name":  "NSA Sofia W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10897.png"
+                  },
+                  {
+                      "id":  7482,
+                      "name":  "Ocna MureÈ™",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7482.png"
+                  },
+                  {
+                      "id":  6883,
+                      "name":  "Odorheiu Secuiesc",
+                      "country":  "Romania",
+                      "founded":  2007,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6883.png"
+                  },
+                  {
+                      "id":  10899,
+                      "name":  "Olimpia Cluj W",
+                      "country":  "Romania",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10899.png"
+                  },
+                  {
+                      "id":  22209,
+                      "name":  "Olimpia MCMXXI",
+                      "country":  "Romania",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22209.png"
+                  },
+                  {
+                      "id":  2609,
+                      "name":  "Olimpia Satu Mare",
+                      "code":  "SAT",
+                      "country":  "Romania",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2609.png"
+                  },
+                  {
+                      "id":  6884,
+                      "name":  "Olimpic Cetate",
+                      "country":  "Romania",
+                      "founded":  1930,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6884.png"
+                  },
+                  {
+                      "id":  14588,
+                      "name":  "Olimpic ZÄƒrneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14588.png"
+                  },
+                  {
+                      "id":  6885,
+                      "name":  "OlteniÅ£a",
+                      "country":  "Romania",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6885.png"
+                  },
+                  {
+                      "id":  19179,
+                      "name":  "Oltul CurtiÅŸoara",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19179.png"
+                  },
+                  {
+                      "id":  6886,
+                      "name":  "OÅ£elul",
+                      "code":  "OTE",
+                      "country":  "Romania",
+                      "founded":  1964,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6886.png"
+                  },
+                  {
+                      "id":  14589,
+                      "name":  "Ozana TÃ¢rgu NeamÅ£",
+                      "country":  "Romania",
+                      "founded":  1974,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14589.png"
+                  },
+                  {
+                      "id":  2591,
+                      "name":  "Pandurii TG JIU",
+                      "code":  "PAN",
+                      "country":  "Romania",
+                      "founded":  1963,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2591.png"
+                  },
+                  {
+                      "id":  10915,
+                      "name":  "PAOK W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10915.png"
+                  },
+                  {
+                      "id":  6887,
+                      "name":  "PaÅŸcani",
+                      "code":  "PAS",
+                      "country":  "Romania",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6887.png"
+                  },
+                  {
+                      "id":  7485,
+                      "name":  "PÄƒpÄƒuÅ£i",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7485.png"
+                  },
+                  {
+                      "id":  6894,
+                      "name":  "PÄƒuleÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6894.png"
+                  },
+                  {
+                      "id":  24374,
+                      "name":  "PÄƒuliÅŸana PÄƒuliÅŸ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24374.png"
+                  },
+                  {
+                      "id":  26201,
+                      "name":  "PÄƒuÈ™eÈ™ti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26201.png"
+                  },
+                  {
+                      "id":  22206,
+                      "name":  "Peciu Nou",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22206.png"
+                  },
+                  {
+                      "id":  6888,
+                      "name":  "PerformanÈ›a Ighiu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6888.png"
+                  },
+                  {
+                      "id":  6889,
+                      "name":  "PescÄƒruÅŸul Sarichioi",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6889.png"
+                  },
+                  {
+                      "id":  6890,
+                      "name":  "Petrofac Å¢icleni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6890.png"
+                  },
+                  {
+                      "id":  24844,
+                      "name":  "Petrolul 52 II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24844.png"
+                  },
+                  {
+                      "id":  17225,
+                      "name":  "Petrolul 95",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17225.png"
+                  },
+                  {
+                      "id":  2598,
+                      "name":  "Petrolul Ploiesti",
+                      "code":  "PET",
+                      "country":  "Romania",
+                      "founded":  1924,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2598.png"
+                  },
+                  {
+                      "id":  16297,
+                      "name":  "Petrolul Potcoava",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16297.png"
+                  },
+                  {
+                      "id":  21434,
+                      "name":  "Phoenix BuziaÈ™",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21434.png"
+                  },
+                  {
+                      "id":  17226,
+                      "name":  "Phoenix PoÅŸta CÃ¢lnÄƒu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17226.png"
+                  },
+                  {
+                      "id":  16293,
+                      "name":  "Plopeni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16293.png"
+                  },
+                  {
+                      "id":  14590,
+                      "name":  "Pobeda StÃ¡r BiÅ¡nov",
+                      "country":  "Romania",
+                      "founded":  1927,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14590.png"
+                  },
+                  {
+                      "id":  24372,
+                      "name":  "PogÄƒceaua",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24372.png"
+                  },
+                  {
+                      "id":  2583,
+                      "name":  "Politehnica Iasi",
+                      "code":  "CSM",
+                      "country":  "Romania",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2583.png"
+                  },
+                  {
+                      "id":  6891,
+                      "name":  "PopeÈ™ti-Leordeni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6891.png"
+                  },
+                  {
+                      "id":  14591,
+                      "name":  "Poseidon 2 Mai",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14591.png"
+                  },
+                  {
+                      "id":  26206,
+                      "name":  "Prima",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26206.png"
+                  },
+                  {
+                      "id":  17145,
+                      "name":  "Progresul Bucuresti",
+                      "country":  "Romania",
+                      "founded":  1944,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17145.png"
+                  },
+                  {
+                      "id":  16300,
+                      "name":  "Progresul EzeriÈ™",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16300.png"
+                  },
+                  {
+                      "id":  19180,
+                      "name":  "Progresul Fundulea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19180.png"
+                  },
+                  {
+                      "id":  24373,
+                      "name":  "Progresul Isaccea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24373.png"
+                  },
+                  {
+                      "id":  26677,
+                      "name":  "Progresul Mogosoaia",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26677.png"
+                  },
+                  {
+                      "id":  7483,
+                      "name":  "Progresul Pecica",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7483.png"
+                  },
+                  {
+                      "id":  6892,
+                      "name":  "Progresul Spartac",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6892.png"
+                  },
+                  {
+                      "id":  7484,
+                      "name":  "Progresul ÅžomcuÅ£a Mare",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7484.png"
+                  },
+                  {
+                      "id":  6893,
+                      "name":  "Pucioasa",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6893.png"
+                  },
+                  {
+                      "id":  6231,
+                      "name":  "Rapid",
+                      "code":  "RAP",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6231.png"
+                  },
+                  {
+                      "id":  21425,
+                      "name":  "Rapid Brodoc",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21425.png"
+                  },
+                  {
+                      "id":  21674,
+                      "name":  "Rapid Buzescu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21674.png"
+                  },
+                  {
+                      "id":  16288,
+                      "name":  "Rapid II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16288.png"
+                  },
+                  {
+                      "id":  6895,
+                      "name":  "Rapid Jibou",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6895.png"
+                  },
+                  {
+                      "id":  26207,
+                      "name":  "RÄƒuceÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26207.png"
+                  },
+                  {
+                      "id":  6897,
+                      "name":  "RÃ¢mnicu SÄƒrat",
+                      "country":  "Romania",
+                      "founded":  1966,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6897.png"
+                  },
+                  {
+                      "id":  7486,
+                      "name":  "Real Bradu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7486.png"
+                  },
+                  {
+                      "id":  19181,
+                      "name":  "Recolta Danceu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19181.png"
+                  },
+                  {
+                      "id":  19182,
+                      "name":  "Recolta DorolÈ›",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19182.png"
+                  },
+                  {
+                      "id":  14592,
+                      "name":  "Recolta Gheorghe Doja",
+                      "country":  "Romania",
+                      "founded":  2002,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14592.png"
+                  },
+                  {
+                      "id":  7487,
+                      "name":  "Recolta Gura ÅžuÅ£ii",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7487.png"
+                  },
+                  {
+                      "id":  21431,
+                      "name":  "Retezatul HaÅ£eg",
+                      "country":  "Romania",
+                      "founded":  1946,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21431.png"
+                  },
+                  {
+                      "id":  2597,
+                      "name":  "Ripensia Timisoara",
+                      "code":  "RIP",
+                      "country":  "Romania",
+                      "founded":  1928,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2597.png"
+                  },
+                  {
+                      "id":  19183,
+                      "name":  "Roberto Ziduri",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19183.png"
+                  },
+                  {
+                      "id":  6896,
+                      "name":  "Roman",
+                      "country":  "Romania",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6896.png"
+                  },
+                  {
+                      "id":  774,
+                      "name":  "Romania",
+                      "code":  "ROM",
+                      "country":  "Romania",
+                      "founded":  1909,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/774.png"
+                  },
+                  {
+                      "id":  22725,
+                      "name":  "Romania U16",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22725.png"
+                  },
+                  {
+                      "id":  17973,
+                      "name":  "Romania U17",
+                      "country":  "Romania",
+                      "founded":  1909,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/17973.png"
+                  },
+                  {
+                      "id":  21477,
+                      "name":  "Romania U18",
+                      "country":  "Romania",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/21477.png"
+                  },
+                  {
+                      "id":  10378,
+                      "name":  "Romania U19",
+                      "code":  "ROM",
+                      "country":  "Romania",
+                      "founded":  1909,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/10378.png"
+                  },
+                  {
+                      "id":  18180,
+                      "name":  "Romania U20",
+                      "country":  "Romania",
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/18180.png"
+                  },
+                  {
+                      "id":  8218,
+                      "name":  "Romania U21",
+                      "code":  "ROM",
+                      "country":  "Romania",
+                      "founded":  1909,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/8218.png"
+                  },
+                  {
+                      "id":  16622,
+                      "name":  "Romania U23",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16622.png"
+                  },
+                  {
+                      "id":  1745,
+                      "name":  "Romania W",
+                      "country":  "Romania",
+                      "founded":  1909,
+                      "national":  true,
+                      "logo":  "https://media.api-sports.io/football/teams/1745.png"
+                  },
+                  {
+                      "id":  24375,
+                      "name":  "Rovine",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24375.png"
+                  },
+                  {
+                      "id":  6905,
+                      "name":  "SÄƒcele",
+                      "country":  "Romania",
+                      "founded":  1949,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6905.png"
+                  },
+                  {
+                      "id":  6906,
+                      "name":  "SÄƒnÄƒtatea Cluj",
+                      "code":  "SAN",
+                      "country":  "Romania",
+                      "founded":  1986,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6906.png"
+                  },
+                  {
+                      "id":  6907,
+                      "name":  "SÄƒnÄƒtatea Darabani",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6907.png"
+                  },
+                  {
+                      "id":  26202,
+                      "name":  "SÃ¢nandrei",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26202.png"
+                  },
+                  {
+                      "id":  7490,
+                      "name":  "SÃ¢nmartin",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7490.png"
+                  },
+                  {
+                      "id":  6232,
+                      "name":  "SCM Gloria BuzÄƒu",
+                      "country":  "Romania",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6232.png"
+                  },
+                  {
+                      "id":  7488,
+                      "name":  "SCM ZalÄƒu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7488.png"
+                  },
+                  {
+                      "id":  15968,
+                      "name":  "Selena ConstanÅ£a W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15968.png"
+                  },
+                  {
+                      "id":  16294,
+                      "name":  "Sepsi II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16294.png"
+                  },
+                  {
+                      "id":  2585,
+                      "name":  "Sepsi OSK Sfantu Gheorghe",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2585.png"
+                  },
+                  {
+                      "id":  14593,
+                      "name":  "Sighetu MarmaÅ£iei",
+                      "country":  "Romania",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14593.png"
+                  },
+                  {
+                      "id":  24376,
+                      "name":  "Silvicultorul Maieru",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24376.png"
+                  },
+                  {
+                      "id":  16280,
+                      "name":  "SJ Vaslui",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16280.png"
+                  },
+                  {
+                      "id":  6898,
+                      "name":  "Slatina",
+                      "country":  "Romania",
+                      "founded":  1919,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6898.png"
+                  },
+                  {
+                      "id":  22207,
+                      "name":  "Socodor",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22207.png"
+                  },
+                  {
+                      "id":  24840,
+                      "name":  "Soimii Gura Humorului",
+                      "country":  "Romania",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24840.png"
+                  },
+                  {
+                      "id":  16281,
+                      "name":  "SomeÅŸul Dej",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16281.png"
+                  },
+                  {
+                      "id":  19134,
+                      "name":  "SomeÅŸul Feldru",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19134.png"
+                  },
+                  {
+                      "id":  24377,
+                      "name":  "SomeÅŸul SomeÅŸ-Odorhei",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24377.png"
+                  },
+                  {
+                      "id":  17227,
+                      "name":  "Sparta RÃ¢mnicu VÃ¢lcea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17227.png"
+                  },
+                  {
+                      "id":  21675,
+                      "name":  "Speed Academy",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21675.png"
+                  },
+                  {
+                      "id":  24845,
+                      "name":  "Sport Team BucureÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24845.png"
+                  },
+                  {
+                      "id":  6899,
+                      "name":  "Sporting LieÅŸti",
+                      "code":  "SPO",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6899.png"
+                  },
+                  {
+                      "id":  6900,
+                      "name":  "Sporting RoÅŸiori",
+                      "country":  "Romania",
+                      "founded":  2008,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6900.png"
+                  },
+                  {
+                      "id":  17228,
+                      "name":  "Sportul Beclean",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17228.png"
+                  },
+                  {
+                      "id":  6901,
+                      "name":  "Sportul Chiscani",
+                      "country":  "Romania",
+                      "founded":  2011,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6901.png"
+                  },
+                  {
+                      "id":  6902,
+                      "name":  "Sportul CiorÄƒÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6902.png"
+                  },
+                  {
+                      "id":  6903,
+                      "name":  "Sportul PetreÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6903.png"
+                  },
+                  {
+                      "id":  2605,
+                      "name":  "Sportul Snagov",
+                      "code":  "MET",
+                      "country":  "Romania",
+                      "founded":  2010,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2605.png"
+                  },
+                  {
+                      "id":  14594,
+                      "name":  "Sportul Åžimleu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14594.png"
+                  },
+                  {
+                      "id":  6233,
+                      "name":  "SSC Farul",
+                      "code":  "FAR",
+                      "country":  "Romania",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6233.png"
+                  },
+                  {
+                      "id":  17659,
+                      "name":  "SSU Poli TimiÅŸoara W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17659.png"
+                  },
+                  {
+                      "id":  21676,
+                      "name":  "StÄƒruinÈ›a Zagon",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21676.png"
+                  },
+                  {
+                      "id":  17229,
+                      "name":  "Steagu RoÅŸu BraÅŸov",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17229.png"
+                  },
+                  {
+                      "id":  6904,
+                      "name":  "Sticla ArieÅŸul Turda",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6904.png"
+                  },
+                  {
+                      "id":  2610,
+                      "name":  "Stiinta Miroslava",
+                      "country":  "Romania",
+                      "founded":  2009,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2610.png"
+                  },
+                  {
+                      "id":  7489,
+                      "name":  "Strehaia",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7489.png"
+                  },
+                  {
+                      "id":  19184,
+                      "name":  "Supporter",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19184.png"
+                  },
+                  {
+                      "id":  6933,
+                      "name":  "È˜oimii Lipova",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6933.png"
+                  },
+                  {
+                      "id":  7498,
+                      "name":  "Åžomuz FÄƒlticeni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7498.png"
+                  },
+                  {
+                      "id":  21686,
+                      "name":  "ÅžtefÄƒneÅŸti",
+                      "country":  "Romania",
+                      "founded":  1997,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21686.png"
+                  },
+                  {
+                      "id":  17232,
+                      "name":  "ÅžtiinÅ£a Beltiug",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17232.png"
+                  },
+                  {
+                      "id":  24385,
+                      "name":  "È˜tiinÈ›a BucureÈ™ti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24385.png"
+                  },
+                  {
+                      "id":  6909,
+                      "name":  "TÃ¢rgu Secuiesc",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6909.png"
+                  },
+                  {
+                      "id":  21677,
+                      "name":  "Team SÄƒgeata",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21677.png"
+                  },
+                  {
+                      "id":  24842,
+                      "name":  "TimiÅŸul Åžag",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24842.png"
+                  },
+                  {
+                      "id":  22203,
+                      "name":  "Tricolorul Breaza",
+                      "country":  "Romania",
+                      "founded":  1971,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22203.png"
+                  },
+                  {
+                      "id":  6908,
+                      "name":  "Tunari",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6908.png"
+                  },
+                  {
+                      "id":  19185,
+                      "name":  "Turceni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19185.png"
+                  },
+                  {
+                      "id":  6234,
+                      "name":  "Turris-Oltul T. MÄƒgurele",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6234.png"
+                  },
+                  {
+                      "id":  6910,
+                      "name":  "U Craiova 1948",
+                      "country":  "Romania",
+                      "founded":  2017,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6910.png"
+                  },
+                  {
+                      "id":  22205,
+                      "name":  "U Craiova 1948 II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22205.png"
+                  },
+                  {
+                      "id":  6911,
+                      "name":  "Unirea Alba Iulia",
+                      "country":  "Romania",
+                      "founded":  1924,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6911.png"
+                  },
+                  {
+                      "id":  24584,
+                      "name":  "Unirea Alba Iulia W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24584.png"
+                  },
+                  {
+                      "id":  19130,
+                      "name":  "Unirea BacÄƒu",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19130.png"
+                  },
+                  {
+                      "id":  6912,
+                      "name":  "Unirea Bascov",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6912.png"
+                  },
+                  {
+                      "id":  19186,
+                      "name":  "Unirea BraniÅŸtea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19186.png"
+                  },
+                  {
+                      "id":  17136,
+                      "name":  "Unirea ConstanÈ›a",
+                      "country":  "Romania",
+                      "founded":  2021,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17136.png"
+                  },
+                  {
+                      "id":  6913,
+                      "name":  "Unirea Cristuru Secuiesc",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6913.png"
+                  },
+                  {
+                      "id":  7491,
+                      "name":  "Unirea CruÅŸeÅ£",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7491.png"
+                  },
+                  {
+                      "id":  21679,
+                      "name":  "Unirea CurteÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21679.png"
+                  },
+                  {
+                      "id":  6914,
+                      "name":  "Unirea Dej",
+                      "country":  "Romania",
+                      "founded":  1921,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6914.png"
+                  },
+                  {
+                      "id":  26681,
+                      "name":  "Unirea DMO",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26681.png"
+                  },
+                  {
+                      "id":  6915,
+                      "name":  "Unirea MirceÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6915.png"
+                  },
+                  {
+                      "id":  26682,
+                      "name":  "Unirea SÃ¢ntana",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26682.png"
+                  },
+                  {
+                      "id":  6916,
+                      "name":  "Unirea Slobozia",
+                      "code":  "SLO",
+                      "country":  "Romania",
+                      "founded":  2004,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6916.png"
+                  },
+                  {
+                      "id":  6917,
+                      "name":  "Unirea TÄƒÈ™nad",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6917.png"
+                  },
+                  {
+                      "id":  7492,
+                      "name":  "Unirea Ungheni",
+                      "code":  "FCU",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7492.png"
+                  },
+                  {
+                      "id":  14595,
+                      "name":  "Unirea Urziceni",
+                      "code":  "VOL",
+                      "country":  "Romania",
+                      "founded":  1954,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14595.png"
+                  },
+                  {
+                      "id":  14596,
+                      "name":  "Universitatea Alba Iulia",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14596.png"
+                  },
+                  {
+                      "id":  15969,
+                      "name":  "Universitatea Alexandria W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15969.png"
+                  },
+                  {
+                      "id":  2599,
+                      "name":  "Universitatea Cluj",
+                      "code":  "UNI",
+                      "country":  "Romania",
+                      "founded":  2016,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2599.png"
+                  },
+                  {
+                      "id":  632,
+                      "name":  "Universitatea Craiova",
+                      "code":  "UNI",
+                      "country":  "Romania",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/632.png"
+                  },
+                  {
+                      "id":  17230,
+                      "name":  "Universitatea de Vest",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17230.png"
+                  },
+                  {
+                      "id":  6918,
+                      "name":  "Universitatea GalaÅ£i",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6918.png"
+                  },
+                  {
+                      "id":  15973,
+                      "name":  "Universitatea GalaÅ£i W",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15973.png"
+                  },
+                  {
+                      "id":  24379,
+                      "name":  "Urban Titu",
+                      "country":  "Romania",
+                      "founded":  2005,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24379.png"
+                  },
+                  {
+                      "id":  21678,
+                      "name":  "USV IaÅŸi",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21678.png"
+                  },
+                  {
+                      "id":  2589,
+                      "name":  "Uta Arad",
+                      "code":  "ARA",
+                      "country":  "Romania",
+                      "founded":  2013,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/2589.png"
+                  },
+                  {
+                      "id":  26208,
+                      "name":  "Valenii de Munte",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26208.png"
+                  },
+                  {
+                      "id":  15970,
+                      "name":  "Vasas Femina W",
+                      "country":  "Romania",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/15970.png"
+                  },
+                  {
+                      "id":  10699,
+                      "name":  "Vaslui",
+                      "code":  "VAS",
+                      "country":  "Romania",
+                      "founded":  2002,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/10699.png"
+                  },
+                  {
+                      "id":  24384,
+                      "name":  "VÃ¢rfu CÃ¢mpului",
+                      "country":  "Romania",
+                      "founded":  2018,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24384.png"
+                  },
+                  {
+                      "id":  7493,
+                      "name":  "VediÅ£a ColoneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7493.png"
+                  },
+                  {
+                      "id":  21426,
+                      "name":  "Victoria Carei",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21426.png"
+                  },
+                  {
+                      "id":  7494,
+                      "name":  "Victoria CumpÄƒna",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7494.png"
+                  },
+                  {
+                      "id":  19187,
+                      "name":  "Victoria Felnac",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19187.png"
+                  },
+                  {
+                      "id":  14597,
+                      "name":  "Victoria GugeÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14597.png"
+                  },
+                  {
+                      "id":  19132,
+                      "name":  "Victoria LeÅ£cani",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19132.png"
+                  },
+                  {
+                      "id":  6919,
+                      "name":  "Victoria Traian",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6919.png"
+                  },
+                  {
+                      "id":  6920,
+                      "name":  "Victoria ZÄƒbrani",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6920.png"
+                  },
+                  {
+                      "id":  6921,
+                      "name":  "Viitorul AlbeÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6921.png"
+                  },
+                  {
+                      "id":  21680,
+                      "name":  "Viitorul Arad",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21680.png"
+                  },
+                  {
+                      "id":  6922,
+                      "name":  "Viitorul Axintele",
+                      "code":  "AXI",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6922.png"
+                  },
+                  {
+                      "id":  19851,
+                      "name":  "Viitorul Cluj",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19851.png"
+                  },
+                  {
+                      "id":  570,
+                      "name":  "Viitorul Constanta",
+                      "code":  "VII",
+                      "country":  "Romania",
+                      "founded":  2004,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/570.png"
+                  },
+                  {
+                      "id":  16284,
+                      "name":  "Viitorul ConstanÅ£a II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16284.png"
+                  },
+                  {
+                      "id":  19133,
+                      "name":  "Viitorul Darabani",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/19133.png"
+                  },
+                  {
+                      "id":  14598,
+                      "name":  "Viitorul DÄƒeÈ™ti",
+                      "country":  "Romania",
+                      "founded":  1976,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14598.png"
+                  },
+                  {
+                      "id":  6924,
+                      "name":  "Viitorul DomneÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6924.png"
+                  },
+                  {
+                      "id":  6925,
+                      "name":  "Viitorul Ianca",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6925.png"
+                  },
+                  {
+                      "id":  21681,
+                      "name":  "Viitorul Ileana",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21681.png"
+                  },
+                  {
+                      "id":  6926,
+                      "name":  "Viitorul Liteni",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6926.png"
+                  },
+                  {
+                      "id":  6923,
+                      "name":  "Viitorul Onesti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6923.png"
+                  },
+                  {
+                      "id":  24381,
+                      "name":  "Viitorul SÃ¢ntimbru",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24381.png"
+                  },
+                  {
+                      "id":  24380,
+                      "name":  "Viitorul Severin",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24380.png"
+                  },
+                  {
+                      "id":  6927,
+                      "name":  "Viitorul ÅželimbÄƒr",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6927.png"
+                  },
+                  {
+                      "id":  6928,
+                      "name":  "Viitorul Åžimian",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6928.png"
+                  },
+                  {
+                      "id":  22201,
+                      "name":  "Viitorul ÅžuÅ£eÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/22201.png"
+                  },
+                  {
+                      "id":  21432,
+                      "name":  "Viitorul TÃ¢rgu Jiu II",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21432.png"
+                  },
+                  {
+                      "id":  26678,
+                      "name":  "VoinÈ›a Crevedia",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26678.png"
+                  },
+                  {
+                      "id":  21682,
+                      "name":  "VoinÅ£a Cudalbi",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21682.png"
+                  },
+                  {
+                      "id":  24382,
+                      "name":  "VoinÅ£a Ion CreangÄƒ",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24382.png"
+                  },
+                  {
+                      "id":  6929,
+                      "name":  "VoinÅ£a Lanurile",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6929.png"
+                  },
+                  {
+                      "id":  21427,
+                      "name":  "VoinÈ›a LimpeziÈ™",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21427.png"
+                  },
+                  {
+                      "id":  26203,
+                      "name":  "VoinÅ£a Livezile",
+                      "country":  "Romania",
+                      "founded":  0,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/26203.png"
+                  },
+                  {
+                      "id":  7495,
+                      "name":  "VoinÅ£a Lupac",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7495.png"
+                  },
+                  {
+                      "id":  21683,
+                      "name":  "VoinÅ£a MaÅŸloc",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21683.png"
+                  },
+                  {
+                      "id":  7496,
+                      "name":  "VoinÅ£a StremÅ£",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7496.png"
+                  },
+                  {
+                      "id":  6930,
+                      "name":  "VoinÅ£a Turnu MÄƒgurele",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6930.png"
+                  },
+                  {
+                      "id":  16289,
+                      "name":  "Voluntari II",
+                      "country":  "Romania",
+                      "founded":  2012,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/16289.png"
+                  },
+                  {
+                      "id":  6931,
+                      "name":  "VultureÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/6931.png"
+                  },
+                  {
+                      "id":  21684,
+                      "name":  "Vulturii FÄƒrcÄƒÅŸeÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21684.png"
+                  },
+                  {
+                      "id":  7497,
+                      "name":  "Vulturii PasÄƒrea",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/7497.png"
+                  },
+                  {
+                      "id":  24383,
+                      "name":  "Vulturul MÄƒgireÅŸti",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/24383.png"
+                  },
+                  {
+                      "id":  21685,
+                      "name":  "Vulturul Mintiu Gherlii",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/21685.png"
+                  },
+                  {
+                      "id":  14541,
+                      "name":  "Zalau",
+                      "country":  "Romania",
+                      "founded":  2005,
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/14541.png"
+                  },
+                  {
+                      "id":  17231,
+                      "name":  "Zimbrul Slobozia Conachi",
+                      "country":  "Romania",
+                      "national":  false,
+                      "logo":  "https://media.api-sports.io/football/teams/17231.png"
+                  }
+              ]
+}

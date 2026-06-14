@@ -18,7 +18,7 @@ services:
   migrator:
     build:
       context: .
-      dockerfile: src/GlobalScout/GlobalScout.Migrator/Dockerfile
+      dockerfile: src/api/GlobalScout.Migrator/Dockerfile
     environment:
       ConnectionStrings__globalscout: "Host=postgres;Port=5432;Database=${POSTGRES_DB:-globalscout};Username=${POSTGRES_USER:-postgres};Password=${POSTGRES_PASSWORD:-postgres}"
     depends_on:
@@ -29,7 +29,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: src/GlobalScout/GlobalScout.Api/Dockerfile
+      dockerfile: src/api/GlobalScout.Api/Dockerfile
     environment:
       ASPNETCORE_ENVIRONMENT: Production
       ASPNETCORE_URLS: http://+:8080
@@ -38,6 +38,8 @@ services:
       Jwt__Issuer: ${JWT_ISSUER:-GlobalScout}
       Jwt__Audience: ${JWT_AUDIENCE:-GlobalScout}
       Jwt__SigningKey: ${JWT_SIGNING_KEY:-LocalDockerSigningKey_ChangeMe_Use32CharsMin!!}
+      AdminSeed__Email: ${AdminSeed__Email:-}
+      AdminSeed__Password: ${AdminSeed__Password:-}
       AvatarStorage__PhysicalAvatarsDirectory: /app/wwwroot/uploads/avatars
       VideoStorage__PhysicalVideosDirectory: /app/wwwroot/uploads/videos
       Stripe__PublicAppBaseUrl: ${PUBLIC_APP_BASE_URL:-http://localhost:8080}

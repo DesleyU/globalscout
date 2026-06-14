@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 48" fill="none">
+  <defs>
+    <linearGradient id="markGradientWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#2563eb"/>
+    </linearGradient>
+    <linearGradient id="northStarWhite" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+  </defs>
+  <circle cx="24" cy="24" r="22" fill="url(#markGradientWhite)" stroke="#93c5fd" stroke-width="1.5"/>
+  <circle cx="24" cy="24" r="16" fill="none" stroke="#ffffff" stroke-width="1" opacity="0.8"/>
+  <g transform="translate(24,24)">
+    <path d="M 0,-12 L 4,-4 L 0,-6 L -4,-4 Z" fill="url(#northStarWhite)"/>
+    <path d="M 0,12 L 4,4 L 0,6 L -4,4 Z" fill="#1e3a8a"/>
+    <path d="M 12,0 L 4,4 L 6,0 L 4,-4 Z" fill="#60a5fa"/>
+    <path d="M -12,0 L -4,4 L -6,0 L -4,-4 Z" fill="#60a5fa"/>
+  </g>
+  <circle cx="24" cy="24" r="2" fill="#ffffff"/>
+  <text x="56" y="32" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="#ffffff">
+    GlobalScout
+  </text>
+</svg>

@@ -1,0 +1,17 @@
+{
+  "name": "globalscout",
+  "private": true,
+  "scripts": {
+    "dev:web": "pnpm --filter @globalscout/web dev",
+    "build:web": "pnpm --filter @globalscout/web build",
+    "start:web": "pnpm --filter @globalscout/web start",
+    "lint:web": "pnpm --filter @globalscout/web lint",
+    "typecheck:web": "pnpm --filter @globalscout/web typecheck",
+    "typecheck": "pnpm --filter @globalscout/shared typecheck && pnpm typecheck:web",
+    "install:web": "pnpm install --filter @globalscout/web..."
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "packageManager": "pnpm@10.12.1"
+}
