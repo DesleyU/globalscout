@@ -10,6 +10,8 @@ export const PROTECTED_ROUTE_PREFIXES = [
   "/dashboard",
   "/onboarding",
   "/profile",
+  "/statistics",
+  "/videos",
   "/search",
   "/users",
   "/connections",

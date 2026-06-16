@@ -20,7 +20,7 @@ The current stack uses:
 - AWS Certificate Manager (ACM)
 - EC2
 - Docker Compose
-- nginx reverse proxy inside the frontend/UI container
+- Next.js standalone runtime in the UI container
 - private S3 media storage through presigned URLs
 
 ---
@@ -37,7 +37,7 @@ Application Load Balancer (ALB)
 EC2 instance
   ↓
 Docker Compose
-  ├── ui (nginx reverse proxy + frontend SPA)
+  ├── ui (Next.js standalone Node server)
   ├── ASP.NET API
   ├── postgres
   └── migrator
@@ -178,7 +178,7 @@ CloudFront
   ↓ HTTP
 ALB
   ↓ HTTP
-EC2/nginx
+EC2/ui container
 ```
 
 ### Frontend CloudFront Configuration
@@ -205,14 +205,15 @@ Allowed methods:
 GET
 HEAD
 OPTIONS
+POST
+PUT
+PATCH
+DELETE
 ```
 
-IMPORTANT:
-The frontend CloudFront distribution is intentionally restricted to read-only HTTP methods.
+Cache only safe read methods at the edge. Non-GET methods are required so Next.js route handlers (sign-in, registration, onboarding, admin actions) on the frontend origin work.
 
-This prevents API POST/PUT/PATCH/DELETE requests from going through the frontend distribution.
-
-API traffic must use:
+The frontend distribution must NOT be used for .NET API traffic. Browser calls to the ASP.NET API must use:
 
 ```text
 https://api.globalscout.eu/api
@@ -318,7 +319,7 @@ Health check path:
 ```
 
 Targets:
-- EC2 instance running the UI nginx container
+- EC2 instance running the UI container (Next.js on port 80)
 
 ---
 
@@ -329,7 +330,7 @@ Current architecture uses a single EC2 instance.
 ## EC2 Purpose
 
 The EC2 instance hosts:
-- ui container (nginx + frontend static files)
+- ui container (Next.js standalone runtime on port 80)
 - ASP.NET API container
 - postgres container
 - migrator container
@@ -347,65 +348,43 @@ Reason:
 
 ---
 
-# nginx
+# UI Container (Next.js)
 
-nginx currently runs in the frontend/UI container and routes traffic by path.
+The UI container runs the Next.js standalone server from `src/ui/apps/web` on port 80.
 
 Current architecture:
 
 ```text
-/api/*     -> ASP.NET API
-/uploads/* -> API/static files if present
-/hubs/*    -> SignalR/WebSockets
-/*         -> frontend SPA
+/*         -> Next.js App Router (pages, layouts, route handlers)
 ```
 
-Current nginx config:
+Next route handlers under `/api/*` are backend-for-frontend endpoints (auth cookies, secure proxying). They are served by Next, not the ASP.NET API.
 
-```nginx
-server {
-    listen 80;
-    server_name _;
-    root /usr/share/nginx/html;
-    index index.html;
+Browser calls to the .NET API still use the absolute API origin:
 
-    client_max_body_size 500m;
-
-    location /api/ {
-        proxy_pass http://api:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location /uploads/ {
-        proxy_pass http://api:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-
-    location /hubs/ {
-        proxy_pass http://api:8080;
-        proxy_http_version 1.1;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header Upgrade $http_upgrade;
-        proxy_set_header Connection "upgrade";
-        proxy_read_timeout 3600s;
-    }
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
+```text
+https://api.globalscout.eu/api
 ```
+
+SignalR and uploads also use the API origin directly:
+
+```text
+https://api.globalscout.eu/hubs/...
+https://api.globalscout.eu/uploads/...
+```
+
+The UI image is built with:
+
+```text
+NEXT_PUBLIC_API_BASE_URL=https://api.globalscout.eu/api
+NEXT_PUBLIC_API_ORIGIN=https://api.globalscout.eu
+```
+
+### CloudFront method requirements
+
+The frontend CloudFront distribution must forward non-GET methods to the UI origin so Next route handlers (sign-in, registration, onboarding uploads, admin actions) work. Cache only safe read methods at the edge; do not restrict viewer methods to GET/HEAD/OPTIONS.
+
+The legacy nginx SPA setup proxied `/api/*` on the frontend host to the ASP.NET API. The Next app does not rely on that path for .NET API traffic.
 
 ---
 
@@ -437,16 +416,10 @@ through an environment variable.
 Recommended frontend environment variable:
 
 ```text
-VITE_API_BASE_URL=https://api.globalscout.eu/api
-```
-
-or:
-
-```text
 NEXT_PUBLIC_API_BASE_URL=https://api.globalscout.eu/api
 ```
 
-depending on framework.
+Legacy Vite builds used `VITE_API_BASE_URL` with the same value.
 
 SignalR/WebSocket connections should also use:
 
@@ -637,7 +610,7 @@ CloudFront
 Application Load Balancer
 ```
 
-nginx itself currently does NOT manage certificates.
+The UI container does not terminate TLS; HTTPS is handled at CloudFront and the ALB.
 
 ---
 
@@ -673,13 +646,12 @@ https://globalscout.eu
 https://www.globalscout.eu
 → CloudFront
 → ALB
-→ EC2/ui nginx
-→ frontend SPA
+→ EC2/ui container
+→ Next.js standalone server
 
 API:
 https://api.globalscout.eu
 → ALB
-→ EC2/nginx
 → ASP.NET API
 
 Media:

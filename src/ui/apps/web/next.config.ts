@@ -27,6 +27,8 @@ function getAllowedDevOrigins(): string[] {
 
 const nextConfig: NextConfig = {
   output: "standalone",
+  // Trace dependencies from the pnpm workspace root for standalone Docker output.
+  outputFileTracingRoot: workspaceRoot,
   transpilePackages: ["@globalscout/shared"],
   // Required when opening the app through Aspire's *.dev.localhost proxy.
   // Without this, Next blocks /_next dev assets cross-origin and client JS never loads.

@@ -4,6 +4,7 @@
 **/bin
 **/obj
 **/node_modules
+**/.next
 **/dist
 **/TestResults
 **/.env

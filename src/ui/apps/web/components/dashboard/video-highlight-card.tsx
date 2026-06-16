@@ -87,7 +87,7 @@ export function VideoHighlightCard({ isPremium = false }: VideoHighlightCardProp
             variant="link"
             size="sm"
             className="h-auto p-0 text-xs text-blue-600"
-            render={<Link href="/profile" />}
+            render={<Link href="/videos" />}
           >
             View All →
           </Button>

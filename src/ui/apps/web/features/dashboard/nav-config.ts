@@ -26,8 +26,8 @@ export const playerNavItems: DashboardNavItem[] = [
     matchPaths: ["/dashboard", "/dashboard/verified"],
   },
   { href: "/profile", label: "My Profile", icon: User },
-  { href: "/profile", label: "Statistics", icon: BarChart3 },
-  { href: "/profile", label: "Videos", icon: Video },
+  { href: "/statistics", label: "Statistics", icon: BarChart3 },
+  { href: "/videos", label: "Videos", icon: Video },
   {
     href: "/messages",
     label: "Messages",

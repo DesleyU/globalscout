@@ -67,11 +67,12 @@ export function DashboardSidebar({ user }: DashboardSidebarProps) {
       <div className="flex-1 p-4">
         <Link href="/dashboard" className="mb-6 block">
           <Image
-            src="/logo/globalscout-mark.svg"
+            src="/logo/globalscout-logo-sidebar.png"
             alt="GlobalScout"
-            width={96}
+            width={160}
             height={96}
             className="mx-auto h-24 w-auto brightness-0 invert"
+            priority
           />
         </Link>
 

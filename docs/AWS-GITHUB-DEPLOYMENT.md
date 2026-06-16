@@ -2,7 +2,7 @@
 
 This repo ships three containers:
 
-- `globalscout/ui`: React/Vite static files served by nginx.
+- `globalscout/ui`: Next.js standalone app from `src/ui/apps/web`.
 - `globalscout/api`: ASP.NET Core API.
 - `globalscout/migrator`: one-shot EF Core migration runner.
 
@@ -206,7 +206,7 @@ Edit `/opt/globalscout/.env` on the instance. At minimum, set:
 - Stripe secrets if billing is enabled
 - `ApiFootball__ApiKey` if football statistics are enabled
 
-The UI image is built with `VITE_API_BASE_URL=https://api.globalscout.eu/api`, so browser API calls go to the ALB-backed API domain instead of the CloudFront frontend domain. The EC2 Compose file also sets API CORS origins for `https://globalscout.eu` and `https://www.globalscout.eu`.
+The UI image is built with `NEXT_PUBLIC_API_BASE_URL=https://api.globalscout.eu/api` and `NEXT_PUBLIC_API_ORIGIN=https://api.globalscout.eu`, so browser calls to the .NET API go to the ALB-backed API domain instead of the CloudFront frontend domain. The EC2 Compose file also sets API CORS origins for `https://globalscout.eu` and `https://www.globalscout.eu`.
 
 Do not commit the filled `.env` file.
 
@@ -244,10 +244,12 @@ The migrator runs before the API starts. If migrations fail, Compose will not st
 
 ## Local Development
 
-Use Aspire for local development so Postgres, MiniStack, the API, and the Vite frontend start together:
+Use Aspire for local development so Postgres, MiniStack, the API, and the Next.js web app start together:
 
 ```bash
 dotnet run --project src/api/GlobalScout.AppHost/GlobalScout.AppHost.csproj
 ```
 
-The AppHost starts MiniStack on port `4566` and configures the API to create/use the local development bucket automatically.
+The AppHost starts MiniStack on port `4566`, injects API URLs into the web app, and configures the API to create/use the local development bucket automatically.
+
+Root `docker-compose.yml` remains available for production-like stack testing and EC2 parity, but Aspire is the preferred local workflow.

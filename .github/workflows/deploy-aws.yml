@@ -66,11 +66,13 @@ jobs:
       - name: Build and push UI image
         uses: docker/build-push-action@v6
         with:
-          context: frontend
+          context: .
+          file: src/ui/apps/web/Dockerfile
           platforms: linux/amd64
           push: true
           build-args: |
-            VITE_API_BASE_URL=https://api.globalscout.eu/api
+            NEXT_PUBLIC_API_BASE_URL=https://api.globalscout.eu/api
+            NEXT_PUBLIC_API_ORIGIN=https://api.globalscout.eu
           tags: |
             ${{ env.ECR_REGISTRY }}/globalscout/ui:${{ env.IMAGE_TAG }}
             ${{ env.ECR_REGISTRY }}/globalscout/ui:latest
