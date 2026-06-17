@@ -30,6 +30,11 @@ const nextConfig: NextConfig = {
   // Trace dependencies from the pnpm workspace root for standalone Docker output.
   outputFileTracingRoot: workspaceRoot,
   transpilePackages: ["@globalscout/shared"],
+  images: {
+    // Match widths used by next/image across the app (logos, feature sections).
+    deviceSizes: [640, 750, 800, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 140, 160, 256, 384],
+  },
   // Required when opening the app through Aspire's *.dev.localhost proxy.
   // Without this, Next blocks /_next dev assets cross-origin and client JS never loads.
   allowedDevOrigins: getAllowedDevOrigins(),

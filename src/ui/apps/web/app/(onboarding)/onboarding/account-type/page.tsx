@@ -40,7 +40,7 @@ export default async function AccountTypePage() {
     <div className="flex min-h-screen flex-col bg-gradient-to-br from-slate-950 via-slate-900 to-blue-950">
       <header className="flex items-center justify-between px-8 py-6">
         <Image
-          src="/logo/globalscout-logo.svg"
+          src="/logo/globalscout-logo.png"
           alt="GlobalScout"
           width={140}
           height={40}

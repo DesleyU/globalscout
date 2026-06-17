@@ -29,7 +29,7 @@ export function OnboardingHeader({
             </Link>
           ) : null}
           <Image
-            src="/logo/globalscout-mark.svg"
+            src="/logo/globalscout-logo.png"
             alt="GlobalScout"
             width={32}
             height={32}

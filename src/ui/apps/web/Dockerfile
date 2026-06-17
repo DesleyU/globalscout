@@ -37,6 +37,9 @@ ENV NODE_ENV=production
 ENV PORT=80
 ENV HOSTNAME=0.0.0.0
 
+# sharp is required for next/image optimization in the standalone server
+RUN apk add --no-cache libc6-compat
+
 RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 --ingroup nodejs nextjs
 

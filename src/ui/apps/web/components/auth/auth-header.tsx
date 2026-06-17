@@ -11,7 +11,7 @@ export function AuthHeader() {
       >
         <ArrowLeft className="h-4 w-4" />
         <Image
-          src="/logo/globalscout-logo.svg"
+          src="/logo/globalscout-logo.png"
           alt="GlobalScout"
           width={140}
           height={40}
