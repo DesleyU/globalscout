@@ -81,6 +81,8 @@ project.fragment.lock.json
 !src/ui/packages/build/
 src/**/[Pp]ackages/*
 !src/**/[Pp]ackages/build/
+!src/ui/packages/shared/
+!src/ui/packages/shared/**
 *.nuget.props
 *.nuget.targets
 project.assets.json
