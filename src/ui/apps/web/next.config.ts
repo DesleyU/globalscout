@@ -31,9 +31,9 @@ const nextConfig: NextConfig = {
   outputFileTracingRoot: workspaceRoot,
   transpilePackages: ["@globalscout/shared"],
   images: {
-    // Match widths used by next/image across the app (logos, feature sections).
-    deviceSizes: [640, 750, 800, 828, 1080, 1200, 1920, 2048, 3840],
-    imageSizes: [16, 32, 48, 64, 96, 128, 140, 160, 256, 384],
+    // CloudFront must forward query strings for /_next/image (url, w, q). Until that is
+    // configured on the frontend distribution, serve public assets directly.
+    unoptimized: true,
   },
   // Required when opening the app through Aspire's *.dev.localhost proxy.
   // Without this, Next blocks /_next dev assets cross-origin and client JS never loads.

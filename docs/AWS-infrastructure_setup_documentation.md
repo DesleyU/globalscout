@@ -384,6 +384,8 @@ NEXT_PUBLIC_API_ORIGIN=https://api.globalscout.eu
 
 The frontend CloudFront distribution must forward non-GET methods to the UI origin so Next route handlers (sign-in, registration, onboarding uploads, admin actions) work. Cache only safe read methods at the edge; do not restrict viewer methods to GET/HEAD/OPTIONS.
 
+For Next.js `/_next/image` optimization (optional; the app currently uses `images.unoptimized` and serves `/public` assets directly), the cache behavior must also **forward all query strings** (`url`, `w`, `q`). If query strings are not forwarded, image optimizer requests return `400` with `"url" parameter is required`.
+
 The legacy nginx SPA setup proxied `/api/*` on the frontend host to the ASP.NET API. The Next app does not rely on that path for .NET API traffic.
 
 ---
