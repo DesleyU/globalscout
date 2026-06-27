@@ -237,8 +237,10 @@ The workflow will:
 1. Assume the AWS role using GitHub OIDC.
 2. Build `linux/amd64` images for API, UI, and migrator.
 3. Push each image to ECR using the selected image tag and `latest`.
-4. Copy `deploy/docker-compose.ec2.yml` to the EC2 deployment directory.
+4. Copy `deploy/docker-compose.ec2.yml` and `deploy/nginx.ec2.conf` to the EC2 deployment directory.
 5. Run `docker compose pull` and `docker compose up -d --remove-orphans` on EC2.
+
+The EC2 Compose stack runs a small **nginx** reverse proxy on host port `80`. It forwards `Host: api.globalscout.eu` to the ASP.NET API container and all other hosts to the Next.js UI container. No separate ALB target group is required for API routing.
 
 The migrator runs before the API starts. If migrations fail, Compose will not start the API because the API depends on the migrator completing successfully.
 

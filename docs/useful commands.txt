@@ -1,0 +1,22 @@
+prod database:L
+docker exec -it globalscout-postgres-1 psql -U postgres -d globalscout
+
+go to docker compose file:
+cd /opt/globalscout
+cat docker-compose.yml
+
+read env variable file for docker-compose:
+nano /opt/globalscout/.env
+
+restart api:
+cd /opt/globalscout
+docker compose --env-file .env up -d api
+
+deploy nginx routing fix (from repo root on your machine):
+scp deploy/docker-compose.ec2.yml ubuntu@63.177.190.171:/opt/globalscout/docker-compose.yml
+scp deploy/nginx.ec2.conf ubuntu@63.177.190.171:/opt/globalscout/nginx.ec2.conf
+ssh ubuntu@63.177.190.171 "cd /opt/globalscout && docker compose --env-file .env pull && docker compose --env-file .env up -d --remove-orphans"
+
+verify api host routing on prod:
+curl -s -o /dev/null -w "%{http_code}" -H "Host: api.globalscout.eu" http://127.0.0.1/
+curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1/

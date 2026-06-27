@@ -50,9 +50,20 @@ services:
 
   ui:
     image: ${ECR_REGISTRY}/globalscout/ui:${IMAGE_TAG}
+    expose:
+      - "80"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  proxy:
+    image: nginx:1.27-alpine
     ports:
       - "${HTTP_PORT:-80}:80"
+    volumes:
+      - ./nginx.ec2.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
+      - ui
       - api
     restart: unless-stopped
 

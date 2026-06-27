@@ -89,7 +89,7 @@ if (enableCors)
 
 app.MapDefaultEndpoints();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.MapOpenApi();
     app.MapScalarApiReference();

@@ -91,6 +91,7 @@ jobs:
         run: |
           ssh -p "${EC2_SSH_PORT}" "${EC2_USER}@${EC2_HOST}" "sudo mkdir -p '${DEPLOY_PATH}' && sudo chown '${EC2_USER}':'${EC2_USER}' '${DEPLOY_PATH}'"
           scp -P "${EC2_SSH_PORT}" deploy/docker-compose.ec2.yml "${EC2_USER}@${EC2_HOST}:${DEPLOY_PATH}/docker-compose.yml"
+          scp -P "${EC2_SSH_PORT}" deploy/nginx.ec2.conf "${EC2_USER}@${EC2_HOST}:${DEPLOY_PATH}/nginx.ec2.conf"
 
       - name: Deploy on EC2
         run: |
