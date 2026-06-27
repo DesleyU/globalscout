@@ -5,11 +5,16 @@ import { Card, CardContent } from "@/components/ui/card";
 type RouteSkeletonPageProps = {
   title: string;
   description: string;
+  footer?: React.ReactNode;
 };
 
-export function RouteSkeletonPage({ title, description }: RouteSkeletonPageProps) {
+export function RouteSkeletonPage({
+  title,
+  description,
+  footer,
+}: RouteSkeletonPageProps) {
   return (
-    <div className="p-8">
+    <div className="flex flex-col gap-6 p-8">
       <Card className="border-0 shadow-sm">
         <CardContent className="flex min-h-[320px] flex-col items-center justify-center gap-3 p-10 text-center">
           <Construction className="size-10 text-blue-600" aria-hidden />
@@ -17,6 +22,7 @@ export function RouteSkeletonPage({ title, description }: RouteSkeletonPageProps
           <p className="max-w-lg text-sm text-muted-foreground">{description}</p>
         </CardContent>
       </Card>
+      {footer}
     </div>
   );
 }

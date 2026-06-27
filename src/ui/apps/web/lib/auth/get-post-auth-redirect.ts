@@ -24,6 +24,10 @@ export async function getPostAuthRedirect(
     return ONBOARDING_ACCOUNT_TYPE_PATH;
   }
 
+  if (role === "ADMIN") {
+    return "/admin";
+  }
+
   if (role !== "PLAYER") {
     return DEFAULT_AUTHENTICATED_REDIRECT;
   }

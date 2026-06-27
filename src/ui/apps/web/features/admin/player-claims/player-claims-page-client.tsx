@@ -118,9 +118,9 @@ export function PlayerClaimsPageClient({
             type="button"
             variant="ghost"
             size="sm"
-            render={<Link href="/dashboard" />}
+            render={<Link href="/admin" />}
           >
-            Back to dashboard
+            Back to overview
           </Button>
         </div>
       </div>

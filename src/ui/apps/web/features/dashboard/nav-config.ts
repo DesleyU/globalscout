@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   BarChart3,
   Home,
+  LayoutDashboard,
   MessageCircle,
   Search,
   ShieldCheck,
@@ -16,6 +17,7 @@ export type DashboardNavItem = {
   icon: LucideIcon;
   badge?: string;
   matchPaths?: string[];
+  exactMatch?: boolean;
 };
 
 export const playerNavItems: DashboardNavItem[] = [
@@ -40,16 +42,31 @@ export const playerNavItems: DashboardNavItem[] = [
 
 export const adminNavItems: DashboardNavItem[] = [
   {
+    href: "/admin",
+    label: "Overview",
+    icon: LayoutDashboard,
+    matchPaths: ["/admin"],
+    exactMatch: true,
+  },
+  {
     href: "/admin/player-claims",
     label: "Player Claims",
     icon: ShieldCheck,
-    matchPaths: ["/admin", "/admin/player-claims"],
+    matchPaths: ["/admin/player-claims"],
+  },
+  {
+    href: "/admin/users",
+    label: "User Management",
+    icon: Users,
+    matchPaths: ["/admin/users"],
   },
 ];
 
 export function isNavItemActive(pathname: string, item: DashboardNavItem): boolean {
   const paths = item.matchPaths ?? [item.href];
-  return paths.some(
-    (path) => pathname === path || pathname.startsWith(`${path}/`),
+  return paths.some((path) =>
+    item.exactMatch
+      ? pathname === path
+      : pathname === path || pathname.startsWith(`${path}/`),
   );
 }

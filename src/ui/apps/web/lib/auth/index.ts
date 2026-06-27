@@ -8,6 +8,7 @@ export { getAuthCookieOptions } from "./cookies";
 export { getSession, type Session } from "./get-session";
 export { requireSession } from "./require-session";
 export { requireAdmin } from "./require-admin";
+export { requireMember } from "./require-member";
 export { isAdminUser, ADMIN_ROLE } from "./is-admin";
 export {
   ONBOARDING_ACCOUNT_TYPE_PATH,

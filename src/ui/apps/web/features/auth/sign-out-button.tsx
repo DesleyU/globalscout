@@ -9,11 +9,13 @@ import { useSession } from "@/features/auth/session-provider";
 type SignOutButtonProps = {
   className?: string;
   redirectTo?: string;
+  children?: React.ReactNode;
 };
 
 export function SignOutButton({
   className,
   redirectTo = "/sign-in",
+  children,
 }: SignOutButtonProps) {
   const router = useRouter();
   const { setUser } = useSession();
@@ -50,7 +52,7 @@ export function SignOutButton({
       disabled={isPending}
       onClick={handleSignOut}
     >
-      {isPending ? "Signing out..." : "Sign out"}
+      {isPending ? "Signing out..." : (children ?? "Sign out")}
     </Button>
   );
 }

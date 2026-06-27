@@ -6,6 +6,17 @@ export function formatClaimStatus(status: string): string {
     .replace(/_/g, " ");
 }
 
+export function formatUserRole(role: string): string {
+  return role
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+export function formatUserStatus(status: string): string {
+  const normalized = status.trim().toLowerCase();
+  return normalized.charAt(0).toUpperCase() + normalized.slice(1);
+}
+
 export function hasRequestedMoreInfo(
   status: string,
   adminNote?: string | null,
