@@ -40,6 +40,17 @@ export const playerNavItems: DashboardNavItem[] = [
   { href: "/search", label: "Search", icon: Search },
 ];
 
+export const agentNavItems: DashboardNavItem[] = [
+  { href: "/agent/profile", label: "My Profile", icon: User },
+  {
+    href: "/agent/messages",
+    label: "Messages",
+    icon: MessageCircle,
+  },
+  { href: "/agent/connections", label: "My Network", icon: Users },
+  { href: "/agent/search", label: "Search", icon: Search },
+];
+
 export const adminNavItems: DashboardNavItem[] = [
   {
     href: "/admin",

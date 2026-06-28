@@ -1,25 +1,35 @@
 "use client";
 
 import type { AuthUserDto } from "@globalscout/shared";
-import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { AccountTypeCard } from "@/components/onboarding/account-type-card";
 import { useSession } from "@/features/auth/session-provider";
+import {
+  DEFAULT_AGENT_REDIRECT,
+  ROLES,
+} from "@/lib/auth/roles";
 import { ONBOARDING_EMPTY_PROFILE_PATH } from "@/lib/auth/onboarding-redirect";
+
+type SelectableRole = typeof ROLES.PLAYER | typeof ROLES.SCOUT_AGENT;
+
+const FALLBACK_REDIRECT: Record<SelectableRole, string> = {
+  [ROLES.PLAYER]: ONBOARDING_EMPTY_PROFILE_PATH,
+  [ROLES.SCOUT_AGENT]: DEFAULT_AGENT_REDIRECT,
+};
 
 export function AccountTypeSelection() {
   const router = useRouter();
   const { setUser } = useSession();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [pendingRole, setPendingRole] = useState<SelectableRole | null>(null);
 
-  async function selectPlayer() {
-    if (isSubmitting) {
+  async function selectRole(role: SelectableRole) {
+    if (pendingRole) {
       return;
     }
 
-    setIsSubmitting(true);
+    setPendingRole(role);
 
     try {
       const response = await fetch("/api/account/set-role", {
@@ -28,7 +38,7 @@ export function AccountTypeSelection() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({ role: "PLAYER" }),
+        body: JSON.stringify({ role }),
       });
 
       const data = (await response.json()) as {
@@ -45,13 +55,13 @@ export function AccountTypeSelection() {
         setUser(data.user);
       }
 
-      router.push(data.redirectTo ?? ONBOARDING_EMPTY_PROFILE_PATH);
+      router.push(data.redirectTo ?? FALLBACK_REDIRECT[role]);
       router.refresh();
     } catch (error) {
       const message =
         error instanceof Error ? error.message : "Could not set account type";
       toast.error(message);
-      setIsSubmitting(false);
+      setPendingRole(null);
     }
   }
 
@@ -59,10 +69,16 @@ export function AccountTypeSelection() {
     <div className="grid w-full max-w-2xl grid-cols-1 gap-6 md:grid-cols-2">
       <AccountTypeCard
         variant="player"
-        onSelect={selectPlayer}
-        loading={isSubmitting}
+        onSelect={() => selectRole(ROLES.PLAYER)}
+        loading={pendingRole === ROLES.PLAYER}
+        disabled={pendingRole !== null}
       />
-      <AccountTypeCard variant="agent" disabled />
+      <AccountTypeCard
+        variant="agent"
+        onSelect={() => selectRole(ROLES.SCOUT_AGENT)}
+        loading={pendingRole === ROLES.SCOUT_AGENT}
+        disabled={pendingRole !== null}
+      />
     </div>
   );
 }

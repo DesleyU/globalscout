@@ -4,9 +4,7 @@ import { redirect } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import { OnboardingSessionActions } from "@/components/onboarding/onboarding-session-actions";
 import { AccountTypeSelection } from "@/features/onboarding/account-type-selection";
-import { createPlayerIdentityApi } from "@/lib/api/player-identity";
-import { createServerApiClient } from "@/lib/api/server";
-import { requireSession } from "@/lib/auth";
+import { getPostAuthRedirect, requireSession, ROLES } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Choose account type",
@@ -15,25 +13,8 @@ export const metadata: Metadata = {
 export default async function AccountTypePage() {
   const session = await requireSession("/onboarding/account-type");
 
-  if (session.user.role !== "PLAYER" && session.user.role !== "PENDING") {
-    redirect("/dashboard");
-  }
-
-  if (session.user.role === "PLAYER") {
-    const client = await createServerApiClient();
-    const claimResult = await createPlayerIdentityApi(client).getMyClaim();
-
-    if (claimResult.status === "PendingVerification") {
-      redirect("/onboarding/player/submitted");
-    }
-
-    if (claimResult.status === "Verified") {
-      redirect("/dashboard");
-    }
-
-    if (claimResult.status === "Claimed") {
-      redirect("/onboarding/player/claim");
-    }
+  if (session.user.role !== ROLES.PENDING) {
+    redirect(await getPostAuthRedirect(session.user.role));
   }
 
   return (
@@ -64,10 +45,6 @@ export default async function AccountTypePage() {
         </div>
 
         <AccountTypeSelection />
-
-        <p className="mt-8 text-sm text-gray-500">
-          You can change this later in your account settings.
-        </p>
       </main>
     </div>
   );

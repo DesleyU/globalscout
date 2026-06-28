@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { EmptyProfileSkeleton } from "@/components/onboarding/empty-profile-skeleton";
 import { ConnectIdentityCard } from "@/components/onboarding/connect-identity-card";
 import { StatCard } from "@/components/dashboard/stat-card";
@@ -37,18 +36,6 @@ export function PendingDashboardContent({
             connectHref="/onboarding/player/connect"
             skipHref="/dashboard"
           />
-          <div className="rounded-xl border bg-white p-4 text-center shadow-sm">
-            <p className="text-sm text-gray-600">
-              Profiles with verified football statistics receive{" "}
-              <strong>3x more scout views</strong>
-            </p>
-            <Link
-              href="/onboarding/player/empty-profile"
-              className="mt-3 inline-block text-sm font-medium text-blue-600 hover:underline"
-            >
-              Connect your profile
-            </Link>
-          </div>
         </aside>
       </div>
     </div>

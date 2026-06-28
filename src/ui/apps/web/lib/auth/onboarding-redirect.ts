@@ -4,7 +4,8 @@ import { DEFAULT_AUTHENTICATED_REDIRECT } from "./constants";
 export const ONBOARDING_ACCOUNT_TYPE_PATH = "/onboarding/account-type";
 export const ONBOARDING_SUBMITTED_PATH = "/onboarding/player/submitted";
 export const ONBOARDING_CLAIM_PATH = "/onboarding/player/claim";
-export const ONBOARDING_EMPTY_PROFILE_PATH = "/onboarding/player/empty-profile";
+/** Incomplete player home; legacy name kept for existing imports. */
+export const ONBOARDING_EMPTY_PROFILE_PATH = DEFAULT_AUTHENTICATED_REDIRECT;
 
 /** Client-safe redirect resolver based on claim status. */
 export function resolvePlayerOnboardingRedirect(

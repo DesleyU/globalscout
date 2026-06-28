@@ -9,6 +9,7 @@ import { navLinks } from "@/components/marketing/content";
 import { useSession } from "@/features/auth/session-provider";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { formatUserDisplayName } from "@/lib/auth/format-user-display";
+import { resolveAppEntryPath } from "@/lib/auth/resolve-app-entry-path";
 import { cn } from "@/lib/utils";
 
 function NavLink({
@@ -43,6 +44,7 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const { user } = useSession();
   const displayName = user ? formatUserDisplayName(user) : null;
+  const appEntryHref = resolveAppEntryPath(user?.role);
 
   return (
     <header>
@@ -89,7 +91,7 @@ export function Navbar() {
                 </span>
                 <Button
                   size="sm"
-                  render={<Link href="/dashboard" />}
+                  render={<Link href={appEntryHref} />}
                   className="bg-blue-600 text-white hover:bg-blue-700"
                 >
                   Open App
@@ -174,7 +176,7 @@ export function Navbar() {
                       <span className="font-medium">{displayName}</span>
                     </p>
                     <Button
-                      render={<Link href="/dashboard" />}
+                      render={<Link href={appEntryHref} />}
                       className="w-full bg-blue-600 text-white hover:bg-blue-700"
                       onClick={() => setMobileOpen(false)}
                     >

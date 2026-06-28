@@ -17,6 +17,7 @@ export const PROTECTED_ROUTE_PREFIXES = [
   "/connections",
   "/messages",
   "/billing",
+  "/agent",
   "/admin",
 ] as const;
 

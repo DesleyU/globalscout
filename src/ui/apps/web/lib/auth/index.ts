@@ -8,8 +8,21 @@ export { getAuthCookieOptions } from "./cookies";
 export { getSession, type Session } from "./get-session";
 export { requireSession } from "./require-session";
 export { requireAdmin } from "./require-admin";
-export { requireMember } from "./require-member";
+export { requirePendingOnboarding } from "./require-pending-onboarding";
+export { requirePlayer } from "./require-player";
+export { requireAgent } from "./require-agent";
 export { isAdminUser, ADMIN_ROLE } from "./is-admin";
+export {
+  ROLES,
+  type AppRole,
+  DEFAULT_PLAYER_REDIRECT,
+  DEFAULT_AGENT_REDIRECT,
+  DEFAULT_ADMIN_REDIRECT,
+  isPendingUser,
+  isPlayerUser,
+  isAgentUser,
+} from "./roles";
+export { resolveAppEntryPath } from "./resolve-app-entry-path";
 export {
   ONBOARDING_ACCOUNT_TYPE_PATH,
   ONBOARDING_CLAIM_PATH,

@@ -7,7 +7,7 @@ import { VerificationTimeline } from "@/components/onboarding/verification-timel
 import { Button } from "@/components/ui/button";
 import { createPlayerIdentityApi } from "@/lib/api/player-identity";
 import { createServerApiClient } from "@/lib/api/server";
-import { requireSession } from "@/lib/auth";
+import { ONBOARDING_EMPTY_PROFILE_PATH, requireSession } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Claim submitted",
@@ -23,7 +23,7 @@ export default async function SubmittedPage() {
   }
 
   if (claimResult.status !== "PendingVerification") {
-    redirect("/onboarding/player/empty-profile");
+    redirect(ONBOARDING_EMPTY_PROFILE_PATH);
   }
 
   return (

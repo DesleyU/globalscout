@@ -1,11 +1,15 @@
 import { createWebApiClient } from "@/lib/api/client";
 import { createPlayerIdentityApi } from "@/lib/api/player-identity";
 import { createServerApiClient } from "@/lib/api/server";
-import { DEFAULT_AUTHENTICATED_REDIRECT } from "./constants";
 import {
   ONBOARDING_ACCOUNT_TYPE_PATH,
   resolvePlayerOnboardingRedirect,
 } from "./onboarding-redirect";
+import {
+  DEFAULT_ADMIN_REDIRECT,
+  DEFAULT_AGENT_REDIRECT,
+  ROLES,
+} from "./roles";
 
 async function fetchClaimStatus(token?: string | null) {
   const client = token
@@ -20,16 +24,20 @@ export async function getPostAuthRedirect(
   role: string,
   token?: string | null,
 ): Promise<string> {
-  if (role === "PENDING") {
+  if (role === ROLES.PENDING) {
     return ONBOARDING_ACCOUNT_TYPE_PATH;
   }
 
-  if (role === "ADMIN") {
-    return "/admin";
+  if (role === ROLES.ADMIN) {
+    return DEFAULT_ADMIN_REDIRECT;
   }
 
-  if (role !== "PLAYER") {
-    return DEFAULT_AUTHENTICATED_REDIRECT;
+  if (role === ROLES.SCOUT_AGENT) {
+    return DEFAULT_AGENT_REDIRECT;
+  }
+
+  if (role !== ROLES.PLAYER) {
+    return ONBOARDING_ACCOUNT_TYPE_PATH;
   }
 
   try {

@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { OnboardingResumeGate } from "@/features/onboarding/player/onboarding-resume-gate";
 import { createPlayerIdentityApi } from "@/lib/api/player-identity";
 import { createServerApiClient } from "@/lib/api/server";
-import { requireSession } from "@/lib/auth";
+import { requireSession, resolveAppEntryPath, ROLES } from "@/lib/auth";
 
 export const metadata: Metadata = {
   title: "Player onboarding",
@@ -17,11 +17,14 @@ export default async function OnboardingLayout({
 }>) {
   const session = await requireSession();
 
-  if (session.user.role !== "PLAYER" && session.user.role !== "PENDING") {
-    redirect("/dashboard");
+  if (
+    session.user.role !== ROLES.PLAYER &&
+    session.user.role !== ROLES.PENDING
+  ) {
+    redirect(resolveAppEntryPath(session.user.role));
   }
 
-  if (session.user.role === "PENDING") {
+  if (session.user.role === ROLES.PENDING) {
     return (
       <div className="flex min-h-screen flex-col">{children}</div>
     );

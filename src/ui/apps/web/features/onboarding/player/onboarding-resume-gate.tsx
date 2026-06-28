@@ -4,7 +4,6 @@ import type { GetMyPlayerIdentityClaimResult } from "@globalscout/shared";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import {
-  ONBOARDING_ACCOUNT_TYPE_PATH,
   ONBOARDING_CLAIM_PATH,
   ONBOARDING_EMPTY_PROFILE_PATH,
   ONBOARDING_SUBMITTED_PATH,
@@ -13,7 +12,6 @@ import {
 
 const ALLOWED_PATHS_BY_STATUS: Record<string, string[]> = {
   Unmatched: [
-    ONBOARDING_ACCOUNT_TYPE_PATH,
     ONBOARDING_EMPTY_PROFILE_PATH,
     "/onboarding/player/connect",
     "/onboarding/player/searching",
@@ -21,7 +19,6 @@ const ALLOWED_PATHS_BY_STATUS: Record<string, string[]> = {
     ONBOARDING_CLAIM_PATH,
   ],
   Rejected: [
-    ONBOARDING_ACCOUNT_TYPE_PATH,
     ONBOARDING_EMPTY_PROFILE_PATH,
     "/onboarding/player/connect",
     "/onboarding/player/searching",

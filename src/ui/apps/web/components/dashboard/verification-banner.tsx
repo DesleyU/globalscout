@@ -24,8 +24,8 @@ const config = {
     title: "Your profile is incomplete",
     description:
       "Connect your football identity to unlock stats, highlights, and scout visibility.",
-    cta: "Connect My Football Profile",
-    href: "/onboarding/player/empty-profile",
+    cta: null,
+    href: null,
   },
   pending: {
     icon: Clock,

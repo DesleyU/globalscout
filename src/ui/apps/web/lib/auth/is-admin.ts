@@ -1,7 +1,5 @@
-import type { AuthUserDto } from "@globalscout/shared";
+import { ROLES, isAdminUser } from "./roles";
 
-export const ADMIN_ROLE = "ADMIN";
+export const ADMIN_ROLE = ROLES.ADMIN;
 
-export function isAdminUser(user: AuthUserDto | null | undefined): boolean {
-  return user?.role === ADMIN_ROLE;
-}
+export { isAdminUser };

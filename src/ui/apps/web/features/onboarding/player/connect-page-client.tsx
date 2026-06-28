@@ -53,7 +53,7 @@ export function ConnectPageClient() {
       <OnboardingHeader
         step={1}
         totalSteps={4}
-        backHref="/onboarding/player/empty-profile"
+        backHref="/dashboard"
       />
 
       <main className="mx-auto max-w-xl px-4 py-12">

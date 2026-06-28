@@ -1,13 +1,14 @@
 import { redirect } from "next/navigation";
-import { isAdminUser } from "./is-admin";
-import { resolveAppEntryPath } from "./resolve-app-entry-path";
 import type { Session } from "./get-session";
+import { resolveAppEntryPath } from "./resolve-app-entry-path";
+import { isPlayerUser } from "./roles";
 import { requireSession } from "./require-session";
 
-export async function requireAdmin(): Promise<Session> {
+/** Section guard: only PLAYER users may access player routes. */
+export async function requirePlayer(): Promise<Session> {
   const session = await requireSession();
 
-  if (!isAdminUser(session.user)) {
+  if (!isPlayerUser(session.user)) {
     redirect(resolveAppEntryPath(session.user.role));
   }
 

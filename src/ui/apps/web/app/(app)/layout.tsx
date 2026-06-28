@@ -1,12 +1,11 @@
-import { AppShell } from "@/features/dashboard/app-shell";
-import { requireSession } from "@/lib/auth";
+import { requirePendingOnboarding } from "@/lib/auth";
 
 export default async function AppLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  await requireSession();
+  await requirePendingOnboarding();
 
-  return <AppShell>{children}</AppShell>;
+  return children;
 }

@@ -1,11 +1,12 @@
 import type { AuthUserDto } from "@globalscout/shared";
 import { Bell, Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import type { SidebarVariant } from "@/components/layout/app-sidebar";
 import { formatUserDisplayName } from "@/lib/auth/format-user-display";
-import { isAdminUser } from "@/lib/auth/is-admin";
 
 type DashboardHeaderProps = {
   user: AuthUserDto;
+  variant: SidebarVariant;
   avatarUrl?: string | null;
 };
 
@@ -18,12 +19,29 @@ function getInitials(name: string): string {
     .toUpperCase();
 }
 
-export function DashboardHeader({ user, avatarUrl }: DashboardHeaderProps) {
+const SUBTITLE_BY_VARIANT: Record<SidebarVariant, string> = {
+  player: "Player",
+  agent: "Agent",
+  admin: "Administrator",
+};
+
+const SEARCH_PLACEHOLDER_BY_VARIANT: Record<SidebarVariant, string> = {
+  player: "Search matches, stats, scouts...",
+  agent: "Search players, clubs, scouts...",
+  admin: "",
+};
+
+export function DashboardHeader({
+  user,
+  variant,
+  avatarUrl,
+}: DashboardHeaderProps) {
   const displayName = formatUserDisplayName(user);
-  const isAdmin = isAdminUser(user);
-  const subtitle = isAdmin
-    ? "Administrator"
-    : user.profile?.position?.trim() || "Player";
+  const isAdmin = variant === "admin";
+  const subtitle =
+    variant === "player"
+      ? user.profile?.position?.trim() || SUBTITLE_BY_VARIANT.player
+      : SUBTITLE_BY_VARIANT[variant];
 
   return (
     <header className="sticky top-0 z-40 border-b border-gray-200 bg-white">
@@ -37,9 +55,9 @@ export function DashboardHeader({ user, avatarUrl }: DashboardHeaderProps) {
             <Search className="size-4 shrink-0 text-gray-400" aria-hidden />
             <input
               type="search"
-              placeholder="Search matches, stats, scouts..."
+              placeholder={SEARCH_PLACEHOLDER_BY_VARIANT[variant]}
               className="flex-1 bg-transparent text-sm text-gray-700 outline-none"
-              aria-label="Search matches, stats, scouts"
+              aria-label={SEARCH_PLACEHOLDER_BY_VARIANT[variant]}
             />
           </label>
         )}
