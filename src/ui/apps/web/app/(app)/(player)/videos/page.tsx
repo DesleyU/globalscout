@@ -1,15 +1,31 @@
-import {
-  createRouteSkeletonMetadata,
-  RouteSkeletonPage,
-} from "@/features/dashboard/route-skeleton-page";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import type { MediaVideoListItem } from "@globalscout/shared";
+import { VideosPageClient } from "@/features/media/videos-page-client";
+import { fetchMyVideos } from "@/features/media/load-videos-data";
+import { getSession } from "@/lib/auth";
 
-export const metadata = createRouteSkeletonMetadata("Videos");
+export const metadata: Metadata = {
+  title: "Videos",
+};
 
-export default function VideosPage() {
+export default async function VideosPage() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/sign-in");
+  }
+
+  let initialVideos: MediaVideoListItem[] = [];
+  try {
+    initialVideos = await fetchMyVideos();
+  } catch {
+    initialVideos = [];
+  }
+
   return (
-    <RouteSkeletonPage
-      title="Videos"
-      description="Highlight uploads and video management will be implemented in a later stage."
+    <VideosPageClient
+      initialVideos={initialVideos}
+      accountType={session.user.accountType}
     />
   );
 }

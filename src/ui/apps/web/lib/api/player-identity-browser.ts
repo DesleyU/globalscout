@@ -1,6 +1,7 @@
 import type {
   AddLinkEvidenceRequest,
   CreatePlayerIdentityClaimRequest,
+  CreateSelfReportedClaimRequest,
   EvidenceType,
   GetMyPlayerIdentityClaimResult,
   PlayerIdentityClaimDto,
@@ -66,6 +67,13 @@ export function createBrowserPlayerIdentityApi() {
 
     createClaim(body: CreatePlayerIdentityClaimRequest) {
       return postJson<PlayerIdentityClaimDto>("/api/player-identity/claims", body);
+    },
+
+    createSelfReportedClaim(body: CreateSelfReportedClaimRequest) {
+      return postJson<PlayerIdentityClaimDto>(
+        "/api/player-identity/claims/self-reported",
+        body,
+      );
     },
 
     getMyClaim() {

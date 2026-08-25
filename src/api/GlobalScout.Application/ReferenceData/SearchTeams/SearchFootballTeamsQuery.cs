@@ -3,5 +3,8 @@ using GlobalScout.Application.Abstractions.ReferenceData;
 
 namespace GlobalScout.Application.ReferenceData.SearchTeams;
 
-public sealed record SearchFootballTeamsQuery(string Country, string SearchTerm)
+public sealed record SearchFootballTeamsQuery(
+    string Country,
+    string SearchTerm,
+    bool RequiresExternalId = false)
     : IQuery<SearchFootballTeamsResult>;

@@ -29,6 +29,22 @@ export const createPlayerIdentityClaimSchema = playerIdentitySearchSchema
     currentClub: z.string().trim().min(1, "Current club is required").max(120),
   });
 
+export const selfReportedClaimSchema = z.object({
+  firstName: z.string().trim().min(1, "First name is required").max(80),
+  lastName: z.string().trim().min(2, "Last name is required").max(80),
+  dateOfBirth: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/, "Use YYYY-MM-DD format"),
+  nationality: z.string().trim().min(2, "Nationality is required"),
+  currentCountry: z.string().trim().min(1, "Current country is required").max(80),
+  currentClub: z.string().trim().min(1, "Current club is required").max(120),
+  position: z.string().trim().min(1, "Position is required"),
+  previousClub: optionalText,
+  league: optionalText,
+});
+
+export type SelfReportedClaimFormValues = z.infer<typeof selfReportedClaimSchema>;
+
 export const addLinkEvidenceSchema = z.object({
   type: z.enum(evidenceTypes),
   url: z.string().trim().url("Enter a valid URL"),

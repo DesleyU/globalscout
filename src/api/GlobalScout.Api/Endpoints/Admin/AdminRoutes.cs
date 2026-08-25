@@ -22,4 +22,24 @@ internal static class AdminRoutes
 
     public static string PlayerClaimEvidenceReadUrl =>
         $"{Base}/player-claims/{{claimId:guid}}/evidence/{{evidenceId:guid}}/url";
+
+    public static string ReferenceDataSync =>
+        $"{Base}/reference-data/sync/{{countryCode}}";
+
+    public static string ReferenceDataCountries => $"{Base}/reference-data/countries";
+
+    public static string ReferenceDataCountryCompetitions =>
+        $"{Base}/reference-data/countries/{{countryCode}}/competitions";
+
+    public static string ReferenceDataCompetitionLevel =>
+        $"{Base}/reference-data/competitions/{{competitionId:guid}}/level";
+
+    public static string ReferenceDataCompetitionType =>
+        $"{Base}/reference-data/competitions/{{competitionId:guid}}/type";
+
+    public static string ReferenceDataCompetitionApprove =>
+        $"{Base}/reference-data/competitions/{{competitionId:guid}}/approve";
+
+    public static string ReferenceDataCompetitionReject =>
+        $"{Base}/reference-data/competitions/{{competitionId:guid}}/reject";
 }

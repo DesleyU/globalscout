@@ -26,4 +26,29 @@ function formatPositionLabel(value: string | null | undefined): string {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-export { formatDateLabel, formatPositionLabel };
+const EXTERNAL_PROVIDER_LABELS: Record<string, string> = {
+  "api-football": "API-Football",
+};
+
+function formatExternalProvider(provider: string | null | undefined): string {
+  if (!provider) {
+    return "Football database";
+  }
+
+  return EXTERNAL_PROVIDER_LABELS[provider] ?? provider.replace(/-/g, " ");
+}
+
+function normalizeComparisonValue(value: string): string {
+  return value.trim().toLocaleLowerCase();
+}
+
+function valuesMatch(left: string, right: string): boolean {
+  return normalizeComparisonValue(left) === normalizeComparisonValue(right);
+}
+
+export {
+  formatDateLabel,
+  formatExternalProvider,
+  formatPositionLabel,
+  valuesMatch,
+};

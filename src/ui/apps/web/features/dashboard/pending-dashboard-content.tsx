@@ -5,6 +5,7 @@ import {
   VerificationBanner,
   type VerificationBannerStatus,
 } from "@/components/dashboard/verification-banner";
+import { cn } from "@/lib/utils";
 
 type PendingDashboardContentProps = {
   bannerStatus: VerificationBannerStatus;
@@ -13,11 +14,18 @@ type PendingDashboardContentProps = {
 export function PendingDashboardContent({
   bannerStatus,
 }: PendingDashboardContentProps) {
+  const showConnectCard = bannerStatus === "none";
+
   return (
     <div className="space-y-8 p-8">
       <VerificationBanner status={bannerStatus} />
 
-      <div className="grid grid-cols-1 gap-8 xl:grid-cols-[minmax(0,1fr)_320px]">
+      <div
+        className={cn(
+          "grid grid-cols-1 gap-8",
+          showConnectCard && "xl:grid-cols-[minmax(0,1fr)_320px]",
+        )}
+      >
         <div className="space-y-6">
           <EmptyProfileSkeleton />
 
@@ -31,12 +39,14 @@ export function PendingDashboardContent({
           </div>
         </div>
 
-        <aside className="space-y-4">
-          <ConnectIdentityCard
-            connectHref="/onboarding/player/connect"
-            skipHref="/dashboard"
-          />
-        </aside>
+        {showConnectCard ? (
+          <aside className="space-y-4">
+            <ConnectIdentityCard
+              connectHref="/onboarding/player/connect"
+              skipHref="/dashboard"
+            />
+          </aside>
+        ) : null}
       </div>
     </div>
   );

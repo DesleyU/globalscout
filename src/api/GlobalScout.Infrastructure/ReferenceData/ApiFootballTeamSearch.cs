@@ -2,6 +2,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using GlobalScout.Application.Abstractions.ReferenceData;
 using GlobalScout.Application.Abstractions.Statistics;
+using GlobalScout.Application.Common;
 using GlobalScout.Application.ReferenceData;
 using GlobalScout.SharedKernel;
 using Microsoft.Extensions.Options;
@@ -14,7 +15,7 @@ internal sealed class ApiFootballTeamSearch(
 {
     private const int MaxTeams = 25;
 
-    public async Task<Result<IReadOnlyList<FootballTeamDto>>> SearchAsync(
+    public async Task<Result<IReadOnlyList<ExternalFootballTeam>>> SearchAsync(
         string country,
         string searchTerm,
         CancellationToken cancellationToken)
@@ -22,15 +23,15 @@ internal sealed class ApiFootballTeamSearch(
         var opt = options.Value;
         if (string.IsNullOrWhiteSpace(opt.ApiKey))
         {
-            return Result.Failure<IReadOnlyList<FootballTeamDto>>(
+            return Result.Failure<IReadOnlyList<ExternalFootballTeam>>(
                 ReferenceDataErrors.ExternalTeamSearchUnavailable);
         }
 
         var trimmedCountry = country.Trim();
-        var trimmedSearch = searchTerm.Trim();
+        var trimmedSearch = TextNormalizer.ToApiFootballSearchTerm(searchTerm);
         if (trimmedSearch.Length < 3)
         {
-            return Result.Success<IReadOnlyList<FootballTeamDto>>([]);
+            return Result.Success<IReadOnlyList<ExternalFootballTeam>>([]);
         }
 
         var encodedCountry = Uri.EscapeDataString(trimmedCountry);
@@ -42,7 +43,7 @@ internal sealed class ApiFootballTeamSearch(
 
         if (!response.IsSuccessStatusCode)
         {
-            return Result.Failure<IReadOnlyList<FootballTeamDto>>(
+            return Result.Failure<IReadOnlyList<ExternalFootballTeam>>(
                 ReferenceDataErrors.ExternalTeamSearchUnavailable);
         }
 
@@ -50,10 +51,10 @@ internal sealed class ApiFootballTeamSearch(
         using var doc = JsonDocument.Parse(json);
         var teams = ParseTeamsResponse(doc);
 
-        return Result.Success<IReadOnlyList<FootballTeamDto>>(teams);
+        return Result.Success<IReadOnlyList<ExternalFootballTeam>>(teams);
     }
 
-    private static List<FootballTeamDto> ParseTeamsResponse(JsonDocument doc)
+    private static List<ExternalFootballTeam> ParseTeamsResponse(JsonDocument doc)
     {
         if (!doc.RootElement.TryGetProperty("response", out var response)
             || response.ValueKind != JsonValueKind.Array)
@@ -61,7 +62,7 @@ internal sealed class ApiFootballTeamSearch(
             return [];
         }
 
-        var teams = new List<FootballTeamDto>();
+        var teams = new List<ExternalFootballTeam>();
 
         foreach (var item in response.EnumerateArray())
         {
@@ -85,7 +86,7 @@ internal sealed class ApiFootballTeamSearch(
         return teams;
     }
 
-    private static FootballTeamDto? MapTeam(JsonElement team)
+    private static ExternalFootballTeam? MapTeam(JsonElement team)
     {
         if (!team.TryGetProperty("id", out var idElement) || !idElement.TryGetInt32(out var id))
         {
@@ -109,11 +110,10 @@ internal sealed class ApiFootballTeamSearch(
         var national = team.TryGetProperty("national", out var nationalElement)
                        && nationalElement.ValueKind == JsonValueKind.True;
 
-        return new FootballTeamDto(
+        return new ExternalFootballTeam(
             id,
             name,
             ReadString(team, "code"),
-            ReadString(team, "country") ?? string.Empty,
             founded,
             national,
             ReadString(team, "logo"));

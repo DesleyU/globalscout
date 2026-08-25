@@ -22,4 +22,7 @@ public sealed record Error(
 
     public static Error Forbidden(string code, string description, IReadOnlyDictionary<string, object?>? extensions = null) =>
         new(code, description, ErrorType.Forbidden, extensions);
+
+    public static Error Unauthorized(string code, string description) =>
+        new(code, description, ErrorType.Unauthorized, null);
 }

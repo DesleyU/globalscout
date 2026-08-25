@@ -14,6 +14,7 @@ type PlayerProfileHeaderProps = {
   imageUrl?: string | null;
   profileViews?: number | null;
   profileViewsTrend?: string | null;
+  identityBadge?: string | null;
 };
 
 export function PlayerProfileHeader({
@@ -27,6 +28,7 @@ export function PlayerProfileHeader({
   imageUrl,
   profileViews,
   profileViewsTrend,
+  identityBadge,
 }: PlayerProfileHeaderProps) {
   const details = [
     position,
@@ -51,6 +53,11 @@ export function PlayerProfileHeader({
           <div>
             <h1 className="mb-1 text-3xl font-bold">{name}</h1>
             <p className="text-sm text-gray-300">{details}</p>
+            {identityBadge ? (
+              <p className="mt-2 text-xs font-medium uppercase tracking-wide text-amber-300">
+                {identityBadge}
+              </p>
+            ) : null}
             <div className="mt-3 flex items-center gap-3">
               <Button
                 size="sm"

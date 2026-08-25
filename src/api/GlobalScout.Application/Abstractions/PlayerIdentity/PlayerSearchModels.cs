@@ -24,7 +24,6 @@ public sealed record ExternalPlayerCandidate(
     string Provider,
     string FirstName,
     string LastName,
-    string Name,
     string Club,
     string Position,
     string Nationality,

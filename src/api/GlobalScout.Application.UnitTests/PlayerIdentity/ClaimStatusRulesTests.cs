@@ -10,6 +10,7 @@ public sealed class ClaimStatusRulesTests
     [InlineData(ClaimStatus.Claimed, true)]
     [InlineData(ClaimStatus.PendingVerification, true)]
     [InlineData(ClaimStatus.Verified, true)]
+    [InlineData(ClaimStatus.SelfReported, true)]
     [InlineData(ClaimStatus.Rejected, false)]
     [InlineData(ClaimStatus.Unmatched, false)]
     public void BlocksNewClaim_matches_expected_statuses(ClaimStatus status, bool expected)

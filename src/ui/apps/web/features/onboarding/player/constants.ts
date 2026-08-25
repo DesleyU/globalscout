@@ -44,7 +44,7 @@ export const EVIDENCE_TYPE_OPTIONS: {
   {
     value: "ProfileUrl",
     label: "Profile URL",
-    description: "Official club or league profile page",
+    description: "Official club or competition profile page",
   },
   {
     value: "SocialAccount",

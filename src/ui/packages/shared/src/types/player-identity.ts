@@ -20,6 +20,7 @@ export const claimStatuses = [
   "PendingVerification",
   "Verified",
   "Rejected",
+  "SelfReported",
 ] as const;
 
 export type ClaimStatus = (typeof claimStatuses)[number];
@@ -50,6 +51,18 @@ export interface CreatePlayerIdentityClaimRequest {
   league?: string | null;
 }
 
+export interface CreateSelfReportedClaimRequest {
+  firstName: string;
+  lastName: string;
+  dateOfBirth: string;
+  nationality: string;
+  currentCountry: string;
+  currentClub: string;
+  position: string;
+  previousClub?: string | null;
+  league?: string | null;
+}
+
 export interface InitiateEvidenceUploadRequest {
   fileName: string;
   contentType: string;
@@ -73,7 +86,8 @@ export interface AddLinkEvidenceRequest {
 export interface PlayerMatchDto {
   externalPlayerId: number;
   provider: string;
-  name: string;
+  firstName: string;
+  lastName: string;
   club: string;
   position: string;
   nationality: string;
@@ -100,14 +114,15 @@ export interface VerificationEvidenceDto {
 export interface PlayerIdentityClaimDto {
   id: string;
   status: ClaimStatus | string;
-  externalPlayerId: number;
+  externalPlayerId?: number | null;
   externalProvider: string;
   fullName: string;
   dateOfBirth: string;
   nationality: string;
   currentClub: string;
   position: string;
-  candidateName: string;
+  candidateFirstName: string;
+  candidateLastName: string;
   candidateClub: string;
   candidatePosition: string;
   candidateNationality: string;
@@ -135,6 +150,16 @@ export interface AdminPendingClaimItem {
 
 export interface ListPendingPlayerClaimsResult {
   claims: AdminPendingClaimItem[];
+}
+
+export function formatPlayerName(
+  firstName?: string | null,
+  lastName?: string | null,
+): string {
+  return [firstName, lastName]
+    .map((part) => part?.trim() ?? "")
+    .filter(Boolean)
+    .join(" ");
 }
 
 export type InitiateEvidenceUploadResult = PresignedUploadResult;

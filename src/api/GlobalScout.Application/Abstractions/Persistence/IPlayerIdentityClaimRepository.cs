@@ -28,4 +28,8 @@ public interface IPlayerIdentityClaimRepository
         CancellationToken cancellationToken);
 
     Task UpdateAsync(PlayerIdentityClaim claim, CancellationToken cancellationToken);
+
+    Task<PlayerIdentityClaim?> ReplaceClaimedCandidateAsync(
+        PlayerIdentityClaim updatedClaim,
+        CancellationToken cancellationToken);
 }

@@ -17,7 +17,7 @@ export default async function DashboardPage() {
 
   const claimResult = await fetchMyClaim();
 
-  if (claimResult?.status === "Verified") {
+  if (claimResult?.status === "Verified" || claimResult?.status === "SelfReported") {
     redirect("/dashboard/verified");
   }
 

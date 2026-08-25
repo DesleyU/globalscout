@@ -21,61 +21,8 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 .HasAnnotation("ProductVersion", "10.0.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
+            NpgsqlModelBuilderExtensions.HasPostgresExtension(modelBuilder, "pg_trgm");
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
-
-            modelBuilder.Entity("GlobalScout.Domain.Clubs.Club", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid")
-                        .HasColumnName("id");
-
-                    b.Property<string>("City")
-                        .HasColumnType("text")
-                        .HasColumnName("city");
-
-                    b.Property<string>("Country")
-                        .HasColumnType("text")
-                        .HasColumnName("country");
-
-                    b.Property<DateTimeOffset>("CreatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("created_at");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("text")
-                        .HasColumnName("description");
-
-                    b.Property<string>("League")
-                        .HasColumnType("text")
-                        .HasColumnName("league");
-
-                    b.Property<string>("LogoUrl")
-                        .HasColumnType("text")
-                        .HasColumnName("logo_url");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("name");
-
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
-                    b.Property<string>("Website")
-                        .HasColumnType("text")
-                        .HasColumnName("website");
-
-                    b.HasKey("Id")
-                        .HasName("pk_clubs");
-
-                    b.HasIndex("Name")
-                        .IsUnique()
-                        .HasDatabaseName("ix_clubs_name");
-
-                    b.ToTable("clubs", (string)null);
-                });
 
             modelBuilder.Entity("GlobalScout.Domain.PlayerIdentity.PlayerIdentityClaim", b =>
                 {
@@ -99,11 +46,17 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("character varying(200)")
                         .HasColumnName("candidate_club");
 
-                    b.Property<string>("CandidateName")
+                    b.Property<string>("CandidateFirstName")
                         .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("character varying(200)")
-                        .HasColumnName("candidate_name");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("candidate_first_name");
+
+                    b.Property<string>("CandidateLastName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)")
+                        .HasColumnName("candidate_last_name");
 
                     b.Property<string>("CandidateNationality")
                         .IsRequired()
@@ -140,7 +93,7 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("date")
                         .HasColumnName("date_of_birth");
 
-                    b.Property<int>("ExternalPlayerId")
+                    b.Property<int?>("ExternalPlayerId")
                         .HasColumnType("integer")
                         .HasColumnName("external_player_id");
 
@@ -205,7 +158,7 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.HasIndex("UserId")
                         .IsUnique()
                         .HasDatabaseName("ix_player_identity_claims_user_id")
-                        .HasFilter("status IN (2, 3, 4)");
+                        .HasFilter("status IN (2, 3, 4, 6)");
 
                     b.ToTable("player_identity_claims", (string)null);
                 });
@@ -251,6 +204,246 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasDatabaseName("ix_verification_evidence_claim_id");
 
                     b.ToTable("verification_evidence", (string)null);
+                });
+
+            modelBuilder.Entity("GlobalScout.Domain.ReferenceData.Competition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("country_code");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<int?>("ExternalCompetitionId")
+                        .HasColumnType("integer")
+                        .HasColumnName("external_competition_id");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("integer")
+                        .HasColumnName("level");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("logo_url");
+
+                    b.Property<Guid?>("MergedIntoCompetitionId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("merged_into_competition_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("NameNormalized")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("name_normalized");
+
+                    b.Property<int>("Source")
+                        .HasColumnType("integer")
+                        .HasColumnName("source");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<Guid?>("SubmittedByUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("submitted_by_user_id");
+
+                    b.Property<int?>("SubmittedLevelHint")
+                        .HasColumnType("integer")
+                        .HasColumnName("submitted_level_hint");
+
+                    b.Property<int?>("SubmittedTypeHint")
+                        .HasColumnType("integer")
+                        .HasColumnName("submitted_type_hint");
+
+                    b.Property<string>("Type")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)")
+                        .HasColumnName("type");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_reference_competitions");
+
+                    b.HasIndex("ExternalCompetitionId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_reference_competitions_external_competition_id")
+                        .HasFilter("external_competition_id IS NOT NULL");
+
+                    b.HasIndex("MergedIntoCompetitionId")
+                        .HasDatabaseName("ix_reference_competitions_merged_into_competition_id");
+
+                    b.HasIndex("NameNormalized")
+                        .HasDatabaseName("ix_reference_competitions_name_normalized");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("NameNormalized"), "gin");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("NameNormalized"), new[] { "gin_trgm_ops" });
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_reference_competitions_status");
+
+                    b.HasIndex("CountryCode", "NameNormalized")
+                        .HasDatabaseName("ix_reference_competitions_country_code_name_normalized");
+
+                    b.HasIndex("SubmittedByUserId", "Status")
+                        .HasDatabaseName("ix_reference_competitions_submitted_by_user_id_status");
+
+                    b.ToTable("reference_competitions", (string)null);
+                });
+
+            modelBuilder.Entity("GlobalScout.Domain.ReferenceData.CountrySyncState", b =>
+                {
+                    b.Property<string>("CountryCode")
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("country_code");
+
+                    b.Property<int>("CompetitionCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("competition_count");
+
+                    b.Property<DateTimeOffset?>("CompetitionsSyncedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("competitions_synced_at");
+
+                    b.Property<Guid?>("LastSyncedByUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("last_synced_by_user_id");
+
+                    b.Property<int>("TeamCount")
+                        .HasColumnType("integer")
+                        .HasColumnName("team_count");
+
+                    b.Property<DateTimeOffset?>("TeamsSyncedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("teams_synced_at");
+
+                    b.HasKey("CountryCode")
+                        .HasName("pk_reference_country_sync_states");
+
+                    b.HasIndex("LastSyncedByUserId")
+                        .HasDatabaseName("ix_reference_country_sync_states_last_synced_by_user_id");
+
+                    b.ToTable("reference_country_sync_states", (string)null);
+                });
+
+            modelBuilder.Entity("GlobalScout.Domain.ReferenceData.Team", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Code")
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasColumnName("code");
+
+                    b.Property<string>("CountryCode")
+                        .IsRequired()
+                        .HasMaxLength(8)
+                        .HasColumnType("character varying(8)")
+                        .HasColumnName("country_code");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<int?>("ExternalTeamId")
+                        .HasColumnType("integer")
+                        .HasColumnName("external_team_id");
+
+                    b.Property<int?>("Founded")
+                        .HasColumnType("integer")
+                        .HasColumnName("founded");
+
+                    b.Property<bool>("IsNational")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_national");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)")
+                        .HasColumnName("logo_url");
+
+                    b.Property<Guid?>("MergedIntoTeamId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("merged_into_team_id");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("name");
+
+                    b.Property<string>("NameNormalized")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)")
+                        .HasColumnName("name_normalized");
+
+                    b.Property<int>("Source")
+                        .HasColumnType("integer")
+                        .HasColumnName("source");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer")
+                        .HasColumnName("status");
+
+                    b.Property<Guid?>("SubmittedByUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("submitted_by_user_id");
+
+                    b.Property<DateTimeOffset>("UpdatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("updated_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_reference_teams");
+
+                    b.HasIndex("ExternalTeamId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_reference_teams_external_team_id")
+                        .HasFilter("external_team_id IS NOT NULL");
+
+                    b.HasIndex("MergedIntoTeamId")
+                        .HasDatabaseName("ix_reference_teams_merged_into_team_id");
+
+                    b.HasIndex("NameNormalized")
+                        .HasDatabaseName("ix_reference_teams_name_normalized");
+
+                    NpgsqlIndexBuilderExtensions.HasMethod(b.HasIndex("NameNormalized"), "gin");
+                    NpgsqlIndexBuilderExtensions.HasOperators(b.HasIndex("NameNormalized"), new[] { "gin_trgm_ops" });
+
+                    b.HasIndex("Status")
+                        .HasDatabaseName("ix_reference_teams_status");
+
+                    b.HasIndex("CountryCode", "NameNormalized")
+                        .HasDatabaseName("ix_reference_teams_country_code_name_normalized");
+
+                    b.HasIndex("SubmittedByUserId", "Status")
+                        .HasDatabaseName("ix_reference_teams_submitted_by_user_id_status");
+
+                    b.ToTable("reference_teams", (string)null);
                 });
 
             modelBuilder.Entity("GlobalScout.Domain.Social.Connection", b =>
@@ -1045,6 +1238,45 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("fk_verification_evidence_player_identity_claims_claim_id");
+                });
+
+            modelBuilder.Entity("GlobalScout.Domain.ReferenceData.Competition", b =>
+                {
+                    b.HasOne("GlobalScout.Domain.ReferenceData.Competition", null)
+                        .WithMany()
+                        .HasForeignKey("MergedIntoCompetitionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_reference_competitions_merged_into");
+
+                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("SubmittedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_reference_competitions_submitted_by_user");
+                });
+
+            modelBuilder.Entity("GlobalScout.Domain.ReferenceData.CountrySyncState", b =>
+                {
+                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("LastSyncedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_reference_country_sync_states_last_synced_by_user");
+                });
+
+            modelBuilder.Entity("GlobalScout.Domain.ReferenceData.Team", b =>
+                {
+                    b.HasOne("GlobalScout.Domain.ReferenceData.Team", null)
+                        .WithMany()
+                        .HasForeignKey("MergedIntoTeamId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("fk_reference_teams_merged_into");
+
+                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("SubmittedByUserId")
+                        .OnDelete(DeleteBehavior.SetNull)
+                        .HasConstraintName("fk_reference_teams_submitted_by_user");
                 });
 
             modelBuilder.Entity("GlobalScout.Domain.Social.Connection", b =>

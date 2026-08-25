@@ -21,6 +21,7 @@ internal sealed class GetMyPlayerStatisticsQueryHandler(IPlayerStatisticsReposit
         var rows = await stats.ListByUserAsync(query.UserId, cancellationToken);
         var dtos = rows.Select(PlayerStatisticsMapper.ToDto).ToList();
         var data = dtos.Select(PlayerStatisticsMapper.ToFullDictionary).Cast<object>().ToList();
+        var hasLinkedProvider = await stats.GetApiPlayerIdAsync(query.UserId, cancellationToken) is not null;
 
         var tier = AccountTypeToApi(accountType.Value);
         var message = data.Count == 0
@@ -34,7 +35,8 @@ internal sealed class GetMyPlayerStatisticsQueryHandler(IPlayerStatisticsReposit
                 AccountType: tier,
                 AvailableFields: "all",
                 TotalSeasons: data.Count,
-                Message: message));
+                Message: message,
+                HasLinkedProvider: hasLinkedProvider));
     }
 
     private static string AccountTypeToApi(AccountType a) => a.ToString().ToUpperInvariant();

@@ -1,7 +1,7 @@
 using System.Globalization;
 using GlobalScout.Application.Abstractions.PlayerIdentity;
+using GlobalScout.Application.Common;
 using GlobalScout.Domain.Identity;
-
 namespace GlobalScout.Application.PlayerIdentity.Matching;
 
 public static class ConfidenceScorer
@@ -20,12 +20,11 @@ public static class ConfidenceScorer
         var reasons = new List<string>();
         var score = 0;
 
-        if (NamesMatch(criteria, candidate))
+        if (NameMatcher.NamesMatch(criteria, candidate))
         {
             score += NamePoints;
-            reasons.Add("Exact name match");
+            reasons.Add("Name match");
         }
-
         if (DateOfBirthMatches(criteria.DateOfBirth, candidate.DateOfBirth))
         {
             score += DateOfBirthPoints;
@@ -86,81 +85,7 @@ public static class ConfidenceScorer
         _ => ConfidenceBucket.Low
     };
 
-    private static bool NamesMatch(PlayerSearchCriteria criteria, ExternalPlayerCandidate candidate)
-    {
-        var candidateFirstName = ResolveCandidateFirstName(candidate);
-        var candidateLastName = ResolveCandidateLastName(candidate);
-
-        return LastNamesMatch(criteria.LastName, candidateLastName)
-               && FirstNamesMatch(criteria.FirstName, candidateFirstName);
-    }
-
-    private static string ResolveCandidateFirstName(ExternalPlayerCandidate candidate) =>
-        !string.IsNullOrWhiteSpace(candidate.FirstName)
-            ? candidate.FirstName
-            : ExtractFirstName(candidate.Name);
-
-    private static string ResolveCandidateLastName(ExternalPlayerCandidate candidate) =>
-        !string.IsNullOrWhiteSpace(candidate.LastName)
-            ? candidate.LastName
-            : ExtractLastName(candidate.Name);
-
-    private static bool LastNamesMatch(string left, string right) =>
-        NormalizeText(left) == NormalizeText(right);
-
-    private static bool FirstNamesMatch(string left, string right)
-    {
-        var normalizedLeft = NormalizeText(left);
-        var normalizedRight = NormalizeText(right);
-
-        if (normalizedLeft == normalizedRight)
-        {
-            return true;
-        }
-
-        var leftInitial = normalizedLeft.TrimEnd('.');
-        var rightInitial = normalizedRight.TrimEnd('.');
-
-        if (leftInitial.Length == 1 && normalizedRight.StartsWith(leftInitial, StringComparison.Ordinal))
-        {
-            return true;
-        }
-
-        if (rightInitial.Length == 1 && normalizedLeft.StartsWith(rightInitial, StringComparison.Ordinal))
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    private static string ExtractFirstName(string fullName)
-    {
-        var parts = fullName.Trim()
-            .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
-
-        return parts.Length switch
-        {
-            0 => string.Empty,
-            1 => parts[0],
-            _ => string.Join(' ', parts[..^1])
-        };
-    }
-
-    private static string ExtractLastName(string fullName)
-    {
-        var parts = fullName.Trim()
-            .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries);
-
-        return parts.Length switch
-        {
-            0 => string.Empty,
-            _ => parts[^1]
-        };
-    }
-
-    private static bool DateOfBirthMatches(DateOnly criteriaDateOfBirth, DateOnly? candidateDateOfBirth) =>
-        candidateDateOfBirth == criteriaDateOfBirth;
+    private static bool DateOfBirthMatches(DateOnly criteriaDateOfBirth, DateOnly? candidateDateOfBirth) =>        candidateDateOfBirth == criteriaDateOfBirth;
 
     private static bool ClubsMatch(string left, string right)
     {
@@ -224,10 +149,10 @@ public static class ConfidenceScorer
     private static string NormalizeText(string value) =>
         string.Join(
             ' ',
-            value.Trim()
+            TextNormalizer.RemoveDiacritics(value)
+                .Trim()
                 .ToLower(CultureInfo.InvariantCulture)
                 .Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries));
-
     private static string NormalizeClub(string value)
     {
         var normalized = NormalizeText(value);

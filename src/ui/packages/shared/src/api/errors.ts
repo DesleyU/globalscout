@@ -96,6 +96,7 @@ export function parseApiError(
       status,
       kind: kindFromStatus(status),
       code: typeof record.code === "string" ? record.code : undefined,
+      problem: record as ApiProblemDetails,
     });
   }
 

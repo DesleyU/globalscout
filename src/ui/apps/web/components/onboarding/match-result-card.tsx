@@ -1,4 +1,4 @@
-import type { PlayerMatchDto } from "@globalscout/shared";
+import { formatPlayerName, type PlayerMatchDto } from "@globalscout/shared";
 import {
   Calendar,
   Check,
@@ -34,7 +34,8 @@ export function MatchResultCard({
   onSelect,
   onDismiss,
 }: MatchResultCardProps) {
-  const initials = match.name
+  const displayName = formatPlayerName(match.firstName, match.lastName);
+  const initials = displayName
     .split(" ")
     .map((part) => part[0])
     .join("")
@@ -61,7 +62,7 @@ export function MatchResultCard({
         <div className="flex items-start gap-5">
           <div className="relative shrink-0">
             <Avatar className="h-20 w-20 rounded-xl">
-              <AvatarImage src={match.photoUrl ?? undefined} alt={match.name} />
+              <AvatarImage src={match.photoUrl ?? undefined} alt={displayName} />
               <AvatarFallback className="rounded-xl bg-blue-100 text-lg font-bold text-blue-700">
                 {initials}
               </AvatarFallback>
@@ -77,7 +78,7 @@ export function MatchResultCard({
           </div>
 
           <div className="min-w-0 flex-1">
-            <h3 className="mb-1 text-lg font-bold text-gray-900">{match.name}</h3>
+            <h3 className="mb-1 text-lg font-bold text-gray-900">{displayName}</h3>
 
             <dl className="mb-3 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-600">
               <div className="flex items-center gap-1">

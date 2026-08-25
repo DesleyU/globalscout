@@ -6,5 +6,6 @@ public interface IPlayerStatisticsRefreshExecutor
 {
     Task<Result<RefreshMyPlayerStatisticsResult>> ExecuteAsync(
         Guid userId,
+        bool enforceCooldown,
         CancellationToken cancellationToken);
 }

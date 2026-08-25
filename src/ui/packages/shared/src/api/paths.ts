@@ -27,6 +27,7 @@ export const usersPaths = {
 
 export const statsPaths = {
   me: "/stats/me",
+  meSeason: (season: string) => `/stats/me/${encodeURIComponent(season)}`,
   user: (userId: string) => `/stats/user/${userId}`,
   refresh: "/stats/refresh",
   refreshAll: "/stats/refresh/all",
@@ -84,11 +85,25 @@ export const adminPaths = {
     `/admin/player-claims/${claimId}/request-info`,
   playerClaimEvidenceReadUrl: (claimId: string, evidenceId: string) =>
     `/admin/player-claims/${claimId}/evidence/${evidenceId}/url`,
+  referenceDataSync: (countryCode: string) =>
+    `/admin/reference-data/sync/${encodeURIComponent(countryCode)}`,
+  referenceDataCountries: "/admin/reference-data/countries",
+  referenceDataCountryCompetitions: (countryCode: string) =>
+    `/admin/reference-data/countries/${encodeURIComponent(countryCode)}/competitions`,
+  referenceDataCompetitionLevel: (competitionId: string) =>
+    `/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/level`,
+  referenceDataCompetitionType: (competitionId: string) =>
+    `/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/type`,
+  referenceDataCompetitionApproval: (competitionId: string) =>
+    `/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/approve`,
+  referenceDataCompetitionRejection: (competitionId: string) =>
+    `/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/reject`,
 } as const;
 
 export const playerIdentityPaths = {
   search: "/player-identity/search",
   claims: "/player-identity/claims",
+  claimsSelfReported: "/player-identity/claims/self-reported",
   claimsMe: "/player-identity/claims/me",
   evidenceUploadUrl: "/player-identity/claims/me/evidence/upload-url",
   evidenceComplete: "/player-identity/claims/me/evidence/complete",

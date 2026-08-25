@@ -79,7 +79,11 @@ export function TeamAutocompleteField({
     const timeoutId = window.setTimeout(() => {
       const api = createBrowserReferenceDataApi();
       void api
-        .searchTeams({ country, searchTerm: trimmed })
+        .searchTeams({
+          country,
+          searchTerm: trimmed,
+          requiresExternalId: true,
+        })
         .then((result) => {
           setResults(result.teams);
           setHasSearched(true);
@@ -125,6 +129,10 @@ export function TeamAutocompleteField({
   }
 
   function handleSelectTeam(team: FootballTeamDto) {
+    if (team.externalTeamId === null) {
+      return;
+    }
+
     onTeamChange({
       teamId: team.externalTeamId,
       teamName: team.name,
@@ -205,7 +213,7 @@ export function TeamAutocompleteField({
           className="absolute z-20 mt-1 max-h-60 w-full overflow-auto rounded-md border bg-popover p-1 shadow-md"
         >
           {results.map((team) => (
-            <li key={team.externalTeamId} role="none">
+            <li key={team.id} role="none">
               <button
                 type="button"
                 role="option"

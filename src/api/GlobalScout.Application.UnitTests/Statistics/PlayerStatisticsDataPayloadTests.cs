@@ -42,6 +42,55 @@ public sealed class PlayerStatisticsDataPayloadTests
     }
 
     [Fact]
+    public void CreateManualDocument_writes_aggregated_and_competitions()
+    {
+        var teamId = Guid.NewGuid();
+        var competitionId = Guid.NewGuid();
+        var values = new ManualStatisticsValues
+        {
+            Goals = 2,
+            Assists = 4,
+            Matches = 8,
+            Minutes = 400,
+            YellowCards = 0,
+            RedCards = 1,
+            Rating = 6.5,
+            Competitions =
+            [
+                new ResolvedManualCompetition
+                {
+                    TeamCatalogId = teamId,
+                    TeamName = "FC Voluntari U19",
+                    TeamIsVerified = false,
+                    CompetitionCatalogId = competitionId,
+                    CompetitionName = "Liga Elitelor",
+                    CompetitionCountry = "Romania",
+                    Level = "YouthAcademy",
+                    CompetitionIsVerified = false,
+                    SeasonYear = 2024,
+                    Appearances = 8,
+                    Minutes = 400,
+                    Goals = 2,
+                    Assists = 4,
+                    YellowCards = 0,
+                    RedCards = 1,
+                    Rating = 6.5,
+                },
+            ],
+        };
+
+        using JsonDocument doc = PlayerStatisticsDataPayload.CreateManualDocument("2024", values);
+        var root = doc.RootElement;
+
+        Assert.True(root.TryGetProperty("aggregated", out var aggregated));
+        Assert.Equal(2, aggregated.GetProperty("goals").GetInt32());
+        Assert.True(root.TryGetProperty("competitions", out var competitions));
+        Assert.Equal(1, competitions.GetArrayLength());
+        Assert.Equal(teamId.ToString(), competitions[0].GetProperty("team").GetProperty("catalogId").GetString());
+        Assert.Equal(competitionId.ToString(), competitions[0].GetProperty("competition").GetProperty("catalogId").GetString());
+    }
+
+    [Fact]
     public void CreateManualDocument_round_trips_merge()
     {
         var values = new ManualStatisticsValues

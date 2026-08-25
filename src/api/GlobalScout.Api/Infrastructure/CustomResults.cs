@@ -15,6 +15,7 @@ public static class CustomResults
             ErrorType.Conflict => StatusCodes.Status409Conflict,
             ErrorType.Problem => StatusCodes.Status400BadRequest,
             ErrorType.Forbidden => StatusCodes.Status403Forbidden,
+            ErrorType.Unauthorized => StatusCodes.Status401Unauthorized,
             _ => StatusCodes.Status400BadRequest
         };
 
@@ -43,6 +44,7 @@ public static class CustomResults
             ErrorType.Conflict => "Conflict",
             ErrorType.Problem => "Bad request",
             ErrorType.Forbidden => "Forbidden",
+            ErrorType.Unauthorized => "Unauthorized",
             _ => "Error"
         };
 }

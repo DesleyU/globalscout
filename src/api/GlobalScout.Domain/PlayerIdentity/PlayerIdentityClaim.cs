@@ -8,11 +8,13 @@ public sealed class PlayerIdentityClaim
 
     public Guid UserId { get; set; }
 
-    public int ExternalPlayerId { get; set; }
+    public int? ExternalPlayerId { get; set; }
 
     public string ExternalProvider { get; set; } = string.Empty;
 
-    public string CandidateName { get; set; } = string.Empty;
+    public string CandidateFirstName { get; set; } = string.Empty;
+
+    public string CandidateLastName { get; set; } = string.Empty;
 
     public string CandidateClub { get; set; } = string.Empty;
 

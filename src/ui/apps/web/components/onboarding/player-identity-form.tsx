@@ -255,8 +255,14 @@ export function PlayerIdentityForm({
                         teamId={teamIdField.value}
                         teamName={teamNameField.value}
                         onTeamChange={({ teamId, teamName }) => {
-                          teamIdField.onChange(teamId);
-                          teamNameField.onChange(teamName);
+                          form.setValue("currentTeamId", teamId, {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                          });
+                          form.setValue("currentTeamName", teamName, {
+                            shouldDirty: true,
+                            shouldValidate: true,
+                          });
                         }}
                         disabled={isSubmitting}
                         invalid={fieldState.invalid}

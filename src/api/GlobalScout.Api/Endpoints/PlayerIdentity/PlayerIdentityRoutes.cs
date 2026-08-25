@@ -8,6 +8,8 @@ internal static class PlayerIdentityRoutes
 
     public static string Claims => $"{Base}/claims";
 
+    public static string ClaimsSelfReported => $"{Base}/claims/self-reported";
+
     public static string ClaimsMe => $"{Base}/claims/me";
 
     public static string EvidenceUploadUrl => $"{Base}/claims/me/evidence/upload-url";

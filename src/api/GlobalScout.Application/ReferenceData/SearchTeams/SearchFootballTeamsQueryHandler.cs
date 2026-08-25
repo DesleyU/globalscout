@@ -5,11 +5,12 @@ using GlobalScout.SharedKernel;
 namespace GlobalScout.Application.ReferenceData.SearchTeams;
 
 internal sealed class SearchFootballTeamsQueryHandler(
-    IReferenceDataStore referenceData,
+    IReferenceDataCatalog catalog,
     IExternalTeamSearch externalTeamSearch)
     : IQueryHandler<SearchFootballTeamsQuery, SearchFootballTeamsResult>
 {
-    private const int MinPreloadedSearchLength = 2;
+    private const int MaxResults = 25;
+    private const int MinLocalSearchLength = 2;
     private const int MinExternalSearchLength = 3;
 
     public async Task<Result<SearchFootballTeamsResult>> Handle(
@@ -19,18 +20,28 @@ internal sealed class SearchFootballTeamsQueryHandler(
         var country = query.Country.Trim();
         var searchTerm = query.SearchTerm.Trim();
 
-        if (searchTerm.Length < MinPreloadedSearchLength)
+        if (searchTerm.Length < MinLocalSearchLength)
         {
             return Result.Success(new SearchFootballTeamsResult([]));
         }
 
-        if (referenceData.IsPreloadedCountry(country))
+        var countryDefinition = FootballCountries.FindByName(country)
+                                ?? FootballCountries.FindByCode(country);
+        if (countryDefinition is null)
         {
-            var preloaded = referenceData.SearchPreloadedTeams(country, searchTerm);
-            if (preloaded.Count > 0)
-            {
-                return Result.Success(new SearchFootballTeamsResult(preloaded));
-            }
+            return Result.Failure<SearchFootballTeamsResult>(
+                ReferenceDataErrors.CountryNotSupported);
+        }
+
+        var local = await catalog.SearchTeamsAsync(
+            countryDefinition.Code,
+            searchTerm,
+            query.RequiresExternalId,
+            MaxResults,
+            cancellationToken);
+        if (local.Count > 0)
+        {
+            return Result.Success(new SearchFootballTeamsResult(local));
         }
 
         if (searchTerm.Length < MinExternalSearchLength)
@@ -38,12 +49,20 @@ internal sealed class SearchFootballTeamsQueryHandler(
             return Result.Success(new SearchFootballTeamsResult([]));
         }
 
-        var external = await externalTeamSearch.SearchAsync(country, searchTerm, cancellationToken);
+        var external = await externalTeamSearch.SearchAsync(
+            countryDefinition.ProviderName,
+            searchTerm,
+            cancellationToken);
         if (external.IsFailure)
         {
             return Result.Failure<SearchFootballTeamsResult>(external.Error);
         }
 
-        return Result.Success(new SearchFootballTeamsResult(external.Value));
+        var upserted = await catalog.UpsertProviderTeamsAsync(
+            countryDefinition.Code,
+            external.Value,
+            cancellationToken);
+
+        return Result.Success(new SearchFootballTeamsResult(upserted.Items));
     }
 }

@@ -11,7 +11,8 @@ internal sealed class PlayerIdentityClaimRepository(GlobalScoutDbContext db) : I
     [
         ClaimStatus.Claimed,
         ClaimStatus.PendingVerification,
-        ClaimStatus.Verified
+        ClaimStatus.Verified,
+        ClaimStatus.SelfReported
     ];
 
     public async Task AddAsync(PlayerIdentityClaim claim, CancellationToken cancellationToken)
@@ -84,7 +85,8 @@ internal sealed class PlayerIdentityClaimRepository(GlobalScoutDbContext db) : I
         {
             var term = criteria.Search.Trim();
             query = query.Where(c =>
-                EF.Functions.ILike(c.CandidateName, $"%{term}%")
+                EF.Functions.ILike(c.CandidateFirstName, $"%{term}%")
+                || EF.Functions.ILike(c.CandidateLastName, $"%{term}%")
                 || EF.Functions.ILike(c.FullName, $"%{term}%")
                 || db.Users.Any(u =>
                     u.Id == c.UserId
@@ -119,5 +121,49 @@ internal sealed class PlayerIdentityClaimRepository(GlobalScoutDbContext db) : I
                     .SetProperty(c => c.ReviewedByUserId, claim.ReviewedByUserId)
                     .SetProperty(c => c.ReviewedAt, claim.ReviewedAt),
                 cancellationToken);
+    }
+
+    public async Task<PlayerIdentityClaim?> ReplaceClaimedCandidateAsync(
+        PlayerIdentityClaim updatedClaim,
+        CancellationToken cancellationToken)
+    {
+        var tracked = await db.PlayerIdentityClaims
+            .Include(c => c.Evidence)
+            .FirstOrDefaultAsync(
+                c => c.Id == updatedClaim.Id && c.Status == ClaimStatus.Claimed,
+                cancellationToken);
+
+        if (tracked is null)
+        {
+            return null;
+        }
+
+        tracked.ExternalPlayerId = updatedClaim.ExternalPlayerId;
+        tracked.ExternalProvider = updatedClaim.ExternalProvider;
+        tracked.CandidateFirstName = updatedClaim.CandidateFirstName;
+        tracked.CandidateLastName = updatedClaim.CandidateLastName;
+        tracked.CandidateClub = updatedClaim.CandidateClub;
+        tracked.CandidatePosition = updatedClaim.CandidatePosition;
+        tracked.CandidateNationality = updatedClaim.CandidateNationality;
+        tracked.CandidateAge = updatedClaim.CandidateAge;
+        tracked.CandidatePhotoUrl = updatedClaim.CandidatePhotoUrl;
+        tracked.FullName = updatedClaim.FullName;
+        tracked.DateOfBirth = updatedClaim.DateOfBirth;
+        tracked.Nationality = updatedClaim.Nationality;
+        tracked.CurrentClub = updatedClaim.CurrentClub;
+        tracked.PreviousClub = updatedClaim.PreviousClub;
+        tracked.Position = updatedClaim.Position;
+        tracked.League = updatedClaim.League;
+        tracked.ConfidenceScore = updatedClaim.ConfidenceScore;
+        tracked.UpdatedAt = updatedClaim.UpdatedAt;
+
+        if (tracked.Evidence.Count > 0)
+        {
+            db.VerificationEvidence.RemoveRange(tracked.Evidence);
+            tracked.Evidence.Clear();
+        }
+
+        await db.SaveChangesAsync(cancellationToken);
+        return tracked;
     }
 }

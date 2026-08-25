@@ -53,7 +53,8 @@ internal sealed class SearchPlayersCommandHandler(
                 return PlayerIdentityMapper.ToMatchDto(candidate, score);
             })
             .OrderByDescending(m => m.ConfidenceScore)
-            .ThenBy(m => m.Name, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(m => m.LastName, StringComparer.OrdinalIgnoreCase)
+            .ThenBy(m => m.FirstName, StringComparer.OrdinalIgnoreCase)
             .ToArray();
 
         return Result.Success(new SearchPlayersResult(matches));

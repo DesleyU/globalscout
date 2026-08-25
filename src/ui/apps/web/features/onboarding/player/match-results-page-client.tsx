@@ -25,7 +25,12 @@ export function MatchResultsPageClient() {
 
   useEffect(() => {
     if (initialMatches === null) {
-      router.replace("/onboarding/player/connect");
+      const criteria = loadSearchCriteria();
+      router.replace(
+        criteria
+          ? "/onboarding/player/searching"
+          : "/onboarding/player/connect",
+      );
     }
   }, [initialMatches, router]);
 
@@ -114,8 +119,15 @@ export function MatchResultsPageClient() {
                 We couldn&apos;t find a football profile that matches your
                 details. Try adjusting your search.
               </p>
-              <Button render={<Link href="/onboarding/player/connect" />}>
-                Search Again
+              <Button render={<Link href="/onboarding/player/manual" />}>
+                Build a self-reported profile
+              </Button>
+              <Button
+                variant="outline"
+                render={<Link href="/onboarding/player/connect" />}
+                className="mt-3"
+              >
+                Search again
               </Button>
             </CardContent>
           </Card>
@@ -134,7 +146,7 @@ export function MatchResultsPageClient() {
 
         <div className="mt-8 text-center">
           <Link
-            href="/onboarding/player/connect"
+            href="/onboarding/player/manual"
             className="text-sm text-gray-500 underline underline-offset-4 transition hover:text-blue-600"
           >
             I Can&apos;t Find My Profile

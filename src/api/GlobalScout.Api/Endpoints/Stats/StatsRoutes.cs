@@ -6,6 +6,8 @@ internal static class StatsRoutes
 
     public static string Me => $"{Base}/me";
 
+    public const string MeSeason = $"{Base}/me/{{season}}";
+
     public static string User => $"{Base}/user/{{userId:guid}}";
 
     public static string Refresh => $"{Base}/refresh";

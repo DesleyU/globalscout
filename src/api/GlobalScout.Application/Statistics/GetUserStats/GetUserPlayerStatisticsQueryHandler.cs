@@ -36,6 +36,7 @@ internal sealed class GetUserPlayerStatisticsQueryHandler(IPlayerStatisticsRepos
         object availableFields = isOtherBasic
             ? SubscriptionLimits.BasicTierVisibleStatKeys
             : "all";
+        var hasLinkedProvider = await stats.GetApiPlayerIdAsync(query.TargetUserId, cancellationToken) is not null;
 
         return Result.Success(
             new PlayerStatisticsResponseEnvelope(
@@ -44,7 +45,8 @@ internal sealed class GetUserPlayerStatisticsQueryHandler(IPlayerStatisticsRepos
                 AccountType: tier,
                 AvailableFields: availableFields,
                 TotalSeasons: data.Count,
-                Message: null));
+                Message: null,
+                HasLinkedProvider: hasLinkedProvider));
     }
 
     private static string AccountTypeToApi(AccountType a) => a.ToString().ToUpperInvariant();

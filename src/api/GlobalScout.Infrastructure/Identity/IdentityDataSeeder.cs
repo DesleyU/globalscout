@@ -62,6 +62,7 @@ public static class IdentityDataSeeder
             {
                 Id = Guid.NewGuid(),
                 UserName = normalizedEmail,
+
                 Email = normalizedEmail,
                 NormalizedEmail = normalizedEmail.ToUpperInvariant(),
                 NormalizedUserName = normalizedEmail.ToUpperInvariant(),

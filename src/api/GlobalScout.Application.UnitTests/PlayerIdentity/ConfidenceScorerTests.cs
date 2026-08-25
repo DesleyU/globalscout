@@ -27,7 +27,6 @@ public sealed class ConfidenceScorerTests
     private static ExternalPlayerCandidate CreateCandidate(
         string firstName = "Pedri",
         string lastName = "Gonzalez",
-        string name = "Pedri Gonzalez",
         string club = "FC Barcelona",
         DateOnly? dateOfBirth = null,
         int? age = null,
@@ -40,7 +39,6 @@ public sealed class ConfidenceScorerTests
             Provider: ExternalPlayerProviders.ApiFootball,
             FirstName: firstName,
             LastName: lastName,
-            Name: name,
             Club: club,
             Position: position,
             Nationality: nationality,
@@ -68,13 +66,12 @@ public sealed class ConfidenceScorerTests
             CreateCandidate(
                 firstName: "Ianis",
                 lastName: "Hagi",
-                name: "I. Hagi",
                 club: "FCSB",
                 dateOfBirth: new DateOnly(1998, 10, 22),
                 nationality: "Romania",
                 position: "Midfielder"));
 
-        Assert.Contains("Exact name match", result.Reasons);
+        Assert.Contains("Name match", result.Reasons);
     }
 
     [Fact]
@@ -87,7 +84,7 @@ public sealed class ConfidenceScorerTests
         Assert.InRange(result.Score, 90, 100);
         Assert.Equal(ConfidenceBucket.High, result.Bucket);
         Assert.True(ConfidenceScorer.IsRecommended(result));
-        Assert.Contains("Exact name match", result.Reasons);
+        Assert.Contains("Name match", result.Reasons);
         Assert.Contains("Date of birth match", result.Reasons);
         Assert.Contains("Current club match", result.Reasons);
     }
@@ -104,7 +101,7 @@ public sealed class ConfidenceScorerTests
         Assert.InRange(result.Score, 60, 89);
         Assert.Equal(ConfidenceBucket.Medium, result.Bucket);
         Assert.False(ConfidenceScorer.IsRecommended(result));
-        Assert.Contains("Exact name match", result.Reasons);
+        Assert.Contains("Name match", result.Reasons);
         Assert.Contains("Date of birth match", result.Reasons);
         Assert.DoesNotContain("Current club match", result.Reasons);
     }
@@ -117,7 +114,6 @@ public sealed class ConfidenceScorerTests
             CreateCandidate(
                 firstName: "Another",
                 lastName: "Player",
-                name: "Another Player",
                 club: "Real Zaragoza",
                 dateOfBirth: new DateOnly(1999, 1, 1),
                 age: 27,
@@ -171,6 +167,96 @@ public sealed class ConfidenceScorerTests
                 dateOfBirth: DateOfBirth));
 
         Assert.Contains("Current club match", result.Reasons);
+    }
+
+    [Fact]
+    public void Score_matches_when_api_includes_middle_name_in_first_name()
+    {
+        var criteria = new PlayerSearchCriteria(
+            FirstName: "Ianis",
+            LastName: "Hagi",
+            DateOfBirth: new DateOnly(1998, 10, 22),
+            Nationality: "Romania",
+            CurrentCountry: "Romania",
+            CurrentTeamId: 559,
+            CurrentClub: "FCSB",
+            Position: Position.Midfielder);
+
+        var result = ConfidenceScorer.Score(
+            criteria,
+            CreateCandidate(
+                firstName: "Ianis Florin",
+                lastName: "Hagi",
+                club: "FCSB",
+                dateOfBirth: new DateOnly(1998, 10, 22),
+                nationality: "Romania",
+                position: "Midfielder"));
+
+        Assert.Contains("Name match", result.Reasons);
+    }
+
+    [Fact]
+    public void Score_matches_when_api_includes_middle_name_in_last_name()
+    {
+        var criteria = new PlayerSearchCriteria(
+            FirstName: "Andrei",
+            LastName: "Tarnovanu",
+            DateOfBirth: new DateOnly(2000, 1, 1),
+            Nationality: "Romania",
+            CurrentCountry: "Romania",
+            CurrentTeamId: 559,
+            CurrentClub: "FCSB",
+            Position: Position.Midfielder);
+
+        var result = ConfidenceScorer.Score(
+            criteria,
+            CreateCandidate(
+                firstName: "Andrei",
+                lastName: "Ionut Tarnovanu",
+                club: "FCSB",
+                dateOfBirth: new DateOnly(2000, 1, 1),
+                nationality: "Romania",
+                position: "Midfielder"));
+
+        Assert.Contains("Name match", result.Reasons);
+    }
+
+    [Fact]
+    public void Score_matches_when_last_name_differs_by_one_character()
+    {
+        var result = ConfidenceScorer.Score(
+            CreateCriteria(),
+            CreateCandidate(
+                lastName: "Gonzales",
+                dateOfBirth: DateOfBirth));
+
+        Assert.Contains("Name match", result.Reasons);
+    }
+
+    [Fact]
+    public void Score_matches_when_last_name_differs_only_by_diacritics()
+    {
+        var criteria = new PlayerSearchCriteria(
+            FirstName: "Andrei",
+            LastName: "Târnovanu",
+            DateOfBirth: DateOfBirth,
+            Nationality: "Romania",
+            CurrentCountry: "Romania",
+            CurrentTeamId: 559,
+            CurrentClub: "FCSB",
+            Position: Position.Midfielder);
+
+        var result = ConfidenceScorer.Score(
+            criteria,
+            CreateCandidate(
+                firstName: "Andrei",
+                lastName: "Tarnovanu",
+                club: "FCSB",
+                dateOfBirth: DateOfBirth,
+                nationality: "Romania",
+                position: "Midfielder"));
+
+        Assert.Contains("Name match", result.Reasons);
     }
 
     private static int ComputeAge(DateOnly dateOfBirth)

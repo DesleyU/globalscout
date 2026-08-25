@@ -11,7 +11,7 @@ import {
   type SearchUsersParams,
   type SearchUsersResult,
   type UpdateUserProfileRequest,
-  type UploadUserAvatarResult,
+  type CompleteAvatarUploadResponse,
   type UsersFullProfileResult,
 } from "@globalscout/shared";
 
@@ -43,7 +43,7 @@ export function createUsersApi(client: ApiTransport) {
     },
 
     completeAvatarUpload(body: CompleteAvatarUploadRequest) {
-      return client.post<UploadUserAvatarResult>(
+      return client.post<CompleteAvatarUploadResponse>(
         usersPaths.avatarComplete,
         body,
       );

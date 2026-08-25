@@ -4,6 +4,7 @@ import type { PlayerIdentitySearchFormValues } from "@/lib/validation/player-ide
 const SEARCH_KEY = "gs:onboarding:search";
 const MATCHES_KEY = "gs:onboarding:matches";
 const SELECTED_MATCH_KEY = "gs:onboarding:selected-match";
+const MANUAL_COUNTRY_KEY = "gs:onboarding:manual-country";
 
 export function saveSearchCriteria(data: PlayerIdentitySearchFormValues): void {
   if (typeof window === "undefined") {
@@ -84,4 +85,19 @@ export function clearOnboardingDraft(): void {
   sessionStorage.removeItem(SEARCH_KEY);
   sessionStorage.removeItem(MATCHES_KEY);
   sessionStorage.removeItem(SELECTED_MATCH_KEY);
+  sessionStorage.removeItem(MANUAL_COUNTRY_KEY);
+}
+
+export function saveManualCountry(country: string): void {
+  if (typeof window === "undefined") {
+    return;
+  }
+  sessionStorage.setItem(MANUAL_COUNTRY_KEY, country);
+}
+
+export function loadManualCountry(): string | null {
+  if (typeof window === "undefined") {
+    return null;
+  }
+  return sessionStorage.getItem(MANUAL_COUNTRY_KEY);
 }

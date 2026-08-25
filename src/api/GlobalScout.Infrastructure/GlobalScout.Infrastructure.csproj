@@ -28,9 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ReferenceData\Data\**\*.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
+    <InternalsVisibleTo Include="GlobalScout.Api.IntegrationTests" />
   </ItemGroup>
 
 </Project>

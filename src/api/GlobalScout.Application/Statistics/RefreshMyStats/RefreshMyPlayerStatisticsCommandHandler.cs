@@ -9,5 +9,5 @@ internal sealed class RefreshMyPlayerStatisticsCommandHandler(IPlayerStatisticsR
     public Task<Result<RefreshMyPlayerStatisticsResult>> Handle(
         RefreshMyPlayerStatisticsCommand command,
         CancellationToken cancellationToken) =>
-        executor.ExecuteAsync(command.UserId, cancellationToken);
+        executor.ExecuteAsync(command.UserId, enforceCooldown: true, cancellationToken);
 }

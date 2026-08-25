@@ -20,6 +20,8 @@ export function resolvePlayerOnboardingRedirect(
       return ONBOARDING_SUBMITTED_PATH;
     case "Verified":
       return DEFAULT_AUTHENTICATED_REDIRECT;
+    case "SelfReported":
+      return DEFAULT_AUTHENTICATED_REDIRECT;
     case "Claimed":
       return ONBOARDING_CLAIM_PATH;
     case "Rejected":

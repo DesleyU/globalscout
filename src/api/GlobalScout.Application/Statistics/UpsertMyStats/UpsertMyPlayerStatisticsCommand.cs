@@ -1,4 +1,5 @@
 using GlobalScout.Application.Abstractions.Messaging;
+using GlobalScout.Application.Abstractions.Persistence;
 
 namespace GlobalScout.Application.Statistics.UpsertMyStats;
 
@@ -8,19 +9,7 @@ public sealed class UpsertMyPlayerStatisticsCommand : ICommand<UpsertMyPlayerSta
 
     public string Season { get; init; } = string.Empty;
 
-    public int? Goals { get; init; }
-
-    public int? Assists { get; init; }
-
-    public int? Matches { get; init; }
-
-    public int? Minutes { get; init; }
-
-    public int? YellowCards { get; init; }
-
-    public int? RedCards { get; init; }
-
-    public double? Rating { get; init; }
+    public IReadOnlyList<ManualCompetitionInput> Competitions { get; init; } = [];
 
     public int? ShotsTotal { get; init; }
 

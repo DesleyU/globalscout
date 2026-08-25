@@ -23,13 +23,15 @@ export interface UserProfileDto {
 }
 
 export interface UsersFullProfileResult {
-  user: {
-    id: string;
-    email: string;
-    role: string;
-    accountType: string;
-    profile: UserProfileDto;
-  };
+  id: string;
+  email: string;
+  role: string;
+  status: string;
+  accountType: string;
+  playerId?: number | null;
+  profile: UserProfileDto | null;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface PublicUserProfile {
@@ -115,6 +117,13 @@ export interface CompleteAvatarUploadRequest {
   storageKey: string;
 }
 
+export interface CompleteAvatarUploadResponse {
+  message: string;
+  storageKey: string;
+  profile: UserProfileDto;
+}
+
+/** @deprecated Use CompleteAvatarUploadResponse — legacy shape kept for compatibility. */
 export interface UploadUserAvatarResult {
   message: string;
   avatar: string;

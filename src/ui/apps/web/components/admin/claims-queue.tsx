@@ -1,6 +1,7 @@
 "use client";
 
 import type { AdminPendingClaimItem } from "@globalscout/shared";
+import { formatPlayerName } from "@globalscout/shared";
 import { cn } from "@/lib/utils";
 import { ConfidenceScoreBadge } from "@/components/admin/confidence-score-badge";
 import {
@@ -54,7 +55,11 @@ export function ClaimsQueue({
                     {item.userFullName || item.email}
                   </p>
                   <p className="truncate text-xs text-muted-foreground">
-                    {item.claim.candidateName} · {item.claim.candidateClub}
+                    {formatPlayerName(
+                      item.claim.candidateFirstName,
+                      item.claim.candidateLastName,
+                    )}{" "}
+                    · {item.claim.candidateClub}
                   </p>
                 </div>
                 <ConfidenceScoreBadge score={item.claim.confidenceScore} />

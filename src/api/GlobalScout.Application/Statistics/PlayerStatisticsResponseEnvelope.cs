@@ -7,4 +7,5 @@ public sealed record PlayerStatisticsResponseEnvelope(
     string AccountType,
     object AvailableFields,
     int TotalSeasons,
-    string? Message);
+    string? Message,
+    bool HasLinkedProvider);

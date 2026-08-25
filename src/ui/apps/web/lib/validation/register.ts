@@ -11,14 +11,16 @@ export const registerSchema = z
       .string()
       .min(6, "Password must be at least 6 characters"),
     confirmPassword: z.string().min(1, "Confirm your password"),
-    fullName: z
+    firstName: z
       .string()
       .trim()
-      .min(2, "Full name is required")
-      .refine((value) => {
-        const parts = value.trim().split(/\s+/);
-        return parts.length >= 2 && parts[1]!.length >= 2;
-      }, "Enter your first and last name"),
+      .min(2, "First name is required")
+      .max(50, "First name must be at most 50 characters"),
+    lastName: z
+      .string()
+      .trim()
+      .min(2, "Last name is required")
+      .max(50, "Last name must be at most 50 characters"),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords do not match",
@@ -27,22 +29,11 @@ export const registerSchema = z
 
 export type RegisterFormValues = z.infer<typeof registerSchema>;
 
-export function splitFullName(fullName: string): {
-  firstName: string;
-  lastName: string;
-} {
-  const parts = fullName.trim().split(/\s+/);
-  const firstName = parts[0] ?? "";
-  const lastName = parts.slice(1).join(" ");
-  return { firstName, lastName };
-}
-
 export function toRegisterRequest(values: RegisterFormValues) {
-  const { firstName, lastName } = splitFullName(values.fullName);
   return {
     email: values.email,
     password: values.password,
-    firstName,
-    lastName,
+    firstName: values.firstName,
+    lastName: values.lastName,
   };
 }

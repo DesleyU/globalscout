@@ -1,36 +1,28 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { SignOutButton } from "@/features/auth/sign-out-button";
-import {
-  createRouteSkeletonMetadata,
-  RouteSkeletonPage,
-} from "@/features/dashboard/route-skeleton-page";
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { ProfilePageClient } from "@/features/profile/profile-page-client";
+import { fetchMyFullProfile } from "@/features/profile/load-profile-data";
+import { getSession } from "@/lib/auth";
 
-export const metadata = createRouteSkeletonMetadata("Profile");
+export const metadata: Metadata = {
+  title: "Profile",
+};
 
-export default function ProfilePage() {
+export default async function ProfilePage() {
+  const session = await getSession();
+  if (!session) {
+    redirect("/sign-in");
+  }
+
+  const profileResult = await fetchMyFullProfile();
+  if (!profileResult?.profile) {
+    redirect("/dashboard");
+  }
+
   return (
-    <RouteSkeletonPage
-      title="My Profile"
-      description="Profile editing, avatar uploads, and account details will be implemented in a later stage."
-      footer={
-        <Card className="border-0 shadow-sm">
-          <CardHeader>
-            <CardTitle>Account</CardTitle>
-            <CardDescription>
-              Sign out of your GlobalScout account on this device.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <SignOutButton />
-          </CardContent>
-        </Card>
-      }
+    <ProfilePageClient
+      user={session.user}
+      profile={profileResult.profile}
     />
   );
 }

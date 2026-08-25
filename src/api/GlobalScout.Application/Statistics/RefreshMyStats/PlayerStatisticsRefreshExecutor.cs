@@ -11,6 +11,7 @@ internal sealed class PlayerStatisticsRefreshExecutor(
 {
     public async Task<Result<RefreshMyPlayerStatisticsResult>> ExecuteAsync(
         Guid userId,
+        bool enforceCooldown,
         CancellationToken cancellationToken)
     {
         if (!updateState.TryBeginUserRefresh(userId))
@@ -29,6 +30,20 @@ internal sealed class PlayerStatisticsRefreshExecutor(
             if (playerId is null)
             {
                 return Result.Failure<RefreshMyPlayerStatisticsResult>(StatsErrors.NoPlayerId);
+            }
+
+            if (enforceCooldown)
+            {
+                var lastUpdated = await stats.GetApiFootballLastUpdatedAsync(userId, cancellationToken);
+                if (lastUpdated is not null)
+                {
+                    var elapsed = DateTimeOffset.UtcNow - lastUpdated.Value;
+                    if (elapsed < StatsErrors.RefreshCooldown)
+                    {
+                        return Result.Failure<RefreshMyPlayerStatisticsResult>(
+                            StatsErrors.RefreshTooSoon(StatsErrors.RefreshCooldown - elapsed));
+                    }
+                }
             }
 
             var seasonYear = DateTime.UtcNow.Year;

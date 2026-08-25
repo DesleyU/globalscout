@@ -23,6 +23,7 @@ type VerifiedDashboardContentProps = {
   profileViews?: number | null;
   stats: SeasonStatsSummary;
   isPremium?: boolean;
+  identityBadge?: string | null;
 };
 
 export function VerifiedDashboardContent({
@@ -36,6 +37,7 @@ export function VerifiedDashboardContent({
   profileViews,
   stats,
   isPremium = false,
+  identityBadge = null,
 }: VerifiedDashboardContentProps) {
   return (
     <div className="p-8">
@@ -49,6 +51,7 @@ export function VerifiedDashboardContent({
         imageUrl={imageUrl}
         profileViews={profileViews}
         profileViewsTrend="+12.5%"
+        identityBadge={identityBadge}
       />
 
       <div className="mb-8 grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">

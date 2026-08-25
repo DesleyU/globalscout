@@ -1,28 +1,38 @@
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application.Abstractions.Messaging;
+using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Statistics.UpsertMyStats;
 
 namespace GlobalScout.Api.Endpoints.Stats;
 
 internal sealed class PutStatsMe : IEndpoint
 {
+    public sealed class CompetitionRequest
+    {
+        public Guid TeamCatalogId { get; set; }
+
+        public Guid CompetitionCatalogId { get; set; }
+
+        public int Appearances { get; set; }
+
+        public int Minutes { get; set; }
+
+        public int Goals { get; set; }
+
+        public int Assists { get; set; }
+
+        public int YellowCards { get; set; }
+
+        public int RedCards { get; set; }
+
+        public double? Rating { get; set; }
+    }
+
     public sealed class Request
     {
         public string Season { get; set; } = string.Empty;
 
-        public int? Goals { get; set; }
-
-        public int? Assists { get; set; }
-
-        public int? Matches { get; set; }
-
-        public int? Minutes { get; set; }
-
-        public int? YellowCards { get; set; }
-
-        public int? RedCards { get; set; }
-
-        public double? Rating { get; set; }
+        public IReadOnlyList<CompetitionRequest> Competitions { get; set; } = [];
 
         public int? ShotsTotal { get; set; }
 
@@ -63,13 +73,20 @@ internal sealed class PutStatsMe : IEndpoint
                     {
                         UserId = userId.Value,
                         Season = body.Season,
-                        Goals = body.Goals,
-                        Assists = body.Assists,
-                        Matches = body.Matches,
-                        Minutes = body.Minutes,
-                        YellowCards = body.YellowCards,
-                        RedCards = body.RedCards,
-                        Rating = body.Rating,
+                        Competitions = body.Competitions
+                            .Select(c => new ManualCompetitionInput
+                            {
+                                TeamCatalogId = c.TeamCatalogId,
+                                CompetitionCatalogId = c.CompetitionCatalogId,
+                                Appearances = c.Appearances,
+                                Minutes = c.Minutes,
+                                Goals = c.Goals,
+                                Assists = c.Assists,
+                                YellowCards = c.YellowCards,
+                                RedCards = c.RedCards,
+                                Rating = c.Rating,
+                            })
+                            .ToArray(),
                         ShotsTotal = body.ShotsTotal,
                         ShotsOnTarget = body.ShotsOnTarget,
                         PassesTotal = body.PassesTotal,
@@ -78,7 +95,7 @@ internal sealed class PutStatsMe : IEndpoint
                         TacklesInterceptions = body.TacklesInterceptions,
                         DuelsWon = body.DuelsWon,
                         FoulsCommitted = body.FoulsCommitted,
-                        FoulsDrawn = body.FoulsDrawn
+                        FoulsDrawn = body.FoulsDrawn,
                     };
 
                     var result = await handler.Handle(command, cancellationToken);

@@ -42,7 +42,7 @@ export type CreateApiTransportOptions = {
 
 async function readResponseBody(response: Response): Promise<unknown> {
   const contentType = response.headers.get("content-type") ?? "";
-  if (contentType.includes("application/json")) {
+  if (contentType.includes("json")) {
     return response.json();
   }
   const text = await response.text();

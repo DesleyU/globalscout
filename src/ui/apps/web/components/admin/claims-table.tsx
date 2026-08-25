@@ -1,6 +1,7 @@
 "use client";
 
 import type { AdminPendingClaimItem } from "@globalscout/shared";
+import { formatPlayerName } from "@globalscout/shared";
 import {
   flexRender,
   getCoreRowModel,
@@ -50,7 +51,10 @@ export function ClaimsTable({
         cell: ({ row }) => (
           <div className="min-w-0">
             <p className="truncate font-medium">
-              {row.original.claim.candidateName}
+              {formatPlayerName(
+                row.original.claim.candidateFirstName,
+                row.original.claim.candidateLastName,
+              )}
             </p>
             <p className="truncate text-xs text-muted-foreground">
               {row.original.claim.candidateClub}

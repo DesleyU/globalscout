@@ -4,6 +4,7 @@ import {
   type ApiTransport,
   type CompleteEvidenceUploadRequest,
   type CreatePlayerIdentityClaimRequest,
+  type CreateSelfReportedClaimRequest,
   type GetMyPlayerIdentityClaimResult,
   type InitiateEvidenceUploadRequest,
   type InitiateEvidenceUploadResult,
@@ -22,6 +23,13 @@ export function createPlayerIdentityApi(client: ApiTransport) {
     createClaim(body: CreatePlayerIdentityClaimRequest) {
       return client.post<PlayerIdentityClaimDto>(
         playerIdentityPaths.claims,
+        body,
+      );
+    },
+
+    createSelfReportedClaim(body: CreateSelfReportedClaimRequest) {
+      return client.post<PlayerIdentityClaimDto>(
+        playerIdentityPaths.claimsSelfReported,
         body,
       );
     },

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   ArrowRight,
+  Globe,
   LayoutDashboard,
   ShieldCheck,
   Users,
@@ -111,7 +112,7 @@ export default async function AdminOverviewPage() {
         </Card>
       </section>
 
-      <section className="grid gap-4 md:grid-cols-2">
+      <section className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card className="transition-shadow hover:shadow-md">
           <CardHeader>
             <div className="flex items-center gap-2">
@@ -143,6 +144,24 @@ export default async function AdminOverviewPage() {
           <CardContent>
             <Button render={<Link href="/admin/users" />}>
               Manage users
+              <ArrowRight className="size-4" />
+            </Button>
+          </CardContent>
+        </Card>
+
+        <Card className="transition-shadow hover:shadow-md">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Globe className="size-5 text-primary" />
+              <CardTitle>Reference Data</CardTitle>
+            </div>
+            <CardDescription>
+              Sync competitions and teams from API-Football for each country.
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Button render={<Link href="/admin/reference-data" />}>
+              Manage catalog
               <ArrowRight className="size-4" />
             </Button>
           </CardContent>

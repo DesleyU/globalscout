@@ -19,7 +19,8 @@ internal static class PlayerStatisticsMapper
             p.Season,
             p.Source,
             p.SchemaVersion,
-            dataEl);
+            dataEl,
+            p.UpdatedAt);
     }
 
     private static ManualStatisticsValues ParseValues(PlayerStatisticsListItemDto row)
@@ -42,6 +43,7 @@ internal static class PlayerStatisticsMapper
             ["season"] = row.Season,
             ["source"] = row.Source,
             ["schemaVersion"] = row.SchemaVersion,
+            ["updatedAt"] = row.UpdatedAt,
             ["goals"] = v.Goals,
             ["assists"] = v.Assists,
             ["minutes"] = v.Minutes,
@@ -62,6 +64,7 @@ internal static class PlayerStatisticsMapper
             ["season"] = row.Season,
             ["source"] = row.Source,
             ["schemaVersion"] = row.SchemaVersion,
+            ["updatedAt"] = row.UpdatedAt,
             ["goals"] = v.Goals,
             ["assists"] = v.Assists,
             ["minutes"] = v.Minutes,

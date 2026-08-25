@@ -45,7 +45,7 @@ public static class DependencyInjection
             .AddGlobalScoutIdentity(configuration)
             .AddStripeBilling(configuration)
             .AddFileStorage(configuration)
-            .AddReferenceData(configuration)
+            .AddReferenceData()
             .AddPersistenceHealthChecks(configuration);
 
     private static IServiceCollection AddDatabase(
@@ -86,16 +86,18 @@ public static class DependencyInjection
         return services;
     }
 
-    private static IServiceCollection AddReferenceData(
-        this IServiceCollection services,
-        IConfiguration configuration)
+    private static IServiceCollection AddReferenceData(this IServiceCollection services)
     {
-        services.Configure<ReferenceDataOptions>(configuration.GetSection(ReferenceDataOptions.SectionName));
-        services.AddSingleton<IReferenceDataStore, JsonReferenceDataStore>();
+        services.AddScoped<IReferenceDataCatalog, ReferenceDataCatalog>();
         services.AddHttpClient<IExternalTeamSearch, ApiFootballTeamSearch>((sp, client) =>
         {
             ConfigureApiFootballHttpClient(sp, client);
         });
+        services.AddHttpClient<IExternalCountryReferenceDataProvider, ApiFootballCountryReferenceDataProvider>(
+            (sp, client) =>
+            {
+                ConfigureApiFootballHttpClient(sp, client);
+            });
         return services;
     }
 

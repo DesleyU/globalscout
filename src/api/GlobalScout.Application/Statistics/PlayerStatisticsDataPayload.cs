@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Text.Json;
 using GlobalScout.Application.Abstractions.Persistence;
 
@@ -6,30 +7,44 @@ namespace GlobalScout.Application.Statistics;
 /// <summary>Read/write canonical keys in <see cref="PlayerStatistics.Data"/>.</summary>
 public static class PlayerStatisticsDataPayload
 {
-    public static JsonDocument CreateManualDocument(string season, ManualStatisticsValues v) =>
-        JsonSerializer.SerializeToDocument(new Dictionary<string, JsonElement>
-        {
-            ["kind"] = JsonSerializer.SerializeToElement("manual"),
-            ["season"] = JsonSerializer.SerializeToElement(season),
-            ["goals"] = JsonSerializer.SerializeToElement(v.Goals),
-            ["assists"] = JsonSerializer.SerializeToElement(v.Assists),
-            ["matches"] = JsonSerializer.SerializeToElement(v.Matches),
-            ["minutes"] = JsonSerializer.SerializeToElement(v.Minutes),
-            ["yellowCards"] = JsonSerializer.SerializeToElement(v.YellowCards),
-            ["redCards"] = JsonSerializer.SerializeToElement(v.RedCards),
-            ["rating"] = JsonSerializer.SerializeToElement(v.Rating),
-            ["shotsTotal"] = JsonSerializer.SerializeToElement(v.ShotsTotal),
-            ["shotsOnTarget"] = JsonSerializer.SerializeToElement(v.ShotsOnTarget),
-            ["passesTotal"] = JsonSerializer.SerializeToElement(v.PassesTotal),
-            ["passesAccuracy"] = JsonSerializer.SerializeToElement(v.PassesAccuracy),
-            ["tacklesTotal"] = JsonSerializer.SerializeToElement(v.TacklesTotal),
-            ["tacklesInterceptions"] = JsonSerializer.SerializeToElement(v.TacklesInterceptions),
-            ["duelsWon"] = JsonSerializer.SerializeToElement(v.DuelsWon),
-            ["foulsCommitted"] = JsonSerializer.SerializeToElement(v.FoulsCommitted),
-            ["foulsDrawn"] = JsonSerializer.SerializeToElement(v.FoulsDrawn)
-        });
+    public const string ManualSchemaVersion = "manual-v2";
 
-    /// <summary>Parse values for merge when updating a manual row (flat keys or legacy column-only backfill).</summary>
+    public static JsonDocument CreateManualDocument(string season, ManualStatisticsValues v)
+    {
+        var competitions = v.Competitions
+            .Select(ToCompetitionElement)
+            .ToArray();
+
+        var payload = new Dictionary<string, object?>
+        {
+            ["kind"] = "manual",
+            ["season"] = season,
+            ["aggregated"] = new Dictionary<string, object?>
+            {
+                ["goals"] = v.Goals,
+                ["assists"] = v.Assists,
+                ["appearances"] = v.Matches,
+                ["minutes"] = v.Minutes,
+                ["yellowCards"] = v.YellowCards,
+                ["redCards"] = v.RedCards,
+                ["rating"] = v.Rating,
+                ["shotsTotal"] = v.ShotsTotal,
+                ["shotsOnTarget"] = v.ShotsOnTarget,
+                ["passesTotal"] = v.PassesTotal,
+                ["passesAccuracy"] = v.PassesAccuracy,
+                ["tacklesTotal"] = v.TacklesTotal,
+                ["tacklesInterceptions"] = v.TacklesInterceptions,
+                ["duelsWon"] = v.DuelsWon,
+                ["foulsCommitted"] = v.FoulsCommitted,
+                ["foulsDrawn"] = v.FoulsDrawn,
+            },
+            ["competitions"] = competitions,
+        };
+
+        return JsonSerializer.SerializeToDocument(payload);
+    }
+
+    /// <summary>Parse values for merge when updating a manual row (flat keys or nested aggregated).</summary>
     public static ManualStatisticsValues ParseManualForMerge(JsonDocument? data)
     {
         if (data is null)
@@ -61,9 +76,48 @@ public static class PlayerStatisticsDataPayload
             TacklesInterceptions = ReadNullableInt(stats, "tacklesInterceptions", "tackles_interceptions"),
             DuelsWon = ReadNullableInt(stats, "duelsWon", "duels_won"),
             FoulsCommitted = ReadNullableInt(stats, "foulsCommitted", "fouls_committed"),
-            FoulsDrawn = ReadNullableInt(stats, "foulsDrawn", "fouls_drawn")
+            FoulsDrawn = ReadNullableInt(stats, "foulsDrawn", "fouls_drawn"),
+            Competitions = [],
         };
     }
+
+    private static object ToCompetitionElement(ResolvedManualCompetition row) =>
+        new Dictionary<string, object?>
+        {
+            ["team"] = new Dictionary<string, object?>
+            {
+                ["id"] = row.TeamExternalId,
+                ["name"] = row.TeamName,
+                ["catalogId"] = row.TeamCatalogId,
+                ["isVerified"] = row.TeamIsVerified,
+            },
+            ["competition"] = new Dictionary<string, object?>
+            {
+                ["id"] = row.CompetitionExternalId,
+                ["name"] = row.CompetitionName,
+                ["country"] = row.CompetitionCountry,
+                ["season"] = row.SeasonYear,
+                ["catalogId"] = row.CompetitionCatalogId,
+                ["level"] = row.Level,
+                ["isVerified"] = row.CompetitionIsVerified,
+            },
+            ["games"] = new Dictionary<string, object?>
+            {
+                ["appearences"] = row.Appearances,
+                ["minutes"] = row.Minutes,
+                ["rating"] = row.Rating?.ToString("0.##", CultureInfo.InvariantCulture),
+            },
+            ["goals"] = new Dictionary<string, object?>
+            {
+                ["total"] = row.Goals,
+                ["assists"] = row.Assists,
+            },
+            ["cards"] = new Dictionary<string, object?>
+            {
+                ["yellow"] = row.YellowCards,
+                ["red"] = row.RedCards,
+            },
+        };
 
     private static int ReadInt(JsonElement el, params string[] names)
     {

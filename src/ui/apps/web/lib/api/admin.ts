@@ -12,7 +12,13 @@ import {
   type ListAdminUsersParams,
   type PlayerIdentityClaimDto,
   type PresignedReadUrlResult,
+  type SyncCountryReferenceDataResult,
 } from "@globalscout/shared";
+import type {
+  AdminFootballCompetition,
+  ListAdminCountryCompetitionsResult,
+  ListAdminReferenceDataCountriesResult,
+} from "@/lib/api/reference-data-types";
 
 function toQueryString(
   params: ListAdminUsersParams | ListAdminPlayerClaimsParams,
@@ -88,6 +94,60 @@ export function createAdminApi(client: ApiTransport) {
     getEvidenceReadUrl(claimId: string, evidenceId: string) {
       return client.get<PresignedReadUrlResult>(
         adminPaths.playerClaimEvidenceReadUrl(claimId, evidenceId),
+      );
+    },
+
+    syncCountryReferenceData(countryCode: string) {
+      return client.post<SyncCountryReferenceDataResult>(
+        adminPaths.referenceDataSync(countryCode),
+      );
+    },
+
+    getReferenceDataCountries() {
+      return client.get<ListAdminReferenceDataCountriesResult>(
+        adminPaths.referenceDataCountries,
+      );
+    },
+
+    getReferenceDataCountryCompetitions(countryCode: string) {
+      return client.get<ListAdminCountryCompetitionsResult>(
+        adminPaths.referenceDataCountryCompetitions(countryCode),
+      );
+    },
+
+    setReferenceDataCompetitionLevel(
+      competitionId: string,
+      body: { level: string },
+    ) {
+      return client.put<AdminFootballCompetition>(
+        adminPaths.referenceDataCompetitionLevel(competitionId),
+        body,
+      );
+    },
+
+    setReferenceDataCompetitionType(
+      competitionId: string,
+      body: { type: string },
+    ) {
+      return client.put<AdminFootballCompetition>(
+        adminPaths.referenceDataCompetitionType(competitionId),
+        body,
+      );
+    },
+
+    approveReferenceDataCompetition(
+      competitionId: string,
+      body: { level: string; type: string },
+    ) {
+      return client.post<AdminFootballCompetition>(
+        adminPaths.referenceDataCompetitionApproval(competitionId),
+        body,
+      );
+    },
+
+    rejectReferenceDataCompetition(competitionId: string) {
+      return client.post<AdminFootballCompetition>(
+        adminPaths.referenceDataCompetitionRejection(competitionId),
       );
     },
   };

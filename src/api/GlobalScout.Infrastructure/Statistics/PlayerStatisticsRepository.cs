@@ -36,6 +36,13 @@ internal sealed class PlayerStatisticsRepository(GlobalScoutDbContext db) : IPla
             .Select(u => u.PlayerId)
             .FirstOrDefaultAsync(cancellationToken);
 
+    public async Task<DateTimeOffset?> GetApiFootballLastUpdatedAsync(Guid userId, CancellationToken cancellationToken) =>
+        await db.PlayerStatistics.AsNoTracking()
+            .Where(p => p.UserId == userId && p.Source == StatsSource.ApiFootball)
+            .OrderByDescending(p => p.UpdatedAt)
+            .Select(p => (DateTimeOffset?)p.UpdatedAt)
+            .FirstOrDefaultAsync(cancellationToken);
+
     public async Task<bool> UserExistsAsync(Guid userId, CancellationToken cancellationToken) =>
         await db.Users.AsNoTracking().AnyAsync(u => u.Id == userId, cancellationToken);
 
@@ -60,7 +67,7 @@ internal sealed class PlayerStatisticsRepository(GlobalScoutDbContext db) : IPla
                 UserId = userId,
                 Season = season,
                 Source = StatsSource.Manual,
-                SchemaVersion = "1",
+                SchemaVersion = PlayerStatisticsDataPayload.ManualSchemaVersion,
                 Data = dataDoc,
                 CreatedAt = now,
                 UpdatedAt = now
@@ -70,12 +77,28 @@ internal sealed class PlayerStatisticsRepository(GlobalScoutDbContext db) : IPla
         else
         {
             row.Data = dataDoc;
-            row.SchemaVersion = "1";
+            row.SchemaVersion = PlayerStatisticsDataPayload.ManualSchemaVersion;
             row.UpdatedAt = now;
         }
 
         await db.SaveChangesAsync(cancellationToken);
         return row;
+    }
+
+    public async Task<bool> DeleteManualAsync(Guid userId, string season, CancellationToken cancellationToken)
+    {
+        var row = await db.PlayerStatistics.FirstOrDefaultAsync(
+            p => p.UserId == userId && p.Season == season && p.Source == StatsSource.Manual,
+            cancellationToken);
+
+        if (row is null)
+        {
+            return false;
+        }
+
+        db.PlayerStatistics.Remove(row);
+        await db.SaveChangesAsync(cancellationToken);
+        return true;
     }
 
     public async Task<PlayerStatistics> UpsertApiFootballAndReturnAsync(

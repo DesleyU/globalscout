@@ -758,6 +758,8 @@ Required so browsers can upload directly to S3 with presigned PUT URLs from the 
     "AllowedOrigins": [
       "https://globalscout.eu",
       "https://www.globalscout.eu",
+      "http://localhost:3000",
+      "http://127.0.0.1:3000",
       "https://d1k7x0oeu0hozx.cloudfront.net"
     ],
     "ExposeHeaders": ["ETag"],
@@ -767,6 +769,8 @@ Required so browsers can upload directly to S3 with presigned PUT URLs from the 
 ```
 
 **Note:** the current frontend CloudFront distribution domain is `dxbo3oa5f8xms.cloudfront.net`, not `d1k7x0oeu0hozx.cloudfront.net`. Production uploads from `https://globalscout.eu` and `https://www.globalscout.eu` are covered. If you ever test uploads via the raw CloudFront domain, add `https://dxbo3oa5f8xms.cloudfront.net` to `AllowedOrigins` or remove the stale distribution hostname.
+
+**Local development:** the Next.js web app (`http://localhost:3000`) uploads video and avatar bytes directly to S3/LocalStack with presigned PUT URLs. Include the local UI origin in bucket CORS. For Aspire/LocalStack, apply the same CORS JSON to the dev bucket (`globalscout-dev-media` per `appsettings.Development.json`).
 
 ### Tags
 

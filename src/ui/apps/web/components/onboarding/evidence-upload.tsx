@@ -1,7 +1,15 @@
 "use client";
 
+import type { VerificationEvidenceDto } from "@globalscout/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Link2, Upload } from "lucide-react";
+import {
+  CheckCircle2,
+  ExternalLink,
+  FileText,
+  Link2,
+  Loader2,
+  Upload,
+} from "lucide-react";
 import { useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
@@ -21,6 +29,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { EVIDENCE_TYPE_OPTIONS } from "@/features/onboarding/player/constants";
+import { formatEvidenceType } from "@/features/admin/formatters";
 import {
   addLinkEvidenceSchema,
   type AddLinkEvidenceFormValues,
@@ -29,14 +38,120 @@ import {
 type EvidenceUploadProps = {
   onFileUpload: (file: File, type: AddLinkEvidenceFormValues["type"]) => Promise<void>;
   onLinkSubmit: (values: AddLinkEvidenceFormValues) => Promise<void>;
-  uploadedCount?: number;
+  evidence?: VerificationEvidenceDto[];
   disabled?: boolean;
 };
+
+function fileNameFromStorageKey(storageKey: string): string {
+  const parts = storageKey.split("/");
+  return parts[parts.length - 1] || storageKey;
+}
+
+function isFileEvidence(item: VerificationEvidenceDto): boolean {
+  return Boolean(item.storageKey);
+}
+
+function evidenceLabel(item: VerificationEvidenceDto): string {
+  if (item.url) {
+    return item.url;
+  }
+
+  if (item.storageKey) {
+    return fileNameFromStorageKey(item.storageKey);
+  }
+
+  return "Uploaded file";
+}
+
+function EvidenceTypeSelectLabel({
+  value,
+}: {
+  value: AddLinkEvidenceFormValues["type"];
+}) {
+  const option = EVIDENCE_TYPE_OPTIONS.find((item) => item.value === value);
+  return <>{option?.label ?? value}</>;
+}
+
+function SubmittedEvidenceList({
+  evidence,
+}: {
+  evidence: VerificationEvidenceDto[];
+}) {
+  if (evidence.length === 0) {
+    return (
+      <div className="rounded-lg border border-dashed border-gray-200 bg-gray-50 px-4 py-5 text-center">
+        <p className="text-sm font-medium text-gray-700">No evidence added yet</p>
+        <p className="mt-1 text-sm text-muted-foreground">
+          Upload a document or add a link below to support your claim.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <ul className="space-y-3">
+      {evidence.map((item) => {
+        const isFile = isFileEvidence(item);
+        const label = evidenceLabel(item);
+
+        return (
+          <li key={item.id}>
+            <div className="flex items-start gap-3 rounded-lg border border-green-200 bg-green-50/70 px-4 py-3">
+              <div
+                className={
+                  isFile
+                    ? "rounded-lg bg-blue-50 p-2 text-blue-600"
+                    : "rounded-lg bg-violet-50 p-2 text-violet-600"
+                }
+              >
+                {isFile ? (
+                  <FileText className="h-4 w-4" aria-hidden />
+                ) : (
+                  <ExternalLink className="h-4 w-4" aria-hidden />
+                )}
+              </div>
+
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2">
+                  <p className="text-sm font-medium text-gray-900">
+                    {formatEvidenceType(String(item.type))}
+                  </p>
+                  <CheckCircle2
+                    className="h-4 w-4 shrink-0 text-green-600"
+                    aria-hidden
+                  />
+                </div>
+                {item.url ? (
+                  <a
+                    href={item.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-0.5 block truncate text-sm text-primary underline-offset-4 hover:underline"
+                  >
+                    {label}
+                  </a>
+                ) : (
+                  <p className="mt-0.5 truncate text-sm text-gray-700">{label}</p>
+                )}
+                {item.note ? (
+                  <p className="mt-1 text-sm text-muted-foreground">{item.note}</p>
+                ) : null}
+                <p className="mt-1 text-xs text-green-700">
+                  {isFile ? "File uploaded" : "Link added"}
+                </p>
+              </div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
 
 export function EvidenceUpload({
   onFileUpload,
   onLinkSubmit,
-  uploadedCount = 0,
+  evidence = [],
   disabled = false,
 }: EvidenceUploadProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -80,18 +195,28 @@ export function EvidenceUpload({
   }
 
   return (
-    <div className="space-y-6">
+    <div className="mb-8 space-y-6">
       <Card className="border-0 shadow-sm">
         <CardHeader>
           <CardTitle className="text-lg">Upload verification evidence</CardTitle>
           <p className="text-sm text-muted-foreground">
-            Submit at least one document or link to support your claim.{" "}
-            {uploadedCount > 0
-              ? `${uploadedCount} item${uploadedCount === 1 ? "" : "s"} added.`
-              : null}
+            Submit at least one document or link so our team can verify this
+            profile belongs to you.
           </p>
         </CardHeader>
         <CardContent className="space-y-6">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-sm font-medium text-gray-900">Added evidence</p>
+              {evidence.length > 0 ? (
+                <p className="text-sm text-green-700">
+                  {evidence.length} item{evidence.length === 1 ? "" : "s"} ready
+                </p>
+              ) : null}
+            </div>
+            <SubmittedEvidenceList evidence={evidence} />
+          </div>
+
           <div className="space-y-3">
             <FieldLabel htmlFor="evidence-file-type">Document type</FieldLabel>
             <Select
@@ -102,10 +227,15 @@ export function EvidenceUpload({
               disabled={disabled || isUploadingFile}
             >
               <SelectTrigger id="evidence-file-type" className="w-full">
-                <SelectValue />
+                <SelectValue>
+                  <EvidenceTypeSelectLabel value={fileType} />
+                </SelectValue>
               </SelectTrigger>
               <SelectContent>
-                {EVIDENCE_TYPE_OPTIONS.map((option) => (
+                {EVIDENCE_TYPE_OPTIONS.filter(
+                  (option) =>
+                    !["ProfileUrl", "SocialAccount"].includes(option.value),
+                ).map((option) => (
                   <SelectItem key={option.value} value={option.value}>
                     {option.label}
                   </SelectItem>
@@ -171,7 +301,9 @@ export function EvidenceUpload({
                         className="w-full"
                         aria-invalid={fieldState.invalid}
                       >
-                        <SelectValue />
+                        <SelectValue>
+                          <EvidenceTypeSelectLabel value={field.value} />
+                        </SelectValue>
                       </SelectTrigger>
                       <SelectContent>
                         {EVIDENCE_TYPE_OPTIONS.filter((option) =>

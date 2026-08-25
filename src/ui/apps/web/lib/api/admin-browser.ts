@@ -9,7 +9,13 @@ import type {
   PlayerIdentityClaimDto,
   PresignedReadUrlResult,
   AdminUserStatusSummary,
+  SyncCountryReferenceDataResult,
 } from "@globalscout/shared";
+import type {
+  AdminFootballCompetition,
+  ListAdminCountryCompetitionsResult,
+  ListAdminReferenceDataCountriesResult,
+} from "@/lib/api/reference-data-types";
 
 function toPlayerClaimsQueryString(params: ListAdminPlayerClaimsParams): string {
   const search = new URLSearchParams();
@@ -140,6 +146,54 @@ export function createBrowserAdminApi() {
     deleteUser(userId: string) {
       return deleteJson<DeleteAdminUserResponse>(
         `/api/admin/users/${userId}`,
+      );
+    },
+
+    syncCountryReferenceData(countryCode: string) {
+      return postJson<SyncCountryReferenceDataResult>(
+        `/api/admin/reference-data/sync/${encodeURIComponent(countryCode)}`,
+      );
+    },
+
+    getReferenceDataCountries() {
+      return getJson<ListAdminReferenceDataCountriesResult>(
+        "/api/admin/reference-data/countries",
+      );
+    },
+
+    getReferenceDataCountryCompetitions(countryCode: string) {
+      return getJson<ListAdminCountryCompetitionsResult>(
+        `/api/admin/reference-data/countries/${encodeURIComponent(countryCode)}/competitions`,
+      );
+    },
+
+    setReferenceDataCompetitionLevel(competitionId: string, body: { level: string }) {
+      return putJson<AdminFootballCompetition>(
+        `/api/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/level`,
+        body,
+      );
+    },
+
+    setReferenceDataCompetitionType(competitionId: string, body: { type: string }) {
+      return putJson<AdminFootballCompetition>(
+        `/api/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/type`,
+        body,
+      );
+    },
+
+    approveReferenceDataCompetition(
+      competitionId: string,
+      body: { level: string; type: string },
+    ) {
+      return postJson<AdminFootballCompetition>(
+        `/api/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/approve`,
+        body,
+      );
+    },
+
+    rejectReferenceDataCompetition(competitionId: string) {
+      return postJson<AdminFootballCompetition>(
+        `/api/admin/reference-data/competitions/${encodeURIComponent(competitionId)}/reject`,
       );
     },
   };

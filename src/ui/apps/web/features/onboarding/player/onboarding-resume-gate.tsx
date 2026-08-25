@@ -16,6 +16,8 @@ const ALLOWED_PATHS_BY_STATUS: Record<string, string[]> = {
     "/onboarding/player/connect",
     "/onboarding/player/searching",
     "/onboarding/player/match-results",
+    "/onboarding/player/manual",
+    "/onboarding/player/stats",
     ONBOARDING_CLAIM_PATH,
   ],
   Rejected: [
@@ -23,10 +25,18 @@ const ALLOWED_PATHS_BY_STATUS: Record<string, string[]> = {
     "/onboarding/player/connect",
     "/onboarding/player/searching",
     "/onboarding/player/match-results",
+    "/onboarding/player/manual",
+    "/onboarding/player/stats",
     ONBOARDING_CLAIM_PATH,
   ],
-  Claimed: [ONBOARDING_CLAIM_PATH],
+  Claimed: [
+    "/onboarding/player/connect",
+    "/onboarding/player/searching",
+    "/onboarding/player/match-results",
+    ONBOARDING_CLAIM_PATH,
+  ],
   PendingVerification: [ONBOARDING_SUBMITTED_PATH],
+  SelfReported: [],
   Verified: [],
 };
 
@@ -48,7 +58,7 @@ export function OnboardingResumeGate({
       ALLOWED_PATHS_BY_STATUS[claimResult.status] ??
       ALLOWED_PATHS_BY_STATUS.Unmatched!;
 
-    if (claimResult.status === "Verified") {
+    if (claimResult.status === "Verified" || claimResult.status === "SelfReported") {
       router.replace("/dashboard");
       return;
     }

@@ -5,6 +5,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { useSession } from "@/features/auth/session-provider";
+import { clearOnboardingDraft } from "@/features/onboarding/player/storage";
 
 type SignOutButtonProps = {
   className?: string;
@@ -34,6 +35,7 @@ export function SignOutButton({
         throw new Error("Sign out failed");
       }
 
+      clearOnboardingDraft();
       setUser(null);
       router.push(redirectTo);
       router.refresh();

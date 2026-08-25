@@ -7,5 +7,6 @@ public enum ClaimStatus
     Claimed = 2,
     PendingVerification = 3,
     Verified = 4,
-    Rejected = 5
+    Rejected = 5,
+    SelfReported = 6
 }

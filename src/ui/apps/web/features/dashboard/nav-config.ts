@@ -5,6 +5,7 @@ import {
   LayoutDashboard,
   MessageCircle,
   Search,
+  Globe,
   ShieldCheck,
   User,
   Users,
@@ -70,6 +71,12 @@ export const adminNavItems: DashboardNavItem[] = [
     label: "User Management",
     icon: Users,
     matchPaths: ["/admin/users"],
+  },
+  {
+    href: "/admin/reference-data",
+    label: "Reference Data",
+    icon: Globe,
+    matchPaths: ["/admin/reference-data"],
   },
 ];
 

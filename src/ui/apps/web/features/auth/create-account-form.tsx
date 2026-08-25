@@ -48,7 +48,8 @@ export function CreateAccountForm() {
       email: "",
       password: "",
       confirmPassword: "",
-      fullName: "",
+      firstName: "",
+      lastName: "",
     },
   });
 
@@ -122,33 +123,59 @@ export function CreateAccountForm() {
           {formError ? <AuthFormError message={formError} /> : null}
 
           <form onSubmit={handleFormSubmit} className="space-y-4">
-            <Controller
-              name="fullName"
-              control={form.control}
-              render={({ field, fieldState }) => (
-                <div>
-                  <AuthFieldLabel htmlFor="register-full-name">
-                    Full name
-                  </AuthFieldLabel>
-                  <div className="relative">
-                    <User className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <Controller
+                name="firstName"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div>
+                    <AuthFieldLabel htmlFor="register-first-name">
+                      First name
+                    </AuthFieldLabel>
+                    <div className="relative">
+                      <User className="absolute top-1/2 left-3 h-4 w-4 -translate-y-1/2 text-gray-400" />
+                      <Input
+                        {...field}
+                        id="register-first-name"
+                        placeholder="John"
+                        autoComplete="given-name"
+                        className="pl-10"
+                        aria-invalid={fieldState.invalid}
+                      />
+                    </div>
+                    {fieldState.invalid ? (
+                      <p className="mt-1 text-sm text-destructive">
+                        {fieldState.error?.message}
+                      </p>
+                    ) : null}
+                  </div>
+                )}
+              />
+
+              <Controller
+                name="lastName"
+                control={form.control}
+                render={({ field, fieldState }) => (
+                  <div>
+                    <AuthFieldLabel htmlFor="register-last-name">
+                      Last name
+                    </AuthFieldLabel>
                     <Input
                       {...field}
-                      id="register-full-name"
-                      placeholder="John Smith"
-                      autoComplete="name"
-                      className="pl-10"
+                      id="register-last-name"
+                      placeholder="Smith"
+                      autoComplete="family-name"
                       aria-invalid={fieldState.invalid}
                     />
+                    {fieldState.invalid ? (
+                      <p className="mt-1 text-sm text-destructive">
+                        {fieldState.error?.message}
+                      </p>
+                    ) : null}
                   </div>
-                  {fieldState.invalid ? (
-                    <p className="mt-1 text-sm text-destructive">
-                      {fieldState.error?.message}
-                    </p>
-                  ) : null}
-                </div>
-              )}
-            />
+                )}
+              />
+            </div>
 
             <Controller
               name="email"

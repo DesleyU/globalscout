@@ -8,4 +8,5 @@ public sealed record PlayerStatisticsListItemDto(
     string Season,
     string Source,
     string SchemaVersion,
-    JsonElement? Data);
+    JsonElement? Data,
+    DateTimeOffset UpdatedAt = default);

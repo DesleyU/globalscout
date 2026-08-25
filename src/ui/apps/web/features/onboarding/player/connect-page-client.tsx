@@ -13,6 +13,15 @@ import {
 } from "@/features/onboarding/player/storage";
 import type { PlayerIdentitySearchFormValues } from "@/lib/validation/player-identity";
 
+type ProfileDefaults = Pick<
+  PlayerIdentitySearchFormValues,
+  "firstName" | "lastName"
+>;
+
+type ConnectPageClientProps = {
+  profileDefaults?: ProfileDefaults;
+};
+
 function normalizeSavedCriteria(
   saved: PlayerIdentitySearchFormValues | null,
 ): Partial<PlayerIdentitySearchFormValues> | undefined {
@@ -20,20 +29,38 @@ function normalizeSavedCriteria(
     return undefined;
   }
 
+  const { firstName: _firstName, lastName: _lastName, ...rest } = saved;
+
   return {
-    ...saved,
+    ...rest,
     currentCountry: saved.currentCountry ?? "",
     currentTeamId: saved.currentTeamId ?? 0,
     currentTeamName: saved.currentTeamName ?? "",
   };
 }
 
-export function ConnectPageClient() {
+function buildDefaultValues(
+  profileDefaults: ProfileDefaults,
+  saved: Partial<PlayerIdentitySearchFormValues> | undefined,
+): Partial<PlayerIdentitySearchFormValues> {
+  return {
+    ...saved,
+    ...profileDefaults,
+  };
+}
+
+export function ConnectPageClient({
+  profileDefaults = { firstName: "", lastName: "" },
+}: ConnectPageClientProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const defaultValues = useMemo(
-    () => normalizeSavedCriteria(loadSearchCriteria()),
-    [],
+    () =>
+      buildDefaultValues(
+        profileDefaults,
+        normalizeSavedCriteria(loadSearchCriteria()),
+      ),
+    [profileDefaults],
   );
 
   async function handleSubmit(values: PlayerIdentitySearchFormValues) {
@@ -79,6 +106,15 @@ export function ConnectPageClient() {
           We only use this information to find your football profile. Your data
           is never shared with third parties.
         </p>
+
+        <p className="mt-4 text-center">
+          <Link
+            href="/onboarding/player/manual"
+            className="text-sm text-blue-600 underline underline-offset-4 hover:text-blue-700"
+          >
+            My club isn&apos;t listed — build a self-reported profile
+          </Link>
+        </p>
       </main>
     </div>
   );
@@ -88,7 +124,7 @@ export function MatchResultsEmptyLink() {
   return (
     <div className="mt-8 text-center">
       <Link
-        href="/onboarding/player/connect"
+        href="/onboarding/player/manual"
         className="text-sm text-gray-500 underline underline-offset-4 transition hover:text-blue-600"
       >
         I Can&apos;t Find My Profile

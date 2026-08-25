@@ -1,5 +1,5 @@
-using GlobalScout.Domain.Clubs;
 using GlobalScout.Domain.PlayerIdentity;
+using GlobalScout.Domain.ReferenceData;
 using GlobalScout.Domain.Social;
 using GlobalScout.Domain.Subscriptions;
 using GlobalScout.Domain.Users;
@@ -18,8 +18,6 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
     }
 
     public DbSet<Profile> Profiles => Set<Profile>();
-
-    public DbSet<Club> Clubs => Set<Club>();
 
     public DbSet<Connection> Connections => Set<Connection>();
 
@@ -45,9 +43,17 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
 
     public DbSet<VerificationEvidence> VerificationEvidence => Set<VerificationEvidence>();
 
+    public DbSet<Competition> Competitions => Set<Competition>();
+
+    public DbSet<Team> Teams => Set<Team>();
+
+    public DbSet<CountrySyncState> CountrySyncStates => Set<CountrySyncState>();
+
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.HasPostgresExtension("pg_trgm");
 
         builder.Entity<ApplicationUser>(b =>
         {
@@ -73,12 +79,6 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
                 .HasForeignKey<Profile>(p => p.UserId)
                 .HasConstraintName("fk_profiles_users_user_id")
                 .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        builder.Entity<Club>(b =>
-        {
-            b.ToTable("clubs");
-            b.HasIndex(c => c.Name).IsUnique();
         });
 
         builder.Entity<Connection>(b =>
@@ -209,7 +209,8 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
         {
             b.ToTable("player_identity_claims");
             b.Property(c => c.ExternalProvider).HasMaxLength(64).IsRequired();
-            b.Property(c => c.CandidateName).HasMaxLength(200).IsRequired();
+            b.Property(c => c.CandidateFirstName).HasMaxLength(100).IsRequired();
+            b.Property(c => c.CandidateLastName).HasMaxLength(100).IsRequired();
             b.Property(c => c.CandidateClub).HasMaxLength(200).IsRequired();
             b.Property(c => c.CandidatePosition).HasMaxLength(100).IsRequired();
             b.Property(c => c.CandidateNationality).HasMaxLength(80).IsRequired();
@@ -223,7 +224,7 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
             b.HasIndex(c => c.Status);
             b.HasIndex(c => c.UserId)
                 .IsUnique()
-                .HasFilter("status IN (2, 3, 4)");
+                .HasFilter("status IN (2, 3, 4, 6)");
             b.HasOne<ApplicationUser>()
                 .WithMany()
                 .HasForeignKey(c => c.UserId)
@@ -242,6 +243,81 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
                 .HasForeignKey(e => e.ClaimId)
                 .HasConstraintName("fk_verification_evidence_player_identity_claims_claim_id")
                 .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<Competition>(b =>
+        {
+            b.ToTable("reference_competitions");
+            b.Property(x => x.CountryCode).HasMaxLength(8).IsRequired();
+            b.Property(x => x.Name).HasMaxLength(200).IsRequired();
+            b.Property(x => x.NameNormalized).HasMaxLength(200).IsRequired();
+            b.Property(x => x.Type).HasMaxLength(50);
+            b.Property(x => x.LogoUrl).HasMaxLength(500);
+
+            b.HasIndex(x => x.ExternalCompetitionId)
+                .IsUnique()
+                .HasFilter("external_competition_id IS NOT NULL");
+            b.HasIndex(x => new { x.CountryCode, x.NameNormalized });
+            b.HasIndex(x => x.NameNormalized)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops");
+            b.HasIndex(x => x.Status);
+            b.HasIndex(x => new { x.SubmittedByUserId, x.Status });
+
+            b.HasOne<Competition>()
+                .WithMany()
+                .HasForeignKey(x => x.MergedIntoCompetitionId)
+                .HasConstraintName("fk_reference_competitions_merged_into")
+                .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(x => x.SubmittedByUserId)
+                .HasConstraintName("fk_reference_competitions_submitted_by_user")
+                .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        builder.Entity<Team>(b =>
+        {
+            b.ToTable("reference_teams");
+            b.Property(x => x.CountryCode).HasMaxLength(8).IsRequired();
+            b.Property(x => x.Name).HasMaxLength(200).IsRequired();
+            b.Property(x => x.NameNormalized).HasMaxLength(200).IsRequired();
+            b.Property(x => x.Code).HasMaxLength(20);
+            b.Property(x => x.LogoUrl).HasMaxLength(500);
+
+            b.HasIndex(x => x.ExternalTeamId)
+                .IsUnique()
+                .HasFilter("external_team_id IS NOT NULL");
+            b.HasIndex(x => new { x.CountryCode, x.NameNormalized });
+            b.HasIndex(x => x.NameNormalized)
+                .HasMethod("gin")
+                .HasOperators("gin_trgm_ops");
+            b.HasIndex(x => x.Status);
+            b.HasIndex(x => new { x.SubmittedByUserId, x.Status });
+
+            b.HasOne<Team>()
+                .WithMany()
+                .HasForeignKey(x => x.MergedIntoTeamId)
+                .HasConstraintName("fk_reference_teams_merged_into")
+                .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(x => x.SubmittedByUserId)
+                .HasConstraintName("fk_reference_teams_submitted_by_user")
+                .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        builder.Entity<CountrySyncState>(b =>
+        {
+            b.ToTable("reference_country_sync_states");
+            b.HasKey(x => x.CountryCode);
+            b.Property(x => x.CountryCode).HasMaxLength(8);
+
+            b.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(x => x.LastSyncedByUserId)
+                .HasConstraintName("fk_reference_country_sync_states_last_synced_by_user")
+                .OnDelete(DeleteBehavior.SetNull);
         });
     }
 }

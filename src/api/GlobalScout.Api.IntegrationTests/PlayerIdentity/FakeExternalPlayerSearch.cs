@@ -46,8 +46,6 @@ internal sealed class FakeExternalPlayerSearch(int externalPlayerId) : IExternal
 
                 "Gonzalez",
 
-                "Pedri Gonzalez",
-
                 criteria.CurrentClub,
 
                 "Midfielder",

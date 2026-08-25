@@ -39,7 +39,12 @@ Configure CORS on the bucket so the browser can upload directly with presigned P
 ```json
 [
   {
-    "AllowedOrigins": ["https://globalscout.eu", "https://www.globalscout.eu"],
+    "AllowedOrigins": [
+      "https://globalscout.eu",
+      "https://www.globalscout.eu",
+      "http://localhost:3000",
+      "http://127.0.0.1:3000"
+    ],
     "AllowedMethods": ["PUT", "GET", "HEAD"],
     "AllowedHeaders": ["*"],
     "ExposeHeaders": ["ETag"],
@@ -47,6 +52,8 @@ Configure CORS on the bucket so the browser can upload directly with presigned P
   }
 ]
 ```
+
+Apply the same CORS policy to the LocalStack dev bucket (`globalscout-dev-media`) when running locally with Aspire.
 
 The image registry value used by GitHub Actions is:
 

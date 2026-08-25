@@ -49,7 +49,7 @@ export function PlayerCard({
           {getInitials(name)}
         </div>
       )}
-      <div className="absolute right-0 bottom-0 left-0 p-3">
+      {/* <div className="absolute right-0 bottom-0 left-0 p-3">
         <p className="truncate text-xs font-semibold text-white">{name}</p>
         {club ? (
           <p className="truncate text-[10px] text-gray-300">{club}</p>
@@ -57,7 +57,7 @@ export function PlayerCard({
         {nationality ? (
           <p className="truncate text-[10px] text-gray-400">{nationality}</p>
         ) : null}
-      </div>
+      </div> */}
     </div>
   );
 }

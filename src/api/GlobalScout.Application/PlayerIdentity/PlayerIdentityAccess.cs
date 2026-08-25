@@ -31,7 +31,10 @@ internal static class PlayerIdentityAccess
 internal static class ClaimStatusRules
 {
     public static bool BlocksNewClaim(ClaimStatus status) =>
-        status is ClaimStatus.Claimed or ClaimStatus.PendingVerification or ClaimStatus.Verified;
+        status is ClaimStatus.Claimed
+            or ClaimStatus.PendingVerification
+            or ClaimStatus.Verified
+            or ClaimStatus.SelfReported;
 
     public static bool CanAddEvidence(ClaimStatus status) =>
         status is ClaimStatus.Claimed or ClaimStatus.PendingVerification;

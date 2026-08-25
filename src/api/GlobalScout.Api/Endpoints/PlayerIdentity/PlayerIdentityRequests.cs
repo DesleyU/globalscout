@@ -28,6 +28,17 @@ internal sealed record CreatePlayerIdentityClaimRequest(
     string? PreviousClub,
     string? League);
 
+internal sealed record CreateSelfReportedPlayerIdentityClaimRequest(
+    string FirstName,
+    string LastName,
+    DateOnly DateOfBirth,
+    string Nationality,
+    string CurrentCountry,
+    string CurrentClub,
+    string Position,
+    string? PreviousClub,
+    string? League);
+
 internal sealed record InitiateEvidenceUploadRequest(
     string FileName,
     string ContentType,

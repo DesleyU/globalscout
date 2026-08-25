@@ -1,6 +1,7 @@
 import { createWebApiClient } from "@/lib/api/client";
 import { createPlayerIdentityApi } from "@/lib/api/player-identity";
 import { createServerApiClient } from "@/lib/api/server";
+import { DEFAULT_AUTHENTICATED_REDIRECT } from "./constants";
 import {
   ONBOARDING_ACCOUNT_TYPE_PATH,
   resolvePlayerOnboardingRedirect,
@@ -44,6 +45,6 @@ export async function getPostAuthRedirect(
     const claimResult = await fetchClaimStatus(token);
     return resolvePlayerOnboardingRedirect(claimResult);
   } catch {
-    return ONBOARDING_ACCOUNT_TYPE_PATH;
+    return DEFAULT_AUTHENTICATED_REDIRECT;
   }
 }

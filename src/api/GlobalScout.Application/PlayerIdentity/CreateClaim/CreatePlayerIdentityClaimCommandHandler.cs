@@ -29,12 +29,6 @@ internal sealed class CreatePlayerIdentityClaimCommandHandler(
             return Result.Failure<PlayerIdentityClaimDto>(PlayerIdentityErrors.InvalidPosition);
         }
 
-        var activeClaim = await claims.GetActiveByUserIdAsync(command.UserId, cancellationToken);
-        if (activeClaim is not null && ClaimStatusRules.BlocksNewClaim(activeClaim.Status))
-        {
-            return Result.Failure<PlayerIdentityClaimDto>(PlayerIdentityErrors.ClaimAlreadyExists);
-        }
-
         var criteria = new PlayerSearchCriteria(
             command.FirstName.Trim(),
             command.LastName.Trim(),
@@ -74,14 +68,50 @@ internal sealed class CreatePlayerIdentityClaimCommandHandler(
 
         var score = ConfidenceScorer.Score(criteria, candidate);
         var now = DateTimeOffset.UtcNow;
+        var claimPayload = BuildClaim(command.UserId, criteria, candidate, score.Score, now);
 
-        var claim = new PlayerIdentityClaim
+        var activeClaim = await claims.GetActiveByUserIdAsync(command.UserId, cancellationToken);
+        if (activeClaim is not null)
+        {
+            if (activeClaim.Status == ClaimStatus.Claimed)
+            {
+                claimPayload.Id = activeClaim.Id;
+                claimPayload.CreatedAt = activeClaim.CreatedAt;
+
+                var replaced = await claims.ReplaceClaimedCandidateAsync(claimPayload, cancellationToken);
+                if (replaced is null)
+                {
+                    return Result.Failure<PlayerIdentityClaimDto>(PlayerIdentityErrors.ClaimAlreadyExists);
+                }
+
+                return Result.Success(PlayerIdentityMapper.ToClaimDto(replaced));
+            }
+
+            if (ClaimStatusRules.BlocksNewClaim(activeClaim.Status))
+            {
+                return Result.Failure<PlayerIdentityClaimDto>(PlayerIdentityErrors.ClaimAlreadyExists);
+            }
+        }
+
+        await claims.AddAsync(claimPayload, cancellationToken);
+
+        return Result.Success(PlayerIdentityMapper.ToClaimDto(claimPayload));
+    }
+
+    private static PlayerIdentityClaim BuildClaim(
+        Guid userId,
+        PlayerSearchCriteria criteria,
+        ExternalPlayerCandidate candidate,
+        int confidenceScore,
+        DateTimeOffset now) =>
+        new()
         {
             Id = Guid.NewGuid(),
-            UserId = command.UserId,
+            UserId = userId,
             ExternalPlayerId = candidate.ExternalPlayerId,
             ExternalProvider = candidate.Provider,
-            CandidateName = candidate.Name,
+            CandidateFirstName = candidate.FirstName,
+            CandidateLastName = candidate.LastName,
             CandidateClub = candidate.Club,
             CandidatePosition = candidate.Position,
             CandidateNationality = candidate.Nationality,
@@ -94,14 +124,9 @@ internal sealed class CreatePlayerIdentityClaimCommandHandler(
             PreviousClub = criteria.PreviousClub,
             Position = criteria.Position,
             League = criteria.League,
-            ConfidenceScore = score.Score,
+            ConfidenceScore = confidenceScore,
             Status = ClaimStatus.Claimed,
             CreatedAt = now,
-            UpdatedAt = now
+            UpdatedAt = now,
         };
-
-        await claims.AddAsync(claim, cancellationToken);
-
-        return Result.Success(PlayerIdentityMapper.ToClaimDto(claim));
-    }
 }

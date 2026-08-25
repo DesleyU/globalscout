@@ -88,3 +88,17 @@ export interface AdminPlayerClaimsListResult {
   claims: AdminPendingClaimItem[];
   pagination: PaginationDto;
 }
+
+export interface ReferenceDataSyncCounts {
+  fetched: number;
+  added: number;
+  updated: number;
+}
+
+export interface SyncCountryReferenceDataResult {
+  countryCode: string;
+  countryName: string;
+  competitions: ReferenceDataSyncCounts;
+  teams: ReferenceDataSyncCounts;
+  syncedAt: string;
+}

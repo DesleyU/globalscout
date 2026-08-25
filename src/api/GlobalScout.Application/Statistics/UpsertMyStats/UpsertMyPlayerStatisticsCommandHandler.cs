@@ -1,13 +1,14 @@
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
-using GlobalScout.Application.Statistics;
+using GlobalScout.Application.Abstractions.ReferenceData;
 using GlobalScout.Domain.Identity;
-using GlobalScout.Domain.Users;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Statistics.UpsertMyStats;
 
-internal sealed class UpsertMyPlayerStatisticsCommandHandler(IPlayerStatisticsRepository stats)
+internal sealed class UpsertMyPlayerStatisticsCommandHandler(
+    IPlayerStatisticsRepository stats,
+    IReferenceDataCatalog catalog)
     : ICommandHandler<UpsertMyPlayerStatisticsCommand, UpsertMyPlayerStatisticsResult>
 {
     public async Task<Result<UpsertMyPlayerStatisticsResult>> Handle(
@@ -21,14 +22,28 @@ internal sealed class UpsertMyPlayerStatisticsCommandHandler(IPlayerStatisticsRe
         }
 
         var rows = await stats.ListByUserAsync(command.UserId, cancellationToken);
-        var existing = rows.FirstOrDefault(r =>
-            r.Season == command.Season && r.Source == StatsSource.Manual);
+        if (rows.Any(r => r.Season == command.Season && r.Source == StatsSource.ApiFootball))
+        {
+            return Result.Failure<UpsertMyPlayerStatisticsResult>(StatsErrors.SeasonCoveredByProvider);
+        }
 
-        var merged = Merge(command, existing, accountType.Value);
+        var resolved = await ManualCompetitionResolver.ResolveAsync(
+            command.Season,
+            command.Competitions,
+            catalog,
+            cancellationToken);
+        if (resolved.IsFailure)
+        {
+            return Result.Failure<UpsertMyPlayerStatisticsResult>(resolved.Error);
+        }
+
+        var premium = BuildPremiumMetrics(command, accountType.Value);
+        var aggregated = ManualStatisticsAggregator.Aggregate(resolved.Value, premium);
+
         var saved = await stats.UpsertManualAndReturnAsync(
             command.UserId,
             command.Season,
-            merged,
+            aggregated,
             cancellationToken);
 
         var dto = PlayerStatisticsMapper.ToDto(saved);
@@ -38,68 +53,26 @@ internal sealed class UpsertMyPlayerStatisticsCommandHandler(IPlayerStatisticsRe
         return Result.Success(new UpsertMyPlayerStatisticsResult(dict, tier));
     }
 
-    private static ManualStatisticsValues Merge(
+    private static ManualStatisticsValues? BuildPremiumMetrics(
         UpsertMyPlayerStatisticsCommand command,
-        PlayerStatistics? existing,
         AccountType tier)
     {
-        bool premium = tier == AccountType.Premium;
-
-        int IG(int? c, int e) => c ?? e;
-        int? IO(int? c, int? e) => c ?? e;
-        double? DG(double? c, double? e) => c ?? e;
-
-        var existingVals = PlayerStatisticsDataPayload.ParseManualForMerge(existing?.Data);
-
-        int baseGoals = existingVals.Goals;
-        int baseAssists = existingVals.Assists;
-        int baseMatches = existingVals.Matches;
-        int baseMinutes = existingVals.Minutes;
-        int baseY = existingVals.YellowCards;
-        int baseR = existingVals.RedCards;
-        double? baseRating = existingVals.Rating;
-
-        if (!premium)
+        if (tier != AccountType.Premium)
         {
-            return new ManualStatisticsValues
-            {
-                Goals = IG(command.Goals, baseGoals),
-                Assists = IG(command.Assists, baseAssists),
-                Matches = IG(command.Matches, baseMatches),
-                Minutes = IG(command.Minutes, baseMinutes),
-                YellowCards = IG(command.YellowCards, baseY),
-                RedCards = IG(command.RedCards, baseR),
-                Rating = DG(command.Rating, baseRating),
-                ShotsTotal = existingVals.ShotsTotal,
-                ShotsOnTarget = existingVals.ShotsOnTarget,
-                PassesTotal = existingVals.PassesTotal,
-                PassesAccuracy = existingVals.PassesAccuracy,
-                TacklesTotal = existingVals.TacklesTotal,
-                TacklesInterceptions = existingVals.TacklesInterceptions,
-                DuelsWon = existingVals.DuelsWon,
-                FoulsCommitted = existingVals.FoulsCommitted,
-                FoulsDrawn = existingVals.FoulsDrawn
-            };
+            return null;
         }
 
         return new ManualStatisticsValues
         {
-            Goals = IG(command.Goals, baseGoals),
-            Assists = IG(command.Assists, baseAssists),
-            Matches = IG(command.Matches, baseMatches),
-            Minutes = IG(command.Minutes, baseMinutes),
-            YellowCards = IG(command.YellowCards, baseY),
-            RedCards = IG(command.RedCards, baseR),
-            Rating = DG(command.Rating, baseRating),
-            ShotsTotal = IO(command.ShotsTotal, existingVals.ShotsTotal),
-            ShotsOnTarget = IO(command.ShotsOnTarget, existingVals.ShotsOnTarget),
-            PassesTotal = IO(command.PassesTotal, existingVals.PassesTotal),
-            PassesAccuracy = DG(command.PassesAccuracy, existingVals.PassesAccuracy),
-            TacklesTotal = IO(command.TacklesTotal, existingVals.TacklesTotal),
-            TacklesInterceptions = IO(command.TacklesInterceptions, existingVals.TacklesInterceptions),
-            DuelsWon = IO(command.DuelsWon, existingVals.DuelsWon),
-            FoulsCommitted = IO(command.FoulsCommitted, existingVals.FoulsCommitted),
-            FoulsDrawn = IO(command.FoulsDrawn, existingVals.FoulsDrawn)
+            ShotsTotal = command.ShotsTotal,
+            ShotsOnTarget = command.ShotsOnTarget,
+            PassesTotal = command.PassesTotal,
+            PassesAccuracy = command.PassesAccuracy,
+            TacklesTotal = command.TacklesTotal,
+            TacklesInterceptions = command.TacklesInterceptions,
+            DuelsWon = command.DuelsWon,
+            FoulsCommitted = command.FoulsCommitted,
+            FoulsDrawn = command.FoulsDrawn,
         };
     }
 }

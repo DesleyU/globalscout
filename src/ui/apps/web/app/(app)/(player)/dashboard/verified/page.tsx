@@ -7,6 +7,10 @@ import {
   fetchProfileVisitors,
 } from "@/features/dashboard/load-dashboard-data";
 import { VerifiedDashboardContent } from "@/features/dashboard/verified-dashboard-content";
+import {
+  VerificationBanner,
+  resolveVerificationBannerStatus,
+} from "@/components/dashboard/verification-banner";
 import { getSession } from "@/lib/auth";
 
 export const metadata: Metadata = {
@@ -25,7 +29,10 @@ export default async function VerifiedDashboardPage() {
     fetchProfileVisitors(),
   ]);
 
-  if (claimResult?.status !== "Verified") {
+  if (
+    claimResult?.status !== "Verified" &&
+    claimResult?.status !== "SelfReported"
+  ) {
     redirect("/dashboard");
   }
 
@@ -37,19 +44,28 @@ export default async function VerifiedDashboardPage() {
   });
 
   const isPremium = visitorsResult?.tier?.toLowerCase() === "premium";
+  const bannerStatus = resolveVerificationBannerStatus(claimResult?.status);
+  const identityBadge =
+    claimResult?.status === "SelfReported" ? "Self-reported profile" : null;
 
   return (
-    <VerifiedDashboardContent
-      name={player.name}
-      position={player.position}
-      positionShort={player.positionShort}
-      club={player.club}
-      nationality={player.nationality}
-      age={player.age}
-      imageUrl={player.imageUrl}
-      profileViews={player.profileViews}
-      stats={player.stats}
-      isPremium={isPremium}
-    />
+    <div>
+      <div className="px-8 pt-8">
+        <VerificationBanner status={bannerStatus} />
+      </div>
+      <VerifiedDashboardContent
+        name={player.name}
+        position={player.position}
+        positionShort={player.positionShort}
+        club={player.club}
+        nationality={player.nationality}
+        age={player.age}
+        imageUrl={player.imageUrl}
+        profileViews={player.profileViews}
+        stats={player.stats}
+        isPremium={isPremium}
+        identityBadge={identityBadge}
+      />
+    </div>
   );
 }

@@ -1,4 +1,5 @@
 import type { AdminPendingClaimItem } from "@globalscout/shared";
+import { formatPlayerName } from "@globalscout/shared";
 import { UserRound } from "lucide-react";
 import { ClaimActionForm } from "@/components/admin/claim-action-form";
 import { ClaimEvidenceList } from "@/components/admin/claim-evidence-list";
@@ -130,7 +131,13 @@ export function ClaimDetailPanel({
           <section className="space-y-3">
             <h3 className="text-sm font-semibold">Candidate profile</h3>
             <div className="grid gap-4 sm:grid-cols-2">
-              <DetailField label="Name" value={claim.candidateName} />
+              <DetailField
+                label="Name"
+                value={formatPlayerName(
+                  claim.candidateFirstName,
+                  claim.candidateLastName,
+                )}
+              />
               <DetailField
                 label="Position"
                 value={formatPositionLabel(claim.candidatePosition)}

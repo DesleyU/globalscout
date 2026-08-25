@@ -30,7 +30,7 @@ internal sealed class RefreshAllPlayerStatisticsCommandHandler(
             var errorCount = 0;
             foreach (var userId in userIds)
             {
-                var r = await refreshOne.ExecuteAsync(userId, cancellationToken);
+                var r = await refreshOne.ExecuteAsync(userId, enforceCooldown: false, cancellationToken);
                 if (r.IsSuccess && r.Value.Success)
                 {
                     successCount++;

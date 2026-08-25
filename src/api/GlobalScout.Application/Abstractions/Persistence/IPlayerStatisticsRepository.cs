@@ -12,6 +12,9 @@ public interface IPlayerStatisticsRepository
 
     Task<int?> GetApiPlayerIdAsync(Guid userId, CancellationToken cancellationToken);
 
+    /// <summary>Most recent <c>updated_at</c> for the user's API-Football rows, used to enforce a refresh cooldown.</summary>
+    Task<DateTimeOffset?> GetApiFootballLastUpdatedAsync(Guid userId, CancellationToken cancellationToken);
+
     Task<bool> UserExistsAsync(Guid userId, CancellationToken cancellationToken);
 
     Task<PlayerStatistics> UpsertManualAndReturnAsync(
@@ -19,6 +22,8 @@ public interface IPlayerStatisticsRepository
         string season,
         ManualStatisticsValues values,
         CancellationToken cancellationToken);
+
+    Task<bool> DeleteManualAsync(Guid userId, string season, CancellationToken cancellationToken);
 
     Task<PlayerStatistics> UpsertApiFootballAndReturnAsync(
         Guid userId,
@@ -62,4 +67,6 @@ public sealed class ManualStatisticsValues
     public int? FoulsCommitted { get; init; }
 
     public int? FoulsDrawn { get; init; }
+
+    public IReadOnlyList<ResolvedManualCompetition> Competitions { get; init; } = [];
 }

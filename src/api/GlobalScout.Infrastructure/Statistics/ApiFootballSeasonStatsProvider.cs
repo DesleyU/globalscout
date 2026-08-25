@@ -51,6 +51,10 @@ internal sealed class ApiFootballSeasonStatsProvider(
             return Result.Failure<AggregatedFootballSeasonStats>(StatsErrors.ExternalStatsUnavailable);
         }
 
+        JsonElement? profile = first.TryGetProperty("player", out var playerEl)
+            ? playerEl
+            : null;
+
         var goals = 0;
         var assists = 0;
         var appearances = 0;
@@ -155,6 +159,7 @@ internal sealed class ApiFootballSeasonStatsProvider(
             {
                 seasonYear,
                 provider = StatsSource.ApiFootball,
+                profile,
                 aggregated = new
                 {
                     goals,
@@ -173,7 +178,8 @@ internal sealed class ApiFootballSeasonStatsProvider(
                     duelsWon = duelsW,
                     foulsCommitted = foulsComm,
                     foulsDrawn = foulsDr
-                }
+                },
+                competitions = statistics
             });
 
         return Result.Success(

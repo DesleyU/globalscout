@@ -17,7 +17,10 @@ internal sealed class PostFootballTeamsSearch : IEndpoint
                     CancellationToken cancellationToken) =>
                 {
                     var result = await handler.Handle(
-                        new SearchFootballTeamsQuery(request.Country, request.SearchTerm),
+                        new SearchFootballTeamsQuery(
+                            request.Country,
+                            request.SearchTerm,
+                            request.RequiresExternalId),
                         cancellationToken);
 
                     return result.Match(Results.Ok, CustomResults.Problem);

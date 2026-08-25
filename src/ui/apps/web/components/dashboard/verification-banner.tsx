@@ -8,7 +8,8 @@ export type VerificationBannerStatus =
   | "none"
   | "pending"
   | "rejected"
-  | "verified";
+  | "verified"
+  | "self-reported";
 
 type VerificationBannerProps = {
   status: VerificationBannerStatus;
@@ -62,6 +63,18 @@ const config = {
     cta: null,
     href: null,
   },
+  "self-reported": {
+    icon: AlertCircle,
+    wrapperClass: "border-blue-200 bg-blue-50",
+    iconClass: "text-blue-600",
+    titleClass: "text-blue-900",
+    descClass: "text-blue-700",
+    title: "Self-reported profile",
+    description:
+      "Your profile is visible to scouts. Stats and identity are self-reported until verified.",
+    cta: "Edit statistics",
+    href: "/statistics",
+  },
 } as const;
 
 export function VerificationBanner({ status }: VerificationBannerProps) {
@@ -107,6 +120,8 @@ export function resolveVerificationBannerStatus(
   switch (claimStatus) {
     case "Verified":
       return "verified";
+    case "SelfReported":
+      return "self-reported";
     case "PendingVerification":
       return "pending";
     case "Rejected":

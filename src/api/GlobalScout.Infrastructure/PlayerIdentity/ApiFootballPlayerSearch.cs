@@ -2,8 +2,8 @@ using System.Globalization;
 using System.Text.Json;
 using GlobalScout.Application.Abstractions.PlayerIdentity;
 using GlobalScout.Application.Abstractions.Statistics;
-using GlobalScout.Application.PlayerIdentity;
-using GlobalScout.SharedKernel;
+using GlobalScout.Application.Common;
+using GlobalScout.Application.PlayerIdentity;using GlobalScout.SharedKernel;
 using Microsoft.Extensions.Options;
 
 namespace GlobalScout.Infrastructure.PlayerIdentity;
@@ -29,8 +29,7 @@ internal sealed class ApiFootballPlayerSearch(
             return Result.Success<IReadOnlyList<ExternalPlayerCandidate>>([]);
         }
 
-        var searchTerm = criteria.LastName.Trim();
-        if (searchTerm.Length < 3)
+        var searchTerm = TextNormalizer.ToApiFootballSearchTerm(criteria.LastName);        if (searchTerm.Length < 3)
         {
             return Result.Success<IReadOnlyList<ExternalPlayerCandidate>>([]);
         }
@@ -148,7 +147,6 @@ internal sealed class ApiFootballPlayerSearch(
             ExternalPlayerProviders.ApiFootball,
             firstName,
             lastName,
-            name,
             club,
             position,
             ReadString(player, "nationality") ?? string.Empty,

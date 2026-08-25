@@ -1,6 +1,7 @@
 "use client";
 
 import type { PlayerIdentityClaimDto } from "@globalscout/shared";
+import { formatPlayerName } from "@globalscout/shared";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
@@ -97,7 +98,13 @@ export function ClaimPageClient({
   const candidateFields = [
     {
       label: "Name",
-      value: claim?.candidateName ?? selectedMatch?.name ?? "—",
+      value:
+        formatPlayerName(
+          claim?.candidateFirstName,
+          claim?.candidateLastName,
+        ) ||
+        formatPlayerName(selectedMatch?.firstName, selectedMatch?.lastName) ||
+        "—",
     },
     {
       label: "Date of Birth",
@@ -169,7 +176,13 @@ export function ClaimPageClient({
     }
   }
 
-  const evidenceCount = claim?.evidence.length ?? 0;
+  const provider =
+    claim?.externalProvider ?? selectedMatch?.provider ?? "api-football";
+  const candidatePhotoUrl =
+    claim?.candidatePhotoUrl ?? selectedMatch?.photoUrl ?? null;
+  const candidateName =
+    formatPlayerName(claim?.candidateFirstName, claim?.candidateLastName) ||
+    formatPlayerName(selectedMatch?.firstName, selectedMatch?.lastName);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -188,19 +201,23 @@ export function ClaimPageClient({
             Claim Football Profile
           </h1>
           <p className="text-gray-500">
-            Review the details and submit verification evidence.
+            Confirm the matched profile, then add documents or links so we can
+            verify it belongs to you.
           </p>
         </div>
 
         <ClaimProfileComparison
           userFields={userFields}
           candidateFields={candidateFields}
+          provider={provider}
+          candidatePhotoUrl={candidatePhotoUrl}
+          candidateName={candidateName}
         />
 
         <EvidenceUpload
           onFileUpload={handleFileUpload}
           onLinkSubmit={handleLinkSubmit}
-          uploadedCount={evidenceCount}
+          evidence={claim?.evidence ?? []}
           disabled={isSubmitting}
         />
 

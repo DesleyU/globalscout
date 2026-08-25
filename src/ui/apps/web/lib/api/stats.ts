@@ -18,6 +18,10 @@ export function createStatsApi(client: ApiTransport) {
       return client.put<UpsertMyStatsResponse>(statsPaths.me, body);
     },
 
+    deleteMySeason(season: string) {
+      return client.delete<{ message: string }>(statsPaths.meSeason(season));
+    },
+
     getUserStats(userId: string) {
       return client.get<PlayerStatisticsResponse>(statsPaths.user(userId));
     },
