@@ -11,4 +11,10 @@ internal static class AuthRoutes
     public static string Profile => $"{Base}/profile";
 
     public static string Logout => $"{Base}/logout";
+
+    public static string ExternalChallenge => $"{Base}/external/{{provider}}/challenge";
+
+    public static string ExternalCallback => $"{Base}/external/{{provider}}/callback";
+
+    public static string ExternalExchange => $"{Base}/external/exchange";
 }

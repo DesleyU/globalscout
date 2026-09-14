@@ -50,4 +50,10 @@ web.WithEnvironment("ASPIRE_WEB_HTTP_ENDPOINT", web.GetEndpoint("http"));
 // allowed CORS origin so the policy always matches whatever Aspire assigned.
 api.WithEnvironment("Cors__AllowedOrigins__0", web.GetEndpoint("http"));
 
+// The OAuth2 callback's self-submitting form_post page needs the frontend's actual origin to target -
+// under Aspire this is a dynamically allocated reverse-proxy endpoint, not a fixed localhost port, so
+// it can't come from a static appsettings value (see appsettings.Development.json's fallback for the
+// plain `docker compose up` dev path instead).
+api.WithEnvironment("Authentication__FrontendBaseUrl", web.GetEndpoint("http"));
+
 builder.Build().Run();

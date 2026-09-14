@@ -46,3 +46,12 @@ export interface AuthProfileResponse {
 export interface LogoutResponse {
   message: string;
 }
+
+export interface ExternalExchangeRequest {
+  code: string;
+}
+
+export interface ExternalExchangeResponse {
+  token: string;
+  user: AuthUserDto;
+}

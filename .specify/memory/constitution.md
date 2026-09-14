@@ -73,9 +73,6 @@ from API-Football, a reference data catalog, S3 media, and Stripe billing.
 - **Production infrastructure**: AWS — CloudFront → ALB → a single EC2 host running Docker
   Compose (`ui`, `api`, `postgres`, `migrator`).
 
-Ignore root `README.md` (describes a stale Node/Express + Prisma + Supabase stack) and
-`legacy_frontend/` (dead code) — both are not the real stack.
-
 ## Git & Deploy Workflow
 
 - **Trunk-based, single branch**: all work happens directly on `main`. Feature branches or PRs

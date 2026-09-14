@@ -4,7 +4,7 @@ import type { AuthUserDto } from "@globalscout/shared";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import {
   ChevronRight,
@@ -34,12 +34,48 @@ import {
   type SignInFormValues,
 } from "@/lib/validation/sign-in";
 
+/** Reason codes app/api/auth/external/complete/route.ts appends to `?error=` on OAuth2 sign-up failure. */
+const DEFAULT_EXTERNAL_LOGIN_ERROR_MESSAGE =
+  "Something went wrong signing in with that provider. Please try again.";
+
+const EXTERNAL_LOGIN_ERROR_MESSAGES: Record<string, string> = {
+  under_age:
+    "You must be at least 16 years old to create a GlobalScout account.",
+  email_in_use:
+    "An account with this email already exists. Sign in using your original method.",
+  access_denied: "Sign-up was not completed.",
+  provider_error: DEFAULT_EXTERNAL_LOGIN_ERROR_MESSAGE,
+};
+
+function describeExternalLoginError(searchParams: URLSearchParams): string | null {
+  const errorCode = searchParams.get("error");
+  if (!errorCode) {
+    return null;
+  }
+
+  return EXTERNAL_LOGIN_ERROR_MESSAGES[errorCode] ?? DEFAULT_EXTERNAL_LOGIN_ERROR_MESSAGE;
+}
+
 export function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { setUser } = useSession();
-  const [formError, setFormError] = useState<string | null>(null);
+  // Read synchronously from the URL on first render (redirected back here by
+  // app/api/auth/external/complete/route.ts on OAuth2 sign-up failure, FR-012) rather than via an
+  // effect + setState, which the repo's react-hooks/set-state-in-effect rule disallows.
+  const [formError, setFormError] = useState<string | null>(() =>
+    describeExternalLoginError(searchParams),
+  );
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (formError) {
+      toast.error(formError);
+    }
+    // Intentionally only on mount: this mirrors the initial `formError` computed above and must not
+    // re-fire the toast for errors raised later by the submit handler.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const form = useForm<SignInFormValues>({
     resolver: zodResolver(signInSchema),

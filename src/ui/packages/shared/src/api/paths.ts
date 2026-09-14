@@ -5,6 +5,7 @@ export const authPaths = {
   register: "/auth/register",
   profile: "/auth/profile",
   logout: "/auth/logout",
+  externalExchange: "/auth/external/exchange",
 } as const;
 
 export const accountPaths = {

@@ -2,6 +2,8 @@ import {
   authPaths,
   type ApiTransport,
   type AuthProfileResponse,
+  type ExternalExchangeRequest,
+  type ExternalExchangeResponse,
   type LoginRequest,
   type LoginResponse,
   type LogoutResponse,
@@ -25,6 +27,10 @@ export function createAuthApi(client: ApiTransport) {
 
     logout() {
       return client.post<LogoutResponse>(authPaths.logout);
+    },
+
+    exchangeExternalCode(body: ExternalExchangeRequest) {
+      return client.post<ExternalExchangeResponse>(authPaths.externalExchange, body);
     },
   };
 }

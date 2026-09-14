@@ -43,6 +43,15 @@ services:
       AvatarStorage__PhysicalAvatarsDirectory: /app/wwwroot/uploads/avatars
       VideoStorage__PhysicalVideosDirectory: /app/wwwroot/uploads/videos
       Stripe__PublicAppBaseUrl: ${PUBLIC_APP_BASE_URL:-http://localhost:8080}
+      Authentication__FrontendBaseUrl: ${PUBLIC_APP_BASE_URL:-http://localhost:8080}
+      Authentication__Google__ClientId: ${AUTH_GOOGLE_CLIENT_ID:-}
+      Authentication__Google__ClientSecret: ${AUTH_GOOGLE_CLIENT_SECRET:-}
+      Authentication__Facebook__ClientId: ${AUTH_FACEBOOK_CLIENT_ID:-}
+      Authentication__Facebook__ClientSecret: ${AUTH_FACEBOOK_CLIENT_SECRET:-}
+      Authentication__Apple__ClientId: ${AUTH_APPLE_CLIENT_ID:-}
+      Authentication__Apple__KeyId: ${AUTH_APPLE_KEY_ID:-}
+      Authentication__Apple__TeamId: ${AUTH_APPLE_TEAM_ID:-}
+      Authentication__Apple__PrivateKey: ${AUTH_APPLE_PRIVATE_KEY:-}
     ports:
       - "${API_PORT:-5288}:8080"
     volumes:

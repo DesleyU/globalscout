@@ -18,69 +18,36 @@ namespace GlobalScout.Infrastructure.Identity;
 internal sealed class UserIdentityStore(
     UserManager<ApplicationUser> userManager,
     GlobalScoutDbContext db,
+    ApplicationUserCreator userCreator,
     ILogger<UserIdentityStore> logger) : IUserIdentityStore
 {
     public async Task<Result<RegisterUserOutcome>> RegisterAsync(
         RegisterUserCommand command,
         CancellationToken cancellationToken)
     {
-        var normalizedEmail = command.Email.Trim().ToLowerInvariant();
         const string roleName = AppRoleNames.Pending;
+        var firstName = command.FirstName.Trim();
+        var lastName = command.LastName.Trim();
 
-        var user = new ApplicationUser
+        var created = await userCreator.CreateAsync(
+            email: command.Email,
+            // TODO(email-verification): once verification for password accounts exists, this should
+            // start false and a confirmation email should be sent, instead of auto-confirming here.
+            emailConfirmed: true,
+            password: command.Password,
+            roleName: roleName,
+            firstName: firstName,
+            lastName: lastName,
+            age: null,
+            cancellationToken);
+
+        if (created.IsFailure)
         {
-            Id = Guid.NewGuid(),
-            UserName = normalizedEmail,
-            Email = normalizedEmail,
-            NormalizedEmail = normalizedEmail.ToUpperInvariant(),
-            NormalizedUserName = normalizedEmail.ToUpperInvariant(),
-            EmailConfirmed = true,
-            Status = UserStatus.Active,
-            AccountType = AccountType.Basic,
-            CreatedAt = DateTimeOffset.UtcNow,
-            UpdatedAt = DateTimeOffset.UtcNow
-        };
-
-        var create = await userManager.CreateAsync(user, command.Password);
-        if (!create.Succeeded)
-        {
-            if (create.Errors.Any(e => e.Code is "DuplicateEmail" or "DuplicateUserName"))
-            {
-                return Result.Failure<RegisterUserOutcome>(AuthErrors.EmailTaken);
-            }
-
-            logger.LogWarning("User create failed: {Errors}", string.Join(", ", create.Errors.Select(e => $"{e.Code}:{e.Description}")));
-            return Result.Failure<RegisterUserOutcome>(
-                Error.Problem("Auth.RegistrationFailed", "Registration could not be completed."));
+            return Result.Failure<RegisterUserOutcome>(created.Error);
         }
 
-        var addRole = await userManager.AddToRoleAsync(user, roleName);
-        if (!addRole.Succeeded)
-        {
-            logger.LogWarning("AddToRole failed: {Errors}", string.Join(", ", addRole.Errors.Select(e => e.Description)));
-            await userManager.DeleteAsync(user);
-            return Result.Failure<RegisterUserOutcome>(
-                Error.Problem("Auth.RoleAssignmentFailed", "Could not assign role to the new user."));
-        }
-
-        var profile = new Profile
-        {
-            UserId = user.Id,
-            FirstName = command.FirstName.Trim(),
-            LastName = command.LastName.Trim(),
-            CreatedAt = DateTimeOffset.UtcNow,
-            UpdatedAt = DateTimeOffset.UtcNow
-        };
-
-        db.Profiles.Add(profile);
-        await db.SaveChangesAsync(cancellationToken);
-
-        var regProfile = new RegistrationProfileDto(
-            profile.FirstName,
-            profile.LastName,
-            PositionToApi(profile.Position),
-            profile.Age,
-            profile.ClubName);
+        var user = created.Value;
+        var regProfile = new RegistrationProfileDto(firstName, lastName, null, null, null);
 
         return Result.Success(new RegisterUserOutcome(user.Id, user.Email!, roleName, regProfile));
     }

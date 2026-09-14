@@ -43,6 +43,7 @@ public static class DependencyInjection
         services
             .AddDatabase(configuration)
             .AddGlobalScoutIdentity(configuration)
+            .AddExternalAuthentication(configuration)
             .AddStripeBilling(configuration)
             .AddFileStorage(configuration)
             .AddReferenceData()
@@ -68,6 +69,7 @@ public static class DependencyInjection
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IMediaRepository, MediaRepository>();
         services.AddScoped<IUserIdentityStore, UserIdentityStore>();
+        services.AddScoped<ApplicationUserCreator>();
         services.AddScoped<IPlayerStatisticsRepository, PlayerStatisticsRepository>();
         services.AddScoped<IPlayerIdentityClaimRepository, PlayerIdentityClaimRepository>();
         services.AddScoped<IAuditLogRepository, AuditLogRepository>();
