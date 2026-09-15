@@ -8,6 +8,8 @@ public interface ISocialGraphRepository
 {
     Task<AccountType?> GetAccountTypeAsync(Guid userId, CancellationToken cancellationToken);
 
+    Task<UserRole?> GetUserRoleAsync(Guid userId, CancellationToken cancellationToken);
+
     Task<bool> IsActiveUserAsync(Guid userId, CancellationToken cancellationToken);
 
     Task<bool> UserExistsAsync(Guid userId, CancellationToken cancellationToken);

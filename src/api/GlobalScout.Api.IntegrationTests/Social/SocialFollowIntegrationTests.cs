@@ -1,7 +1,13 @@
 using System.Net.Http.Json;
 using System.Text.Json;
+using GlobalScout.Domain.Identity;
 
 namespace GlobalScout.Api.IntegrationTests.Social;
+
+// NOTE: Follow is now role-restricted (Player-Player and Agent-Player only, see FollowEligibility).
+// Tests below that exercise generic follow mechanics (not role rules themselves) use two Players,
+// an allowed pairing, so they continue to validate those mechanics independent of role restrictions.
+// Role-restriction behavior itself is covered by the dedicated tests further down this file.
 
 [Collection(nameof(IntegrationCollection))]
 public sealed class SocialFollowIntegrationTests
@@ -36,8 +42,8 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
         using var response = await SocialIntegrationTestHelpers.FollowUserAsync(follower, targetId, Ct);
@@ -54,7 +60,7 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (userId, token) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (userId, token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
         var client = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, token);
 
         using var response = await SocialIntegrationTestHelpers.FollowUserAsync(client, userId, Ct);
@@ -66,7 +72,7 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (_, token) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (_, token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
         var client = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, token);
 
         using var response = await SocialIntegrationTestHelpers.FollowUserAsync(client, Guid.NewGuid(), Ct);
@@ -78,8 +84,8 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
         using var first = await SocialIntegrationTestHelpers.FollowUserAsync(follower, targetId, Ct);
@@ -94,8 +100,8 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
         await SocialIntegrationTestHelpers.FollowUserAsync(follower, targetId, Ct);
@@ -112,8 +118,8 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
         using var response = await SocialIntegrationTestHelpers.UnfollowUserAsync(follower, targetId, Ct);
@@ -125,9 +131,9 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (targetId, targetToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (_, f1Token) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (_, f2Token) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (targetId, targetToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (_, f1Token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (_, f2Token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var c1 = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, f1Token);
         var c2 = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, f2Token);
@@ -149,8 +155,8 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (followerId, followerToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (followerId, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
         await SocialIntegrationTestHelpers.FollowUserAsync(follower, targetId, Ct);
@@ -168,8 +174,8 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
         using var followResp = await SocialIntegrationTestHelpers.FollowUserAsync(follower, targetId, Ct);
@@ -191,8 +197,8 @@ public sealed class SocialFollowIntegrationTests
     {
         var factory = _fixture.Factory;
         var anon = factory.CreateClient();
-        var (targetId, targetToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
-        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (targetId, targetToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (_, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
 
         var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
         await SocialIntegrationTestHelpers.FollowUserAsync(follower, targetId, Ct);
@@ -204,5 +210,115 @@ public sealed class SocialFollowIntegrationTests
         var doc = await JsonDocument.ParseAsync(stream, default, Ct);
         Assert.Equal(1, doc.RootElement.GetProperty("followersCount").GetInt32());
         Assert.Equal(0, doc.RootElement.GetProperty("followingCount").GetInt32());
+    }
+
+    [Fact]
+    public async Task Follow_AgentFollowsPlayer_Returns200()
+    {
+        var factory = _fixture.Factory;
+        var (_, agentToken) = await SocialIntegrationTestHelpers.RegisterScoutAgentUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+
+        var agent = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, agentToken);
+        using var response = await SocialIntegrationTestHelpers.FollowUserAsync(agent, targetId, Ct);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+    }
+
+    [Fact]
+    public async Task Follow_PlayerFollowsAgent_Returns400WithRoleError()
+    {
+        var factory = _fixture.Factory;
+        var (_, playerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterScoutAgentUserAsync(factory, Ct);
+
+        var player = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, playerToken);
+        using var response = await SocialIntegrationTestHelpers.FollowUserAsync(player, targetId, Ct);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        await using var stream = await response.Content.ReadAsStreamAsync(Ct);
+        var doc = await JsonDocument.ParseAsync(stream, default, Ct);
+        Assert.Equal("Social.FollowRestrictedToPlayers", doc.RootElement.GetProperty("code").GetString());
+    }
+
+    [Fact]
+    public async Task Follow_PlayerFollowsClub_Returns400WithRoleError()
+    {
+        var factory = _fixture.Factory;
+        var (_, playerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+
+        var player = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, playerToken);
+        using var response = await SocialIntegrationTestHelpers.FollowUserAsync(player, targetId, Ct);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        await using var stream = await response.Content.ReadAsStreamAsync(Ct);
+        var doc = await JsonDocument.ParseAsync(stream, default, Ct);
+        Assert.Equal("Social.FollowRestrictedToPlayers", doc.RootElement.GetProperty("code").GetString());
+    }
+
+    [Fact]
+    public async Task Follow_AgentFollowsAgent_Returns400WithRoleError()
+    {
+        var factory = _fixture.Factory;
+        var (_, agentToken) = await SocialIntegrationTestHelpers.RegisterScoutAgentUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterScoutAgentUserAsync(factory, Ct);
+
+        var agent = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, agentToken);
+        using var response = await SocialIntegrationTestHelpers.FollowUserAsync(agent, targetId, Ct);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        await using var stream = await response.Content.ReadAsStreamAsync(Ct);
+        var doc = await JsonDocument.ParseAsync(stream, default, Ct);
+        Assert.Equal("Social.AgentsCanOnlyFollowPlayers", doc.RootElement.GetProperty("code").GetString());
+    }
+
+    [Fact]
+    public async Task Follow_PlayerFollowsAdmin_Returns400WithRoleError()
+    {
+        var factory = _fixture.Factory;
+        var (_, playerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterAdminUserAsync(factory, Ct);
+
+        var player = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, playerToken);
+        using var response = await SocialIntegrationTestHelpers.FollowUserAsync(player, targetId, Ct);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        await using var stream = await response.Content.ReadAsStreamAsync(Ct);
+        var doc = await JsonDocument.ParseAsync(stream, default, Ct);
+        Assert.Equal("Social.AdminNotInFollowGraph", doc.RootElement.GetProperty("code").GetString());
+    }
+
+    [Fact]
+    public async Task Follow_AdminFollowsPlayer_Returns400WithRoleError()
+    {
+        var factory = _fixture.Factory;
+        var (_, adminToken) = await SocialIntegrationTestHelpers.RegisterAdminUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+
+        var admin = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, adminToken);
+        using var response = await SocialIntegrationTestHelpers.FollowUserAsync(admin, targetId, Ct);
+        Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
+
+        await using var stream = await response.Content.ReadAsStreamAsync(Ct);
+        var doc = await JsonDocument.ParseAsync(stream, default, Ct);
+        Assert.Equal("Social.AdminNotInFollowGraph", doc.RootElement.GetProperty("code").GetString());
+    }
+
+    [Fact]
+    public async Task Unfollow_AllowedRegardlessOfCurrentRoleEligibility_Returns200()
+    {
+        // A follow created while both users were Players must still be removable even if one
+        // account's role later changes such that the pairing would no longer be a NEW follow.
+        var factory = _fixture.Factory;
+        var (followerId, followerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+        var (targetId, _) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(factory, Ct);
+
+        var follower = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, followerToken);
+        await SocialIntegrationTestHelpers.FollowUserAsync(follower, targetId, Ct);
+
+        await SocialIntegrationTestHelpers.AssignRoleAsync(factory, targetId, AppRoleNames.ScoutAgent, Ct);
+
+        using var response = await SocialIntegrationTestHelpers.UnfollowUserAsync(follower, targetId, Ct);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 }

@@ -1,6 +1,7 @@
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Social;
+using GlobalScout.Domain.Identity;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Social.Follow;
@@ -18,6 +19,19 @@ internal sealed class FollowUserCommandHandler(ISocialGraphRepository social)
         if (!await social.UserExistsAsync(command.FollowingUserId, cancellationToken))
         {
             return Result.Failure<FollowUserResponseDto>(SocialErrors.UserNotFound);
+        }
+
+        var followerRole = await social.GetUserRoleAsync(command.FollowerId, cancellationToken);
+        var targetRole = await social.GetUserRoleAsync(command.FollowingUserId, cancellationToken);
+        if (followerRole is null || targetRole is null)
+        {
+            return Result.Failure<FollowUserResponseDto>(SocialErrors.UserNotFound);
+        }
+
+        var eligibility = FollowEligibility.Evaluate(followerRole.Value, targetRole.Value);
+        if (eligibility.IsFailure)
+        {
+            return Result.Failure<FollowUserResponseDto>(eligibility.Error);
         }
 
         if (await social.FollowExistsAsync(command.FollowerId, command.FollowingUserId, cancellationToken))

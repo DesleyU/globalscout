@@ -32,6 +32,26 @@ internal static class SocialIntegrationTestHelpers
         return (userId, token);
     }
 
+    public static async Task<(Guid UserId, string Token)> RegisterScoutAgentUserAsync(
+        WebApplicationFactory<Program> factory,
+        CancellationToken cancellationToken)
+    {
+        var (userId, email, _) = await RegisterUserCoreAsync(factory, cancellationToken);
+        await AssignRoleAsync(factory, userId, AppRoleNames.ScoutAgent, cancellationToken);
+        var token = await LoginAsync(factory, email, cancellationToken);
+        return (userId, token);
+    }
+
+    public static async Task<(Guid UserId, string Token)> RegisterAdminUserAsync(
+        WebApplicationFactory<Program> factory,
+        CancellationToken cancellationToken)
+    {
+        var (userId, email, _) = await RegisterUserCoreAsync(factory, cancellationToken);
+        await AssignRoleAsync(factory, userId, AppRoleNames.Admin, cancellationToken);
+        var token = await LoginAsync(factory, email, cancellationToken);
+        return (userId, token);
+    }
+
     public static async Task<(Guid UserId, string Token)> RegisterUserAsync(
         WebApplicationFactory<Program> factory,
         CancellationToken cancellationToken)
@@ -66,7 +86,7 @@ internal static class SocialIntegrationTestHelpers
         return (userId, email, token);
     }
 
-    private static async Task AssignRoleAsync(
+    public static async Task AssignRoleAsync(
         WebApplicationFactory<Program> factory,
         Guid userId,
         string roleName,

@@ -27,6 +27,19 @@ internal sealed class SocialGraphRepository(
         return t;
     }
 
+    public async Task<UserRole?> GetUserRoleAsync(Guid userId, CancellationToken cancellationToken)
+    {
+        var userEntity = await userManager.FindByIdAsync(userId.ToString());
+        if (userEntity is null)
+        {
+            return null;
+        }
+
+        var roles = await userManager.GetRolesAsync(userEntity);
+        var roleName = roles.FirstOrDefault();
+        return roleName is null ? null : AppRoleNames.ToUserRole(roleName);
+    }
+
     public async Task<bool> IsActiveUserAsync(Guid userId, CancellationToken cancellationToken) =>
         await db.Users.AsNoTracking()
             .AnyAsync(u => u.Id == userId && u.Status == UserStatus.Active, cancellationToken);

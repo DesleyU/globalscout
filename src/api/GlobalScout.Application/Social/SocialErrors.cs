@@ -33,6 +33,18 @@ public static class SocialErrors
     public static readonly Error NotFollowing =
         Error.NotFound("Social.NotFollowing", "You are not following this user.");
 
+    public static readonly Error FollowRestrictedToPlayers =
+        Error.Problem("Social.FollowRestrictedToPlayers", "Players can only follow other Players.");
+
+    public static readonly Error AgentsCanOnlyFollowPlayers =
+        Error.Problem("Social.AgentsCanOnlyFollowPlayers", "Agents can only follow Players.");
+
+    public static readonly Error AdminNotInFollowGraph =
+        Error.Problem("Social.AdminNotInFollowGraph", "Admin accounts do not participate in the follow graph.");
+
+    public static readonly Error FollowNotEligible =
+        Error.Problem("Social.FollowNotEligible", "This account type cannot follow other users.");
+
     public static readonly Error InvalidPendingRequestType =
         Error.Problem("Social.InvalidRequestType", "Invalid type. Use \"received\" or \"sent\".");
 
