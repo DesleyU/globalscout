@@ -1,6 +1,8 @@
+using GlobalScout.Application.Abstractions.Auth;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Abstractions.Social.Messages;
+using GlobalScout.Application.Auth;
 using GlobalScout.Application.Social.Messages;
 using GlobalScout.SharedKernel;
 
@@ -9,7 +11,8 @@ namespace GlobalScout.Application.Social.Messages.SendMessage;
 internal sealed class SendMessageCommandHandler(
     ISocialGraphRepository social,
     IMessageRepository messages,
-    IMessageRealtimeNotifier notifier)
+    IMessageRealtimeNotifier notifier,
+    IUserIdentityStore identityStore)
     : ICommandHandler<SendMessageCommand, MessageDetailDto>
 {
     public async Task<Result<MessageDetailDto>> Handle(
@@ -19,6 +22,11 @@ internal sealed class SendMessageCommandHandler(
         if (command.SenderId == command.ReceiverId)
         {
             return Result.Failure<MessageDetailDto>(MessageErrors.CannotMessageSelf);
+        }
+
+        if (!await identityStore.IsEmailConfirmedAsync(command.SenderId, cancellationToken))
+        {
+            return Result.Failure<MessageDetailDto>(AuthErrors.EmailNotVerified);
         }
 
         if (!await social.IsActiveUserAsync(command.ReceiverId, cancellationToken))

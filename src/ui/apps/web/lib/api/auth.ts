@@ -9,6 +9,9 @@ import {
   type LogoutResponse,
   type RegisterRequest,
   type RegisterResponse,
+  type ResendVerificationResponse,
+  type VerifyEmailRequest,
+  type VerifyEmailResponse,
 } from "@globalscout/shared";
 
 export function createAuthApi(client: ApiTransport) {
@@ -31,6 +34,14 @@ export function createAuthApi(client: ApiTransport) {
 
     exchangeExternalCode(body: ExternalExchangeRequest) {
       return client.post<ExternalExchangeResponse>(authPaths.externalExchange, body);
+    },
+
+    verifyEmail(body: VerifyEmailRequest) {
+      return client.post<VerifyEmailResponse>(authPaths.verifyEmail, body);
+    },
+
+    resendVerification() {
+      return client.post<ResendVerificationResponse>(authPaths.resendVerification);
     },
   };
 }

@@ -2,8 +2,9 @@
 
 ## Prerequisites
 
-- Local stack running via the Aspire AppHost (`dotnet run --project src/api/GlobalScout.AppHost`) or Docker Compose (`docker compose up`) — either brings up Postgres, the API, and the Next.js UI together.
-- The `Email` configuration section (added by this feature) pointed at either real AWS SES sandbox credentials, or a local capture sink (e.g. a fake `IEmailSender` / a tool like Mailhog) for dev — see research.md §1. For quickstart purposes, a logging/console `IEmailSender` stub that writes the verification link to logs is sufficient to validate the flow without real email delivery.
+- Local stack running via the Aspire AppHost (`dotnet run --project src/api/GlobalScout.AppHost`) — this already brings up Ministack (local S3 *and*, as of this feature, local SES) alongside Postgres, the API, and the Next.js UI. No new container is required (see research.md §1).
+- The `Email` configuration section (added by this feature) has its `EndpointUrl` pointed at Ministack's endpoint in this environment, the same way `ObjectStorage__EndpointUrl` already is — so `SesEmailSender` sends through Ministack's SES emulation instead of real AWS SES.
+- A way to read back what Ministack "sent" (its SES message-listing behavior, to be confirmed during implementation — see research.md §1) to extract the verification link's token for the scenarios below.
 - No pre-existing account required — the scenarios below create one.
 
 ## Scenario 1 — New internal account starts unverified and receives a link (User Story 1)
@@ -12,8 +13,8 @@
 2. Confirm the response indicates success and the account is created, but query the account's
    verification status (e.g. via `GET /api/auth/profile` with the returned token) and confirm
    `emailConfirmed` (or equivalent field) is `false`.
-3. Retrieve the verification link from wherever `IEmailSender` sent/logged it in this
-   environment; extract the `token` query parameter.
+3. Retrieve the verification link from Ministack's SES emulation (the "sent" message it
+   captured); extract the `token` query parameter.
 4. Call `POST /api/auth/verify-email` with `{ "token": "<extracted token>" }`.
 5. **Expected**: `200 OK`; re-checking the account's profile now shows `emailConfirmed: true`.
 6. Call `POST /api/auth/verify-email` again with the *same* token.
@@ -34,8 +35,10 @@
 ## Scenario 3 — Expired and invalid links are rejected (User Story 3)
 
 1. Register a new account and obtain its verification token.
-2. Either wait past the 24-hour expiry window, or (in a test/integration context) seed a token
-   row with `ExpiresAt` in the past directly against the database.
+2. Either wait past the 24-hour expiry window, or (in a test/integration context) shorten
+   `DataProtectionTokenProviderOptions.TokenLifespan` for that test run so a token issued moments
+   ago is already expired — tokens are stateless (research.md §2), so there is no database row to
+   seed directly.
 3. Call `POST /api/auth/verify-email` with that token.
 4. **Expected**: generic `400` invalid-link response; account remains unverified.
 5. Call `POST /api/auth/verify-email` with a syntactically plausible but entirely made-up token.

@@ -25,6 +25,11 @@ var api = builder.AddProject<Projects.GlobalScout_Api>("globalscout-api")
     .WithEnvironment("ObjectStorage__SecretKey", "test")
     .WithEnvironment("ObjectStorage__ForcePathStyle", "true")
     .WithEnvironment("ObjectStorage__CreateBucketIfMissing", "true")
+    .WithEnvironment("Email__EndpointUrl", ministack.GetEndpoint("http"))
+    .WithEnvironment("Email__Provider", "Ses")
+    .WithEnvironment("Email__Region", "us-east-1")
+    .WithEnvironment("Email__AccessKey", "test")
+    .WithEnvironment("Email__SecretKey", "test")
     .WithEnvironment("AdminSeed__Email", builder.Configuration["AdminSeed:Email"])
     .WithEnvironment("AdminSeed__Password", builder.Configuration["AdminSeed:Password"]);
 

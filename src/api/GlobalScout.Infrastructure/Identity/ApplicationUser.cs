@@ -20,6 +20,8 @@ public sealed class ApplicationUser : IdentityUser<Guid>
 
     public DateTimeOffset UpdatedAt { get; set; }
 
+    public DateTimeOffset? LastVerificationEmailSentAt { get; set; }
+
     public Profile? Profile { get; set; }
 
     public ICollection<Connection> SentConnections { get; set; } = [];

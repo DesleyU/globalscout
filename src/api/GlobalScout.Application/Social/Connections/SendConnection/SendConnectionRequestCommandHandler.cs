@@ -1,5 +1,7 @@
+using GlobalScout.Application.Abstractions.Auth;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
+using GlobalScout.Application.Auth;
 using GlobalScout.Application.Social;
 using GlobalScout.Application.Subscriptions;
 using GlobalScout.Domain.Identity;
@@ -7,7 +9,9 @@ using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Social.Connections.SendConnection;
 
-internal sealed class SendConnectionRequestCommandHandler(ISocialGraphRepository social)
+internal sealed class SendConnectionRequestCommandHandler(
+    ISocialGraphRepository social,
+    IUserIdentityStore identityStore)
     : ICommandHandler<SendConnectionRequestCommand, SendConnectionResponseDto>
 {
     public async Task<Result<SendConnectionResponseDto>> Handle(
@@ -17,6 +21,11 @@ internal sealed class SendConnectionRequestCommandHandler(ISocialGraphRepository
         if (command.SenderId == command.ReceiverId)
         {
             return Result.Failure<SendConnectionResponseDto>(SocialErrors.CannotConnectToSelf);
+        }
+
+        if (!await identityStore.IsEmailConfirmedAsync(command.SenderId, cancellationToken))
+        {
+            return Result.Failure<SendConnectionResponseDto>(AuthErrors.EmailNotVerified);
         }
 
         if (!await social.IsActiveUserAsync(command.ReceiverId, cancellationToken))

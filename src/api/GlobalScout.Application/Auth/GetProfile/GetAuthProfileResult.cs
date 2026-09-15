@@ -8,6 +8,7 @@ public sealed record GetAuthProfileResult(
     string Role,
     UserStatus Status,
     AccountType AccountType,
+    bool EmailConfirmed,
     AuthProfilePayload Profile);
 
 public sealed record AuthProfilePayload(

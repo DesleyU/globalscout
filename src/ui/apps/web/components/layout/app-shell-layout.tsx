@@ -1,6 +1,7 @@
 import type { AuthUserDto } from "@globalscout/shared";
 import { AppSidebar, type SidebarVariant } from "@/components/layout/app-sidebar";
 import { DashboardHeader } from "@/components/layout/dashboard-header";
+import { VerifyEmailBanner } from "@/components/layout/verify-email-banner";
 
 type AppShellLayoutProps = {
   user: AuthUserDto;
@@ -20,6 +21,7 @@ export function AppShellLayout({
       <AppSidebar variant={variant} />
       <div className="ml-48 flex min-h-screen flex-col">
         <DashboardHeader user={user} variant={variant} avatarUrl={avatarUrl} />
+        {user.emailConfirmed === false ? <VerifyEmailBanner /> : null}
         <main className="flex-1">{children}</main>
       </div>
     </div>

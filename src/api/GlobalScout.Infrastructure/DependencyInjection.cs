@@ -9,6 +9,7 @@ using GlobalScout.Application.Abstractions.Media;
 using GlobalScout.Application.Abstractions.Social.Messages;
 using GlobalScout.Application.Abstractions.Statistics;
 using GlobalScout.Infrastructure.Auth;
+using GlobalScout.Infrastructure.Auth.Email;
 using GlobalScout.Infrastructure.Media;
 using GlobalScout.Infrastructure.Data;
 using GlobalScout.Infrastructure.Identity;
@@ -46,6 +47,7 @@ public static class DependencyInjection
             .AddExternalAuthentication(configuration)
             .AddStripeBilling(configuration)
             .AddFileStorage(configuration)
+            .AddEmail(configuration)
             .AddReferenceData()
             .AddPersistenceHealthChecks(configuration);
 
@@ -146,6 +148,11 @@ public static class DependencyInjection
             })
             .AddEntityFrameworkStores<GlobalScoutDbContext>()
             .AddDefaultTokenProviders();
+
+        // Explicit for documentation/future-proofing even though it matches the framework default -
+        // this is the expiry for email-confirmation tokens (FR-004) and any other DataProtectorTokenProvider
+        // token (e.g. a future password-reset token, which would share this same lifespan).
+        services.Configure<DataProtectionTokenProviderOptions>(options => options.TokenLifespan = TimeSpan.FromHours(24));
 
         var jwt = configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
                   ?? throw new InvalidOperationException($"Configuration section '{JwtOptions.SectionName}' is missing.");

@@ -25,4 +25,7 @@ public sealed record Error(
 
     public static Error Unauthorized(string code, string description) =>
         new(code, description, ErrorType.Unauthorized, null);
+
+    public static Error TooManyRequests(string code, string description) =>
+        new(code, description, ErrorType.TooManyRequests, null);
 }

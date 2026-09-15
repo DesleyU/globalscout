@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
@@ -41,6 +41,7 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     stripe_customer_id = table.Column<string>(type: "text", nullable: true),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    last_verification_email_sent_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
                     user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     normalized_user_name = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     email = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
@@ -447,28 +448,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "reference_country_sync_states",
-                columns: table => new
-                {
-                    country_code = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
-                    competitions_synced_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    teams_synced_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
-                    competition_count = table.Column<int>(type: "integer", nullable: false),
-                    team_count = table.Column<int>(type: "integer", nullable: false),
-                    last_synced_by_user_id = table.Column<Guid>(type: "uuid", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_reference_country_sync_states", x => x.country_code);
-                    table.ForeignKey(
-                        name: "fk_reference_country_sync_states_last_synced_by_user",
-                        column: x => x.last_synced_by_user_id,
-                        principalTable: "asp_net_users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "reference_competitions",
                 columns: table => new
                 {
@@ -485,6 +464,7 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     merged_into_competition_id = table.Column<Guid>(type: "uuid", nullable: true),
                     submitted_by_user_id = table.Column<Guid>(type: "uuid", nullable: true),
                     submitted_level_hint = table.Column<int>(type: "integer", nullable: true),
+                    submitted_type_hint = table.Column<int>(type: "integer", nullable: true),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
@@ -500,6 +480,28 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     table.ForeignKey(
                         name: "fk_reference_competitions_submitted_by_user",
                         column: x => x.submitted_by_user_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "reference_country_sync_states",
+                columns: table => new
+                {
+                    country_code = table.Column<string>(type: "character varying(8)", maxLength: 8, nullable: false),
+                    competitions_synced_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    teams_synced_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    competition_count = table.Column<int>(type: "integer", nullable: false),
+                    team_count = table.Column<int>(type: "integer", nullable: false),
+                    last_synced_by_user_id = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_reference_country_sync_states", x => x.country_code);
+                    table.ForeignKey(
+                        name: "fk_reference_country_sync_states_last_synced_by_user",
+                        column: x => x.last_synced_by_user_id,
                         principalTable: "asp_net_users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.SetNull);
@@ -725,11 +727,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 column: "visitor_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_reference_country_sync_states_last_synced_by_user_id",
-                table: "reference_country_sync_states",
-                column: "last_synced_by_user_id");
-
-            migrationBuilder.CreateIndex(
                 name: "ix_reference_competitions_country_code_name_normalized",
                 table: "reference_competitions",
                 columns: new[] { "country_code", "name_normalized" });
@@ -762,6 +759,11 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 name: "ix_reference_competitions_submitted_by_user_id_status",
                 table: "reference_competitions",
                 columns: new[] { "submitted_by_user_id", "status" });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_reference_country_sync_states_last_synced_by_user_id",
+                table: "reference_country_sync_states",
+                column: "last_synced_by_user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_reference_teams_country_code_name_normalized",
@@ -857,10 +859,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 name: "profiles");
 
             migrationBuilder.DropTable(
-                name: "reference_country_sync_states");
+                name: "reference_competitions");
 
             migrationBuilder.DropTable(
-                name: "reference_competitions");
+                name: "reference_country_sync_states");
 
             migrationBuilder.DropTable(
                 name: "reference_teams");

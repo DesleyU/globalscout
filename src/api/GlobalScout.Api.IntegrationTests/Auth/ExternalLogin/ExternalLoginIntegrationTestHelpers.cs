@@ -95,6 +95,18 @@ internal static class ExternalLoginIntegrationTestHelpers
         return await db.Users.CountAsync(u => u.NormalizedEmail == email.Trim().ToUpperInvariant(), cancellationToken);
     }
 
+    public static async Task<bool> IsEmailConfirmedAsync(
+        WebApplicationFactory<Program> factory,
+        string email,
+        CancellationToken cancellationToken)
+    {
+        await using var scope = factory.Services.CreateAsyncScope();
+        var db = scope.ServiceProvider.GetRequiredService<GlobalScoutDbContext>();
+        var user = await db.Users.AsNoTracking()
+            .SingleAsync(u => u.NormalizedEmail == email.Trim().ToUpperInvariant(), cancellationToken);
+        return user.EmailConfirmed;
+    }
+
     public static async Task<int> CountLoginsAsync(
         WebApplicationFactory<Program> factory,
         Guid userId,

@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GlobalScout.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(GlobalScoutDbContext))]
-    [Migration("20260814174721_AddCompetitionSubmittedTypeHint")]
-    partial class AddCompetitionSubmittedTypeHint
+    [Migration("20260915064216_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -1020,6 +1020,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean")
                         .HasColumnName("email_confirmed");
+
+                    b.Property<DateTimeOffset?>("LastVerificationEmailSentAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_verification_email_sent_at");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean")

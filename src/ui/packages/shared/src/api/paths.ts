@@ -6,6 +6,8 @@ export const authPaths = {
   profile: "/auth/profile",
   logout: "/auth/logout",
   externalExchange: "/auth/external/exchange",
+  verifyEmail: "/auth/verify-email",
+  resendVerification: "/auth/resend-verification",
 } as const;
 
 export const accountPaths = {

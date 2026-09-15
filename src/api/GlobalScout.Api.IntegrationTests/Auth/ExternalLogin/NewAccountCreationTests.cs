@@ -59,6 +59,36 @@ public sealed class NewAccountCreationTests
     }
 
     [Fact]
+    public async Task Callback_with_provider_verified_email_creates_a_verified_account()
+    {
+        var email = $"external-{Guid.NewGuid():N}@example.com";
+        var info = ExternalLoginIntegrationTestHelpers.GoogleInfo(email: email, emailVerified: true);
+        var factory = _fixture.WithFakeExternalLogin(info);
+
+        using var callback = await ExternalLoginIntegrationTestHelpers.CallbackAsync(factory, Ct);
+        var code = await ExternalLoginIntegrationTestHelpers.ExtractFormFieldAsync(callback, "code", Ct);
+        await ExternalLoginIntegrationTestHelpers.ExchangeAsync(factory, code!, Ct);
+
+        // Unaffected by the email-verification feature (FR-011): OAuth2 accounts keep trusting the
+        // provider's own assertion rather than going through the internal-account verification flow.
+        Assert.True(await ExternalLoginIntegrationTestHelpers.IsEmailConfirmedAsync(factory, email, Ct));
+    }
+
+    [Fact]
+    public async Task Callback_with_provider_unverified_email_creates_an_unverified_account()
+    {
+        var email = $"external-{Guid.NewGuid():N}@example.com";
+        var info = ExternalLoginIntegrationTestHelpers.GoogleInfo(email: email, emailVerified: false);
+        var factory = _fixture.WithFakeExternalLogin(info);
+
+        using var callback = await ExternalLoginIntegrationTestHelpers.CallbackAsync(factory, Ct);
+        var code = await ExternalLoginIntegrationTestHelpers.ExtractFormFieldAsync(callback, "code", Ct);
+        await ExternalLoginIntegrationTestHelpers.ExchangeAsync(factory, code!, Ct);
+
+        Assert.False(await ExternalLoginIntegrationTestHelpers.IsEmailConfirmedAsync(factory, email, Ct));
+    }
+
+    [Fact]
     public async Task Callback_succeeds_when_provider_omits_email()
     {
         var info = ExternalLoginIntegrationTestHelpers.GoogleInfo(email: null);

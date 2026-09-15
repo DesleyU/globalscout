@@ -27,4 +27,11 @@ public interface IUserIdentityStore
     Task<Result> SetAccountTierFromBillingAsync(Guid userId, AccountType targetTier, CancellationToken cancellationToken);
 
     Task<string?> GetStripeCustomerIdAsync(Guid userId, CancellationToken cancellationToken);
+
+    Task<Result<VerifyEmailOutcome>> VerifyEmailAsync(string encodedToken, CancellationToken cancellationToken);
+
+    Task<Result> ResendVerificationEmailAsync(Guid userId, CancellationToken cancellationToken);
+
+    /// <summary>Fails closed (returns false) if the account can't be found.</summary>
+    Task<bool> IsEmailConfirmedAsync(Guid userId, CancellationToken cancellationToken);
 }

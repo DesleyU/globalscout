@@ -12,6 +12,10 @@ internal static class AuthRoutes
 
     public static string Logout => $"{Base}/logout";
 
+    public static string VerifyEmail => $"{Base}/verify-email";
+
+    public static string ResendVerification => $"{Base}/resend-verification";
+
     public static string ExternalChallenge => $"{Base}/external/{{provider}}/challenge";
 
     public static string ExternalCallback => $"{Base}/external/{{provider}}/callback";

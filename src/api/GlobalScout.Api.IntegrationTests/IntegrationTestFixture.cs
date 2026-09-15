@@ -45,6 +45,11 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
             builder.UseSetting("ObjectStorage:SecretKey", "test");
             builder.UseSetting("ObjectStorage:ForcePathStyle", "true");
             builder.UseSetting("ObjectStorage:CreateBucketIfMissing", "true");
+            builder.UseSetting("Email:EndpointUrl", ministackEndpoint);
+            builder.UseSetting("Email:Provider", "Ses");
+            builder.UseSetting("Email:Region", "us-east-1");
+            builder.UseSetting("Email:AccessKey", "test");
+            builder.UseSetting("Email:SecretKey", "test");
         });
     }
 

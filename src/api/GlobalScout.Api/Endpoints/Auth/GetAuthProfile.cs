@@ -34,6 +34,7 @@ internal sealed class GetAuthProfile : IEndpoint
                                 role = r.Role,
                                 status = r.Status.ToString().ToUpperInvariant(),
                                 accountType = r.AccountType.ToString().ToUpperInvariant(),
+                                emailConfirmed = r.EmailConfirmed,
                                 profile = r.Profile
                             }
                         }),

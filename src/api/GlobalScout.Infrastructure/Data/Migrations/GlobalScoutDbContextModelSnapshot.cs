@@ -1018,6 +1018,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("email_confirmed");
 
+                    b.Property<DateTimeOffset?>("LastVerificationEmailSentAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_verification_email_sent_at");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean")
                         .HasColumnName("lockout_enabled");

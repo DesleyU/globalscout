@@ -12,6 +12,7 @@ export interface AuthUserDto {
   role: string;
   accountType?: string;
   status?: string;
+  emailConfirmed?: boolean;
   profile: AuthProfileDto;
 }
 
@@ -54,4 +55,17 @@ export interface ExternalExchangeRequest {
 export interface ExternalExchangeResponse {
   token: string;
   user: AuthUserDto;
+}
+
+export interface VerifyEmailRequest {
+  token: string;
+}
+
+export interface VerifyEmailResponse {
+  message: string;
+  alreadyVerified: boolean;
+}
+
+export interface ResendVerificationResponse {
+  message: string;
 }

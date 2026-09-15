@@ -29,3 +29,9 @@ public sealed record LoginProfileDto(
     string? Position,
     int? Age,
     string? ClubName);
+
+public enum VerifyEmailOutcome
+{
+    NewlyVerified,
+    AlreadyVerified
+}

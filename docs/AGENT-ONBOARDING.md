@@ -221,6 +221,7 @@ Prod env template: `deploy/env.example`
 | **API-Football** (`v3.football.api-sports.io`) | Player search, stats refresh, reference data country sync, write-through club search |
 | **Stripe** | Premium subscriptions; webhook-driven entitlement sync to `account_type` + `subscriptions` |
 | **S3** | Avatars and media via presigned URLs (Ministack locally, real S3 in prod) |
+| **SES** | Account email verification (Ministack locally, real SES in prod) |
 
 ---
 

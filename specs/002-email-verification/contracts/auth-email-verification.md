@@ -13,7 +13,7 @@ revealed).
 **Request body**:
 
 ```json
-{ "token": "string (required, opaque)" }
+{ "token": "string (required, opaque — an ASP.NET Core Identity email-confirmation token, base64url-encoded)" }
 ```
 
 **Success response** — `200 OK`:
@@ -22,23 +22,26 @@ revealed).
 { "message": "Email verified successfully" }
 ```
 
-Effect: the associated `ApplicationUser.EmailConfirmed` becomes `true`; the token row's
-`ConsumedAt` is set; the account's other outstanding tokens (if any) are unaffected by this call
-(they would already be `SupersededAt`-set per FR-007, since only the latest token is ever valid).
+or, when the account was already verified before this call (User Story 1, scenario 3 — the spec
+requires this be told to the person "without treating it as an error", so the handler checks
+`EmailConfirmed` before calling `ConfirmEmailAsync` and returns this distinct, still-200 outcome
+rather than the generic failure below):
+
+```json
+{ "message": "Your email is already verified" }
+```
+
+Effect: `UserManager.ConfirmEmailAsync(user, token)` sets the associated
+`ApplicationUser.EmailConfirmed` to `true`. No token record is "consumed" server-side (the token
+is stateless — see research.md §2); a second submission of the same token after this point hits
+the already-verified branch above, not the token-validity failure below.
 
 **Failure response** — `400 Bad Request` (generic "invalid" — FR-008 requires this to cover
-*all* of: expired, already-used, superseded, or entirely unrecognized tokens, indistinguishably):
+*all* of: expired, superseded, or entirely unrecognized/tampered tokens, indistinguishably):
 
 ```json
 { "message": "This verification link is invalid or has expired." }
 ```
-
-**Idempotency note** (User Story 1, scenario 3): if the token was already consumed by an earlier
-call and the account is *already verified*, the endpoint still returns the generic failure body
-above per FR-008's "don't reveal state" rule for the token itself — but the frontend confirmation
-page separately checks the *caller's own* session (if any) to show a friendlier "you're already
-verified" message when the person is signed in, rather than relying on this endpoint to
-distinguish the case.
 
 ## `POST /api/auth/resend-verification`
 
@@ -52,9 +55,10 @@ to avoid becoming an account-enumeration oracle (see research.md §5). No reques
 { "message": "Verification email sent" }
 ```
 
-Effect: a new `EmailVerificationToken` row is issued (`IssuedAt = now`, `ExpiresAt = now + 24h`);
-any previously outstanding token for this account gets `SupersededAt = now` (FR-007); a new email
-is dispatched via `IEmailSender`.
+Effect: the account's `SecurityStamp` is rotated (invalidating any previously issued, still-valid
+confirmation token — FR-007), a new token is generated via
+`UserManager.GenerateEmailConfirmationTokenAsync`, `ApplicationUser.LastVerificationEmailSentAt`
+is set to `now`, and a new email is dispatched via `IEmailSender`.
 
 **Failure responses**:
 
@@ -64,8 +68,8 @@ is dispatched via `IEmailSender`.
   { "message": "Your email is already verified" }
   ```
 
-- `429 Too Many Requests` — caller requested a resend within the throttle cooldown window of the
-  current active token's `IssuedAt` (FR-010):
+- `429 Too Many Requests` — caller requested a resend within the throttle cooldown window of
+  `LastVerificationEmailSentAt` (FR-010):
 
   ```json
   { "message": "Please wait before requesting another verification email" }
