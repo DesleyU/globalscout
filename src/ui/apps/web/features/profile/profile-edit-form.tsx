@@ -11,6 +11,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { ClubNameAutocompleteField } from "@/components/reference-data/club-name-autocomplete-field";
+import { CountryAutocompleteField } from "@/components/reference-data/country-autocomplete-field";
 import { ONBOARDING_POSITIONS } from "@/features/onboarding/player/constants";
 import {
   Select,
@@ -196,11 +198,68 @@ export function ProfileEditForm({ profile, onSaved }: ProfileEditFormProps) {
         </div>
 
         <div className="grid gap-4 sm:grid-cols-2">
+          <Controller
+            name="nationality"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Nationality</FieldLabel>
+                <CountryAutocompleteField
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  disabled={isSubmitting}
+                  invalid={fieldState.invalid}
+                  placeholder="Nationality"
+                />
+                {fieldState.invalid ? (
+                  <FieldError errors={[fieldState.error]} />
+                ) : null}
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="country"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Country</FieldLabel>
+                <CountryAutocompleteField
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  disabled={isSubmitting}
+                  invalid={fieldState.invalid}
+                  placeholder="Country"
+                />
+                {fieldState.invalid ? (
+                  <FieldError errors={[fieldState.error]} />
+                ) : null}
+              </Field>
+            )}
+          />
+
+          <Controller
+            name="clubName"
+            control={form.control}
+            render={({ field, fieldState }) => (
+              <Field data-invalid={fieldState.invalid}>
+                <FieldLabel>Club</FieldLabel>
+                <ClubNameAutocompleteField
+                  country={form.watch("country") ?? ""}
+                  value={field.value ?? ""}
+                  onChange={field.onChange}
+                  disabled={isSubmitting}
+                  invalid={fieldState.invalid}
+                />
+                {fieldState.invalid ? (
+                  <FieldError errors={[fieldState.error]} />
+                ) : null}
+              </Field>
+            )}
+          />
+
           {(
             [
-              ["nationality", "Nationality"],
-              ["clubName", "Club"],
-              ["country", "Country"],
               ["city", "City"],
               ["phone", "Phone"],
               ["website", "Website"],

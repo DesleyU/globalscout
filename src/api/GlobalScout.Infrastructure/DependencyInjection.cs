@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using System.Text;
 using GlobalScout.Application.Abstractions.Auth;
+using GlobalScout.Application.Abstractions.Dev;
 using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Abstractions.PlayerIdentity;
 using GlobalScout.Application.Abstractions.ReferenceData;
@@ -25,6 +26,7 @@ using GlobalScout.Infrastructure.PlayerIdentity;
 using GlobalScout.Infrastructure.ReferenceData;
 using GlobalScout.Infrastructure.Data.Repositories;
 using GlobalScout.Infrastructure.Data.Audit;
+using GlobalScout.Infrastructure.Dev;
 using GlobalScout.Application.Abstractions.Billing;
 using EFCore.NamingConventions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -77,6 +79,7 @@ public static class DependencyInjection
         services.AddScoped<IPlayerStatisticsRepository, PlayerStatisticsRepository>();
         services.AddScoped<IPlayerIdentityClaimRepository, PlayerIdentityClaimRepository>();
         services.AddScoped<IAuditLogRepository, AuditLogRepository>();
+        services.AddScoped<ITestUserFactory, TestUserFactory>();
 
         services.Configure<ApiFootballOptions>(configuration.GetSection(ApiFootballOptions.SectionName));
         services.AddSingleton<IStatisticsUpdateState, StatisticsUpdateState>();

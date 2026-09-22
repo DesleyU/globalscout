@@ -1,3 +1,4 @@
+using System.Net.Http.Json;
 using Aspire.Hosting.ApplicationModel;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -61,4 +62,28 @@ api.WithEnvironment("Cors__AllowedOrigins__0", web.GetEndpoint("http"));
 // plain `docker compose up` dev path instead).
 api.WithEnvironment("Authentication__FrontendBaseUrl", web.GetEndpoint("http"));
 
+// Dashboard buttons for quickly seeding fake, pre-verified test users (api/dev/seed-users is only
+// mapped when the API is running in Development, so these are no-ops against a prod build).
+AddSeedUsersCommand(api, "PLAYER", "Seed 5 test players", "PersonAdd");
+AddSeedUsersCommand(api, "CLUB", "Seed 3 test clubs", "Building");
+AddSeedUsersCommand(api, "SCOUT_AGENT", "Seed 3 test agents", "PersonSearch");
+
 builder.Build().Run();
+
+static void AddSeedUsersCommand(IResourceBuilder<ProjectResource> api, string role, string displayName, string iconName) =>
+    api.WithHttpCommand(
+        path: "/api/dev/seed-users",
+        displayName: displayName,
+        commandName: $"seed-test-users-{role.ToLowerInvariant()}",
+        commandOptions: new HttpCommandOptions
+        {
+            Method = HttpMethod.Post,
+            IconName = iconName,
+            Description = $"Creates fake, pre-verified {role} test users via the dev-only seed endpoint.",
+            ResultMode = HttpCommandResultMode.Json,
+            PrepareRequest = context =>
+            {
+                context.Request.Content = JsonContent.Create(new { role, count = role == "PLAYER" ? 5 : 3 });
+                return Task.CompletedTask;
+            }
+        });

@@ -2,6 +2,7 @@ using GlobalScout.Api.Infrastructure;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Users;
 using GlobalScout.Application.Users.Search;
+using GlobalScout.Domain.Identity;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Api.Endpoints.Users;
@@ -61,9 +62,14 @@ internal sealed class GetUsersSearch : IEndpoint
                         return Results.BadRequest(new { error = "Invalid maxAge. Expected an integer." });
                     }
 
+                    var callerRole = HttpUser.ResolveRole(principal);
+                    var effectiveRole = callerRole is UserRole.Player or UserRole.ScoutAgent
+                        ? AppRoleNames.Player
+                        : role;
+
                     var query = new SearchUsersQuery(
                         userId.Value,
-                        role,
+                        effectiveRole,
                         position,
                         club,
                         country,

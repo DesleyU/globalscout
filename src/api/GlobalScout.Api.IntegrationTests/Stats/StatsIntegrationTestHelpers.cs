@@ -1,4 +1,6 @@
+using GlobalScout.Application.Abstractions.ReferenceData;
 using GlobalScout.Domain.Identity;
+using GlobalScout.Domain.ReferenceData;
 using GlobalScout.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -28,5 +30,36 @@ internal static class StatsIntegrationTestHelpers
         {
             throw new InvalidOperationException(string.Join(", ", update.Errors.Select(e => e.Description)));
         }
+    }
+
+    public static async Task<(Guid TeamCatalogId, Guid CompetitionCatalogId)> CreateCatalogReferencesAsync(
+        WebApplicationFactory<Program> factory,
+        Guid submittedByUserId,
+        CancellationToken cancellationToken)
+    {
+        using var scope = factory.Services.CreateScope();
+        var catalog = scope.ServiceProvider.GetRequiredService<IReferenceDataCatalog>();
+
+        var team = await catalog.TrySubmitTeamAsync(
+            "RO",
+            $"Test Team {Guid.NewGuid():N}",
+            submittedByUserId,
+            5,
+            cancellationToken);
+        var competition = await catalog.TrySubmitCompetitionAsync(
+            "RO",
+            $"Test League {Guid.NewGuid():N}",
+            CompetitionLevel.Amateur,
+            CompetitionType.League,
+            submittedByUserId,
+            5,
+            cancellationToken);
+
+        if (team is null || competition is null)
+        {
+            throw new InvalidOperationException("Failed to create reference data for stats test.");
+        }
+
+        return (team.Id, competition.Id);
     }
 }

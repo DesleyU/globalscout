@@ -83,6 +83,7 @@ internal static class SocialIntegrationTestHelpers
         var root = doc.RootElement;
         var token = root.GetProperty("token").GetString()!;
         var userId = root.GetProperty("user").GetProperty("id").GetGuid();
+        await ConfirmEmailAsync(factory, userId, cancellationToken);
         return (userId, email, token);
     }
 

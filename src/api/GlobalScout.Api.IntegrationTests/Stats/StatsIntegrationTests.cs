@@ -46,12 +46,29 @@ public sealed class StatsIntegrationTests
     [Fact]
     public async Task Put_stats_me_then_get_reflects_row()
     {
-        (_, string token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(_fixture.Factory, Ct);
+        (Guid userId, string token) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(_fixture.Factory, Ct);
         using var client = SocialIntegrationTestHelpers.CreateAuthenticatedClient(_fixture.Factory, token);
+        (Guid teamCatalogId, Guid competitionCatalogId) =
+            await StatsIntegrationTestHelpers.CreateCatalogReferencesAsync(_fixture.Factory, userId, Ct);
 
         using (var put = await client.PutAsJsonAsync(
                    "/api/stats/me",
-                   new { season = "2024", goals = 7, assists = 2 },
+                   new
+                   {
+                       season = "2024",
+                       competitions = new[]
+                       {
+                           new
+                           {
+                               teamCatalogId,
+                               competitionCatalogId,
+                               appearances = 10,
+                               minutes = 900,
+                               goals = 7,
+                               assists = 2
+                           }
+                       }
+                   },
                    Ct))
         {
             put.EnsureSuccessStatusCode();
@@ -92,12 +109,29 @@ public sealed class StatsIntegrationTests
     {
         (_, string viewerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(_fixture.Factory, Ct);
         (Guid targetId, string targetToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(_fixture.Factory, Ct);
+        (Guid teamCatalogId, Guid competitionCatalogId) =
+            await StatsIntegrationTestHelpers.CreateCatalogReferencesAsync(_fixture.Factory, targetId, Ct);
 
         using (var targetClient = SocialIntegrationTestHelpers.CreateAuthenticatedClient(_fixture.Factory, targetToken))
         {
             using var put = await targetClient.PutAsJsonAsync(
                 "/api/stats/me",
-                new { season = "2024", goals = 5, minutes = 900 },
+                new
+                {
+                    season = "2024",
+                    competitions = new[]
+                    {
+                        new
+                        {
+                            teamCatalogId,
+                            competitionCatalogId,
+                            appearances = 10,
+                            minutes = 900,
+                            goals = 5,
+                            assists = 0
+                        }
+                    }
+                },
                 Ct);
             put.EnsureSuccessStatusCode();
         }
@@ -134,12 +168,30 @@ public sealed class StatsIntegrationTests
         (Guid targetId, string targetToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(_fixture.Factory, Ct);
 
         await StatsIntegrationTestHelpers.SetAccountTypeAsync(_fixture.Factory, targetId, AccountType.Premium, Ct);
+        (Guid teamCatalogId, Guid competitionCatalogId) =
+            await StatsIntegrationTestHelpers.CreateCatalogReferencesAsync(_fixture.Factory, targetId, Ct);
 
         using (var targetClient = SocialIntegrationTestHelpers.CreateAuthenticatedClient(_fixture.Factory, targetToken))
         {
             using var put = await targetClient.PutAsJsonAsync(
                 "/api/stats/me",
-                new { season = "2024", goals = 1, shotsTotal = 42 },
+                new
+                {
+                    season = "2024",
+                    competitions = new[]
+                    {
+                        new
+                        {
+                            teamCatalogId,
+                            competitionCatalogId,
+                            appearances = 1,
+                            minutes = 90,
+                            goals = 1,
+                            assists = 0
+                        }
+                    },
+                    shotsTotal = 42
+                },
                 Ct);
             put.EnsureSuccessStatusCode();
         }

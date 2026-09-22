@@ -67,12 +67,19 @@ public sealed class AdminReferenceDataIntegrationTests
             Ct);
         setLevelResponse.EnsureSuccessStatusCode();
 
+        (Guid submitterUserId, string playerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(
+            _fixture.Factory,
+            Ct);
+        using var playerClient = SocialIntegrationTestHelpers.CreateAuthenticatedClient(
+            _fixture.Factory,
+            playerToken);
+
         var submitted = await catalog.TrySubmitCompetitionAsync(
             "RO",
-            $"Pending League {Guid.NewGuid():N}",
+            $"Rejection Search Case {Guid.NewGuid():N}",
             CompetitionLevel.YouthAcademy,
             CompetitionType.League,
-            Guid.NewGuid(),
+            submitterUserId,
             5,
             Ct);
         Assert.NotNull(submitted);
@@ -83,13 +90,6 @@ public sealed class AdminReferenceDataIntegrationTests
             null,
             Ct);
         rejectResponse.EnsureSuccessStatusCode();
-
-        (_, string playerToken) = await SocialIntegrationTestHelpers.RegisterPlayerUserAsync(
-            _fixture.Factory,
-            Ct);
-        using var playerClient = SocialIntegrationTestHelpers.CreateAuthenticatedClient(
-            _fixture.Factory,
-            playerToken);
         using var searchResponse = await playerClient.PostAsJsonAsync(
             "/api/reference-data/football/competitions/search",
             new { country = "Romania", searchTerm = submitted.Name },
@@ -97,7 +97,7 @@ public sealed class AdminReferenceDataIntegrationTests
         searchResponse.EnsureSuccessStatusCode();
         await using var searchStream = await searchResponse.Content.ReadAsStreamAsync(Ct);
         var searchDoc = await JsonDocument.ParseAsync(searchStream, cancellationToken: Ct);
-        var competitions = searchDoc.RootElement.GetProperty("leagues");
+        var competitions = searchDoc.RootElement.GetProperty("competitions");
         Assert.Equal(0, competitions.GetArrayLength());
     }
 }

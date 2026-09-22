@@ -372,7 +372,8 @@ public sealed class ReferenceDataCatalogIntegrationTests
             {
                 country = "Romania",
                 name = "Endpoint Submitted League",
-                levelHint = "Amateur"
+                levelHint = "Amateur",
+                typeHint = "League"
             },
             Ct);
         Assert.Equal(HttpStatusCode.Created, response.StatusCode);

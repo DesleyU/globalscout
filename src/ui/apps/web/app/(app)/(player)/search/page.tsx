@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { SearchPageClient } from "@/features/search/search-page-client";
 import { requirePlayer } from "@/lib/auth";
 
@@ -9,5 +10,9 @@ export const metadata: Metadata = {
 export default async function SearchPage() {
   const session = await requirePlayer();
 
-  return <SearchPageClient currentUserId={session.user.id} />;
+  return (
+    <Suspense>
+      <SearchPageClient currentUserId={session.user.id} />
+    </Suspense>
+  );
 }

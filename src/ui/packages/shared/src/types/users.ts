@@ -66,6 +66,12 @@ export interface SearchUsersResult {
 export interface SearchUsersParams {
   q?: string;
   role?: string;
+  position?: string;
+  club?: string;
+  country?: string;
+  city?: string;
+  minAge?: number;
+  maxAge?: number;
   page?: number;
   limit?: number;
 }
