@@ -1,15 +1,13 @@
-import {
-  createRouteSkeletonMetadata,
-  RouteSkeletonPage,
-} from "@/features/dashboard/route-skeleton-page";
+import type { Metadata } from "next";
+import { SearchPageClient } from "@/features/search/search-page-client";
+import { requireAgent } from "@/lib/auth";
 
-export const metadata = createRouteSkeletonMetadata("Search");
+export const metadata: Metadata = {
+  title: "Search",
+};
 
-export default function AgentSearchPage() {
-  return (
-    <RouteSkeletonPage
-      title="Search"
-      description="Discover and filter players, clubs, and scouts. This is a placeholder for the agent search section."
-    />
-  );
+export default async function AgentSearchPage() {
+  const session = await requireAgent();
+
+  return <SearchPageClient currentUserId={session.user.id} variant="agent" />;
 }

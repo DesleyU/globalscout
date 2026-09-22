@@ -1,7 +1,8 @@
 import type { AuthUserDto } from "@globalscout/shared";
-import { Bell, Search } from "lucide-react";
+import { Search } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import type { SidebarVariant } from "@/components/layout/app-sidebar";
+import { NotificationBell } from "@/components/layout/notification-bell";
 import { formatUserDisplayName } from "@/lib/auth/format-user-display";
 
 type DashboardHeaderProps = {
@@ -63,18 +64,7 @@ export function DashboardHeader({
         )}
 
         <div className="flex items-center gap-4">
-          {!isAdmin ? (
-            <button
-              type="button"
-              className="relative rounded-full p-2 transition hover:bg-gray-100"
-              aria-label="Notifications"
-            >
-              <Bell className="size-5 text-gray-600" />
-              <span className="absolute top-1 right-1 flex size-3.5 items-center justify-center rounded-full bg-red-500 text-[10px] text-white">
-                4
-              </span>
-            </button>
-          ) : null}
+          {!isAdmin ? <NotificationBell variant={variant} /> : null}
 
           <div className="flex items-center gap-3">
             <Avatar size="lg">

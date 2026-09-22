@@ -66,3 +66,22 @@ public sealed record GetFollowListResult(
 public sealed record GetFollowStatusResult(bool IsFollowing, Guid? FollowId);
 
 public sealed record GetFollowStatsResult(int FollowersCount, int FollowingCount);
+
+public sealed record NotificationActorDto(Guid Id, string Role, UserProfileApiDto? Profile);
+
+public sealed record NotificationDto(
+    Guid Id,
+    string Type,
+    NotificationActorDto Actor,
+    Guid? RelatedEntityId,
+    bool IsRead,
+    DateTimeOffset CreatedAt);
+
+public sealed record GetNotificationsResult(
+    IReadOnlyList<NotificationDto> Items,
+    LegacyPaginationDto Pagination,
+    int UnreadCount);
+
+public sealed record MarkNotificationReadResult(Guid Id, bool IsRead, int UnreadCount);
+
+public sealed record MarkAllNotificationsReadResult(int MarkedCount, int UnreadCount);

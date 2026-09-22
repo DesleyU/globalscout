@@ -566,6 +566,56 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.ToTable("messages", (string)null);
                 });
 
+            modelBuilder.Entity("GlobalScout.Domain.Social.Notification", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<Guid>("ActorUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("actor_user_id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("boolean")
+                        .HasColumnName("is_read");
+
+                    b.Property<DateTimeOffset?>("ReadAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("read_at");
+
+                    b.Property<Guid>("RecipientUserId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("recipient_user_id");
+
+                    b.Property<Guid?>("RelatedEntityId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("related_entity_id");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("integer")
+                        .HasColumnName("type");
+
+                    b.HasKey("Id")
+                        .HasName("pk_notifications");
+
+                    b.HasIndex("ActorUserId")
+                        .HasDatabaseName("ix_notifications_actor_user_id");
+
+                    b.HasIndex("RecipientUserId", "CreatedAt")
+                        .HasDatabaseName("ix_notifications_recipient_user_id_created_at");
+
+                    b.HasIndex("RecipientUserId", "IsRead")
+                        .HasDatabaseName("ix_notifications_recipient_user_id_is_read");
+
+                    b.ToTable("notifications", (string)null);
+                });
+
             modelBuilder.Entity("GlobalScout.Domain.Social.UserBlock", b =>
                 {
                     b.Property<Guid>("BlockerId")
@@ -1332,6 +1382,23 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
                         .HasConstraintName("fk_messages_asp_net_users_sender_id");
+                });
+
+            modelBuilder.Entity("GlobalScout.Domain.Social.Notification", b =>
+                {
+                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("ActorUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_notifications_asp_net_users_actor_user_id");
+
+                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("RecipientUserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_notifications_asp_net_users_recipient_user_id");
                 });
 
             modelBuilder.Entity("GlobalScout.Domain.Social.UserBlock", b =>

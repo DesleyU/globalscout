@@ -48,6 +48,9 @@ public static class SocialErrors
     public static readonly Error InvalidPendingRequestType =
         Error.Problem("Social.InvalidRequestType", "Invalid type. Use \"received\" or \"sent\".");
 
+    public static readonly Error NotificationNotFound =
+        Error.NotFound("Social.NotificationNotFound", "Notification not found.");
+
     public static Error ConnectionLimitReached(int currentConnections) =>
         Error.Forbidden(
             "Connections.LimitReached",

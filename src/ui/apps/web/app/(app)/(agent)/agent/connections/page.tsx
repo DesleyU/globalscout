@@ -1,15 +1,13 @@
-import {
-  createRouteSkeletonMetadata,
-  RouteSkeletonPage,
-} from "@/features/dashboard/route-skeleton-page";
+import type { Metadata } from "next";
+import { ConnectionsPageClient } from "@/features/connections/connections-page-client";
+import { requireAgent } from "@/lib/auth";
 
-export const metadata = createRouteSkeletonMetadata("My Network");
+export const metadata: Metadata = {
+  title: "My Network",
+};
 
-export default function AgentConnectionsPage() {
-  return (
-    <RouteSkeletonPage
-      title="My Network"
-      description="Your connections with players, clubs, and other scouts will appear here. This is a placeholder for the agent network section."
-    />
-  );
+export default async function AgentConnectionsPage() {
+  await requireAgent();
+
+  return <ConnectionsPageClient />;
 }

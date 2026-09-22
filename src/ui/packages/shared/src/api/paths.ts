@@ -67,6 +67,12 @@ export const followPaths = {
   stats: (userId: string) => `/follow/${userId}/stats`,
 } as const;
 
+export const notificationsPaths = {
+  list: "/notifications",
+  read: (notificationId: string) => `/notifications/${notificationId}/read`,
+  readAll: "/notifications/read-all",
+} as const;
+
 export const messagesPaths = {
   send: "/messages",
   conversations: "/messages/conversations",

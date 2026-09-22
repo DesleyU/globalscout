@@ -319,6 +319,36 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "notifications",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    recipient_user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    type = table.Column<int>(type: "integer", nullable: false),
+                    actor_user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    related_entity_id = table.Column<Guid>(type: "uuid", nullable: true),
+                    is_read = table.Column<bool>(type: "boolean", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    read_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_notifications", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_notifications_asp_net_users_actor_user_id",
+                        column: x => x.actor_user_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_notifications_asp_net_users_recipient_user_id",
+                        column: x => x.recipient_user_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "player_identity_claims",
                 columns: table => new
                 {
@@ -698,6 +728,21 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 column: "sender_id");
 
             migrationBuilder.CreateIndex(
+                name: "ix_notifications_actor_user_id",
+                table: "notifications",
+                column: "actor_user_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_notifications_recipient_user_id_created_at",
+                table: "notifications",
+                columns: new[] { "recipient_user_id", "created_at" });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_notifications_recipient_user_id_is_read",
+                table: "notifications",
+                columns: new[] { "recipient_user_id", "is_read" });
+
+            migrationBuilder.CreateIndex(
                 name: "ix_player_identity_claims_status",
                 table: "player_identity_claims",
                 column: "status");
@@ -848,6 +893,9 @@ namespace GlobalScout.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "messages");
+
+            migrationBuilder.DropTable(
+                name: "notifications");
 
             migrationBuilder.DropTable(
                 name: "player_statistics");

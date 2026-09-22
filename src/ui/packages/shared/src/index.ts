@@ -13,5 +13,6 @@ export * from "./types/billing";
 export * from "./types/connections";
 export * from "./types/follow";
 export * from "./types/messages";
+export * from "./types/notifications";
 export * from "./types/admin";
 export * from "./types/player-identity";

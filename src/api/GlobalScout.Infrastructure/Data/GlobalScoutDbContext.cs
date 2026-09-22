@@ -25,6 +25,8 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
 
     public DbSet<Message> Messages => Set<Message>();
 
+    public DbSet<Notification> Notifications => Set<Notification>();
+
     public DbSet<MediaItem> MediaItems => Set<MediaItem>();
 
     public DbSet<PlayerStatistics> PlayerStatistics => Set<PlayerStatistics>();
@@ -119,6 +121,21 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
             b.HasOne<ApplicationUser>()
                 .WithMany(u => u.ReceivedMessages)
                 .HasForeignKey(m => m.ReceiverId)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
+        builder.Entity<Notification>(b =>
+        {
+            b.ToTable("notifications");
+            b.HasIndex(n => new { n.RecipientUserId, n.CreatedAt });
+            b.HasIndex(n => new { n.RecipientUserId, n.IsRead });
+            b.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(n => n.RecipientUserId)
+                .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(n => n.ActorUserId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
 

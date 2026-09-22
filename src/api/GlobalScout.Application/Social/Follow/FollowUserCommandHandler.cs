@@ -1,12 +1,17 @@
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
+using GlobalScout.Application.Abstractions.Social.Notifications;
 using GlobalScout.Application.Social;
 using GlobalScout.Domain.Identity;
+using GlobalScout.Domain.Social;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Social.Follow;
 
-internal sealed class FollowUserCommandHandler(ISocialGraphRepository social)
+internal sealed class FollowUserCommandHandler(
+    ISocialGraphRepository social,
+    INotificationRepository notifications,
+    INotificationRealtimeNotifier notifier)
     : ICommandHandler<FollowUserCommand, FollowUserResponseDto>
 {
     public async Task<Result<FollowUserResponseDto>> Handle(FollowUserCommand command, CancellationToken cancellationToken)
@@ -44,6 +49,14 @@ internal sealed class FollowUserCommandHandler(ISocialGraphRepository social)
         {
             return Result.Failure<FollowUserResponseDto>(SocialErrors.AlreadyFollowing);
         }
+
+        var notification = await notifications.CreateAsync(
+            NotificationType.NewFollower,
+            command.FollowingUserId,
+            command.FollowerId,
+            created.Id,
+            cancellationToken);
+        await notifier.NotifyNewNotificationAsync(command.FollowingUserId, notification, cancellationToken);
 
         return Result.Success(created);
     }

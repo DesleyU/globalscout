@@ -15,6 +15,7 @@ using GlobalScout.Infrastructure.Data;
 using GlobalScout.Infrastructure.Identity;
 using GlobalScout.Infrastructure.Social.Graph;
 using GlobalScout.Infrastructure.Social.Messages;
+using GlobalScout.Infrastructure.Social.Notifications;
 using GlobalScout.Infrastructure.Statistics;
 using GlobalScout.Domain.Identity;
 using GlobalScout.Infrastructure.Users;
@@ -69,6 +70,7 @@ public static class DependencyInjection
         services.AddScoped<IAdminRepository, AdminRepository>();
         services.AddScoped<ISocialGraphRepository, SocialGraphRepository>();
         services.AddScoped<IMessageRepository, MessageRepository>();
+        services.AddScoped<INotificationRepository, NotificationRepository>();
         services.AddScoped<IMediaRepository, MediaRepository>();
         services.AddScoped<IUserIdentityStore, UserIdentityStore>();
         services.AddScoped<ApplicationUserCreator>();

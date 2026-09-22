@@ -1,17 +1,21 @@
 using GlobalScout.Application.Abstractions.Auth;
 using GlobalScout.Application.Abstractions.Messaging;
 using GlobalScout.Application.Abstractions.Persistence;
+using GlobalScout.Application.Abstractions.Social.Notifications;
 using GlobalScout.Application.Auth;
 using GlobalScout.Application.Social;
 using GlobalScout.Application.Subscriptions;
 using GlobalScout.Domain.Identity;
+using GlobalScout.Domain.Social;
 using GlobalScout.SharedKernel;
 
 namespace GlobalScout.Application.Social.Connections.SendConnection;
 
 internal sealed class SendConnectionRequestCommandHandler(
     ISocialGraphRepository social,
-    IUserIdentityStore identityStore)
+    IUserIdentityStore identityStore,
+    INotificationRepository notifications,
+    INotificationRealtimeNotifier notifier)
     : ICommandHandler<SendConnectionRequestCommand, SendConnectionResponseDto>
 {
     public async Task<Result<SendConnectionResponseDto>> Handle(
@@ -64,6 +68,14 @@ internal sealed class SendConnectionRequestCommandHandler(
         {
             return Result.Failure<SendConnectionResponseDto>(SocialErrors.ConnectionAlreadyExists);
         }
+
+        var notification = await notifications.CreateAsync(
+            NotificationType.ConnectionRequestReceived,
+            command.ReceiverId,
+            command.SenderId,
+            created.Id,
+            cancellationToken);
+        await notifier.NotifyNewNotificationAsync(command.ReceiverId, notification, cancellationToken);
 
         return Result.Success(created);
     }

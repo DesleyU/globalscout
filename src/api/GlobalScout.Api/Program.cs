@@ -2,9 +2,11 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using GlobalScout.Api.Infrastructure;
 using GlobalScout.Api.Social.Messages;
+using GlobalScout.Api.Social.Notifications;
 using GlobalScout.Application;
 using GlobalScout.Application.Abstractions.Files;
 using GlobalScout.Application.Abstractions.Social.Messages;
+using GlobalScout.Application.Abstractions.Social.Notifications;
 using GlobalScout.Infrastructure;
 using GlobalScout.Infrastructure.Data;
 using GlobalScout.Infrastructure.Identity;
@@ -79,6 +81,7 @@ builder.Services.AddOpenApi(options => options.AddScalarTransformers());
 builder.Services.AddEndpoints(Assembly.GetExecutingAssembly());
 builder.Services.AddSignalR();
 builder.Services.AddScoped<IMessageRealtimeNotifier, SignalRMessageNotifier>();
+builder.Services.AddScoped<INotificationRealtimeNotifier, SignalRNotificationNotifier>();
 
 var app = builder.Build();
 
@@ -103,6 +106,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapHub<MessageHub>("/hubs/messages");
+app.MapHub<NotificationHub>("/hubs/notifications");
 
 if (app.Environment.IsDevelopment() || app.Environment.IsEnvironment("IntegrationTesting"))
 {

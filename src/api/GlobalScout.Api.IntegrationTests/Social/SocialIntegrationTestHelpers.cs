@@ -122,6 +122,31 @@ internal static class SocialIntegrationTestHelpers
         cancellationToken.ThrowIfCancellationRequested();
     }
 
+    public static async Task ConfirmEmailAsync(
+        WebApplicationFactory<Program> factory,
+        Guid userId,
+        CancellationToken cancellationToken)
+    {
+        await using var scope = factory.Services.CreateAsyncScope();
+        var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+
+        var user = await userManager.FindByIdAsync(userId.ToString());
+        if (user is null)
+        {
+            throw new InvalidOperationException($"User {userId} not found.");
+        }
+
+        user.EmailConfirmed = true;
+        var update = await userManager.UpdateAsync(user);
+        if (!update.Succeeded)
+        {
+            throw new InvalidOperationException(
+                $"Failed to confirm email: {string.Join(", ", update.Errors.Select(e => e.Description))}");
+        }
+
+        cancellationToken.ThrowIfCancellationRequested();
+    }
+
     private static async Task<string> LoginAsync(
         WebApplicationFactory<Program> factory,
         string email,
@@ -187,6 +212,27 @@ internal static class SocialIntegrationTestHelpers
         Guid targetUserId,
         CancellationToken cancellationToken) =>
         client.DeleteAsync($"/api/follow/{targetUserId}/unfollow", cancellationToken);
+
+    public static async Task<JsonDocument> GetNotificationsAsync(
+        HttpClient client,
+        CancellationToken cancellationToken)
+    {
+        using var response = await client.GetAsync("/api/notifications", cancellationToken);
+        response.EnsureSuccessStatusCode();
+        await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
+        return await JsonDocument.ParseAsync(stream, default, cancellationToken);
+    }
+
+    public static Task<HttpResponseMessage> MarkNotificationReadAsync(
+        HttpClient client,
+        Guid notificationId,
+        CancellationToken cancellationToken) =>
+        client.PutAsync($"/api/notifications/{notificationId}/read", null, cancellationToken);
+
+    public static Task<HttpResponseMessage> MarkAllNotificationsReadAsync(
+        HttpClient client,
+        CancellationToken cancellationToken) =>
+        client.PutAsync("/api/notifications/read-all", null, cancellationToken);
 
     public static async Task<HttpResponseMessage> UploadVideoAsync(
         HttpClient client,
