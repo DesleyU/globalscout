@@ -10,6 +10,7 @@ export type PlayersSearchFilters = {
   club: string;
   minAge: string;
   maxAge: string;
+  sort: string;
 };
 
 async function fetchPlayersSearch(
@@ -24,6 +25,7 @@ async function fetchPlayersSearch(
   if (filters.club) params.set("club", filters.club);
   if (filters.minAge) params.set("minAge", filters.minAge);
   if (filters.maxAge) params.set("maxAge", filters.maxAge);
+  if (filters.sort) params.set("sort", filters.sort);
   params.set("page", String(page));
 
   const response = await fetch(`/api/users/search?${params.toString()}`, {

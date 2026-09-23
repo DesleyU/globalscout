@@ -72,6 +72,7 @@ export interface SearchUsersParams {
   city?: string;
   minAge?: number;
   maxAge?: number;
+  sort?: string;
   page?: number;
   limit?: number;
 }

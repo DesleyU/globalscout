@@ -13,5 +13,6 @@ public sealed record SearchUsersQuery(
     int? MinAge,
     int? MaxAge,
     string? Search,
+    string? Sort,
     int Page,
     int Limit) : IQuery<SearchUsersResult>;

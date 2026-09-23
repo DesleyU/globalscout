@@ -24,6 +24,7 @@ internal sealed class GetUsersSearch : IEndpoint
                     string? minAge,
                     string? maxAge,
                     string? search,
+                    string? sort,
                     int? page,
                     int? limit,
                     CancellationToken cancellationToken) =>
@@ -77,6 +78,7 @@ internal sealed class GetUsersSearch : IEndpoint
                         parsedMinAge,
                         parsedMaxAge,
                         search,
+                        sort,
                         page ?? 1,
                         limit ?? 20);
 

@@ -24,6 +24,12 @@ import { usePlayersSearch, type PlayersSearchFilters } from "@/features/search/u
 
 const filterLabelClassName = "text-xs font-medium leading-none text-muted-foreground";
 
+const SORT_OPTIONS = [
+  { value: "newest", label: "Newest" },
+  { value: "age_asc", label: "Youngest first" },
+  { value: "age_desc", label: "Oldest first" },
+] as const;
+
 type SearchPageClientProps = {
   currentUserId: string;
   variant?: SidebarVariant;
@@ -52,6 +58,7 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
     club: searchParams.get("club") ?? "",
     minAge: searchParams.get("minAge") ?? "",
     maxAge: searchParams.get("maxAge") ?? "",
+    sort: searchParams.get("sort") ?? "",
   };
 
   // Draft values for the inputs - only become the applied search (and hit the URL) on submit.
@@ -88,9 +95,38 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
       if (minAge) params.set("minAge", minAge);
       if (maxAge) params.set("maxAge", maxAge);
     }
+    if (appliedFilters.sort) params.set("sort", appliedFilters.sort);
 
     router.push(`${pathname}?${params.toString()}`, { scroll: false });
   }
+
+  function handleClearFilters() {
+    setPosition("");
+    setCountry("");
+    setClub("");
+    setMinAge("");
+    setMaxAge("");
+
+    const params = new URLSearchParams();
+    params.set("q", query);
+    if (appliedFilters.sort) params.set("sort", appliedFilters.sort);
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+
+  function handleSortChange(newSort: string) {
+    const params = new URLSearchParams();
+    params.set("q", appliedFilters.q);
+    if (appliedFilters.position) params.set("position", appliedFilters.position);
+    if (appliedFilters.country) params.set("country", appliedFilters.country);
+    if (appliedFilters.club) params.set("club", appliedFilters.club);
+    if (appliedFilters.minAge) params.set("minAge", appliedFilters.minAge);
+    if (appliedFilters.maxAge) params.set("maxAge", appliedFilters.maxAge);
+    if (newSort !== "newest") params.set("sort", newSort);
+
+    router.push(`${pathname}?${params.toString()}`, { scroll: false });
+  }
+
+  const hasActiveFilters = Boolean(position || country || club || minAge || maxAge);
 
   async function handleConnect(userId: string) {
     setPendingIds((prev) => new Set(prev).add(userId));
@@ -212,6 +248,17 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
                 onChange={(e) => setMaxAge(e.target.value)}
               />
             </div>
+
+            {hasActiveFilters ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleClearFilters}
+              >
+                Clear filters
+              </Button>
+            ) : null}
           </div>
         ) : null}
       </form>
@@ -244,9 +291,34 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
         ) : null}
 
         {!isLoading && results.length > 0 && pagination ? (
-          <p className="text-xs text-gray-500">
-            Showing {results.length} of {pagination.total} player{pagination.total === 1 ? "" : "s"}
-          </p>
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <p className="text-xs text-gray-500">
+              Showing {results.length} of {pagination.total} player{pagination.total === 1 ? "" : "s"}
+            </p>
+
+            {isAgent ? (
+              <div className="flex items-center gap-2">
+                <label htmlFor="search-sort" className={filterLabelClassName}>
+                  Sort by
+                </label>
+                <Select
+                  value={appliedFilters.sort || "newest"}
+                  onValueChange={(value) => handleSortChange(value ?? "newest")}
+                >
+                  <SelectTrigger id="search-sort" size="sm">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SORT_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            ) : null}
+          </div>
         ) : null}
 
         {!isLoading && results.map((user) => {

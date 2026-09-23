@@ -21,6 +21,7 @@ export async function GET(request: Request) {
       city: searchParams.get("city") ?? undefined,
       minAge: Number.isFinite(minAge) && minAge > 0 ? minAge : undefined,
       maxAge: Number.isFinite(maxAge) && maxAge > 0 ? maxAge : undefined,
+      sort: searchParams.get("sort") ?? undefined,
       page: Number.isFinite(page) && page > 0 ? page : undefined,
       limit: Number.isFinite(limit) && limit > 0 ? limit : undefined,
     });

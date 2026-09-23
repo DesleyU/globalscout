@@ -15,6 +15,7 @@ public sealed record SearchUsersCriteria(
     int? MinAge,
     int? MaxAge,
     string? Search,
+    string? Sort,
     int Page,
     int Limit);
 

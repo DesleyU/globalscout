@@ -211,8 +211,7 @@ internal sealed class UserDirectoryRepository(
 
         var total = await query.CountAsync(cancellationToken);
         var skip = (c.Page - 1) * c.Limit;
-        var users = await query
-            .OrderByDescending(u => u.CreatedAt)
+        var users = await ApplySort(query, c.Sort)
             .Skip(skip)
             .Take(c.Limit)
             .ToListAsync(cancellationToken);
@@ -229,6 +228,19 @@ internal sealed class UserDirectoryRepository(
             items,
             new SearchUsersPagination(c.Page, c.Limit, total, pages));
     }
+
+    /// <summary>Ages are optional (not required at registration), so both age sorts push unset ages last.</summary>
+    private static IOrderedQueryable<ApplicationUser> ApplySort(IQueryable<ApplicationUser> query, string? sort) =>
+        sort switch
+        {
+            "age_asc" => query
+                .OrderBy(u => u.Profile == null || u.Profile.Age == null)
+                .ThenBy(u => u.Profile!.Age),
+            "age_desc" => query
+                .OrderBy(u => u.Profile == null || u.Profile.Age == null)
+                .ThenByDescending(u => u.Profile!.Age),
+            _ => query.OrderByDescending(u => u.CreatedAt)
+        };
 
     public async Task<IReadOnlyList<SearchUserItem>> GetRecommendationsAsync(
         Guid currentUserId,

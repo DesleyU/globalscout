@@ -25,6 +25,7 @@ function toSearchParams(params: SearchUsersParams): string {
   if (params.city) search.set("city", params.city);
   if (params.minAge !== undefined) search.set("minAge", String(params.minAge));
   if (params.maxAge !== undefined) search.set("maxAge", String(params.maxAge));
+  if (params.sort) search.set("sort", params.sort);
   if (params.page !== undefined) search.set("page", String(params.page));
   if (params.limit !== undefined) search.set("limit", String(params.limit));
   const query = search.toString();

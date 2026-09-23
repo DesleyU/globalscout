@@ -20,6 +20,7 @@ internal sealed class SearchUsersQueryHandler(IUserDirectoryRepository users)
             query.MinAge,
             query.MaxAge,
             query.Search,
+            query.Sort,
             query.Page < 1 ? 1 : query.Page,
             query.Limit < 1 ? 20 : Math.Min(query.Limit, 100));
 
