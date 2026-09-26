@@ -12,6 +12,8 @@ public sealed class Connection
 
     public string? InvitationNote { get; set; }
 
+    public string? ResponseNote { get; set; }
+
     public DateTimeOffset CreatedAt { get; set; }
 
     public DateTimeOffset UpdatedAt { get; set; }

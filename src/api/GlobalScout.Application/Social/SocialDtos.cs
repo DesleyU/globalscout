@@ -16,6 +16,7 @@ public sealed record RespondToConnectionResponseDto(
     Guid Id,
     string Status,
     string? Message,
+    string? ResponseMessage,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
     ConnectionUserSummaryDto Sender,
@@ -25,6 +26,7 @@ public sealed record ConnectionListItemDto(
     Guid Id,
     string Status,
     string? Message,
+    string? ResponseMessage,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt,
     ConnectionUserSummaryDto User);

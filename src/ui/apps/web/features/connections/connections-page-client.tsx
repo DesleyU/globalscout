@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { NoteDialog } from "@/features/connections/note-dialog";
 
 function getInitials(firstName: string, lastName: string): string {
   return `${firstName[0] ?? ""}${lastName[0] ?? ""}`.toUpperCase();
@@ -17,6 +18,7 @@ function UserRow({
   firstName,
   lastName,
   avatar,
+  note,
   children,
 }: {
   userId: string;
@@ -24,6 +26,7 @@ function UserRow({
   firstName: string;
   lastName: string;
   avatar?: string | null;
+  note?: string | null;
   children?: React.ReactNode;
 }) {
   const name = `${firstName} ${lastName}`;
@@ -39,6 +42,7 @@ function UserRow({
           <div>
             <div className="text-sm font-medium text-gray-900">{name}</div>
             <div className="text-xs text-gray-500">{role}</div>
+            {note ? <div className="mt-1 text-xs text-gray-600 italic">&ldquo;{note}&rdquo;</div> : null}
           </div>
         </div>
         {children}
@@ -76,6 +80,11 @@ export function ConnectionsPageClient() {
   const [connections, setConnections] = useState<ConnectionListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [pendingIds, setPendingIds] = useState<Set<string>>(new Set());
+  const [respondTarget, setRespondTarget] = useState<{
+    connectionId: string;
+    action: "accept" | "reject";
+    name: string;
+  } | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -99,7 +108,7 @@ export function ConnectionsPageClient() {
     };
   }, []);
 
-  async function respond(connectionId: string, action: "accept" | "reject") {
+  async function respond(connectionId: string, action: "accept" | "reject", message: string) {
     setPendingIds((prev) => new Set(prev).add(connectionId));
 
     try {
@@ -107,7 +116,7 @@ export function ConnectionsPageClient() {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ action }),
+        body: JSON.stringify({ action, message: message || undefined }),
       });
       const data = (await response.json()) as { error?: string; message?: string };
 
@@ -121,6 +130,7 @@ export function ConnectionsPageClient() {
       setReceived(refreshed.received);
       setSent(refreshed.sent);
       setConnections(refreshed.connections);
+      setRespondTarget(null);
     } catch {
       toast.error("Could not respond to request");
     } finally {
@@ -145,34 +155,44 @@ export function ConnectionsPageClient() {
         {received.length === 0 ? (
           <p className="text-sm text-gray-500">No pending requests.</p>
         ) : (
-          received.map((request) => (
-            <UserRow
-              key={request.id}
-              userId={request.sender.id}
-              role={request.sender.role}
-              firstName={request.sender.profile?.firstName ?? "Unknown"}
-              lastName={request.sender.profile?.lastName ?? "user"}
-              avatar={request.sender.profile?.avatar}
-            >
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  disabled={pendingIds.has(request.id)}
-                  onClick={() => void respond(request.id, "reject")}
-                >
-                  Reject
-                </Button>
-                <Button
-                  size="sm"
-                  disabled={pendingIds.has(request.id)}
-                  onClick={() => void respond(request.id, "accept")}
-                >
-                  Accept
-                </Button>
-              </div>
-            </UserRow>
-          ))
+          received.map((request) => {
+            const senderName =
+              `${request.sender.profile?.firstName ?? "Unknown"} ${request.sender.profile?.lastName ?? "user"}`.trim();
+
+            return (
+              <UserRow
+                key={request.id}
+                userId={request.sender.id}
+                role={request.sender.role}
+                firstName={request.sender.profile?.firstName ?? "Unknown"}
+                lastName={request.sender.profile?.lastName ?? "user"}
+                avatar={request.sender.profile?.avatar}
+                note={request.message}
+              >
+                <div className="flex gap-2">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    disabled={pendingIds.has(request.id)}
+                    onClick={() =>
+                      setRespondTarget({ connectionId: request.id, action: "reject", name: senderName })
+                    }
+                  >
+                    Reject
+                  </Button>
+                  <Button
+                    size="sm"
+                    disabled={pendingIds.has(request.id)}
+                    onClick={() =>
+                      setRespondTarget({ connectionId: request.id, action: "accept", name: senderName })
+                    }
+                  >
+                    Accept
+                  </Button>
+                </div>
+              </UserRow>
+            );
+          })
         )}
       </section>
 
@@ -189,6 +209,7 @@ export function ConnectionsPageClient() {
               firstName={request.receiver.profile?.firstName ?? "Unknown"}
               lastName={request.receiver.profile?.lastName ?? "user"}
               avatar={request.receiver.profile?.avatar}
+              note={request.message}
             >
               <span className="text-xs text-gray-500">Pending</span>
             </UserRow>
@@ -215,6 +236,25 @@ export function ConnectionsPageClient() {
           ))
         )}
       </section>
+
+      <NoteDialog
+        open={respondTarget !== null}
+        onClose={() => setRespondTarget(null)}
+        title={
+          respondTarget?.action === "accept"
+            ? `Accept ${respondTarget.name}'s request`
+            : `Decline ${respondTarget?.name ?? ""}'s request`
+        }
+        description="Add an optional reply."
+        placeholder="e.g. Great to connect!"
+        confirmLabel={respondTarget?.action === "accept" ? "Accept" : "Decline"}
+        confirmVariant={respondTarget?.action === "reject" ? "destructive" : "default"}
+        onConfirm={(message) => {
+          if (respondTarget) {
+            return respond(respondTarget.connectionId, respondTarget.action, message);
+          }
+        }}
+      />
     </div>
   );
 }

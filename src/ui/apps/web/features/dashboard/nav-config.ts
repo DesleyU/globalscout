@@ -35,7 +35,6 @@ export const playerNavItems: DashboardNavItem[] = [
     href: "/messages",
     label: "Messages",
     icon: MessageCircle,
-    badge: "3",
   },
   { href: "/connections", label: "My Network", icon: Users },
   { href: "/search", label: "Search", icon: Search },

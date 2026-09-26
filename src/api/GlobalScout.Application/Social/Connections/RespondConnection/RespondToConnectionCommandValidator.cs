@@ -13,5 +13,7 @@ internal sealed class RespondToConnectionCommandValidator : AbstractValidator<Re
                 a.Equals("accept", StringComparison.OrdinalIgnoreCase)
                 || a.Equals("reject", StringComparison.OrdinalIgnoreCase))
             .WithMessage("Invalid action. Use \"accept\" or \"reject\".");
+
+        RuleFor(c => c.Message).MaximumLength(1000);
     }
 }

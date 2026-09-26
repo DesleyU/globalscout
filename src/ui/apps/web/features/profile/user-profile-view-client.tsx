@@ -11,6 +11,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import type { SidebarVariant } from "@/components/layout/app-sidebar";
 import { ONBOARDING_POSITIONS } from "@/features/onboarding/player/constants";
 import { useConnectionStates } from "@/features/connections/use-connection-states";
+import { NoteDialog } from "@/features/connections/note-dialog";
 
 type UserProfileViewClientProps = {
   currentUserId: string;
@@ -36,6 +37,7 @@ export function UserProfileViewClient({
 }: UserProfileViewClientProps) {
   const isAgent = variant === "agent";
   const networkHref = isAgent ? "/agent/connections" : "/connections";
+  const messagesHref = isAgent ? "/agent/messages" : "/messages";
   const isSelf = user.id === currentUserId;
 
   const profile = user.profile;
@@ -46,16 +48,17 @@ export function UserProfileViewClient({
 
   const [connectionStates, setConnectionStates] = useConnectionStates();
   const [isConnecting, setIsConnecting] = useState(false);
+  const [showConnectDialog, setShowConnectDialog] = useState(false);
   const state = connectionStates.get(user.id);
 
-  async function handleConnect() {
+  async function handleConnect(message: string) {
     setIsConnecting(true);
     try {
       const response = await fetch("/api/connections/send", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ receiverId: user.id }),
+        body: JSON.stringify({ receiverId: user.id, message: message || undefined }),
       });
       const data = (await response.json()) as { message?: string; error?: string };
 
@@ -66,6 +69,7 @@ export function UserProfileViewClient({
 
       toast.success("Connection request sent");
       setConnectionStates((prev) => new Map(prev).set(user.id, "pending-sent"));
+      setShowConnectDialog(false);
     } catch {
       toast.error("Could not send connection request");
     } finally {
@@ -110,7 +114,13 @@ export function UserProfileViewClient({
                 Edit profile
               </Button>
             ) : state === "accepted" ? (
-              <span className="text-xs text-gray-500">Connected</span>
+              <Button
+                size="sm"
+                variant="outline"
+                render={<Link href={`${messagesHref}/${user.id}`} />}
+              >
+                Message
+              </Button>
             ) : state === "pending-sent" ? (
               <span className="text-xs text-gray-500">Pending</span>
             ) : state === "pending-received" ? (
@@ -118,7 +128,7 @@ export function UserProfileViewClient({
                 Respond in My Network
               </Button>
             ) : (
-              <Button size="sm" disabled={isConnecting} onClick={() => void handleConnect()}>
+              <Button size="sm" disabled={isConnecting} onClick={() => setShowConnectDialog(true)}>
                 {isConnecting ? "Sending..." : "Connect"}
               </Button>
             )}
@@ -161,6 +171,16 @@ export function UserProfileViewClient({
           ) : null}
         </CardContent>
       </Card>
+
+      <NoteDialog
+        open={showConnectDialog}
+        onClose={() => setShowConnectDialog(false)}
+        title={`Connect with ${name}`}
+        description="Add an optional note to introduce yourself."
+        placeholder="e.g. Hi, I'd like to connect..."
+        confirmLabel="Send request"
+        onConfirm={handleConnect}
+      />
     </div>
   );
 }

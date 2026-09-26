@@ -29,7 +29,8 @@ internal sealed class PutConnectionsRespond : IEndpoint
                     {
                         ReceiverId = receiverId.Value,
                         ConnectionId = connectionId,
-                        Action = body.Action
+                        Action = body.Action,
+                        Message = body.Message
                     };
 
                     var result = await handler.Handle(command, cancellationToken);
@@ -51,5 +52,5 @@ internal sealed class PutConnectionsRespond : IEndpoint
     private static string PastTense(string action) =>
         action.Equals("accept", StringComparison.OrdinalIgnoreCase) ? "accepted" : "rejected";
 
-    private sealed record RespondBody(string Action);
+    private sealed record RespondBody(string Action, string? Message);
 }

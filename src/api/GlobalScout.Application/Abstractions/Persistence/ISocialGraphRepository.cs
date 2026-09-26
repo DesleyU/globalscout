@@ -31,6 +31,7 @@ public interface ISocialGraphRepository
         Guid connectionId,
         Guid receiverId,
         ConnectionStatus newStatus,
+        string? responseNote,
         CancellationToken cancellationToken);
 
     Task<(IReadOnlyList<ConnectionListItemDto> Items, int Total)> GetConnectionsPageAsync(

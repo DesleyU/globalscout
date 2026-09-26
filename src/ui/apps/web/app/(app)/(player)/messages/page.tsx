@@ -1,15 +1,13 @@
-import {
-  createRouteSkeletonMetadata,
-  RouteSkeletonPage,
-} from "@/features/dashboard/route-skeleton-page";
+import type { Metadata } from "next";
+import { ConversationsListClient } from "@/features/messages/conversations-list-client";
+import { requirePlayer } from "@/lib/auth";
 
-export const metadata = createRouteSkeletonMetadata("Messages");
+export const metadata: Metadata = {
+  title: "Messages",
+};
 
-export default function MessagesPage() {
-  return (
-    <RouteSkeletonPage
-      title="Messages"
-      description="Direct messaging with scouts and clubs will be implemented in a later stage."
-    />
-  );
+export default async function MessagesPage() {
+  await requirePlayer();
+
+  return <ConversationsListClient />;
 }

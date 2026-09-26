@@ -175,11 +175,12 @@ internal static class SocialIntegrationTestHelpers
     public static async Task<Guid> SendConnectionRequestAsync(
         HttpClient client,
         Guid receiverId,
-        CancellationToken cancellationToken)
+        CancellationToken cancellationToken,
+        string? message = null)
     {
         using var response = await client.PostAsJsonAsync(
             "/api/connections/send",
-            new { receiverId },
+            new { receiverId, message },
             cancellationToken);
         response.EnsureSuccessStatusCode();
         await using var stream = await response.Content.ReadAsStreamAsync(cancellationToken);
@@ -197,8 +198,9 @@ internal static class SocialIntegrationTestHelpers
         HttpClient client,
         Guid connectionId,
         string action,
-        CancellationToken cancellationToken) =>
-        client.PutAsJsonAsync($"/api/connections/{connectionId}/respond", new { action }, cancellationToken);
+        CancellationToken cancellationToken,
+        string? message = null) =>
+        client.PutAsJsonAsync($"/api/connections/{connectionId}/respond", new { action, message }, cancellationToken);
 
     public static Task<HttpResponseMessage> FollowUserAsync(
         HttpClient client,

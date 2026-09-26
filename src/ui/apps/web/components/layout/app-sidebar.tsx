@@ -14,6 +14,7 @@ import {
   playerNavItems,
   type DashboardNavItem,
 } from "@/features/dashboard/nav-config";
+import { useMessagesContext } from "@/features/messages/messages-provider";
 import { cn } from "@/lib/utils";
 
 export type SidebarVariant = "player" | "agent" | "admin";
@@ -127,6 +128,7 @@ export function AppSidebar({ variant }: AppSidebarProps) {
   const pathname = usePathname();
   const navItems = NAV_ITEMS_BY_VARIANT[variant];
   const homeHref = HOME_HREF_BY_VARIANT[variant];
+  const messages = useMessagesContext();
 
   return (
     <aside className="fixed z-40 flex h-full w-48 flex-col overflow-y-auto bg-gradient-to-b from-slate-900 to-slate-800 text-white">
@@ -143,16 +145,23 @@ export function AppSidebar({ variant }: AppSidebarProps) {
         </Link>
 
         <nav className="space-y-1" aria-label="Dashboard navigation">
-          {navItems.map((item) => (
-            <SidebarNavLink
-              key={`${item.href}-${item.label}`}
-              href={item.href}
-              label={item.label}
-              icon={item.icon}
-              badge={item.badge}
-              active={isNavItemActive(pathname, item)}
-            />
-          ))}
+          {navItems.map((item) => {
+            const badge =
+              item.label === "Messages" && messages && messages.totalUnread > 0
+                ? String(messages.totalUnread)
+                : item.badge;
+
+            return (
+              <SidebarNavLink
+                key={`${item.href}-${item.label}`}
+                href={item.href}
+                label={item.label}
+                icon={item.icon}
+                badge={badge}
+                active={isNavItemActive(pathname, item)}
+              />
+            );
+          })}
         </nav>
       </div>
 

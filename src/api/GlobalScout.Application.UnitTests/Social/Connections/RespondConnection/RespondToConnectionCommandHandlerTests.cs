@@ -21,13 +21,14 @@ public sealed class RespondToConnectionCommandHandlerTests
             connectionId,
             "ACCEPTED",
             null,
+            null,
             DateTimeOffset.UtcNow,
             DateTimeOffset.UtcNow,
             new ConnectionUserSummaryDto(senderId, "Player", null),
             new ConnectionUserSummaryDto(receiverId, "Player", null));
 
         var social = new Mock<ISocialGraphRepository>();
-        social.Setup(s => s.RespondToPendingConnectionAsync(connectionId, receiverId, ConnectionStatus.Accepted, It.IsAny<CancellationToken>()))
+        social.Setup(s => s.RespondToPendingConnectionAsync(connectionId, receiverId, ConnectionStatus.Accepted, null, It.IsAny<CancellationToken>()))
             .ReturnsAsync(updated);
 
         var notificationDto = new NotificationDto(
@@ -78,13 +79,14 @@ public sealed class RespondToConnectionCommandHandlerTests
             connectionId,
             "REJECTED",
             null,
+            null,
             DateTimeOffset.UtcNow,
             DateTimeOffset.UtcNow,
             new ConnectionUserSummaryDto(senderId, "Player", null),
             new ConnectionUserSummaryDto(receiverId, "Player", null));
 
         var social = new Mock<ISocialGraphRepository>();
-        social.Setup(s => s.RespondToPendingConnectionAsync(connectionId, receiverId, ConnectionStatus.Rejected, It.IsAny<CancellationToken>()))
+        social.Setup(s => s.RespondToPendingConnectionAsync(connectionId, receiverId, ConnectionStatus.Rejected, null, It.IsAny<CancellationToken>()))
             .ReturnsAsync(updated);
 
         var notifications = new Mock<INotificationRepository>();
@@ -116,7 +118,7 @@ public sealed class RespondToConnectionCommandHandlerTests
         var connectionId = Guid.NewGuid();
 
         var social = new Mock<ISocialGraphRepository>();
-        social.Setup(s => s.RespondToPendingConnectionAsync(connectionId, receiverId, ConnectionStatus.Accepted, It.IsAny<CancellationToken>()))
+        social.Setup(s => s.RespondToPendingConnectionAsync(connectionId, receiverId, ConnectionStatus.Accepted, null, It.IsAny<CancellationToken>()))
             .ReturnsAsync((RespondToConnectionResponseDto?)null);
 
         var notifications = new Mock<INotificationRepository>();

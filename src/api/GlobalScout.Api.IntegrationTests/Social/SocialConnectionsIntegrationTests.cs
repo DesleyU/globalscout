@@ -149,6 +149,35 @@ public sealed class SocialConnectionsIntegrationTests
     }
 
     [Fact]
+    public async Task Respond_Accept_WithNotes_PersistsBothInvitationAndResponseNotes()
+    {
+        var factory = _fixture.Factory;
+        var (_, senderToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (receiverId, receiverToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+
+        var sender = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, senderToken);
+        var connectionId = await SocialIntegrationTestHelpers.SendConnectionRequestAsync(
+            sender, receiverId, Ct, message: "Hi, I'd like to connect");
+
+        var receiver = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, receiverToken);
+        using var respond = await SocialIntegrationTestHelpers.RespondToConnectionAsync(
+            receiver, connectionId, "accept", Ct, message: "Great to connect!");
+        Assert.Equal(HttpStatusCode.OK, respond.StatusCode);
+        await using var respondStream = await respond.Content.ReadAsStreamAsync(Ct);
+        var respondDoc = await JsonDocument.ParseAsync(respondStream, default, Ct);
+        var respondedConnection = respondDoc.RootElement.GetProperty("connection");
+        Assert.Equal("Hi, I'd like to connect", respondedConnection.GetProperty("message").GetString());
+        Assert.Equal("Great to connect!", respondedConnection.GetProperty("responseMessage").GetString());
+
+        using var list = await sender.GetAsync("/api/connections?status=ACCEPTED", Ct);
+        await using var listStream = await list.Content.ReadAsStreamAsync(Ct);
+        var listDoc = await JsonDocument.ParseAsync(listStream, default, Ct);
+        var listedConnection = listDoc.RootElement.GetProperty("connections")[0];
+        Assert.Equal("Hi, I'd like to connect", listedConnection.GetProperty("message").GetString());
+        Assert.Equal("Great to connect!", listedConnection.GetProperty("responseMessage").GetString());
+    }
+
+    [Fact]
     public async Task Respond_Reject_Returns200_AndNotInAcceptedList()
     {
         var factory = _fixture.Factory;

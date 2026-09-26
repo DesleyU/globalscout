@@ -101,6 +101,7 @@ internal sealed class SocialGraphRepository(
         Guid connectionId,
         Guid receiverId,
         ConnectionStatus newStatus,
+        string? responseNote,
         CancellationToken cancellationToken)
     {
         var entity = await db.Connections
@@ -114,6 +115,7 @@ internal sealed class SocialGraphRepository(
         }
 
         entity.Status = newStatus;
+        entity.ResponseNote = responseNote;
         entity.UpdatedAt = DateTimeOffset.UtcNow;
         await db.SaveChangesAsync(cancellationToken);
 
@@ -157,6 +159,7 @@ internal sealed class SocialGraphRepository(
                     c.Id,
                     ConnectionStatusToApi(c.Status),
                     c.InvitationNote,
+                    c.ResponseNote,
                     c.CreatedAt,
                     c.UpdatedAt,
                     new ConnectionUserSummaryDto(other.Id, role, await MapProfileAsync(other.Profile, cancellationToken))));
@@ -417,6 +420,7 @@ internal sealed class SocialGraphRepository(
             c.Id,
             ConnectionStatusToApi(c.Status),
             c.InvitationNote,
+            c.ResponseNote,
             c.CreatedAt,
             c.UpdatedAt,
             new ConnectionUserSummaryDto(sender.Id, senderRole, await MapProfileAsync(sender.Profile, cancellationToken)),

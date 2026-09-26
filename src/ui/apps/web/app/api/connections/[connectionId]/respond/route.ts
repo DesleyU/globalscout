@@ -18,14 +18,17 @@ export async function PUT(request: Request, context: RouteContext) {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { action } = body as RespondToConnectionRequest;
+  const { action, message } = body as RespondToConnectionRequest;
   if (action !== "accept" && action !== "reject") {
     return NextResponse.json({ error: 'action must be "accept" or "reject"' }, { status: 400 });
   }
 
   try {
     const client = await createServerApiClient();
-    const result = await createConnectionsApi(client).respondToRequest(connectionId, { action });
+    const result = await createConnectionsApi(client).respondToRequest(connectionId, {
+      action,
+      message,
+    });
     return NextResponse.json(result);
   } catch (error) {
     return handleApiRouteError(error);

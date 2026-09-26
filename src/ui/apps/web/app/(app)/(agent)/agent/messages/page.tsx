@@ -1,15 +1,13 @@
-import {
-  createRouteSkeletonMetadata,
-  RouteSkeletonPage,
-} from "@/features/dashboard/route-skeleton-page";
+import type { Metadata } from "next";
+import { ConversationsListClient } from "@/features/messages/conversations-list-client";
+import { requireAgent } from "@/lib/auth";
 
-export const metadata = createRouteSkeletonMetadata("Messages");
+export const metadata: Metadata = {
+  title: "Messages",
+};
 
-export default function AgentMessagesPage() {
-  return (
-    <RouteSkeletonPage
-      title="Messages"
-      description="Conversations with players, clubs, and scouts will appear here. This is a placeholder for the agent messaging section."
-    />
-  );
+export default async function AgentMessagesPage() {
+  await requireAgent();
+
+  return <ConversationsListClient variant="agent" />;
 }

@@ -20,6 +20,7 @@ import {
 import type { SidebarVariant } from "@/components/layout/app-sidebar";
 import { ONBOARDING_POSITIONS } from "@/features/onboarding/player/constants";
 import { useConnectionStates } from "@/features/connections/use-connection-states";
+import { NoteDialog } from "@/features/connections/note-dialog";
 import { usePlayersSearch, type PlayersSearchFilters } from "@/features/search/use-players-search";
 
 const filterLabelClassName = "text-xs font-medium leading-none text-muted-foreground";
@@ -71,6 +72,7 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
 
   const [pendingIds, setPendingIds] = useState<Set<string>>(new Set());
   const [connectionStates, setConnectionStates] = useConnectionStates();
+  const [connectTarget, setConnectTarget] = useState<{ id: string; name: string } | null>(null);
 
   const {
     data,
@@ -128,7 +130,7 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
 
   const hasActiveFilters = Boolean(position || country || club || minAge || maxAge);
 
-  async function handleConnect(userId: string) {
+  async function handleConnect(userId: string, message: string) {
     setPendingIds((prev) => new Set(prev).add(userId));
 
     try {
@@ -136,7 +138,7 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ receiverId: userId }),
+        body: JSON.stringify({ receiverId: userId, message: message || undefined }),
       });
       const data = (await response.json()) as { message?: string; error?: string };
 
@@ -147,6 +149,7 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
 
       toast.success("Connection request sent");
       setConnectionStates((prev) => new Map(prev).set(userId, "pending-sent"));
+      setConnectTarget(null);
     } catch {
       toast.error("Could not send connection request");
     } finally {
@@ -371,7 +374,7 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
                   <Button
                     size="sm"
                     disabled={isPending}
-                    onClick={() => void handleConnect(user.id)}
+                    onClick={() => setConnectTarget({ id: user.id, name })}
                   >
                     {isPending ? "Sending..." : "Connect"}
                   </Button>
@@ -392,6 +395,20 @@ export function SearchPageClient({ currentUserId, variant = "player" }: SearchPa
           </Button>
         ) : null}
       </div>
+
+      <NoteDialog
+        open={connectTarget !== null}
+        onClose={() => setConnectTarget(null)}
+        title={`Connect with ${connectTarget?.name ?? ""}`}
+        description="Add an optional note to introduce yourself."
+        placeholder="e.g. Hi, I'd like to connect..."
+        confirmLabel="Send request"
+        onConfirm={(message) => {
+          if (connectTarget) {
+            return handleConnect(connectTarget.id, message);
+          }
+        }}
+      />
     </div>
   );
 }

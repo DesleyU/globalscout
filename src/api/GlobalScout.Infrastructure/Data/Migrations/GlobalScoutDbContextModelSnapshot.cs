@@ -465,6 +465,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("receiver_id");
 
+                    b.Property<string>("ResponseNote")
+                        .HasColumnType("text")
+                        .HasColumnName("response_note");
+
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uuid")
                         .HasColumnName("sender_id");

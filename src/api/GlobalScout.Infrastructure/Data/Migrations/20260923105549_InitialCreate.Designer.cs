@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GlobalScout.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(GlobalScoutDbContext))]
-    [Migration("20260915151706_InitialCreate")]
+    [Migration("20260923105549_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -467,6 +467,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid")
                         .HasColumnName("receiver_id");
+
+                    b.Property<string>("ResponseNote")
+                        .HasColumnType("text")
+                        .HasColumnName("response_note");
 
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uuid")

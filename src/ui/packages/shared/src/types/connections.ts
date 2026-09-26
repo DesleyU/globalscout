@@ -26,6 +26,7 @@ export interface SendConnectionResponse {
 
 export interface RespondToConnectionRequest {
   action: "accept" | "reject";
+  message?: string | null;
 }
 
 export interface RespondToConnectionResponse {
@@ -34,6 +35,7 @@ export interface RespondToConnectionResponse {
     id: string;
     status: string;
     message?: string | null;
+    responseMessage?: string | null;
     createdAt: string;
     updatedAt: string;
     sender: ConnectionUserSummary;
@@ -45,6 +47,7 @@ export interface ConnectionListItem {
   id: string;
   status: string;
   message?: string | null;
+  responseMessage?: string | null;
   createdAt: string;
   updatedAt: string;
   user: ConnectionUserSummary;

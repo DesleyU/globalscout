@@ -7,5 +7,6 @@ internal sealed class SendConnectionRequestCommandValidator : AbstractValidator<
     public SendConnectionRequestCommandValidator()
     {
         RuleFor(c => c.ReceiverId).NotEmpty();
+        RuleFor(c => c.Message).MaximumLength(1000);
     }
 }

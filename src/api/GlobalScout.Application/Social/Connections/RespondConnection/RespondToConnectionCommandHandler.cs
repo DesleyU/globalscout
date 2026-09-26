@@ -25,6 +25,7 @@ internal sealed class RespondToConnectionCommandHandler(
             command.ConnectionId,
             command.ReceiverId,
             status,
+            command.Message,
             cancellationToken);
 
         if (updated is null)

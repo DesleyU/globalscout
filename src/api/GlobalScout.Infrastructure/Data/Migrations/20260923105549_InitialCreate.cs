@@ -214,6 +214,7 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     receiver_id = table.Column<Guid>(type: "uuid", nullable: false),
                     status = table.Column<int>(type: "integer", nullable: false),
                     invitation_note = table.Column<string>(type: "text", nullable: true),
+                    response_note = table.Column<string>(type: "text", nullable: true),
                     created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },

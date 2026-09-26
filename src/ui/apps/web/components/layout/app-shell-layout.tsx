@@ -2,6 +2,7 @@ import type { AuthUserDto } from "@globalscout/shared";
 import { AppSidebar, type SidebarVariant } from "@/components/layout/app-sidebar";
 import { DashboardHeader } from "@/components/layout/dashboard-header";
 import { VerifyEmailBanner } from "@/components/layout/verify-email-banner";
+import { MessagesProvider } from "@/features/messages/messages-provider";
 
 type AppShellLayoutProps = {
   user: AuthUserDto;
@@ -10,12 +11,7 @@ type AppShellLayoutProps = {
   children: React.ReactNode;
 };
 
-export function AppShellLayout({
-  user,
-  variant,
-  avatarUrl,
-  children,
-}: AppShellLayoutProps) {
+function AppShellBody({ user, variant, avatarUrl, children }: AppShellLayoutProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <AppSidebar variant={variant} />
@@ -25,5 +21,17 @@ export function AppShellLayout({
         <main className="flex-1">{children}</main>
       </div>
     </div>
+  );
+}
+
+export function AppShellLayout(props: AppShellLayoutProps) {
+  if (props.variant === "admin") {
+    return <AppShellBody {...props} />;
+  }
+
+  return (
+    <MessagesProvider>
+      <AppShellBody {...props} />
+    </MessagesProvider>
   );
 }
