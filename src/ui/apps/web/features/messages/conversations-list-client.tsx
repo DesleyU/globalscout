@@ -89,9 +89,7 @@ export function ConversationsListClient({ variant = "player" }: ConversationsLis
                     <Card className={hasUnread ? "border-blue-200 bg-blue-50/50" : undefined}>
                       <CardContent className="flex items-center gap-3">
                         <Avatar>
-                          {profile?.profilePicture ? (
-                            <AvatarImage src={profile.profilePicture} alt={name} />
-                          ) : null}
+                          {profile?.avatar ? <AvatarImage src={profile.avatar} alt={name} /> : null}
                           <AvatarFallback>
                             {profile ? getInitials(profile.firstName, profile.lastName) : "?"}
                           </AvatarFallback>

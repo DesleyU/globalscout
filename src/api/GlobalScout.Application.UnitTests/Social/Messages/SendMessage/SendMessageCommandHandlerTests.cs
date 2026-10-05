@@ -40,4 +40,38 @@ public sealed class SendMessageCommandHandlerTests
             m => m.CreateMessageAsync(It.IsAny<Guid>(), It.IsAny<Guid>(), It.IsAny<string>(), It.IsAny<CancellationToken>()),
             Times.Never);
     }
+
+    [Fact]
+    public async Task Handle_persists_trimmed_content()
+    {
+        var senderId = Guid.NewGuid();
+        var receiverId = Guid.NewGuid();
+
+        var identityStore = new Mock<IUserIdentityStore>();
+        identityStore.Setup(s => s.IsEmailConfirmedAsync(senderId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+
+        var social = new Mock<ISocialGraphRepository>();
+        social.Setup(s => s.IsActiveUserAsync(receiverId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+        social.Setup(s => s.AcceptedConnectionExistsAsync(senderId, receiverId, It.IsAny<CancellationToken>()))
+            .ReturnsAsync(true);
+
+        var messages = new Mock<IMessageRepository>();
+        var notifier = new Mock<IMessageRealtimeNotifier>();
+
+        var handler = new SendMessageCommandHandler(social.Object, messages.Object, notifier.Object, identityStore.Object);
+        var command = new SendMessageCommand
+        {
+            SenderId = senderId,
+            ReceiverId = receiverId,
+            Content = "  hello there \n",
+        };
+
+        await handler.Handle(command, CancellationToken.None);
+
+        messages.Verify(
+            m => m.CreateMessageAsync(senderId, receiverId, "hello there", It.IsAny<CancellationToken>()),
+            Times.Once);
+    }
 }

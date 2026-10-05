@@ -62,7 +62,7 @@ export interface ConversationLastMessage {
 export interface ConversationPartnerProfile {
   firstName: string;
   lastName: string;
-  profilePicture?: string | null;
+  avatar?: string | null;
 }
 
 export interface ConversationPartner {
@@ -84,9 +84,11 @@ export interface GetConversationsResult {
 
 export interface GetConversationResult {
   messages: MessageThreadItem[];
-  page: number;
-  limit: number;
-  hasMore: boolean;
+  pagination: {
+    page: number;
+    limit: number;
+    hasMore: boolean;
+  };
 }
 
 export interface GetConversationParams {

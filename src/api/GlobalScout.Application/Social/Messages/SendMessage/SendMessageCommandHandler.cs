@@ -34,22 +34,15 @@ internal sealed class SendMessageCommandHandler(
             return Result.Failure<MessageDetailDto>(MessageErrors.ReceiverNotFound);
         }
 
-        if (!await messages.HasAcceptedConnectionAsync(command.SenderId, command.ReceiverId, cancellationToken))
+        if (!await social.AcceptedConnectionExistsAsync(command.SenderId, command.ReceiverId, cancellationToken))
         {
             return Result.Failure<MessageDetailDto>(MessageErrors.NotConnected);
-        }
-
-        string content = command.Content.Trim();
-        if (content.Length == 0)
-        {
-            return Result.Failure<MessageDetailDto>(
-                Error.Validation("Messages.EmptyContent", "Message content cannot be empty."));
         }
 
         MessageDetailDto created = await messages.CreateMessageAsync(
             command.SenderId,
             command.ReceiverId,
-            content,
+            command.Content.Trim(),
             cancellationToken);
 
         await notifier.NotifyNewMessageAsync(command.ReceiverId, created, cancellationToken);

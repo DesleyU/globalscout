@@ -55,7 +55,7 @@ export function ConversationThreadClient({
         );
         const data = (await response.json()) as {
           messages?: MessageThreadItem[];
-          hasMore?: boolean;
+          pagination?: { hasMore?: boolean };
           error?: string;
         };
         if (!response.ok) {
@@ -64,7 +64,7 @@ export function ConversationThreadClient({
         }
         if (cancelled) return;
         setMessages(data.messages ?? []);
-        setHasMore(data.hasMore ?? false);
+        setHasMore(data.pagination?.hasMore ?? false);
         setPage(1);
         messagesContext?.markConversationReadLocally(otherUserId);
       } catch {
@@ -136,7 +136,7 @@ export function ConversationThreadClient({
       );
       const data = (await response.json()) as {
         messages?: MessageThreadItem[];
-        hasMore?: boolean;
+        pagination?: { hasMore?: boolean };
         error?: string;
       };
       if (!response.ok) {
@@ -144,7 +144,7 @@ export function ConversationThreadClient({
         return;
       }
       setMessages((prev) => [...(data.messages ?? []), ...prev]);
-      setHasMore(data.hasMore ?? false);
+      setHasMore(data.pagination?.hasMore ?? false);
       setPage(nextPage);
     } catch {
       toast.error("Could not load older messages");

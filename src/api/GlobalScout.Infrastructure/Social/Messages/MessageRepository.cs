@@ -10,17 +10,6 @@ namespace GlobalScout.Infrastructure.Social.Messages;
 
 internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResolver avatarUrls) : IMessageRepository
 {
-    public async Task<bool> HasAcceptedConnectionAsync(
-        Guid userId,
-        Guid otherUserId,
-        CancellationToken cancellationToken) =>
-        await db.Connections.AsNoTracking()
-            .AnyAsync(
-                c => c.Status == ConnectionStatus.Accepted
-                     && ((c.SenderId == userId && c.ReceiverId == otherUserId)
-                         || (c.SenderId == otherUserId && c.ReceiverId == userId)),
-                cancellationToken);
-
     public async Task<MessageDetailDto> CreateMessageAsync(
         Guid senderId,
         Guid receiverId,

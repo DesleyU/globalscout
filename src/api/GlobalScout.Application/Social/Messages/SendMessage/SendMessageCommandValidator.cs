@@ -8,7 +8,8 @@ internal sealed class SendMessageCommandValidator : AbstractValidator<SendMessag
     {
         RuleFor(c => c.ReceiverId).NotEmpty();
         RuleFor(c => c.Content)
-            .NotEmpty()
+            .Must(content => !string.IsNullOrWhiteSpace(content))
+            .WithMessage("Message content cannot be empty.")
             .MaximumLength(1000);
     }
 }

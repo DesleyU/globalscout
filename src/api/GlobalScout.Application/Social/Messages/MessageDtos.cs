@@ -1,5 +1,3 @@
-using System.Text.Json.Serialization;
-
 namespace GlobalScout.Application.Social.Messages;
 
 public sealed record MessageParticipantProfileDto(
@@ -51,7 +49,7 @@ public sealed record ConversationLastMessageDto(
 public sealed record ConversationPartnerProfileDto(
     string FirstName,
     string LastName,
-    [property: JsonPropertyName("profilePicture")] string? ProfilePicture);
+    string? Avatar);
 
 public sealed record ConversationPartnerDto(
     Guid Id,
