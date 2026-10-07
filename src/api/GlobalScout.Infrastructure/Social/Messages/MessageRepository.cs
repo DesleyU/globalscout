@@ -17,9 +17,15 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
         CancellationToken cancellationToken)
     {
         var now = DateTimeOffset.UtcNow;
+
+        await using var transaction = await db.Database.BeginTransactionAsync(cancellationToken);
+
+        Guid conversationId = await UpsertConversationAsync(senderId, receiverId, now, cancellationToken);
+
         var entity = new Message
         {
             Id = Guid.NewGuid(),
+            ConversationId = conversationId,
             SenderId = senderId,
             ReceiverId = receiverId,
             Content = content,
@@ -30,6 +36,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
 
         db.Messages.Add(entity);
         await db.SaveChangesAsync(cancellationToken);
+        await transaction.CommitAsync(cancellationToken);
 
         var loaded = await db.Messages.AsNoTracking().FirstAsync(m => m.Id == entity.Id, cancellationToken);
         var sender = await db.Users.AsNoTracking()
@@ -40,6 +47,33 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             .FirstAsync(u => u.Id == loaded.ReceiverId, cancellationToken);
 
         return await MapDetailAsync(loaded, sender, receiver, cancellationToken);
+    }
+
+    /// <summary>
+    /// Gets or creates the pair's conversation and bumps <c>last_message_at</c> in one statement.
+    /// The unique (user1_id, user2_id) index makes concurrent first messages converge on a single row;
+    /// only senders in the same conversation wait on each other's row lock.
+    /// </summary>
+    private async Task<Guid> UpsertConversationAsync(
+        Guid senderId,
+        Guid receiverId,
+        DateTimeOffset messageAt,
+        CancellationToken cancellationToken)
+    {
+        (Guid user1Id, Guid user2Id) = Conversation.OrderPair(senderId, receiverId);
+
+        List<Guid> ids = await db.Database
+            .SqlQuery<Guid>(
+                $"""
+                 INSERT INTO conversations (id, user1_id, user2_id, created_at, last_message_at)
+                 VALUES ({Guid.NewGuid()}, {user1Id}, {user2Id}, {messageAt}, {messageAt})
+                 ON CONFLICT (user1_id, user2_id) DO UPDATE
+                     SET last_message_at = GREATEST(conversations.last_message_at, EXCLUDED.last_message_at)
+                 RETURNING id AS "Value"
+                 """)
+            .ToListAsync(cancellationToken);
+
+        return ids[0];
     }
 
     public async Task<(IReadOnlyList<MessageThreadDto> Messages, bool HasMore)> GetConversationPageAsync(

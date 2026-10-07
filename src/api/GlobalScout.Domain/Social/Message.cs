@@ -4,6 +4,8 @@ public sealed class Message
 {
     public Guid Id { get; set; }
 
+    public Guid ConversationId { get; set; }
+
     public Guid SenderId { get; set; }
 
     public Guid ReceiverId { get; set; }

@@ -23,6 +23,8 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
 
     public DbSet<Follow> Follows => Set<Follow>();
 
+    public DbSet<Conversation> Conversations => Set<Conversation>();
+
     public DbSet<Message> Messages => Set<Message>();
 
     public DbSet<Notification> Notifications => Set<Notification>();
@@ -111,9 +113,34 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
                 .OnDelete(DeleteBehavior.Restrict);
         });
 
+        builder.Entity<Conversation>(b =>
+        {
+            b.ToTable(
+                "conversations",
+                t => t.HasCheckConstraint("ck_conversations_user_order", "user1_id < user2_id"));
+            b.Property(c => c.User1Id).HasColumnName("user1_id");
+            b.Property(c => c.User2Id).HasColumnName("user2_id");
+            b.HasIndex(c => new { c.User1Id, c.User2Id }).IsUnique();
+            b.HasIndex(c => c.User2Id);
+            b.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(c => c.User1Id)
+                .OnDelete(DeleteBehavior.Restrict);
+            b.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(c => c.User2Id)
+                .OnDelete(DeleteBehavior.Restrict);
+        });
+
         builder.Entity<Message>(b =>
         {
             b.ToTable("messages");
+            b.HasIndex(m => new { m.ConversationId, m.CreatedAt, m.Id })
+                .IsDescending(false, true, true);
+            b.HasOne<Conversation>()
+                .WithMany()
+                .HasForeignKey(m => m.ConversationId)
+                .OnDelete(DeleteBehavior.Restrict);
             b.HasOne<ApplicationUser>()
                 .WithMany(u => u.SentMessages)
                 .HasForeignKey(m => m.SenderId)

@@ -11,8 +11,8 @@ Status tracker for making `Conversation` a real part of the 1:1 messaging model.
 | # | Step | Status |
 |---|------|--------|
 | 0 | Commit in-flight connections work | ☑ Approved (`94f4e08`) |
-| 1 | Fix the current model's bugs | ◐ In progress (awaiting review) |
-| 2 | Add Conversation; switch sending to it | ☐ Pending |
+| 1 | Fix the current model's bugs | ☑ Approved (`7e41442`) |
+| 2 | Add Conversation; switch sending to it | ☑ Approved |
 | 3 | Move read state to Conversation; make GetConversation read-only | ☐ Pending |
 | 4 | Build the inbox query from the user's conversations | ☐ Pending |
 | 5 | Conversation-based thread query with cursor pagination | ☐ Pending |
@@ -43,7 +43,7 @@ Message        Id, ConversationId, SenderId, Content, CreatedAt
 
 - **Membership and "which side am I".** A user is in a conversation when `User1Id = @me OR User2Id = @me`. The other user and the caller's read position come from `CASE WHEN User1Id = @me …`. That `CASE` logic lives in one repository helper, not repeated across queries.
 - **How the user pair is ordered.** `User1Id` is the lower ID of the pair, and the `CHECK` constraint enforces this. The helper uses `Guid.CompareTo`, which orders GUIDs the same way Postgres orders `uuid` (field by field, unsigned, which matches the hex-string order). Never compare `Guid.ToByteArray()` bytes: .NET stores the first three fields little-endian, so that order disagrees with Postgres for about half of all pairs. One helper owns this rule.
-- **One conversation per pair.** This is guaranteed by the unique constraint. Get-or-create uses `INSERT … ON CONFLICT (user1_id, user2_id) DO NOTHING` followed by a select. Nothing gets serialized across unrelated conversations.
+- **One conversation per pair.** This is guaranteed by the unique constraint. Get-or-create is a single `INSERT … ON CONFLICT (user1_id, user2_id) DO UPDATE SET last_message_at = GREATEST(…) RETURNING id`. That one statement creates or finds the conversation, bumps `LastMessageAt` (never backwards), and returns the ID. Only concurrent senders in the same conversation wait on each other's row lock; nothing gets serialized across unrelated conversations.
 - **When a conversation exists.** It is created on the first message sent. It is not created when a connection is accepted or when an empty thread is opened.
 - **Send is one transaction.** The conversation (if new), the message and the `LastMessageAt` update are written together. The SignalR notification happens only after commit.
 - **Read state is a timestamp.** The caller's `User1LastReadAt` or `User2LastReadAt` is set to the newest message's `CreatedAt` as stored in the database, never the current time, so a message that arrives mid-request isn't wrongly marked read. A message counts as read for the recipient when `CreatedAt <= recipient.LastReadAt`.
@@ -97,8 +97,8 @@ No schema change.
 - EF configuration, constraints and indexes as in the target schema.
 - Pair-ordering helper, with unit tests.
 - `Message` gains `ConversationId` (required FK). `ReceiverId` and `IsRead` are **temporarily kept** so the existing read queries keep working unchanged.
-- The send path does, in one transaction: get-or-create the conversation (`ON CONFLICT DO NOTHING`), insert the message, update `LastMessageAt`. Notify after commit.
-- Squash and regenerate `InitialCreate`.
+- The send path does, in one transaction: upsert the conversation (which also bumps `LastMessageAt`), then insert the message. Notify after commit.
+- Add an incremental `AddConversations` migration rather than squashing, so local databases don't need resetting at every step. It backfills a conversation for every existing message pair, then makes `messages.conversation_id` required. The single squash happens in step 7.
 
 **Tests**
 - A→B and B→A resolve to the same conversation.
@@ -199,7 +199,7 @@ No schema change.
 ## Step 7: Cleanup, query-plan review, docs
 
 - Remove the `Message.ReceiverId` and `Message.UpdatedAt` columns, dead DTOs and unused repository methods.
-- Final migration squash.
+- Final migration squash: fold `AddConversations` and the later step migrations into a single `InitialCreate` (local databases need a reset).
 - Seed a realistic volume of data and run `EXPLAIN ANALYZE` on the inbox, thread page and unread-count queries. Adjust indexes based on the actual plans.
 - Document the model, invariants and API contract (a new `docs/MESSAGING.md`, linked from `docs/AGENT-ONBOARDING.md`).
 - Full verification: `dotnet test`, `pnpm typecheck`, `pnpm lint`.
