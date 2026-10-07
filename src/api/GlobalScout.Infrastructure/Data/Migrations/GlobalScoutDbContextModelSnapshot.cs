@@ -513,9 +513,17 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("user1_id");
 
+                    b.Property<DateTimeOffset?>("User1LastReadAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("user1_last_read_at");
+
                     b.Property<Guid>("User2Id")
                         .HasColumnType("uuid")
                         .HasColumnName("user2_id");
+
+                    b.Property<DateTimeOffset?>("User2LastReadAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("user2_last_read_at");
 
                     b.HasKey("Id")
                         .HasName("pk_conversations");
@@ -584,10 +592,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_read");
 
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid")

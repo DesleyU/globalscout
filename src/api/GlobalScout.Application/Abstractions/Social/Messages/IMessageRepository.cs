@@ -21,5 +21,6 @@ public interface IMessageRepository
         Guid userId,
         CancellationToken cancellationToken);
 
-    Task<int> MarkMessagesReadAsync(Guid receiverId, Guid senderId, CancellationToken cancellationToken);
+    /// <summary>Advances <paramref name="userId"/>'s read position in their conversation with <paramref name="otherUserId"/>.</summary>
+    Task<int> MarkMessagesReadAsync(Guid userId, Guid otherUserId, CancellationToken cancellationToken);
 }

@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Text.Json;
 using GlobalScout.Domain.Social;
 using GlobalScout.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
@@ -96,6 +97,83 @@ public sealed class SocialConversationsIntegrationTests
         {
             Assert.Equal(lefts[i].CompareTo(rights[i]) < 0, postgresLess[i]);
         }
+    }
+
+    [Fact]
+    public async Task Loading_a_thread_does_not_mark_it_read()
+    {
+        var (userA, clientA, userB, clientB) = await CreateConnectedPairAsync();
+        await SendAsync(clientA, userB, "one");
+        await SendAsync(clientA, userB, "two");
+
+        var thread = await GetThreadAsync(clientB, userA);
+
+        Assert.All(thread, m => Assert.False(m.GetProperty("isRead").GetBoolean()));
+        Assert.Equal(2, await GetUnreadCountAsync(clientB, userA));
+    }
+
+    [Fact]
+    public async Task Marking_read_moves_only_the_callers_position()
+    {
+        var (userA, clientA, userB, clientB) = await CreateConnectedPairAsync();
+        await SendAsync(clientA, userB, "from A");
+        await SendAsync(clientB, userA, "from B");
+
+        await MarkReadAsync(clientB, userA);
+
+        Assert.Equal(0, await GetUnreadCountAsync(clientB, userA));
+        Assert.Equal(1, await GetUnreadCountAsync(clientA, userB));
+
+        var thread = await GetThreadAsync(clientA, userB);
+        Assert.True(thread.Single(m => m.GetProperty("senderId").GetGuid() == userA).GetProperty("isRead").GetBoolean());
+        Assert.False(thread.Single(m => m.GetProperty("senderId").GetGuid() == userB).GetProperty("isRead").GetBoolean());
+    }
+
+    [Fact]
+    public async Task Messages_after_the_read_position_stay_unread()
+    {
+        var (userA, clientA, userB, clientB) = await CreateConnectedPairAsync();
+        await SendAsync(clientA, userB, "before");
+        await MarkReadAsync(clientB, userA);
+
+        await SendAsync(clientA, userB, "after");
+
+        Assert.Equal(1, await GetUnreadCountAsync(clientB, userA));
+        var thread = await GetThreadAsync(clientB, userA);
+        Assert.False(thread.Single(m => m.GetProperty("content").GetString() == "after").GetProperty("isRead").GetBoolean());
+        Assert.True(thread.Single(m => m.GetProperty("content").GetString() == "before").GetProperty("isRead").GetBoolean());
+    }
+
+    [Fact]
+    public async Task Marking_read_without_a_conversation_succeeds()
+    {
+        var (userA, _, _, clientB) = await CreateConnectedPairAsync();
+
+        await MarkReadAsync(clientB, userA);
+    }
+
+    private async Task<List<JsonElement>> GetThreadAsync(HttpClient client, Guid otherUserId)
+    {
+        using var response = await client.GetAsync($"/api/messages/conversation/{otherUserId}", Ct);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync(Ct));
+        return doc.RootElement.GetProperty("messages").EnumerateArray().Select(m => m.Clone()).ToList();
+    }
+
+    private async Task<int> GetUnreadCountAsync(HttpClient client, Guid otherUserId)
+    {
+        using var response = await client.GetAsync("/api/messages/conversations", Ct);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+        using var doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync(Ct));
+        return doc.RootElement.GetProperty("conversations").EnumerateArray()
+            .Single(c => c.GetProperty("otherUser").GetProperty("id").GetGuid() == otherUserId)
+            .GetProperty("unreadCount").GetInt32();
+    }
+
+    private async Task MarkReadAsync(HttpClient client, Guid otherUserId)
+    {
+        using var response = await client.PutAsync($"/api/messages/read/{otherUserId}", null, Ct);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
     private async Task<(Guid UserA, HttpClient ClientA, Guid UserB, HttpClient ClientB)> CreateConnectedPairAsync()

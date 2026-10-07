@@ -12,8 +12,6 @@ public sealed class Message
 
     public string Content { get; set; } = string.Empty;
 
-    public bool IsRead { get; set; }
-
     public DateTimeOffset CreatedAt { get; set; }
 
     public DateTimeOffset UpdatedAt { get; set; }

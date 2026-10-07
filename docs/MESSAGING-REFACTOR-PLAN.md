@@ -13,7 +13,7 @@ Status tracker for making `Conversation` a real part of the 1:1 messaging model.
 | 0 | Commit in-flight connections work | ☑ Approved (`94f4e08`) |
 | 1 | Fix the current model's bugs | ☑ Approved (`7e41442`) |
 | 2 | Add Conversation; switch sending to it | ☑ Approved |
-| 3 | Move read state to Conversation; make GetConversation read-only | ☐ Pending |
+| 3 | Move read state to Conversation; make GetConversation read-only | ☑ Approved |
 | 4 | Build the inbox query from the user's conversations | ☐ Pending |
 | 5 | Conversation-based thread query with cursor pagination | ☐ Pending |
 | 6 | Push `MessageCreated` to both participants | ☐ Pending |
@@ -116,7 +116,7 @@ No schema change.
 - `MarkMessagesReadCommand` finds the conversation for the normalized `(caller, otherUserId)` pair and advances the caller's side (`User1LastReadAt` or `User2LastReadAt`) to the newest message's `CreatedAt`. It does nothing if the conversation doesn't exist. Because the lookup is by the caller's own pair, a user can only ever move their own read position.
 - `GetConversationQueryHandler` becomes read-only. Remove the `MarkMessagesReadAsync` call and the `IsRead` rewriting.
 - Inbox unread counts and per-message `isRead` are derived from the relevant side's `LastReadAt`.
-- Remove the `Message.IsRead` column.
+- Remove the `Message.IsRead` column. The incremental `AddConversationReadState` migration first sets each user's read position to their newest received message that was marked read, then drops the column.
 
 **Frontend**
 - The thread view calls `PUT /api/messages/read/{userId}` after loading, and again when a message from that user arrives while the thread is open.

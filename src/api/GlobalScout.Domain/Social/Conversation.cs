@@ -17,6 +17,24 @@ public sealed class Conversation
     public DateTimeOffset LastMessageAt { get; set; }
 
     /// <summary>
+    /// <see cref="User1Id"/>'s read position: every message created at or before this time counts as read by them.
+    /// </summary>
+    public DateTimeOffset? User1LastReadAt { get; set; }
+
+    /// <summary>
+    /// <see cref="User2Id"/>'s read position: every message created at or before this time counts as read by them.
+    /// </summary>
+    public DateTimeOffset? User2LastReadAt { get; set; }
+
+    public DateTimeOffset? LastReadAtFor(Guid userId) =>
+        userId == User1Id ? User1LastReadAt
+        : userId == User2Id ? User2LastReadAt
+        : throw new ArgumentException("User is not part of this conversation.", nameof(userId));
+
+    public bool IsReadBy(Guid userId, DateTimeOffset messageCreatedAt) =>
+        LastReadAtFor(userId) is { } readAt && messageCreatedAt <= readAt;
+
+    /// <summary>
     /// Orders a pair of user IDs the way they are stored. <see cref="Guid.CompareTo(Guid)"/> matches
     /// PostgreSQL <c>uuid</c> ordering, which the <c>user1_id &lt; user2_id</c> check constraint relies on.
     /// </summary>

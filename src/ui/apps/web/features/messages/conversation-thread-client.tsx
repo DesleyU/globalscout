@@ -67,6 +67,8 @@ export function ConversationThreadClient({
         setHasMore(data.pagination?.hasMore ?? false);
         setPage(1);
         messagesContext?.markConversationReadLocally(otherUserId);
+        // Loading a thread no longer marks it read on the server; do it explicitly.
+        void fetch(`/api/messages/read/${otherUserId}`, { method: "PUT", credentials: "include" });
       } catch {
         if (!cancelled) toast.error("Could not load conversation");
       } finally {

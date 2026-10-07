@@ -29,7 +29,6 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             SenderId = senderId,
             ReceiverId = receiverId,
             Content = content,
-            IsRead = false,
             CreatedAt = now,
             UpdatedAt = now
         };
@@ -99,6 +98,14 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
         bool hasMore = batch.Count == limit;
         batch.Reverse();
 
+        if (batch.Count == 0)
+        {
+            return ([], false);
+        }
+
+        Conversation conversation = await db.Conversations.AsNoTracking()
+            .FirstAsync(c => c.Id == batch[0].ConversationId, cancellationToken);
+
         var senderIds = batch.Select(m => m.SenderId).Distinct().ToList();
         var users = await db.Users.AsNoTracking()
             .Include(u => u.Profile)
@@ -108,7 +115,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
         var messages = new List<MessageThreadDto>(batch.Count);
         foreach (var message in batch)
         {
-            messages.Add(await MapThreadAsync(message, users, cancellationToken));
+            messages.Add(await MapThreadAsync(message, conversation, users, cancellationToken));
         }
 
         return (messages, hasMore);
@@ -142,11 +149,20 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             .Include(u => u.Profile)
             .ToDictionaryAsync(u => u.Id, cancellationToken);
 
-        var unreadCounts = await db.Messages.AsNoTracking()
-            .Where(m => m.ReceiverId == userId && otherIds.Contains(m.SenderId) && !m.IsRead)
-            .GroupBy(m => m.SenderId)
-            .Select(g => new { OtherId = g.Key, Count = g.Count() })
-            .ToListAsync(cancellationToken);
+        var conversations = await db.Conversations.AsNoTracking()
+            .Where(c => c.User1Id == userId || c.User2Id == userId)
+            .ToDictionaryAsync(c => c.Id, cancellationToken);
+
+        // Unread = received after the caller's read position on that conversation.
+        var unreadCounts = await (
+            from m in db.Messages.AsNoTracking()
+            join c in db.Conversations on m.ConversationId equals c.Id
+            let readAt = c.User1Id == userId ? c.User1LastReadAt : c.User2LastReadAt
+            where m.ReceiverId == userId && (readAt == null || m.CreatedAt > readAt)
+            group m by m.SenderId
+            into g
+            select new { OtherId = g.Key, Count = g.Count() }
+        ).ToListAsync(cancellationToken);
 
         var unreadDict = unreadCounts.ToDictionary(x => x.OtherId, x => x.Count);
 
@@ -165,7 +181,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
                 m.SenderId,
                 m.ReceiverId,
                 m.CreatedAt,
-                m.IsRead);
+                conversations[m.ConversationId].IsReadBy(m.ReceiverId, m.CreatedAt));
 
             var profile = otherUser.Profile;
             var partner = new ConversationPartnerDto(
@@ -189,16 +205,44 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
     }
 
     public async Task<int> MarkMessagesReadAsync(
-        Guid receiverId,
-        Guid senderId,
+        Guid userId,
+        Guid otherUserId,
         CancellationToken cancellationToken)
     {
-        var rows = await db.Messages
-            .Where(m => m.SenderId == senderId && m.ReceiverId == receiverId && !m.IsRead)
-            .ExecuteUpdateAsync(
-                s => s.SetProperty(m => m.IsRead, true).SetProperty(m => m.UpdatedAt, DateTimeOffset.UtcNow),
-                cancellationToken);
-        return rows;
+        if (userId == otherUserId)
+        {
+            return 0;
+        }
+
+        (Guid user1Id, Guid user2Id) = Conversation.OrderPair(userId, otherUserId);
+
+        // The read position is the newest stored message time, not "now": a message committed
+        // while this request runs must stay unread.
+        var target = await db.Conversations.AsNoTracking()
+            .Where(c => c.User1Id == user1Id && c.User2Id == user2Id)
+            .Select(c => new
+            {
+                c.Id,
+                NewestAt = db.Messages
+                    .Where(m => m.ConversationId == c.Id)
+                    .Max(m => (DateTimeOffset?)m.CreatedAt)
+            })
+            .FirstOrDefaultAsync(cancellationToken);
+
+        if (target?.NewestAt is not { } newestAt)
+        {
+            return 0;
+        }
+
+        // Only ever moves forward, so an older concurrent request can't rewind it.
+        var conversation = db.Conversations.Where(c => c.Id == target.Id);
+        return userId == user1Id
+            ? await conversation
+                .Where(c => c.User1LastReadAt == null || c.User1LastReadAt < newestAt)
+                .ExecuteUpdateAsync(s => s.SetProperty(c => c.User1LastReadAt, newestAt), cancellationToken)
+            : await conversation
+                .Where(c => c.User2LastReadAt == null || c.User2LastReadAt < newestAt)
+                .ExecuteUpdateAsync(s => s.SetProperty(c => c.User2LastReadAt, newestAt), cancellationToken);
     }
 
     private async Task<MessageDetailDto> MapDetailAsync(
@@ -216,7 +260,8 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             m.ReceiverId,
             m.Content,
             m.CreatedAt,
-            m.IsRead,
+            // Only used for a just-sent message, which the receiver can't have read yet.
+            false,
             new MessageParticipantDto(
                 sender.Id,
                 sender.Email ?? string.Empty,
@@ -239,6 +284,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
 
     private async Task<MessageThreadDto> MapThreadAsync(
         Message m,
+        Conversation conversation,
         Dictionary<Guid, ApplicationUser> usersBySenderId,
         CancellationToken cancellationToken)
     {
@@ -259,7 +305,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             m.ReceiverId,
             m.Content,
             m.CreatedAt,
-            m.IsRead,
+            conversation.IsReadBy(m.ReceiverId, m.CreatedAt),
             senderDto);
     }
 }

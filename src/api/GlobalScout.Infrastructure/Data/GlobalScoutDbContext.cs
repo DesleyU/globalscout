@@ -120,6 +120,8 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
                 t => t.HasCheckConstraint("ck_conversations_user_order", "user1_id < user2_id"));
             b.Property(c => c.User1Id).HasColumnName("user1_id");
             b.Property(c => c.User2Id).HasColumnName("user2_id");
+            b.Property(c => c.User1LastReadAt).HasColumnName("user1_last_read_at");
+            b.Property(c => c.User2LastReadAt).HasColumnName("user2_last_read_at");
             b.HasIndex(c => new { c.User1Id, c.User2Id }).IsUnique();
             b.HasIndex(c => c.User2Id);
             b.HasOne<ApplicationUser>()

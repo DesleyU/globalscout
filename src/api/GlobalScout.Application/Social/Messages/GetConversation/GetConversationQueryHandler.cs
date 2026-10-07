@@ -27,16 +27,7 @@ internal sealed class GetConversationQueryHandler(
             query.Limit,
             cancellationToken);
 
-        await messages.MarkMessagesReadAsync(query.UserId, query.OtherUserId, cancellationToken);
-
-        var normalized = page
-            .Select(m =>
-                m.SenderId == query.OtherUserId && m.ReceiverId == query.UserId
-                    ? m with { IsRead = true }
-                    : m)
-            .ToList();
-
         return Result.Success(
-            new GetConversationResult(normalized, query.Page, query.Limit, hasMore));
+            new GetConversationResult(page, query.Page, query.Limit, hasMore));
     }
 }
