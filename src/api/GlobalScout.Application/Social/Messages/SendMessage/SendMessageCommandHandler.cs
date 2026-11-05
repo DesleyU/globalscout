@@ -45,7 +45,7 @@ internal sealed class SendMessageCommandHandler(
             command.Content.Trim(),
             cancellationToken);
 
-        await notifier.NotifyNewMessageAsync(command.ReceiverId, created, cancellationToken);
+        await notifier.NotifyMessageCreatedAsync(command.SenderId, command.ReceiverId, created, cancellationToken);
 
         return Result.Success(created);
     }

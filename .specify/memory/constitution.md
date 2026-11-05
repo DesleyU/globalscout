@@ -53,7 +53,7 @@ from obscuring the actual change.
 
 ### V. Production URL & CORS Invariants (NON-NEGOTIABLE)
 Canonical production URLs are load-bearing and MUST NOT change casually: frontend is
-`https://globalscout.eu`, API is `https://api.globalscout.eu/api` (never a relative `/api`). Any
+`https://futboligy.com`, API is `https://api.futboligy.com/api` (never a relative `/api`). Any
 change touching deployment, Docker, nginx, CORS, or object storage MUST first be checked against
 `docs/AWS-infrastructure_setup_documentation.md` and `.cursor/rules/aws-production-architecture.mdc`.
 Rationale: the production topology (CloudFront → ALB → single EC2 host running Docker Compose) has

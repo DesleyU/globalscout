@@ -17,6 +17,18 @@ internal static class MediaRoutes
     public static string MediaReadUrl => $"{Base}/{{mediaId:guid}}/url";
 
     public static string DeleteVideo => $"{Base}/video/{{videoId:guid}}";
+
+    public static string Photo => $"{Base}/photo";
+
+    public static string PhotoUploadUrl => $"{Base}/photo/upload-url";
+
+    public static string CompletePhotoUpload => $"{Base}/photo/complete";
+
+    public static string PhotosSelf => $"{Base}/photos";
+
+    public static string PhotosForUser => $"{Base}/photos/{{userId:guid}}";
+
+    public static string DeletePhoto => $"{Base}/photo/{{photoId:guid}}";
 }
 
 internal static class MediaEndpointTags

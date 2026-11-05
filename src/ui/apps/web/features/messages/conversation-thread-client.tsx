@@ -35,7 +35,7 @@ export function ConversationThreadClient({
   const messagesContext = useMessagesContext();
 
   const [messages, setMessages] = useState<MessageThreadItem[]>([]);
-  const [page, setPage] = useState(1);
+  const [cursor, setCursor] = useState<string | null>(null);
   const [hasMore, setHasMore] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -50,12 +50,13 @@ export function ConversationThreadClient({
     async function load() {
       try {
         const response = await fetch(
-          `/api/messages/conversation/${otherUserId}?page=1&limit=30`,
+          `/api/messages/conversation/${otherUserId}?limit=30`,
           { credentials: "include" },
         );
         const data = (await response.json()) as {
           messages?: MessageThreadItem[];
-          pagination?: { hasMore?: boolean };
+          nextCursor?: string | null;
+          hasMore?: boolean;
           error?: string;
         };
         if (!response.ok) {
@@ -64,8 +65,8 @@ export function ConversationThreadClient({
         }
         if (cancelled) return;
         setMessages(data.messages ?? []);
-        setHasMore(data.pagination?.hasMore ?? false);
-        setPage(1);
+        setHasMore(data.hasMore ?? false);
+        setCursor(data.nextCursor ?? null);
         messagesContext?.markConversationReadLocally(otherUserId);
         // Loading a thread no longer marks it read on the server; do it explicitly.
         void fetch(`/api/messages/read/${otherUserId}`, { method: "PUT", credentials: "include" });
@@ -95,7 +96,11 @@ export function ConversationThreadClient({
   useEffect(() => {
     const incoming = messagesContext?.lastReceivedMessage;
     if (!incoming) return;
-    if (incoming.senderId !== otherUserId) return;
+    const isFromOtherUser = incoming.senderId === otherUserId;
+    // The push reaches both participants, so a message sent from this same user's other tab
+    // also needs to land here - not just messages from the person on the other side of this thread.
+    const isMyOwnEcho = incoming.senderId === currentUserId && incoming.receiverId === otherUserId;
+    if (!isFromOtherUser && !isMyOwnEcho) return;
 
     setMessages((prev) =>
       prev.some((m) => m.id === incoming.id)
@@ -122,23 +127,26 @@ export function ConversationThreadClient({
             },
           ],
     );
-    messagesContext?.markConversationReadLocally(otherUserId);
-    void fetch(`/api/messages/read/${otherUserId}`, { method: "PUT", credentials: "include" });
+    if (isFromOtherUser) {
+      messagesContext?.markConversationReadLocally(otherUserId);
+      void fetch(`/api/messages/read/${otherUserId}`, { method: "PUT", credentials: "include" });
+    }
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-run when a new push arrives
   }, [messagesContext?.lastReceivedMessage]);
 
   async function handleLoadOlder() {
+    if (!cursor) return;
     setIsLoadingMore(true);
     try {
-      const nextPage = page + 1;
       const response = await fetch(
-        `/api/messages/conversation/${otherUserId}?page=${nextPage}&limit=30`,
+        `/api/messages/conversation/${otherUserId}?before=${encodeURIComponent(cursor)}&limit=30`,
         { credentials: "include" },
       );
       const data = (await response.json()) as {
         messages?: MessageThreadItem[];
-        pagination?: { hasMore?: boolean };
+        nextCursor?: string | null;
+        hasMore?: boolean;
         error?: string;
       };
       if (!response.ok) {
@@ -146,8 +154,8 @@ export function ConversationThreadClient({
         return;
       }
       setMessages((prev) => [...(data.messages ?? []), ...prev]);
-      setHasMore(data.pagination?.hasMore ?? false);
-      setPage(nextPage);
+      setHasMore(data.hasMore ?? false);
+      setCursor(data.nextCursor ?? null);
     } catch {
       toast.error("Could not load older messages");
     } finally {
@@ -176,7 +184,10 @@ export function ConversationThreadClient({
       }
 
       if (data.data) {
-        setMessages((prev) => [...prev, data.data as MessageThreadItem]);
+        const sent = data.data;
+        // The MessageCreated push for this same message (now sent to the sender too) can arrive
+        // over SignalR before this HTTP response does - don't append it twice.
+        setMessages((prev) => (prev.some((m) => m.id === sent.id) ? prev : [...prev, sent]));
       }
       setDraft("");
       void messagesContext?.refetchConversations();
@@ -189,9 +200,9 @@ export function ConversationThreadClient({
   }
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-4rem)] max-w-2xl flex-col p-8">
+    <div className="flex h-full flex-col p-4 md:p-8">
       <div className="mb-3 flex items-center gap-2">
-        <Button size="sm" variant="ghost" render={<Link href={messagesHref} />}>
+        <Button size="sm" variant="ghost" className="md:hidden" render={<Link href={messagesHref} />}>
           <ArrowLeft className="size-4" aria-hidden />
         </Button>
         <Avatar size="sm">

@@ -12,6 +12,7 @@ export const PROTECTED_ROUTE_PREFIXES = [
   "/profile",
   "/statistics",
   "/videos",
+  "/photos",
   "/search",
   "/users",
   "/connections",

@@ -78,6 +78,7 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
             b.ToTable("profiles");
             b.HasKey(p => p.UserId);
             b.Property(p => p.AvatarStorageKey).HasColumnName("avatar_storage_key");
+            b.Property(p => p.BannerStorageKey).HasColumnName("banner_storage_key");
             b.HasOne<ApplicationUser>()
                 .WithOne(u => u.Profile)
                 .HasForeignKey<Profile>(p => p.UserId)
@@ -146,10 +147,6 @@ public sealed class GlobalScoutDbContext : IdentityDbContext<ApplicationUser, Ap
             b.HasOne<ApplicationUser>()
                 .WithMany(u => u.SentMessages)
                 .HasForeignKey(m => m.SenderId)
-                .OnDelete(DeleteBehavior.Restrict);
-            b.HasOne<ApplicationUser>()
-                .WithMany(u => u.ReceivedMessages)
-                .HasForeignKey(m => m.ReceiverId)
                 .OnDelete(DeleteBehavior.Restrict);
         });
 

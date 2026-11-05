@@ -1,22 +1,24 @@
-prod database:L
-docker exec -it globalscout-postgres-1 psql -U postgres -d globalscout
+shell on the prod instance (no SSH; uses SSM Session Manager, needs the session-manager-plugin locally):
+aws ssm start-session --target <EC2_INSTANCE_ID> --profile futboligy
+sudo -i
+
+prod database:
+docker exec -it futboligy-postgres-1 psql -U postgres -d globalscout
 
 go to docker compose file:
-cd /opt/globalscout
+cd /opt/futboligy
 cat docker-compose.yml
 
 read env variable file for docker-compose:
-nano /opt/globalscout/.env
+nano /opt/futboligy/.env
 
 restart api:
-cd /opt/globalscout
+cd /opt/futboligy
 docker compose --env-file .env up -d api
 
-deploy nginx routing fix (from repo root on your machine):
-scp deploy/docker-compose.ec2.yml ubuntu@63.177.190.171:/opt/globalscout/docker-compose.yml
-scp deploy/nginx.ec2.conf ubuntu@63.177.190.171:/opt/globalscout/nginx.ec2.conf
-ssh ubuntu@63.177.190.171 "cd /opt/globalscout && docker compose --env-file .env pull && docker compose --env-file .env up -d --remove-orphans"
+deploy compose/nginx changes:
+run the "Deploy to AWS" GitHub Actions workflow (it ships deploy/docker-compose.ec2.yml and deploy/nginx.ec2.conf via SSM)
 
-verify api host routing on prod:
-curl -s -o /dev/null -w "%{http_code}" -H "Host: api.globalscout.eu" http://127.0.0.1/
+verify api host routing on prod (from an SSM session):
+curl -s -o /dev/null -w "%{http_code}" -H "Host: api.futboligy.com" http://127.0.0.1/
 curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1/

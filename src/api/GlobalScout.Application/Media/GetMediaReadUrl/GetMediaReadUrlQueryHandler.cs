@@ -16,10 +16,10 @@ internal sealed class GetMediaReadUrlQueryHandler(
         GetMediaReadUrlQuery query,
         CancellationToken cancellationToken)
     {
-        var item = await media.FindVideoAsync(query.MediaId, cancellationToken);
+        var item = await media.FindAnyAsync(query.MediaId, cancellationToken);
         if (item is null)
         {
-            return Result.Failure<MediaReadUrlResult>(MediaErrors.VideoNotFound);
+            return Result.Failure<MediaReadUrlResult>(MediaErrors.MediaNotFound);
         }
 
         if (item.UserId != query.RequesterId)
@@ -31,7 +31,7 @@ internal sealed class GetMediaReadUrlQueryHandler(
 
             if (!connected)
             {
-                return Result.Failure<MediaReadUrlResult>(MediaErrors.VideoNotFound);
+                return Result.Failure<MediaReadUrlResult>(MediaErrors.MediaNotFound);
             }
         }
 

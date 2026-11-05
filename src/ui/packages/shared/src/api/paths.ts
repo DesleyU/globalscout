@@ -22,6 +22,9 @@ export const usersPaths = {
   avatarUploadUrl: "/users/avatar/upload-url",
   avatarComplete: "/users/avatar/complete",
   avatarReadUrl: (userId: string) => `/users/${userId}/avatar/url`,
+  bannerUploadUrl: "/users/banner/upload-url",
+  bannerComplete: "/users/banner/complete",
+  bannerReadUrl: (userId: string) => `/users/${userId}/banner/url`,
   search: "/users/search",
   recommendations: "/users/recommendations",
   profileVisitors: "/users/profile/visitors",
@@ -44,6 +47,11 @@ export const mediaPaths = {
   videosForUser: (userId: string) => `/media/videos/${userId}`,
   readUrl: (mediaId: string) => `/media/${mediaId}/url`,
   deleteVideo: (videoId: string) => `/media/video/${videoId}`,
+  photoUploadUrl: "/media/photo/upload-url",
+  photoComplete: "/media/photo/complete",
+  photos: "/media/photos",
+  photosForUser: (userId: string) => `/media/photos/${userId}`,
+  deletePhoto: (photoId: string) => `/media/photo/${photoId}`,
 } as const;
 
 export const billingPaths = {

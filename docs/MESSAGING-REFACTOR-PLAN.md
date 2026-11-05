@@ -14,10 +14,10 @@ Status tracker for making `Conversation` a real part of the 1:1 messaging model.
 | 1 | Fix the current model's bugs | ☑ Approved (`7e41442`) |
 | 2 | Add Conversation; switch sending to it | ☑ Approved |
 | 3 | Move read state to Conversation; make GetConversation read-only | ☑ Approved |
-| 4 | Build the inbox query from the user's conversations | ☐ Pending |
-| 5 | Conversation-based thread query with cursor pagination | ☐ Pending |
-| 6 | Push `MessageCreated` to both participants | ☐ Pending |
-| 7 | Cleanup, query-plan review, docs | ☐ Pending |
+| 4 | Build the inbox query from the user's conversations | ◐ In progress (awaiting review) |
+| 5 | Conversation-based thread query with cursor pagination | ◐ In progress (awaiting review) |
+| 6 | Push `MessageCreated` to both participants | ◐ In progress (awaiting review) |
+| 7 | Cleanup, query-plan review, docs | ◐ In progress (awaiting review) |
 
 Status values: ☐ Pending · ◐ In progress · ☑ Approved
 
@@ -136,13 +136,15 @@ No schema change.
 
 **Backend**
 - Rewrite `GetConversationsAsync` to start from the caller's conversations (`User1Id = @me OR User2Id = @me`). Join the other user's profile and the latest message. Count unread messages from the other user after the caller's read position. Sort by `LastMessageAt DESC`.
-- Use projections only, with a fixed number of queries no matter how many conversations there are.
+- Use projections only, with a fixed number of queries no matter how many conversations there are. The result is 3 queries: conversations with the latest message ID and unread count, then those messages by ID, then the partners' profiles.
+- Select the latest message as a scalar ID subquery (`ORDER BY created_at DESC, id DESC LIMIT 1`). Projecting the whole message row instead makes EF emit a `ROW_NUMBER()` window over the entire `messages` table.
 - Resolve each avatar once per distinct user.
 - DTOs gain `conversationId`.
 
 **Tests**
 - Inbox order, last-message preview, unread counts, empty inbox.
 - Conversations the caller isn't part of never appear.
+- The inbox runs the same number of SQL commands with 1 and with 3 conversations. The test captures EF's executed commands.
 
 **Done when:** the inbox output matches the previous behaviour, and the query count is constant.
 

@@ -11,7 +11,7 @@ import {
 
 function toQueryString(params: GetConversationParams): string {
   const search = new URLSearchParams();
-  if (params.page !== undefined) search.set("page", String(params.page));
+  if (params.before !== undefined) search.set("before", params.before);
   if (params.limit !== undefined) search.set("limit", String(params.limit));
   const query = search.toString();
   return query ? `?${query}` : "";

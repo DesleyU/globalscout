@@ -17,7 +17,7 @@ services:
     restart: unless-stopped
 
   migrator:
-    image: ${ECR_REGISTRY}/globalscout/migrator:${IMAGE_TAG}
+    image: ${ECR_REGISTRY}/futboligy/migrator:${IMAGE_TAG}
     env_file:
       - .env
     environment:
@@ -28,7 +28,7 @@ services:
     restart: "no"
 
   api:
-    image: ${ECR_REGISTRY}/globalscout/api:${IMAGE_TAG}
+    image: ${ECR_REGISTRY}/futboligy/api:${IMAGE_TAG}
     env_file:
       - .env
     environment:
@@ -41,15 +41,15 @@ services:
       ObjectStorage__Region: ${ObjectStorage__Region}
       ObjectStorage__ForcePathStyle: ${ObjectStorage__ForcePathStyle:-false}
       ObjectStorage__CreateBucketIfMissing: ${ObjectStorage__CreateBucketIfMissing:-false}
-      Cors__AllowedOrigins__0: https://globalscout.eu
-      Cors__AllowedOrigins__1: https://www.globalscout.eu
+      Cors__AllowedOrigins__0: https://futboligy.com
+      Cors__AllowedOrigins__1: https://www.futboligy.com
     depends_on:
       migrator:
         condition: service_completed_successfully
     restart: unless-stopped
 
   ui:
-    image: ${ECR_REGISTRY}/globalscout/ui:${IMAGE_TAG}
+    image: ${ECR_REGISTRY}/futboligy/ui:${IMAGE_TAG}
     expose:
       - "80"
     depends_on:

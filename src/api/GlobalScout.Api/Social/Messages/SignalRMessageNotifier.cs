@@ -6,9 +6,12 @@ namespace GlobalScout.Api.Social.Messages;
 
 internal sealed class SignalRMessageNotifier(IHubContext<MessageHub> hub) : IMessageRealtimeNotifier
 {
-    public Task NotifyNewMessageAsync(
-        Guid recipientUserId,
+    public Task NotifyMessageCreatedAsync(
+        Guid senderId,
+        Guid recipientId,
         MessageDetailDto message,
         CancellationToken cancellationToken) =>
-        hub.Clients.User(recipientUserId.ToString()).SendAsync("ReceiveMessage", message, cancellationToken);
+        hub.Clients
+            .Users([senderId.ToString(), recipientId.ToString()])
+            .SendAsync("MessageCreated", message, cancellationToken);
 }

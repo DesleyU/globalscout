@@ -8,6 +8,12 @@ internal sealed class FileKeyGenerator : IFileKeyGenerator
     public string CreateVideoKey(Guid userId, string originalFileName) =>
         CreateKey("media/videos", userId, originalFileName);
 
+    public string CreatePhotoKey(Guid userId, string originalFileName) =>
+        CreateKey("media/photos", userId, originalFileName);
+
+    public string CreateBannerKey(Guid userId, string originalFileName) =>
+        CreateKey("banners", userId, originalFileName);
+
     public string CreateEvidenceKey(Guid userId, string originalFileName) =>
         CreateKey("evidence", userId, originalFileName);
 
@@ -16,6 +22,12 @@ internal sealed class FileKeyGenerator : IFileKeyGenerator
 
     public bool IsVideoKeyForUser(Guid userId, string storageKey) =>
         IsKeyForUser("media/videos", userId, storageKey);
+
+    public bool IsPhotoKeyForUser(Guid userId, string storageKey) =>
+        IsKeyForUser("media/photos", userId, storageKey);
+
+    public bool IsBannerKeyForUser(Guid userId, string storageKey) =>
+        IsKeyForUser("banners", userId, storageKey);
 
     public bool IsEvidenceKeyForUser(Guid userId, string storageKey) =>
         IsKeyForUser("evidence", userId, storageKey);

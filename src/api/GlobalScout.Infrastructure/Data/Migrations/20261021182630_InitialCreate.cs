@@ -236,6 +236,36 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "conversations",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user1_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user2_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    last_message_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    user1_last_read_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true),
+                    user2_last_read_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_conversations", x => x.id);
+                    table.CheckConstraint("ck_conversations_user_order", "user1_id < user2_id");
+                    table.ForeignKey(
+                        name: "fk_conversations_asp_net_users_user1_id",
+                        column: x => x.user1_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_conversations_asp_net_users_user2_id",
+                        column: x => x.user2_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "follows",
                 columns: table => new
                 {
@@ -288,35 +318,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         principalTable: "asp_net_users",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "messages",
-                columns: table => new
-                {
-                    id = table.Column<Guid>(type: "uuid", nullable: false),
-                    sender_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    receiver_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    content = table.Column<string>(type: "text", nullable: false),
-                    is_read = table.Column<bool>(type: "boolean", nullable: false),
-                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    updated_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("pk_messages", x => x.id);
-                    table.ForeignKey(
-                        name: "fk_messages_asp_net_users_receiver_id",
-                        column: x => x.receiver_id,
-                        principalTable: "asp_net_users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "fk_messages_asp_net_users_sender_id",
-                        column: x => x.sender_id,
-                        principalTable: "asp_net_users",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -627,6 +628,33 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "messages",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    conversation_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    sender_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    content = table.Column<string>(type: "text", nullable: false),
+                    created_at = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_messages", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_messages_asp_net_users_sender_id",
+                        column: x => x.sender_id,
+                        principalTable: "asp_net_users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "fk_messages_conversations_conversation_id",
+                        column: x => x.conversation_id,
+                        principalTable: "conversations",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "verification_evidence",
                 columns: table => new
                 {
@@ -703,6 +731,17 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "ix_conversations_user1_id_user2_id",
+                table: "conversations",
+                columns: new[] { "user1_id", "user2_id" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_conversations_user2_id",
+                table: "conversations",
+                column: "user2_id");
+
+            migrationBuilder.CreateIndex(
                 name: "ix_follows_follower_id_following_id",
                 table: "follows",
                 columns: new[] { "follower_id", "following_id" },
@@ -719,9 +758,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                 column: "user_id");
 
             migrationBuilder.CreateIndex(
-                name: "ix_messages_receiver_id",
+                name: "ix_messages_conversation_id_created_at_id",
                 table: "messages",
-                column: "receiver_id");
+                columns: new[] { "conversation_id", "created_at", "id" },
+                descending: new[] { false, true, true });
 
             migrationBuilder.CreateIndex(
                 name: "ix_messages_sender_id",
@@ -930,6 +970,9 @@ namespace GlobalScout.Infrastructure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "asp_net_roles");
+
+            migrationBuilder.DropTable(
+                name: "conversations");
 
             migrationBuilder.DropTable(
                 name: "player_identity_claims");

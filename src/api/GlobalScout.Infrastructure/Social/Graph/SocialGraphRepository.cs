@@ -460,6 +460,7 @@ internal sealed class SocialGraphRepository(
             p.FirstName,
             p.LastName,
             await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken),
+            await avatarUrls.ResolveAsync(p.BannerStorageKey, cancellationToken),
             p.Bio,
             PositionToApi(p.Position),
             p.Age,

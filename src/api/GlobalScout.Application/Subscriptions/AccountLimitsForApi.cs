@@ -26,6 +26,7 @@ public static class AccountLimitsForApi
     {
         maxConnections = SubscriptionLimits.BasicMaxConnections,
         maxVideos = SubscriptionLimits.BasicMaxVideos,
+        maxPhotos = SubscriptionLimits.BasicMaxPhotos,
         profileFields = BasicProfileFields,
         statsFields = BasicStatsFields,
         visitorDetails = false
@@ -35,6 +36,7 @@ public static class AccountLimitsForApi
     {
         maxConnections = -1,
         maxVideos = -1,
+        maxPhotos = -1,
         profileFields = "all",
         statsFields = "all",
         visitorDetails = true

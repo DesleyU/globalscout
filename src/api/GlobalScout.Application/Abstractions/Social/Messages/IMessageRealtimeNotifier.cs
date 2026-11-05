@@ -4,5 +4,10 @@ namespace GlobalScout.Application.Abstractions.Social.Messages;
 
 public interface IMessageRealtimeNotifier
 {
-    Task NotifyNewMessageAsync(Guid recipientUserId, MessageDetailDto message, CancellationToken cancellationToken);
+    /// <summary>Pushes a <c>MessageCreated</c> event to both participants, only after the send commits.</summary>
+    Task NotifyMessageCreatedAsync(
+        Guid senderId,
+        Guid recipientId,
+        MessageDetailDto message,
+        CancellationToken cancellationToken);
 }

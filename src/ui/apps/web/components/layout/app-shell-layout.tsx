@@ -30,7 +30,7 @@ export function AppShellLayout(props: AppShellLayoutProps) {
   }
 
   return (
-    <MessagesProvider>
+    <MessagesProvider userId={props.user.id}>
       <AppShellBody {...props} />
     </MessagesProvider>
   );

@@ -1,5 +1,5 @@
 /** Production default; override via NEXT_PUBLIC_API_BASE_URL in each app. */
-export const DEFAULT_API_BASE_URL = "https://api.globalscout.eu/api";
+export const DEFAULT_API_BASE_URL = "https://api.futboligy.com/api";
 
 /**
  * Resolves the API base URL from an optional environment override.

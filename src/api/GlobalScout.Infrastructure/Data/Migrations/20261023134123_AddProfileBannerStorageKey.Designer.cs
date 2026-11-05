@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GlobalScout.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(GlobalScoutDbContext))]
-    [Migration("20260923105549_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20261023134123_AddProfileBannerStorageKey")]
+    partial class AddProfileBannerStorageKey
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -497,6 +497,53 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.ToTable("connections", (string)null);
                 });
 
+            modelBuilder.Entity("GlobalScout.Domain.Social.Conversation", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("created_at");
+
+                    b.Property<DateTimeOffset>("LastMessageAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("last_message_at");
+
+                    b.Property<Guid>("User1Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user1_id");
+
+                    b.Property<DateTimeOffset?>("User1LastReadAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("user1_last_read_at");
+
+                    b.Property<Guid>("User2Id")
+                        .HasColumnType("uuid")
+                        .HasColumnName("user2_id");
+
+                    b.Property<DateTimeOffset?>("User2LastReadAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("user2_last_read_at");
+
+                    b.HasKey("Id")
+                        .HasName("pk_conversations");
+
+                    b.HasIndex("User2Id")
+                        .HasDatabaseName("ix_conversations_user2_id");
+
+                    b.HasIndex("User1Id", "User2Id")
+                        .IsUnique()
+                        .HasDatabaseName("ix_conversations_user1_id_user2_id");
+
+                    b.ToTable("conversations", null, t =>
+                        {
+                            t.HasCheckConstraint("ck_conversations_user_order", "user1_id < user2_id");
+                        });
+                });
+
             modelBuilder.Entity("GlobalScout.Domain.Social.Follow", b =>
                 {
                     b.Property<Guid>("Id")
@@ -541,34 +588,27 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("text")
                         .HasColumnName("content");
 
+                    b.Property<Guid>("ConversationId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("conversation_id");
+
                     b.Property<DateTimeOffset>("CreatedAt")
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_read");
-
-                    b.Property<Guid>("ReceiverId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("receiver_id");
 
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uuid")
                         .HasColumnName("sender_id");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
                         .HasName("pk_messages");
 
-                    b.HasIndex("ReceiverId")
-                        .HasDatabaseName("ix_messages_receiver_id");
-
                     b.HasIndex("SenderId")
                         .HasDatabaseName("ix_messages_sender_id");
+
+                    b.HasIndex("ConversationId", "CreatedAt", "Id")
+                        .IsDescending(false, true, true)
+                        .HasDatabaseName("ix_messages_conversation_id_created_at_id");
 
                     b.ToTable("messages", (string)null);
                 });
@@ -827,6 +867,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Property<string>("AvatarStorageKey")
                         .HasColumnType("text")
                         .HasColumnName("avatar_storage_key");
+
+                    b.Property<string>("BannerStorageKey")
+                        .HasColumnType("text")
+                        .HasColumnName("banner_storage_key");
 
                     b.Property<string>("Bio")
                         .HasColumnType("text")
@@ -1357,6 +1401,23 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasConstraintName("fk_connections_asp_net_users_sender_id");
                 });
 
+            modelBuilder.Entity("GlobalScout.Domain.Social.Conversation", b =>
+                {
+                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("User1Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_conversations_asp_net_users_user1_id");
+
+                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("User2Id")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("fk_conversations_asp_net_users_user2_id");
+                });
+
             modelBuilder.Entity("GlobalScout.Domain.Social.Follow", b =>
                 {
                     b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
@@ -1376,12 +1437,12 @@ namespace GlobalScout.Infrastructure.Data.Migrations
 
             modelBuilder.Entity("GlobalScout.Domain.Social.Message", b =>
                 {
-                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverId")
+                    b.HasOne("GlobalScout.Domain.Social.Conversation", null)
+                        .WithMany()
+                        .HasForeignKey("ConversationId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("fk_messages_asp_net_users_receiver_id");
+                        .HasConstraintName("fk_messages_conversations_conversation_id");
 
                     b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany("SentMessages")
@@ -1572,8 +1633,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Navigation("Profile");
 
                     b.Navigation("ReceivedConnections");
-
-                    b.Navigation("ReceivedMessages");
 
                     b.Navigation("SentConnections");
 

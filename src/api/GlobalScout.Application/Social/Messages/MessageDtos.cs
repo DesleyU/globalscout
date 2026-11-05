@@ -56,16 +56,17 @@ public sealed record ConversationPartnerDto(
     string Email,
     ConversationPartnerProfileDto? Profile);
 
+/// <param name="Id">The other user's ID (the frontend keys threads by it).</param>
 public sealed record ConversationListItemDto(
     Guid Id,
+    Guid ConversationId,
     ConversationLastMessageDto LastMessage,
     ConversationPartnerDto OtherUser,
     int UnreadCount);
 
 public sealed record GetConversationResult(
     IReadOnlyList<MessageThreadDto> Messages,
-    int Page,
-    int Limit,
+    string? NextCursor,
     bool HasMore);
 
 public sealed record GetConversationsResult(IReadOnlyList<ConversationListItemDto> Conversations);

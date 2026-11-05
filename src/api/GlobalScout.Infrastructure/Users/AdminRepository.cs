@@ -144,7 +144,14 @@ internal sealed class AdminRepository(
 
         await using var tx = await db.Database.BeginTransactionAsync(cancellationToken);
 
-        await db.Messages.Where(m => m.SenderId == targetUserId || m.ReceiverId == targetUserId)
+        var conversationIds = await db.Conversations
+            .Where(c => c.User1Id == targetUserId || c.User2Id == targetUserId)
+            .Select(c => c.Id)
+            .ToListAsync(cancellationToken);
+
+        await db.Messages.Where(m => conversationIds.Contains(m.ConversationId))
+            .ExecuteDeleteAsync(cancellationToken);
+        await db.Conversations.Where(c => conversationIds.Contains(c.Id))
             .ExecuteDeleteAsync(cancellationToken);
 
         await db.Connections.Where(c => c.SenderId == targetUserId || c.ReceiverId == targetUserId)
@@ -241,6 +248,7 @@ internal sealed class AdminRepository(
             p.FirstName,
             p.LastName,
             await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken),
+            await avatarUrls.ResolveAsync(p.BannerStorageKey, cancellationToken),
             p.Bio,
             PositionToApi(p.Position),
             p.Age,

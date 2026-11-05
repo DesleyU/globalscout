@@ -5,5 +5,5 @@ namespace GlobalScout.Application.Social.Messages.GetConversation;
 public sealed record GetConversationQuery(
     Guid UserId,
     Guid OtherUserId,
-    int Page,
+    string? Before,
     int Limit) : IQuery<GetConversationResult>;

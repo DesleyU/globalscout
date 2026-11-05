@@ -47,6 +47,10 @@ public interface IUserDirectoryRepository
 
     Task<string?> GetAvatarStorageKeyAsync(Guid userId, CancellationToken cancellationToken);
 
+    Task SetBannerStorageKeyAsync(Guid userId, string storageKey, CancellationToken cancellationToken);
+
+    Task<string?> GetBannerStorageKeyAsync(Guid userId, CancellationToken cancellationToken);
+
     /// <summary>Role and subscription tier for media upload rules (players only; basic video cap).</summary>
     Task<MediaUploadContext?> GetMediaUploadContextAsync(Guid userId, CancellationToken cancellationToken);
 }

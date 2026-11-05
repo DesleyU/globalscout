@@ -26,6 +26,22 @@ public sealed record MediaReadUrlResult(string Url, DateTimeOffset ExpiresAt);
 
 public sealed record DeleteVideoResult(string Message);
 
+public sealed record InitiatePhotoUploadResult(
+    string StorageKey,
+    string UploadUrl,
+    string HttpMethod,
+    DateTimeOffset ExpiresAt);
+
+public sealed record CompletePhotoUploadResult(
+    Guid Id,
+    string StorageKey,
+    string Title,
+    string Description,
+    string Tags,
+    DateTimeOffset CreatedAt);
+
+public sealed record DeletePhotoResult(string Message);
+
 public sealed record MediaVideoListItemDto(
     Guid Id,
     Guid UserId,

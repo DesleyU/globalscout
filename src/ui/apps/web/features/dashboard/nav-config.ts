@@ -2,6 +2,7 @@ import type { LucideIcon } from "lucide-react";
 import {
   BarChart3,
   Home,
+  Image as ImageIcon,
   LayoutDashboard,
   MessageCircle,
   Search,
@@ -31,6 +32,7 @@ export const playerNavItems: DashboardNavItem[] = [
   { href: "/profile", label: "My Profile", icon: User },
   { href: "/statistics", label: "Statistics", icon: BarChart3 },
   { href: "/videos", label: "Videos", icon: Video },
+  { href: "/photos", label: "Photos", icon: ImageIcon },
   {
     href: "/messages",
     label: "Messages",

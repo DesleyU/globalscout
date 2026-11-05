@@ -15,6 +15,12 @@ internal static class UsersRoutes
 
     public static string AvatarReadUrl => $"{Base}/{{userId:guid}}/avatar/url";
 
+    public static string BannerUploadUrl => $"{Base}/banner/upload-url";
+
+    public static string CompleteBannerUpload => $"{Base}/banner/complete";
+
+    public static string BannerReadUrl => $"{Base}/{{userId:guid}}/banner/url";
+
     public static string Search => $"{Base}/search";
 
     public static string Recommendations => $"{Base}/recommendations";

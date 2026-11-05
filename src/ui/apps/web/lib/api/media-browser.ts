@@ -1,7 +1,12 @@
 import type {
+  CompletePhotoUploadRequest,
+  CompletePhotoUploadResponse,
   CompleteVideoUploadRequest,
   CompleteVideoUploadResponse,
+  DeletePhotoResponse,
   DeleteVideoResponse,
+  InitiatePhotoUploadRequest,
+  InitiatePhotoUploadResult,
   InitiateVideoUploadRequest,
   InitiateVideoUploadResult,
   MediaReadUrlResult,
@@ -92,6 +97,28 @@ export function createBrowserMediaApi() {
 
     deleteVideo(videoId: string) {
       return deleteJson<DeleteVideoResponse>(`/api/media/video/${videoId}`);
+    },
+
+    initiatePhotoUpload(body: InitiatePhotoUploadRequest) {
+      return postJson<InitiatePhotoUploadResult>(
+        "/api/media/photo/upload-url",
+        body,
+      );
+    },
+
+    completePhotoUpload(body: CompletePhotoUploadRequest) {
+      return postJson<CompletePhotoUploadResponse>(
+        "/api/media/photo/complete",
+        body,
+      );
+    },
+
+    getMyPhotos() {
+      return getJson<MediaVideoListItem[]>("/api/media/photos");
+    },
+
+    deletePhoto(photoId: string) {
+      return deleteJson<DeletePhotoResponse>(`/api/media/photo/${photoId}`);
     },
   };
 }

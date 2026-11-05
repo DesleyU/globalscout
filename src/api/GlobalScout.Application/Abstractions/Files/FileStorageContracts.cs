@@ -23,11 +23,19 @@ public interface IFileKeyGenerator
 
     string CreateVideoKey(Guid userId, string originalFileName);
 
+    string CreatePhotoKey(Guid userId, string originalFileName);
+
+    string CreateBannerKey(Guid userId, string originalFileName);
+
     string CreateEvidenceKey(Guid userId, string originalFileName);
 
     bool IsAvatarKeyForUser(Guid userId, string storageKey);
 
     bool IsVideoKeyForUser(Guid userId, string storageKey);
+
+    bool IsPhotoKeyForUser(Guid userId, string storageKey);
+
+    bool IsBannerKeyForUser(Guid userId, string storageKey);
 
     bool IsEvidenceKeyForUser(Guid userId, string storageKey);
 }

@@ -1,7 +1,10 @@
 import type {
   CompleteAvatarUploadRequest,
   CompleteAvatarUploadResponse,
+  CompleteBannerUploadRequest,
+  CompleteBannerUploadResponse,
   InitiateAvatarUploadRequest,
+  InitiateBannerUploadRequest,
   PresignedReadUrlResult,
   PresignedUploadResult,
 } from "@globalscout/shared";
@@ -58,6 +61,26 @@ export function createBrowserUsersApi() {
     getAvatarUrl(userId: string) {
       return getJson<PresignedReadUrlResult>(
         `/api/users/${userId}/avatar/url`,
+      );
+    },
+
+    initiateBannerUpload(body: InitiateBannerUploadRequest) {
+      return postJson<PresignedUploadResult>(
+        "/api/users/banner/upload-url",
+        body,
+      );
+    },
+
+    completeBannerUpload(body: CompleteBannerUploadRequest) {
+      return postJson<CompleteBannerUploadResponse>(
+        "/api/users/banner/complete",
+        body,
+      );
+    },
+
+    getBannerUrl(userId: string) {
+      return getJson<PresignedReadUrlResult>(
+        `/api/users/${userId}/banner/url`,
       );
     },
   };

@@ -3,6 +3,7 @@ export interface UserProfileDto {
   firstName: string;
   lastName: string;
   avatar?: string | null;
+  banner?: string | null;
   bio?: string | null;
   position?: string | null;
   age?: number | null;
@@ -134,6 +135,22 @@ export interface CompleteAvatarUploadResponse {
 export interface UploadUserAvatarResult {
   message: string;
   avatar: string;
+  profile: UserProfileDto;
+}
+
+export interface InitiateBannerUploadRequest {
+  fileName: string;
+  contentType: string;
+  contentLength: number;
+}
+
+export interface CompleteBannerUploadRequest {
+  storageKey: string;
+}
+
+export interface CompleteBannerUploadResponse {
+  message: string;
+  storageKey: string;
   profile: UserProfileDto;
 }
 

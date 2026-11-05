@@ -8,7 +8,7 @@ internal sealed class EmailOptions
 
     public string Region { get; init; } = "us-east-1";
 
-    public string FromAddress { get; init; } = "no-reply@globalscout.eu";
+    public string FromAddress { get; init; } = "no-reply@futboligy.com";
 
     public string? EndpointUrl { get; init; }
 

@@ -12,4 +12,7 @@ public static class MessageErrors
 
     public static readonly Error ReceiverNotFound =
         Error.NotFound("Messages.UserNotFound", "User not found.");
+
+    public static readonly Error InvalidCursor =
+        Error.Validation("Messages.InvalidCursor", "Invalid pagination cursor.");
 }

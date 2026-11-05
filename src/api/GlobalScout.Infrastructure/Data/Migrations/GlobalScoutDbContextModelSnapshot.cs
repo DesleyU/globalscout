@@ -593,23 +593,12 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<Guid>("ReceiverId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("receiver_id");
-
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uuid")
                         .HasColumnName("sender_id");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
                         .HasName("pk_messages");
-
-                    b.HasIndex("ReceiverId")
-                        .HasDatabaseName("ix_messages_receiver_id");
 
                     b.HasIndex("SenderId")
                         .HasDatabaseName("ix_messages_sender_id");
@@ -875,6 +864,10 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Property<string>("AvatarStorageKey")
                         .HasColumnType("text")
                         .HasColumnName("avatar_storage_key");
+
+                    b.Property<string>("BannerStorageKey")
+                        .HasColumnType("text")
+                        .HasColumnName("banner_storage_key");
 
                     b.Property<string>("Bio")
                         .HasColumnType("text")
@@ -1449,13 +1442,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasConstraintName("fk_messages_conversations_conversation_id");
 
                     b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_messages_asp_net_users_receiver_id");
-
-                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany("SentMessages")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1644,8 +1630,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Navigation("Profile");
 
                     b.Navigation("ReceivedConnections");
-
-                    b.Navigation("ReceivedMessages");
 
                     b.Navigation("SentConnections");
 

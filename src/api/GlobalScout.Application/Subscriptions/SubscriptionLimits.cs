@@ -8,6 +8,9 @@ public static class SubscriptionLimits
     /// <summary>Aligned with legacy <c>subscriptionService.getBasicLimits().maxVideos</c>.</summary>
     public const int BasicMaxVideos = 1;
 
+    /// <summary>Independent of the video cap; gallery photos have their own tier limit.</summary>
+    public const int BasicMaxPhotos = 3;
+
     /// <summary>Fields visible on another user's stats when that user is BASIC (legacy <c>statsFields</c>).</summary>
     public static readonly string[] BasicTierVisibleStatKeys =
     [

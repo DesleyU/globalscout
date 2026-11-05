@@ -12,6 +12,8 @@ public sealed class Profile
 
     public string? AvatarStorageKey { get; set; }
 
+    public string? BannerStorageKey { get; set; }
+
     public string? Bio { get; set; }
 
     public Position? Position { get; set; }

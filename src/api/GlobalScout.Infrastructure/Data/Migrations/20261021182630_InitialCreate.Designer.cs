@@ -13,8 +13,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GlobalScout.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(GlobalScoutDbContext))]
-    [Migration("20261005125141_AddConversations")]
-    partial class AddConversations
+    [Migration("20261021182630_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -516,9 +516,17 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("user1_id");
 
+                    b.Property<DateTimeOffset?>("User1LastReadAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("user1_last_read_at");
+
                     b.Property<Guid>("User2Id")
                         .HasColumnType("uuid")
                         .HasColumnName("user2_id");
+
+                    b.Property<DateTimeOffset?>("User2LastReadAt")
+                        .HasColumnType("timestamp with time zone")
+                        .HasColumnName("user2_last_read_at");
 
                     b.HasKey("Id")
                         .HasName("pk_conversations");
@@ -588,27 +596,12 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasColumnType("timestamp with time zone")
                         .HasColumnName("created_at");
 
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("boolean")
-                        .HasColumnName("is_read");
-
-                    b.Property<Guid>("ReceiverId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("receiver_id");
-
                     b.Property<Guid>("SenderId")
                         .HasColumnType("uuid")
                         .HasColumnName("sender_id");
 
-                    b.Property<DateTimeOffset>("UpdatedAt")
-                        .HasColumnType("timestamp with time zone")
-                        .HasColumnName("updated_at");
-
                     b.HasKey("Id")
                         .HasName("pk_messages");
-
-                    b.HasIndex("ReceiverId")
-                        .HasDatabaseName("ix_messages_receiver_id");
 
                     b.HasIndex("SenderId")
                         .HasDatabaseName("ix_messages_sender_id");
@@ -1448,13 +1441,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                         .HasConstraintName("fk_messages_conversations_conversation_id");
 
                     b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
-                        .WithMany("ReceivedMessages")
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("fk_messages_asp_net_users_receiver_id");
-
-                    b.HasOne("GlobalScout.Infrastructure.Identity.ApplicationUser", null)
                         .WithMany("SentMessages")
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -1643,8 +1629,6 @@ namespace GlobalScout.Infrastructure.Data.Migrations
                     b.Navigation("Profile");
 
                     b.Navigation("ReceivedConnections");
-
-                    b.Navigation("ReceivedMessages");
 
                     b.Navigation("SentConnections");
 

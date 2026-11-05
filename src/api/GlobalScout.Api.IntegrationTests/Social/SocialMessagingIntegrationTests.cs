@@ -92,7 +92,7 @@ public sealed class SocialMessagingIntegrationTests
     /// is the Global Scout user ID.
     /// </summary>
     [Fact]
-    public async Task SendMessage_PushesReceiveMessage_ToRecipientHubConnection()
+    public async Task SendMessage_PushesMessageCreated_ToRecipientHubConnection()
     {
         var factory = _fixture.Factory;
         var (_, senderToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
@@ -104,18 +104,10 @@ public sealed class SocialMessagingIntegrationTests
         using var accept = await SocialIntegrationTestHelpers.RespondToConnectionAsync(receiver, connectionId, "accept", Ct);
         Assert.Equal(HttpStatusCode.OK, accept.StatusCode);
 
-        await using var hub = new HubConnectionBuilder()
-            .WithUrl(
-                $"{factory.Server.BaseAddress}hubs/messages?access_token={Uri.EscapeDataString(receiverToken)}",
-                options =>
-                {
-                    options.Transports = HttpTransportType.LongPolling;
-                    options.HttpMessageHandlerFactory = _ => factory.Server.CreateHandler();
-                })
-            .Build();
+        await using var hub = await ConnectHubAsync(factory, receiverToken);
 
         var received = new TaskCompletionSource<JsonElement>(TaskCreationOptions.RunContinuationsAsynchronously);
-        hub.On<JsonElement>("ReceiveMessage", message => received.TrySetResult(message));
+        hub.On<JsonElement>("MessageCreated", message => received.TrySetResult(message));
         await hub.StartAsync(Ct);
 
         using var send = await sender.PostAsJsonAsync(
@@ -128,4 +120,72 @@ public sealed class SocialMessagingIntegrationTests
         Assert.Equal(receiverId, pushed.GetProperty("receiverId").GetGuid());
         Assert.Equal("Hello realtime", pushed.GetProperty("content").GetString());
     }
+
+    /// <summary>The sender's other open tabs/connections must also see their own just-sent message.</summary>
+    [Fact]
+    public async Task SendMessage_PushesMessageCreated_ToSendersOtherConnection()
+    {
+        var factory = _fixture.Factory;
+        var (senderId, senderToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (receiverId, receiverToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+
+        var sender = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, senderToken);
+        var connectionId = await SocialIntegrationTestHelpers.SendConnectionRequestAsync(sender, receiverId, Ct);
+        var receiver = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, receiverToken);
+        using var accept = await SocialIntegrationTestHelpers.RespondToConnectionAsync(receiver, connectionId, "accept", Ct);
+        Assert.Equal(HttpStatusCode.OK, accept.StatusCode);
+
+        await using var senderHub = await ConnectHubAsync(factory, senderToken);
+
+        var received = new TaskCompletionSource<JsonElement>(TaskCreationOptions.RunContinuationsAsynchronously);
+        senderHub.On<JsonElement>("MessageCreated", message => received.TrySetResult(message));
+        await senderHub.StartAsync(Ct);
+
+        using var send = await sender.PostAsJsonAsync(
+            "/api/messages",
+            new { receiverId, content = "Echo to self" },
+            Ct);
+        Assert.Equal(HttpStatusCode.Created, send.StatusCode);
+
+        var pushed = await received.Task.WaitAsync(TimeSpan.FromSeconds(10), Ct);
+        Assert.Equal(senderId, pushed.GetProperty("senderId").GetGuid());
+        Assert.Equal("Echo to self", pushed.GetProperty("content").GetString());
+    }
+
+    [Fact]
+    public async Task SendMessage_Failure_DoesNotPushMessageCreated()
+    {
+        var factory = _fixture.Factory;
+        var (_, senderToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+        var (receiverId, receiverToken) = await SocialIntegrationTestHelpers.RegisterClubUserAsync(factory, Ct);
+
+        // No accepted connection between sender and receiver, so the send is rejected before any push.
+        var sender = SocialIntegrationTestHelpers.CreateAuthenticatedClient(factory, senderToken);
+
+        await using var hub = await ConnectHubAsync(factory, receiverToken);
+
+        var received = new TaskCompletionSource<JsonElement>(TaskCreationOptions.RunContinuationsAsynchronously);
+        hub.On<JsonElement>("MessageCreated", message => received.TrySetResult(message));
+        await hub.StartAsync(Ct);
+
+        using var send = await sender.PostAsJsonAsync(
+            "/api/messages",
+            new { receiverId, content = "Should not arrive" },
+            Ct);
+        Assert.Equal(HttpStatusCode.Forbidden, send.StatusCode);
+
+        var won = await Task.WhenAny(received.Task, Task.Delay(TimeSpan.FromSeconds(2), Ct));
+        Assert.NotEqual(received.Task, won);
+    }
+
+    private static async Task<HubConnection> ConnectHubAsync(WebApplicationFactory<Program> factory, string accessToken) =>
+        new HubConnectionBuilder()
+            .WithUrl(
+                $"{factory.Server.BaseAddress}hubs/messages?access_token={Uri.EscapeDataString(accessToken)}",
+                options =>
+                {
+                    options.Transports = HttpTransportType.LongPolling;
+                    options.HttpMessageHandlerFactory = _ => factory.Server.CreateHandler();
+                })
+            .Build();
 }

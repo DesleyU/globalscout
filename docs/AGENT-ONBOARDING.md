@@ -108,12 +108,12 @@ GlobalScout production runs on AWS: CloudFront → ALB → single EC2 host runni
 
 | Invariant | Value |
 |-----------|--------|
-| Frontend URLs | `https://globalscout.eu`, `https://www.globalscout.eu` |
-| API URL | `https://api.globalscout.eu/api` — not relative `/api` from the frontend domain |
-| EC2 Compose services | `ui`, `api`, `postgres`, `migrator` |
-| UI container | nginx + Next.js standalone SPA |
+| Frontend URLs | `https://futboligy.com`, `https://www.futboligy.com` |
+| API URL | `https://api.futboligy.com/api` — not relative `/api` from the frontend domain |
+| EC2 Compose services | `proxy` (nginx, host routing), `ui`, `api`, `postgres`, `migrator` |
+| UI container | Next.js standalone server (nginx is a separate `proxy` service) |
 | Media | Private S3 with presigned upload/read URLs |
-| `media.globalscout.eu` CloudFront | Future/planned unless docs and code say otherwise |
+| `media.futboligy.com` CloudFront | Future/planned unless docs and code say otherwise |
 
 **Before changing deployment, Docker, nginx, frontend API URL handling, CORS, object storage/media, or AWS documentation**, read `docs/AWS-infrastructure_setup_documentation.md`.
 
@@ -149,7 +149,7 @@ Read the relevant doc **before** touching that area. These are the best domain-s
 | Doc | Purpose |
 |-----|---------|
 | `docs/AWS-infrastructure_setup_documentation.md` | **Primary** production infra reference: Route 53, CloudFront, ALB, EC2, Compose, S3, env vars, troubleshooting (~900+ lines). |
-| `docs/AWS-GITHUB-DEPLOYMENT.md` | CI/CD: ECR images (`ui`, `api`, `migrator`), GitHub Actions deploy workflow, EC2 SSH deploy. |
+| `docs/AWS-GITHUB-DEPLOYMENT.md` | CI/CD: ECR images (`ui`, `api`, `migrator`), GitHub Actions deploy workflow (SSM Run Command), new-account build runbook. |
 | `docs/useful commands.txt` | Operator cheat sheet: prod DB shell, Compose paths, deploy SCP/SSH, routing curls. |
 
 ### Feature / domain flows
@@ -160,6 +160,7 @@ Read the relevant doc **before** touching that area. These are the best domain-s
 | `docs/PLAYER-STATISTICS.md` | Stats refresh from API-Football, JSONB storage, cooldown, manual entry, tier masking. |
 | `docs/BILLING-FLOW.md` | Stripe checkout → webhook → entitlements (`account_type`, `subscriptions`). |
 | `docs/STRIPE-BILLING.md` | Local Stripe dev: secrets, CLI webhook forwarding, test setup. |
+| `docs/MESSAGING.md` | 1:1 conversations model, read state, cursor pagination, `MessageCreated` SignalR push. |
 
 ### UI / design
 
@@ -312,6 +313,7 @@ These live under the user's Cursor skills directory, not in the GlobalScout repo
 | Billing | `Application/Billing/`, `Infrastructure/Billing/`, `docs/BILLING-FLOW.md` |
 | Reference data | `Application/ReferenceData/`, `docs/REFERENCE-DATA.md` |
 | Statistics | `Application/Statistics/`, `docs/PLAYER-STATISTICS.md` |
+| Messaging | `Application/Social/Messages/`, `Infrastructure/Social/Messages/`, `docs/MESSAGING.md` |
 
 ---
 
@@ -338,7 +340,7 @@ Ignore root README.md (stale Node/Express docs).
 Before coding:
 - Backend (src/api/**/*.cs): follow .cursor/rules/globalscout-feature-first-architecture.mdc
 - Deploy/CORS/Docker/nginx: follow .cursor/rules/aws-production-architecture.mdc + docs/AWS-infrastructure_setup_documentation.md
-- Domain work: read the matching doc in docs/ (REFERENCE-DATA.md, PLAYER-STATISTICS.md, BILLING-FLOW.md, etc.)
+- Domain work: read the matching doc in docs/ (REFERENCE-DATA.md, PLAYER-STATISTICS.md, BILLING-FLOW.md, MESSAGING.md, etc.)
 - Next.js: read src/ui/apps/web/AGENTS.md — this Next version may differ from training data
 
 Local dev: Aspire AppHost (src/api/GlobalScout.AppHost/) or docker compose up.

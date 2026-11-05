@@ -286,6 +286,55 @@ internal static class SocialIntegrationTestHelpers
             cancellationToken);
     }
 
+    public static async Task<HttpResponseMessage> UploadPhotoAsync(
+        HttpClient client,
+        byte[] fileBytes,
+        string fileName,
+        string contentType,
+        CancellationToken cancellationToken)
+    {
+        using var initiate = await client.PostAsJsonAsync(
+            "/api/media/photo/upload-url",
+            new
+            {
+                fileName,
+                contentType,
+                contentLength = fileBytes.LongLength
+            },
+            cancellationToken);
+
+        if (!initiate.IsSuccessStatusCode)
+        {
+            return await CloneResponseAsync(initiate, cancellationToken);
+        }
+
+        await using var initiateStream = await initiate.Content.ReadAsStreamAsync(cancellationToken);
+        var initiateDoc = await JsonDocument.ParseAsync(initiateStream, default, cancellationToken);
+        var storageKey = initiateDoc.RootElement.GetProperty("storageKey").GetString()!;
+        var uploadUrl = initiateDoc.RootElement.GetProperty("uploadUrl").GetString()!;
+
+        using (var s3 = new HttpClient())
+        using (var uploadContent = new ByteArrayContent(fileBytes))
+        {
+            uploadContent.Headers.ContentType = new(contentType);
+            using var upload = await s3.PutAsync(uploadUrl, uploadContent, cancellationToken);
+            upload.EnsureSuccessStatusCode();
+        }
+
+        return await client.PostAsJsonAsync(
+            "/api/media/photo/complete",
+            new
+            {
+                storageKey,
+                fileName,
+                contentType,
+                title = "Integration title",
+                description = "Integration description",
+                tags = ""
+            },
+            cancellationToken);
+    }
+
     private static async Task<HttpResponseMessage> CloneResponseAsync(
         HttpResponseMessage response,
         CancellationToken cancellationToken)

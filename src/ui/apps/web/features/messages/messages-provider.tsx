@@ -44,7 +44,13 @@ async function fetchConversations(): Promise<ConversationListItem[]> {
   return data.conversations;
 }
 
-export function MessagesProvider({ children }: { children: React.ReactNode }) {
+export function MessagesProvider({
+  userId,
+  children,
+}: {
+  userId: string;
+  children: React.ReactNode;
+}) {
   const [conversations, setConversations] = useState<ConversationListItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [lastReceivedMessage, setLastReceivedMessage] = useState<MessageDetail | null>(null);
@@ -72,14 +78,17 @@ export function MessagesProvider({ children }: { children: React.ReactNode }) {
       .withAutomaticReconnect()
       .build();
 
-    connection.on("ReceiveMessage", (message: MessageDetail) => {
+    connection.on("MessageCreated", (message: MessageDetail) => {
       setLastReceivedMessage(message);
       setConversations((prev) => {
-        const otherUserId = message.senderId;
+        const isMine = message.senderId === userId;
+        // The push goes to both participants; the other side of this conversation is whichever
+        // one isn't us.
+        const otherUserId = isMine ? message.receiverId : message.senderId;
         const existing = prev.find((c) => c.otherUser.id === otherUserId);
 
         if (!existing) {
-          // First message from a new conversation partner - refetch to pick up the new row
+          // First message with a new conversation partner - refetch to pick up the new row
           // (constructing it client-side would need data this push doesn't carry, e.g. role).
           void refetchConversations();
           return prev;
@@ -95,7 +104,8 @@ export function MessagesProvider({ children }: { children: React.ReactNode }) {
             createdAt: message.createdAt,
             isRead: message.isRead,
           },
-          unreadCount: existing.unreadCount + 1,
+          // Our own just-sent message bumps the preview/order but was never unread.
+          unreadCount: isMine ? existing.unreadCount : existing.unreadCount + 1,
         };
 
         return [updated, ...prev.filter((c) => c.otherUser.id !== otherUserId)];
@@ -110,7 +120,7 @@ export function MessagesProvider({ children }: { children: React.ReactNode }) {
       connectionRef.current = null;
       void connection.stop();
     };
-  }, [refetchConversations]);
+  }, [refetchConversations, userId]);
 
   const markConversationReadLocally = useCallback((otherUserId: string) => {
     setConversations((prev) =>

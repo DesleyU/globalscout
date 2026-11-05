@@ -1,18 +1,18 @@
 ---
-description: GlobalScout AWS production architecture context
+description: Futboligy (GlobalScout codebase) AWS production architecture context
 alwaysApply: true
 ---
 
 # AWS Production Architecture
 
-GlobalScout production runs on AWS with CloudFront, an Application Load Balancer, and a single EC2 host running Docker Compose.
+Production runs on AWS with CloudFront, an Application Load Balancer, and a single EC2 host running Docker Compose.
 
 Before changing deployment, Docker, nginx, frontend API URL handling, CORS, object storage/media, or AWS documentation, read `docs/AWS-infrastructure_setup_documentation.md`.
 
 Key invariants:
-- Frontend public URLs are `https://globalscout.eu` and `https://www.globalscout.eu`.
-- API traffic must use `https://api.globalscout.eu/api`, not relative `/api` from the frontend domain.
-- The UI image contains nginx and the frontend SPA.
-- EC2 Compose runs `ui`, `api`, `postgres`, and `migrator`.
-- Production media uses private S3 with presigned upload/read URLs.
-- `media.globalscout.eu` CloudFront delivery is future/planned unless the docs and code say otherwise.
+- Frontend public URLs are `https://futboligy.com` and `https://www.futboligy.com`.
+- API traffic must use `https://api.futboligy.com/api`, not relative `/api` from the frontend domain.
+- EC2 Compose runs `proxy` (nginx, routes `Host: api.futboligy.com` to the API, everything else to the UI), `ui` (Next.js standalone), `api`, `postgres`, and `migrator`.
+- The EC2 instance has no inbound SSH; deploys and shell access go through AWS SSM.
+- Production media uses private S3 (`futboligy-prod-media`) with presigned upload/read URLs.
+- `media.futboligy.com` CloudFront delivery is future/planned unless the docs and code say otherwise.

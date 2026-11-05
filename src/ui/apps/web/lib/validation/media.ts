@@ -2,7 +2,10 @@ import { z } from "zod";
 
 export const MAX_VIDEO_BYTES = 500 * 1024 * 1024;
 export const MAX_AVATAR_BYTES = 5 * 1024 * 1024;
+export const MAX_PHOTO_BYTES = 15 * 1024 * 1024;
+export const MAX_BANNER_BYTES = 10 * 1024 * 1024;
 export const BASIC_VIDEO_LIMIT = 1;
+export const BASIC_PHOTO_LIMIT = 3;
 
 export const VIDEO_EXTENSIONS = [".mp4", ".mov", ".avi"] as const;
 
@@ -24,6 +27,19 @@ export const AVATAR_CONTENT_TYPES = [
   "image/webp",
 ] as const;
 
+export const PHOTO_EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"] as const;
+
+export const PHOTO_CONTENT_TYPES = [
+  "image/jpeg",
+  "image/jpg",
+  "image/png",
+  "image/webp",
+] as const;
+
+export const BANNER_EXTENSIONS = AVATAR_EXTENSIONS;
+
+export const BANNER_CONTENT_TYPES = AVATAR_CONTENT_TYPES;
+
 export const initiateUploadBodySchema = z.object({
   fileName: z.string().min(1),
   contentType: z.string().min(1),
@@ -43,6 +59,19 @@ export const completeAvatarUploadBodySchema = z.object({
   storageKey: z.string().min(1),
 });
 
+export const completePhotoUploadBodySchema = z.object({
+  storageKey: z.string().min(1),
+  fileName: z.string().min(1),
+  contentType: z.string().min(1),
+  title: z.string().optional().nullable(),
+  description: z.string().optional().nullable(),
+  tags: z.string().optional().nullable(),
+});
+
+export const completeBannerUploadBodySchema = z.object({
+  storageKey: z.string().min(1),
+});
+
 export const videoUploadFormSchema = z.object({
   title: z.string().trim().optional(),
   description: z.string().trim().optional(),
@@ -50,6 +79,10 @@ export const videoUploadFormSchema = z.object({
 });
 
 export type VideoUploadFormValues = z.infer<typeof videoUploadFormSchema>;
+
+export const photoUploadFormSchema = videoUploadFormSchema;
+
+export type PhotoUploadFormValues = z.infer<typeof photoUploadFormSchema>;
 
 function getFileExtension(fileName: string): string {
   const index = fileName.lastIndexOf(".");
@@ -97,6 +130,48 @@ export function validateAvatarFile(file: File): string | null {
 
   if (file.size > MAX_AVATAR_BYTES) {
     return "Avatar must be 5 MB or smaller.";
+  }
+
+  return null;
+}
+
+export function validatePhotoFile(file: File): string | null {
+  const extension = getFileExtension(file.name);
+  if (!PHOTO_EXTENSIONS.includes(extension as (typeof PHOTO_EXTENSIONS)[number])) {
+    return "Only JPG, PNG, or WebP photos are allowed.";
+  }
+
+  const contentType = file.type.toLowerCase();
+  if (
+    contentType &&
+    !PHOTO_CONTENT_TYPES.includes(contentType as (typeof PHOTO_CONTENT_TYPES)[number])
+  ) {
+    return "Invalid photo type. Only JPG, PNG, or WebP photos are allowed.";
+  }
+
+  if (file.size > MAX_PHOTO_BYTES) {
+    return "Photo must be 15 MB or smaller.";
+  }
+
+  return null;
+}
+
+export function validateBannerFile(file: File): string | null {
+  const extension = getFileExtension(file.name);
+  if (!BANNER_EXTENSIONS.includes(extension as (typeof BANNER_EXTENSIONS)[number])) {
+    return "Banner must be a JPG, PNG, GIF, or WebP image.";
+  }
+
+  const contentType = file.type.toLowerCase();
+  if (
+    contentType &&
+    !BANNER_CONTENT_TYPES.includes(contentType as (typeof BANNER_CONTENT_TYPES)[number])
+  ) {
+    return "Banner must be a JPG, PNG, GIF, or WebP image.";
+  }
+
+  if (file.size > MAX_BANNER_BYTES) {
+    return "Banner must be 10 MB or smaller.";
   }
 
   return null;

@@ -11,7 +11,7 @@ public sealed class ExternalAuthOptions
 
     /// <summary>
     /// Public URL of the frontend (no trailing slash) the OAuth2 callback's self-submitting form_post
-    /// page targets - e.g. <c>https://globalscout.eu</c> in production, per Constitution Principle V.
+    /// page targets - e.g. <c>https://futboligy.com</c> in production, per Constitution Principle V.
     /// Shares the same underlying value as <c>Stripe:PublicAppBaseUrl</c> (both are "the frontend's
     /// public origin"), wired independently so this feature doesn't take a dependency on Billing config.
     /// </summary>

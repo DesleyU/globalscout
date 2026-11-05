@@ -27,10 +27,8 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             Id = Guid.NewGuid(),
             ConversationId = conversationId,
             SenderId = senderId,
-            ReceiverId = receiverId,
             Content = content,
-            CreatedAt = now,
-            UpdatedAt = now
+            CreatedAt = now
         };
 
         db.Messages.Add(entity);
@@ -43,9 +41,9 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             .FirstAsync(u => u.Id == loaded.SenderId, cancellationToken);
         var receiver = await db.Users.AsNoTracking()
             .Include(u => u.Profile)
-            .FirstAsync(u => u.Id == loaded.ReceiverId, cancellationToken);
+            .FirstAsync(u => u.Id == receiverId, cancellationToken);
 
-        return await MapDetailAsync(loaded, sender, receiver, cancellationToken);
+        return await MapDetailAsync(loaded, receiverId, sender, receiver, cancellationToken);
     }
 
     /// <summary>
@@ -75,36 +73,57 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
         return ids[0];
     }
 
-    public async Task<(IReadOnlyList<MessageThreadDto> Messages, bool HasMore)> GetConversationPageAsync(
+    public async Task<(IReadOnlyList<MessageThreadDto> Messages, string? NextCursor, bool HasMore)> GetConversationPageAsync(
         Guid userId,
         Guid otherUserId,
-        int page,
+        MessageCursor? before,
         int limit,
         CancellationToken cancellationToken)
     {
-        int skip = (page - 1) * limit;
+        (Guid user1Id, Guid user2Id) = Conversation.OrderPair(userId, otherUserId);
 
-        var query = db.Messages.AsNoTracking()
-            .Where(m =>
-                (m.SenderId == userId && m.ReceiverId == otherUserId)
-                || (m.SenderId == otherUserId && m.ReceiverId == userId));
+        Conversation? conversation = await db.Conversations.AsNoTracking()
+            .FirstOrDefaultAsync(c => c.User1Id == user1Id && c.User2Id == user2Id, cancellationToken);
 
+        if (conversation is null)
+        {
+            return ([], null, false);
+        }
+
+        var query = db.Messages.AsNoTracking().Where(m => m.ConversationId == conversation.Id);
+
+        if (before is { } cursor)
+        {
+            query = query.Where(m =>
+                m.CreatedAt < cursor.CreatedAt
+                || (m.CreatedAt == cursor.CreatedAt && m.Id < cursor.Id));
+        }
+
+        // Fetch one extra row to know whether another page follows without a second query.
         List<Message> batch = await query
             .OrderByDescending(m => m.CreatedAt)
-            .Skip(skip)
-            .Take(limit)
+            .ThenByDescending(m => m.Id)
+            .Take(limit + 1)
             .ToListAsync(cancellationToken);
 
-        bool hasMore = batch.Count == limit;
-        batch.Reverse();
+        bool hasMore = batch.Count > limit;
+        if (hasMore)
+        {
+            batch.RemoveAt(batch.Count - 1);
+        }
 
         if (batch.Count == 0)
         {
-            return ([], false);
+            return ([], null, false);
         }
 
-        Conversation conversation = await db.Conversations.AsNoTracking()
-            .FirstAsync(c => c.Id == batch[0].ConversationId, cancellationToken);
+        // batch is still newest-first here, so the last element is the oldest row on this page -
+        // exactly the boundary the next page's `before` cursor needs.
+        string? nextCursor = hasMore
+            ? new MessageCursor(batch[^1].CreatedAt, batch[^1].Id).Encode()
+            : null;
+
+        batch.Reverse();
 
         var senderIds = batch.Select(m => m.SenderId).Distinct().ToList();
         var users = await db.Users.AsNoTracking()
@@ -118,87 +137,101 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
             messages.Add(await MapThreadAsync(message, conversation, users, cancellationToken));
         }
 
-        return (messages, hasMore);
+        return (messages, nextCursor, hasMore);
     }
 
     public async Task<IReadOnlyList<ConversationListItemDto>> GetConversationsAsync(
         Guid userId,
         CancellationToken cancellationToken)
     {
-        var latestPerOther = await (
-            from m in db.Messages.AsNoTracking()
-            where m.SenderId == userId || m.ReceiverId == userId
-            group m by m.SenderId == userId ? m.ReceiverId : m.SenderId
-            into g
-            select g.OrderByDescending(x => x.CreatedAt).First()
-        ).ToListAsync(cancellationToken);
+        // Query 1: the caller's conversations, each with its latest message ID and the caller's unread count.
+        // "Mine" vs "other" side is picked per row; the subqueries use the (conversation_id, created_at, id) index.
+        // The latest message is selected as a scalar ID on purpose: projecting the whole row makes EF emit a
+        // ROW_NUMBER() window over the entire messages table instead of a per-conversation LIMIT 1 lookup.
+        var rows = await db.Conversations.AsNoTracking()
+            .Where(c => c.User1Id == userId || c.User2Id == userId)
+            .OrderByDescending(c => c.LastMessageAt)
+            .Select(c => new
+            {
+                ConversationId = c.Id,
+                OtherUserId = c.User1Id == userId ? c.User2Id : c.User1Id,
+                MyReadAt = c.User1Id == userId ? c.User1LastReadAt : c.User2LastReadAt,
+                OtherReadAt = c.User1Id == userId ? c.User2LastReadAt : c.User1LastReadAt,
+                LastMessageId = db.Messages
+                    .Where(m => m.ConversationId == c.Id)
+                    .OrderByDescending(m => m.CreatedAt)
+                    .ThenByDescending(m => m.Id)
+                    .Select(m => (Guid?)m.Id)
+                    .FirstOrDefault(),
+                UnreadCount = db.Messages.Count(m =>
+                    m.ConversationId == c.Id
+                    && m.SenderId != userId
+                    && ((c.User1Id == userId ? c.User1LastReadAt : c.User2LastReadAt) == null
+                        || m.CreatedAt > (c.User1Id == userId ? c.User1LastReadAt : c.User2LastReadAt)))
+            })
+            .ToListAsync(cancellationToken);
 
-        var ordered = latestPerOther.OrderByDescending(m => m.CreatedAt).ToList();
-        if (ordered.Count == 0)
+        if (rows.Count == 0)
         {
             return [];
         }
 
-        var otherIds = ordered
-            .Select(m => m.SenderId == userId ? m.ReceiverId : m.SenderId)
-            .Distinct()
-            .ToList();
+        // Query 2: those latest messages, by primary key.
+        var lastMessageIds = rows.Where(r => r.LastMessageId != null).Select(r => r.LastMessageId!.Value).ToList();
+        var lastMessages = await db.Messages.AsNoTracking()
+            .Where(m => lastMessageIds.Contains(m.Id))
+            .Select(m => new { m.Id, m.Content, m.SenderId, m.CreatedAt })
+            .ToDictionaryAsync(m => m.Id, cancellationToken);
 
-        var users = await db.Users.AsNoTracking()
+        // Query 3: the other participants, only the columns the inbox shows.
+        var otherIds = rows.Select(r => r.OtherUserId).ToList();
+        var partners = await db.Users.AsNoTracking()
             .Where(u => otherIds.Contains(u.Id))
-            .Include(u => u.Profile)
+            .Select(u => new
+            {
+                u.Id,
+                u.Email,
+                Profile = u.Profile == null
+                    ? null
+                    : new { u.Profile.FirstName, u.Profile.LastName, u.Profile.AvatarStorageKey }
+            })
             .ToDictionaryAsync(u => u.Id, cancellationToken);
 
-        var conversations = await db.Conversations.AsNoTracking()
-            .Where(c => c.User1Id == userId || c.User2Id == userId)
-            .ToDictionaryAsync(c => c.Id, cancellationToken);
-
-        // Unread = received after the caller's read position on that conversation.
-        var unreadCounts = await (
-            from m in db.Messages.AsNoTracking()
-            join c in db.Conversations on m.ConversationId equals c.Id
-            let readAt = c.User1Id == userId ? c.User1LastReadAt : c.User2LastReadAt
-            where m.ReceiverId == userId && (readAt == null || m.CreatedAt > readAt)
-            group m by m.SenderId
-            into g
-            select new { OtherId = g.Key, Count = g.Count() }
-        ).ToListAsync(cancellationToken);
-
-        var unreadDict = unreadCounts.ToDictionary(x => x.OtherId, x => x.Count);
-
-        var result = new List<ConversationListItemDto>(ordered.Count);
-        foreach (Message m in ordered)
+        var result = new List<ConversationListItemDto>(rows.Count);
+        foreach (var row in rows)
         {
-            var otherId = m.SenderId == userId ? m.ReceiverId : m.SenderId;
-            if (!users.TryGetValue(otherId, out ApplicationUser? otherUser))
+            // A conversation always has a message, and a missing user (deleted account) is left out.
+            if (row.LastMessageId is not { } lastId
+                || !lastMessages.TryGetValue(lastId, out var last)
+                || !partners.TryGetValue(row.OtherUserId, out var partner))
             {
                 continue;
             }
 
-            var last = new ConversationLastMessageDto(
-                m.Id,
-                m.Content,
-                m.SenderId,
-                m.ReceiverId,
-                m.CreatedAt,
-                conversations[m.ConversationId].IsReadBy(m.ReceiverId, m.CreatedAt));
-
-            var profile = otherUser.Profile;
-            var partner = new ConversationPartnerDto(
-                otherUser.Id,
-                otherUser.Email ?? string.Empty,
-                profile is null
-                    ? null
-                    : new ConversationPartnerProfileDto(
-                        profile.FirstName,
-                        profile.LastName,
-                        await avatarUrls.ResolveAsync(profile.AvatarStorageKey, cancellationToken)));
+            bool sentByMe = last.SenderId == userId;
+            Guid receiverId = sentByMe ? row.OtherUserId : userId;
+            DateTimeOffset? receiverReadAt = sentByMe ? row.OtherReadAt : row.MyReadAt;
 
             result.Add(new ConversationListItemDto(
-                otherId,
-                last,
-                partner,
-                unreadDict.GetValueOrDefault(otherId)));
+                row.OtherUserId,
+                row.ConversationId,
+                new ConversationLastMessageDto(
+                    last.Id,
+                    last.Content,
+                    last.SenderId,
+                    receiverId,
+                    last.CreatedAt,
+                    receiverReadAt is { } readAt && last.CreatedAt <= readAt),
+                new ConversationPartnerDto(
+                    partner.Id,
+                    partner.Email ?? string.Empty,
+                    partner.Profile is null
+                        ? null
+                        : new ConversationPartnerProfileDto(
+                            partner.Profile.FirstName,
+                            partner.Profile.LastName,
+                            await avatarUrls.ResolveAsync(partner.Profile.AvatarStorageKey, cancellationToken))),
+                row.UnreadCount));
         }
 
         return result;
@@ -247,6 +280,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
 
     private async Task<MessageDetailDto> MapDetailAsync(
         Message m,
+        Guid receiverId,
         ApplicationUser sender,
         ApplicationUser receiver,
         CancellationToken cancellationToken)
@@ -257,7 +291,7 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
         return new MessageDetailDto(
             m.Id,
             m.SenderId,
-            m.ReceiverId,
+            receiverId,
             m.Content,
             m.CreatedAt,
             // Only used for a just-sent message, which the receiver can't have read yet.
@@ -299,13 +333,16 @@ internal sealed class MessageRepository(GlobalScoutDbContext db, IAvatarUrlResol
                     p.LastName,
                     await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken)));
 
+        // Derived from the conversation, not the Message.ReceiverId column, which step 7 removes.
+        Guid receiverId = m.SenderId == conversation.User1Id ? conversation.User2Id : conversation.User1Id;
+
         return new MessageThreadDto(
             m.Id,
             m.SenderId,
-            m.ReceiverId,
+            receiverId,
             m.Content,
             m.CreatedAt,
-            conversation.IsReadBy(m.ReceiverId, m.CreatedAt),
+            conversation.IsReadBy(receiverId, m.CreatedAt),
             senderDto);
     }
 }

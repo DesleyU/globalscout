@@ -10,13 +10,13 @@ type RouteContext = {
 export async function GET(request: Request, context: RouteContext) {
   const { userId } = await context.params;
   const searchParams = new URL(request.url).searchParams;
-  const page = Number(searchParams.get("page"));
+  const before = searchParams.get("before");
   const limit = Number(searchParams.get("limit"));
 
   try {
     const client = await createServerApiClient();
     const result = await createMessagesApi(client).getConversation(userId, {
-      page: Number.isFinite(page) && page > 0 ? page : undefined,
+      before: before ?? undefined,
       limit: Number.isFinite(limit) && limit > 0 ? limit : undefined,
     });
     return NextResponse.json(result);

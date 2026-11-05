@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { ConversationsListClient } from "@/features/messages/conversations-list-client";
+import { EmptyConversationState } from "@/features/messages/empty-conversation-state";
 import { requireAgent } from "@/lib/auth";
 
 export const metadata: Metadata = {
@@ -9,5 +9,5 @@ export const metadata: Metadata = {
 export default async function AgentMessagesPage() {
   await requireAgent();
 
-  return <ConversationsListClient variant="agent" />;
+  return <EmptyConversationState />;
 }

@@ -3,6 +3,7 @@ using GlobalScout.Application.Abstractions.Persistence;
 using GlobalScout.Application.Abstractions.Social.Messages;
 using GlobalScout.SharedKernel;
 using GlobalScout.Application.Social.Messages;
+using GlobalScout.Domain.Social;
 
 namespace GlobalScout.Application.Social.Messages.GetConversation;
 
@@ -20,14 +21,24 @@ internal sealed class GetConversationQueryHandler(
             return Result.Failure<GetConversationResult>(MessageErrors.ReceiverNotFound);
         }
 
-        (IReadOnlyList<MessageThreadDto> page, bool hasMore) = await messages.GetConversationPageAsync(
+        MessageCursor? before = null;
+        if (query.Before is not null)
+        {
+            if (!MessageCursor.TryParse(query.Before, out var cursor))
+            {
+                return Result.Failure<GetConversationResult>(MessageErrors.InvalidCursor);
+            }
+
+            before = cursor;
+        }
+
+        (IReadOnlyList<MessageThreadDto> page, string? nextCursor, bool hasMore) = await messages.GetConversationPageAsync(
             query.UserId,
             query.OtherUserId,
-            query.Page,
+            before,
             query.Limit,
             cancellationToken);
 
-        return Result.Success(
-            new GetConversationResult(page, query.Page, query.Limit, hasMore));
+        return Result.Success(new GetConversationResult(page, nextCursor, hasMore));
     }
 }

@@ -396,6 +396,25 @@ internal sealed class UserDirectoryRepository(
             .Select(p => p.AvatarStorageKey)
             .FirstOrDefaultAsync(cancellationToken);
 
+    public async Task SetBannerStorageKeyAsync(Guid userId, string storageKey, CancellationToken cancellationToken)
+    {
+        var profile = await db.Profiles.FirstOrDefaultAsync(p => p.UserId == userId, cancellationToken);
+        if (profile is null)
+        {
+            return;
+        }
+
+        profile.BannerStorageKey = storageKey;
+        profile.UpdatedAt = DateTimeOffset.UtcNow;
+        await db.SaveChangesAsync(cancellationToken);
+    }
+
+    public async Task<string?> GetBannerStorageKeyAsync(Guid userId, CancellationToken cancellationToken) =>
+        await db.Profiles.AsNoTracking()
+            .Where(p => p.UserId == userId)
+            .Select(p => p.BannerStorageKey)
+            .FirstOrDefaultAsync(cancellationToken);
+
     private async Task<GetProfileVisitorsResult> BuildPremiumVisitorsAsync(
         Guid profileOwnerId,
         IReadOnlyList<VisitorTypeCount> stats,
@@ -522,6 +541,7 @@ internal sealed class UserDirectoryRepository(
             p.FirstName,
             p.LastName,
             await avatarUrls.ResolveAsync(p.AvatarStorageKey, cancellationToken),
+            await avatarUrls.ResolveAsync(p.BannerStorageKey, cancellationToken),
             p.Bio,
             PositionToApi(p.Position),
             p.Age,

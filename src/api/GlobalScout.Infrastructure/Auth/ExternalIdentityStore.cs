@@ -19,7 +19,7 @@ internal sealed class ExternalIdentityStore(
     /// rejects a null/empty email outright, so a non-deliverable, per-identity-unique placeholder is
     /// synthesized instead of leaving Email null. EmailConfirmed is left false in that case.
     /// </summary>
-    private const string PlaceholderEmailDomain = "users.globalscout.eu";
+    private const string PlaceholderEmailDomain = "users.futboligy.com";
 
     public async Task<Guid?> FindUserIdByLoginAsync(string provider, string providerKey, CancellationToken cancellationToken)
     {

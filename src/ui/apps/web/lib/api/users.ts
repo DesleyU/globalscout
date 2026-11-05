@@ -2,16 +2,19 @@ import {
   usersPaths,
   type ApiTransport,
   type CompleteAvatarUploadRequest,
+  type CompleteBannerUploadRequest,
   type GetProfileVisitorsResult,
   type GetUserByIdResponse,
   type GetUserRecommendationsResult,
   type InitiateAvatarUploadRequest,
+  type InitiateBannerUploadRequest,
   type PresignedReadUrlResult,
   type PresignedUploadResult,
   type SearchUsersParams,
   type SearchUsersResult,
   type UpdateUserProfileRequest,
   type CompleteAvatarUploadResponse,
+  type CompleteBannerUploadResponse,
   type UsersFullProfileResult,
 } from "@globalscout/shared";
 
@@ -59,6 +62,26 @@ export function createUsersApi(client: ApiTransport) {
     getAvatarUrl(userId: string) {
       return client.get<PresignedReadUrlResult>(
         usersPaths.avatarReadUrl(userId),
+      );
+    },
+
+    initiateBannerUpload(body: InitiateBannerUploadRequest) {
+      return client.post<PresignedUploadResult>(
+        usersPaths.bannerUploadUrl,
+        body,
+      );
+    },
+
+    completeBannerUpload(body: CompleteBannerUploadRequest) {
+      return client.post<CompleteBannerUploadResponse>(
+        usersPaths.bannerComplete,
+        body,
+      );
+    },
+
+    getBannerUrl(userId: string) {
+      return client.get<PresignedReadUrlResult>(
+        usersPaths.bannerReadUrl(userId),
       );
     },
 

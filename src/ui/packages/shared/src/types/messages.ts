@@ -72,7 +72,9 @@ export interface ConversationPartner {
 }
 
 export interface ConversationListItem {
+  /** The other user's ID. */
   id: string;
+  conversationId: string;
   lastMessage: ConversationLastMessage;
   otherUser: ConversationPartner;
   unreadCount: number;
@@ -84,15 +86,12 @@ export interface GetConversationsResult {
 
 export interface GetConversationResult {
   messages: MessageThreadItem[];
-  pagination: {
-    page: number;
-    limit: number;
-    hasMore: boolean;
-  };
+  nextCursor: string | null;
+  hasMore: boolean;
 }
 
 export interface GetConversationParams {
-  page?: number;
+  before?: string;
   limit?: number;
 }
 

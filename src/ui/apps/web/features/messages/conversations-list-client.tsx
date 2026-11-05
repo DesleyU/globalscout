@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import type { ConnectionListItem } from "@globalscout/shared";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,13 @@ export function ConversationsListClient({ variant = "player" }: ConversationsLis
   const isAgent = variant === "agent";
   const messagesHref = isAgent ? "/agent/messages" : "/messages";
   const messages = useMessagesContext();
+
+  const pathname = usePathname();
+  const isIndexRoute = pathname === messagesHref;
+  // On mobile, a detail route means a thread is open, so the list hides in favor of it;
+  // on desktop both panes always show. `layout.tsx` stays unaware of the route for this.
+  const mobileVisibilityClass = isIndexRoute ? "flex" : "hidden md:flex";
+  const selectedUserId = isIndexRoute ? null : pathname.split("/").pop();
 
   const conversations = messages?.conversations ?? [];
   const isLoadingConversations = messages?.isLoading ?? true;
@@ -64,7 +72,7 @@ export function ConversationsListClient({ variant = "player" }: ConversationsLis
   );
 
   return (
-    <div className="mx-auto flex max-w-2xl flex-col gap-6 p-8">
+    <div className={`h-full flex-col gap-4 overflow-y-auto p-4 ${mobileVisibilityClass}`}>
       <h1 className="text-xl font-semibold text-gray-900">Messages</h1>
 
       {isLoading ? (
@@ -83,10 +91,20 @@ export function ConversationsListClient({ variant = "player" }: ConversationsLis
                   ? `${profile.firstName} ${profile.lastName}`
                   : "Unknown user";
                 const hasUnread = conversation.unreadCount > 0;
+                const isSelected = conversation.otherUser.id === selectedUserId;
 
                 return (
                   <Link key={conversation.id} href={`${messagesHref}/${conversation.otherUser.id}`}>
-                    <Card className={hasUnread ? "border-blue-200 bg-blue-50/50" : undefined}>
+                    <Card
+                      aria-current={isSelected ? "page" : undefined}
+                      className={
+                        isSelected
+                          ? "border-blue-300 bg-blue-100/70"
+                          : hasUnread
+                            ? "border-blue-200 bg-blue-50/50"
+                            : undefined
+                      }
+                    >
                       <CardContent className="flex items-center gap-3">
                         <Avatar>
                           {profile?.avatar ? <AvatarImage src={profile.avatar} alt={name} /> : null}
@@ -106,7 +124,7 @@ export function ConversationsListClient({ variant = "player" }: ConversationsLis
                             </span>
                           </div>
                           <p
-                            className={`truncate text-xs ${hasUnread ? "font-medium text-gray-800" : "text-gray-500"}`}
+                            className={`line-clamp-2 text-xs ${hasUnread ? "font-medium text-gray-800" : "text-gray-500"}`}
                           >
                             {conversation.lastMessage.content}
                           </p>

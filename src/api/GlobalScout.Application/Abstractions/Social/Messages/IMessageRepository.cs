@@ -1,4 +1,5 @@
 using GlobalScout.Application.Social.Messages;
+using GlobalScout.Domain.Social;
 
 namespace GlobalScout.Application.Abstractions.Social.Messages;
 
@@ -10,10 +11,10 @@ public interface IMessageRepository
         string content,
         CancellationToken cancellationToken);
 
-    Task<(IReadOnlyList<MessageThreadDto> Messages, bool HasMore)> GetConversationPageAsync(
+    Task<(IReadOnlyList<MessageThreadDto> Messages, string? NextCursor, bool HasMore)> GetConversationPageAsync(
         Guid userId,
         Guid otherUserId,
-        int page,
+        MessageCursor? before,
         int limit,
         CancellationToken cancellationToken);
 

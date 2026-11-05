@@ -34,8 +34,6 @@ public sealed class ApplicationUser : IdentityUser<Guid>
 
     public ICollection<Message> SentMessages { get; set; } = [];
 
-    public ICollection<Message> ReceivedMessages { get; set; } = [];
-
     public ICollection<MediaItem> Media { get; set; } = [];
 
     public ICollection<PlayerStatistics> PlayerStatistics { get; set; } = [];

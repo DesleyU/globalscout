@@ -8,6 +8,7 @@ public sealed record UserProfileApiDto(
     string FirstName,
     string LastName,
     string? Avatar,
+    string? Banner,
     string? Bio,
     string? Position,
     int? Age,

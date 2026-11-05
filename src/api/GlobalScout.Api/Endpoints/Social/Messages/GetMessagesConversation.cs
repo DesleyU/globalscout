@@ -15,7 +15,7 @@ internal sealed class GetMessagesConversation : IEndpoint
                 async (
                     ClaimsPrincipal user,
                     Guid otherUserId,
-                    int? page,
+                    string? before,
                     int? limit,
                     IQueryHandler<GetConversationQuery, GetConversationResult> handler,
                     CancellationToken cancellationToken) =>
@@ -26,11 +26,10 @@ internal sealed class GetMessagesConversation : IEndpoint
                         return Results.Unauthorized();
                     }
 
-                    int p = !page.HasValue || page.Value < 1 ? 1 : page.Value;
                     int l = !limit.HasValue || limit.Value < 1 ? 50 : Math.Min(limit.Value, 200);
 
                     var result = await handler.Handle(
-                        new GetConversationQuery(userId.Value, otherUserId, p, l),
+                        new GetConversationQuery(userId.Value, otherUserId, before, l),
                         cancellationToken);
 
                     return result.Match(
@@ -38,12 +37,8 @@ internal sealed class GetMessagesConversation : IEndpoint
                             new
                             {
                                 messages = ok.Messages,
-                                pagination = new
-                                {
-                                    page = ok.Page,
-                                    limit = ok.Limit,
-                                    hasMore = ok.HasMore
-                                }
+                                nextCursor = ok.NextCursor,
+                                hasMore = ok.HasMore
                             }),
                         CustomResults.Problem);
                 })
