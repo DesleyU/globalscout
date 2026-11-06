@@ -1,3 +1,6 @@
+using Amazon.Runtime;
+using Amazon.SimpleEmail;
+using Amazon.SimpleEmail.Model;
 using GlobalScout.Api.IntegrationTests.Social;
 using DotNet.Testcontainers.Builders;
 using DotNet.Testcontainers.Containers;
@@ -19,6 +22,8 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
         .WithPortBinding(4566, true)
         .Build();
 
+    private const string EmailFromAddress = "no-reply@futboligy.com";
+
     public WebApplicationFactory<Program> Factory { get; private set; } = null!;
 
     /// <summary>Registers a club user through <c>POST /api/auth/register</c> (shared IT database).</summary>
@@ -33,6 +38,7 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
         string connectionString = _postgres.GetConnectionString();
         string ministackEndpoint = $"http://{_ministack.Hostname}:{_ministack.GetMappedPublicPort(4566)}";
         await WaitForMiniStackAsync(ministackEndpoint);
+        await VerifySesSenderAsync(ministackEndpoint, EmailFromAddress);
 
         Factory = new WebApplicationFactory<Program>().WithWebHostBuilder(builder =>
         {
@@ -50,6 +56,7 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
             builder.UseSetting("Email:Region", "us-east-1");
             builder.UseSetting("Email:AccessKey", "test");
             builder.UseSetting("Email:SecretKey", "test");
+            builder.UseSetting("Email:FromAddress", EmailFromAddress);
         });
     }
 
@@ -83,5 +90,14 @@ public sealed class IntegrationTestFixture : IAsyncLifetime
 
             await Task.Delay(TimeSpan.FromMilliseconds(500));
         }
+    }
+
+    /// <summary>MiniStack enforces SES sender verification like real SES, so the sender must be verified first.</summary>
+    private static async Task VerifySesSenderAsync(string endpoint, string fromAddress)
+    {
+        using var ses = new AmazonSimpleEmailServiceClient(
+            new BasicAWSCredentials("test", "test"),
+            new AmazonSimpleEmailServiceConfig { ServiceURL = endpoint, AuthenticationRegion = "us-east-1" });
+        await ses.VerifyEmailIdentityAsync(new VerifyEmailIdentityRequest { EmailAddress = fromAddress });
     }
 }
