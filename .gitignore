@@ -136,3 +136,4 @@ temp/
 /src/api/.vs
 *.vsidx
 /src/api/.vs
+docs/p.txt
