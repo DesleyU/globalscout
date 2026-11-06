@@ -337,7 +337,7 @@ export function StatisticsContent({
                           key={row.key}
                           className="border-b text-foreground last:border-0"
                         >
-                          <td className="px-6 py-3 font-medium">{row.competition}</td>
+                          <td className="px-6 py-3 font-medium">{row.league}</td>
                           <td className="px-3 py-3 text-muted-foreground">
                             {row.team}
                           </td>

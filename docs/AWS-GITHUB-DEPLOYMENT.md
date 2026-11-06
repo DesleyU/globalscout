@@ -17,8 +17,21 @@ Commands are for Git Bash / bash. Run them from the repo root. Every block assum
 ```bash
 export AWS_PROFILE=futboligy
 export AWS_REGION=eu-central-1
-ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
+export AWS_PAGER=""
+ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text | tr -d '\r')
 TMP=$(mktemp -d)
+```
+
+On Windows (Git Bash), `aws.exe` ends text output with `\r\n`. A value captured with `$(...)` then carries a
+hidden `\r`, which breaks JSON and ARNs that are built from it. Strip it with `| tr -d '\r'`, as the commands below
+do where it matters. Or define this wrapper once per shell:
+
+Git Bash also rewrites arguments that look like POSIX paths (e.g. `/dev/sda1` → `C:/Program Files/Git/dev/sda1`).
+Run `export MSYS_NO_PATHCONV=1` first.
+
+```bash
+export MSYS_NO_PATHCONV=1
+aws() { command aws "$@" | tr -d '\r'; }
 ```
 
 ---
@@ -116,7 +129,7 @@ sleep 10
 for pair in "us-east-1 $CF_CERT_ARN" "eu-central-1 $ALB_CERT_ARN"; do
   set -- $pair
   aws acm describe-certificate --region "$1" --certificate-arn "$2" \
-    --query 'Certificate.DomainValidationOptions[].ResourceRecord.[Name,Value]' --output text
+    --query 'Certificate.DomainValidationOptions[].ResourceRecord.[Name,Value]' --output text | tr -d '\r'
 done | sort -u | while read -r name value; do upsert "$name" CNAME "$value"; done
 aws acm wait certificate-validated --region us-east-1 --certificate-arn "$CF_CERT_ARN"
 aws acm wait certificate-validated --region eu-central-1 --certificate-arn "$ALB_CERT_ARN"
